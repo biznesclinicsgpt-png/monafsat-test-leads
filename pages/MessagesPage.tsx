@@ -247,15 +247,29 @@ const MessagesPage = () => {
                         <h3 className="text-lg font-bold text-slate-900">{activeChat.name}</h3>
                         <p className="text-slate-500 text-sm mb-4">عميل محتمل</p>
 
-                        <div className="flex gap-3 w-full">
-                            <button className="flex-1 py-2 bg-slate-50 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 transition-colors flex items-center justify-center gap-2">
-                                <Icons.Phone />
-                                اتصال
+                        <div className="flex flex-col gap-2 w-full">
+                            <button
+                                onClick={() => {
+                                    if (activeChat.phone) {
+                                        const phone = activeChat.phone.replace(/\s+/g, '');
+                                        window.open(`https://web.whatsapp.com/send?phone=${phone}`, '_blank');
+                                    }
+                                }}
+                                className="w-full py-2 bg-green-50 text-green-700 rounded-lg text-sm font-bold hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
+                            >
+                                <Icons.WhatsApp />
+                                محادثة واتساب
                             </button>
-                            <button className="flex-1 py-2 bg-slate-50 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 transition-colors flex items-center justify-center gap-2">
-                                <Icons.Email />
-                                بريد
-                            </button>
+                            <div className="flex gap-3 w-full">
+                                <button className="flex-1 py-2 bg-slate-50 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 transition-colors flex items-center justify-center gap-2">
+                                    <Icons.Phone />
+                                    اتصال
+                                </button>
+                                <button className="flex-1 py-2 bg-slate-50 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-100 transition-colors flex items-center justify-center gap-2">
+                                    <Icons.Email />
+                                    بريد
+                                </button>
+                            </div>
                         </div>
                     </div>
 
