@@ -33,22 +33,37 @@ const MessagesPage = () => {
     const handleSendMessage = (e?: React.FormEvent) => {
         if (e) e.preventDefault();
 
+        // Find input value
+        const input = document.querySelector('input[type="text"]') as HTMLInputElement;
+        const textFromInput = input?.value || '';
+
         if (activeChat && activeChat.type === 'whatsapp') {
             // Check if we have a phone number
             if (!activeChat.phone) return;
 
-            // Clean phone number
+            // 1. Mirror Locally (Hybrid Approach)
+            if (textFromInput) {
+                const newMessage = {
+                    id: Date.now(),
+                    sender: 'me',
+                    text: textFromInput,
+                    time: new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' })
+                };
+                setMessages([...messages, newMessage]);
+                if (input) input.value = ''; // Clear input
+            }
+
+            // 2. Open Popup for Transmission
             const phone = activeChat.phone.replace(/\s+/g, '');
-            // In a real app we would get the message from input, here we open with empty text or draft
-            const url = `https://web.whatsapp.com/send?phone=${phone}&text=`;
-            window.open(url, '_blank');
+            const url = `https://web.whatsapp.com/send?phone=${phone}&text=${encodeURIComponent(textFromInput)}`;
+            window.open(url, 'whatsapp_popup', 'width=800,height=600,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,location=no,status=no');
             return;
         }
         // Mock send for internal
     };
 
     const openWhatsappWeb = () => {
-        window.open('https://web.whatsapp.com/', '_blank');
+        window.open('https://web.whatsapp.com/', 'whatsapp_connect', 'width=800,height=600,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,location=no,status=no');
     };
 
     return (
