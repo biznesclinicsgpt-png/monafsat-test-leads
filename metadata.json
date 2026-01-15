@@ -1,0 +1,8 @@
+{
+  "name": "Manafeth Provider CRM & Lead Engine",
+  "description": "A high-performance provider dashboard combining Clay-like data enrichment pipelines with GHL-style CRM and pipeline management for Arabic-speaking markets.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
