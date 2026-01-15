@@ -30,18 +30,25 @@ const MessagesPage = () => {
 
     const activeChat = chats.find(c => c.id === activeChatId);
 
-    const handleSendMessage = (e: React.FormEvent) => {
-        e.preventDefault();
-        // Mock send
+    const handleSendMessage = (e?: React.FormEvent) => {
+        if (e) e.preventDefault();
+
+        if (activeChat && activeChat.type === 'whatsapp') {
+            // Check if we have a phone number
+            if (!activeChat.phone) return;
+
+            // Clean phone number
+            const phone = activeChat.phone.replace(/\s+/g, '');
+            // In a real app we would get the message from input, here we open with empty text or draft
+            const url = `https://web.whatsapp.com/send?phone=${phone}&text=`;
+            window.open(url, '_blank');
+            return;
+        }
+        // Mock send for internal
     };
 
-    const toggleWhatsappConnection = () => {
-        // Simulate scanning
-        setShowQrScanner(true);
-        setTimeout(() => {
-            setWhatsappConnected(true);
-            setShowQrScanner(false);
-        }, 2000);
+    const openWhatsappWeb = () => {
+        window.open('https://web.whatsapp.com/', '_blank');
     };
 
     return (
@@ -126,34 +133,32 @@ const MessagesPage = () => {
                 {/* Specific WhatsApp Connection State */}
                 {activeTab === 'whatsapp' && !whatsappConnected ? (
                     <div className="absolute inset-0 z-10 bg-white flex flex-col items-center justify-center p-8 text-center animate-fadeIn">
-                        <div className="w-64 h-64 bg-slate-900 rounded-xl mb-6 shadow-xl flex items-center justify-center relative overflow-hidden group">
-                            {showQrScanner ? (
-                                <div className="absolute inset-0 bg-green-500/10 flex items-center justify-center">
-                                    <div className="w-full h-1 bg-green-500 absolute top-0 animate-scan"></div>
-                                    <span className="text-green-600 font-bold animate-pulse">جاري المسح...</span>
-                                </div>
-                            ) : (
-                                <div className="p-4 bg-white rounded-lg">
-                                    {/* Placeholder QR */}
-                                    <div className="w-48 h-48 bg-slate-800 pattern-dots grid grid-cols-6 grid-rows-6 gap-1">
-                                        {[...Array(36)].map((_, i) => (
-                                            <div key={i} className={`bg-white/90 rounded-sm ${Math.random() > 0.5 ? 'opacity-100' : 'opacity-20'}`}></div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
+                        <div className="w-64 h-64 bg-slate-100 rounded-xl mb-6 shadow-inner flex items-center justify-center relative overflow-hidden group border border-slate-300">
+                            <span className="text-green-500 transform scale-150">
+                                <Icons.WhatsApp />
+                            </span>
                         </div>
-                        <h2 className="text-2xl font-bold text-slate-800 mb-2">ربط واتساب</h2>
-                        <p className="text-slate-500 mb-6 max-w-sm">
-                            افتح واتساب على هاتفك، اذهب إلى الإعدادات {'>'} الأجهزة المرتبطة {'>'} ربط جهاز، وقم بمسح الرمز أعلاه.
+                        <h2 className="text-2xl font-bold text-slate-800 mb-2">ربط واتساب ويب</h2>
+                        <p className="text-slate-500 mb-6 max-w-sm text-sm leading-relaxed">
+                            لأسباب أمنية وتقنية، يجب فتح واتساب ويب في نافذة جديدة لربط جهازك.
+                            <br />
+                            اضغط أدناه لفتح الموقع الرسمي، ثم عد إلى هنا لتأكيد الربط.
                         </p>
-                        <button
-                            onClick={toggleWhatsappConnection}
-                            disabled={showQrScanner}
-                            className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-full font-bold shadow-lg shadow-green-600/20 transition-all transform hover:scale-105"
-                        >
-                            {showQrScanner ? 'جاري الاتصال...' : 'محاكاة المسح والربط'}
-                        </button>
+                        <div className="flex flex-col gap-3 w-full max-w-xs">
+                            <button
+                                onClick={openWhatsappWeb}
+                                className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg shadow-green-600/20 transition-all transform hover:scale-105 flex items-center justify-center gap-2"
+                            >
+                                <Icons.WhatsApp />
+                                فتح واتساب ويب
+                            </button>
+                            <button
+                                onClick={() => setWhatsappConnected(true)}
+                                className="bg-white border border-slate-300 text-slate-600 px-6 py-3 rounded-xl font-bold hover:bg-slate-50 transition-all"
+                            >
+                                تم ربط الجهاز
+                            </button>
+                        </div>
                     </div>
                 ) : (
                     <>
@@ -190,8 +195,8 @@ const MessagesPage = () => {
                             {messages.map((msg) => (
                                 <div key={msg.id} className={`flex ${msg.sender === 'me' ? 'justify-end' : 'justify-start'}`}>
                                     <div className={`max-w-md px-4 py-2 rounded-2xl text-sm shadow-sm relative group ${msg.sender === 'me'
-                                            ? (activeChat?.type === 'whatsapp' ? 'bg-[#d9fdd3] text-slate-800 rounded-tl-none' : 'bg-blue-600 text-white rounded-tl-none')
-                                            : 'bg-white text-slate-800 border border-slate-100 rounded-tr-none'
+                                        ? (activeChat?.type === 'whatsapp' ? 'bg-[#d9fdd3] text-slate-800 rounded-tl-none' : 'bg-blue-600 text-white rounded-tl-none')
+                                        : 'bg-white text-slate-800 border border-slate-100 rounded-tr-none'
                                         }`}>
                                         <p>{msg.text}</p>
                                         <span className={`text-[9px] mt-1 block text-right ${msg.sender === 'me' && activeChat?.type !== 'whatsapp' ? 'text-blue-100' : 'text-slate-400'}`}>
@@ -220,7 +225,10 @@ const MessagesPage = () => {
                                         className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-full focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500/20 transition-all text-sm"
                                     />
                                 </div>
-                                <button className={`p-3 rounded-full text-white shadow-md transition-transform hover:scale-105 ${activeChat?.type === 'whatsapp' ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'}`}>
+                                <button
+                                    onClick={(e) => handleSendMessage(e)}
+                                    className={`p-3 rounded-full text-white shadow-md transition-transform hover:scale-105 ${activeChat?.type === 'whatsapp' ? 'bg-green-600 hover:bg-green-700' : 'bg-blue-600 hover:bg-blue-700'}`}
+                                >
                                     <Icons.Send />
                                 </button>
                             </div>
