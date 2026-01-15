@@ -252,7 +252,7 @@ const MessagesPage = () => {
                                 onClick={() => {
                                     if (activeChat.phone) {
                                         const phone = activeChat.phone.replace(/\s+/g, '');
-                                        window.open(`https://web.whatsapp.com/send?phone=${phone}`, '_blank');
+                                        window.open(`https://web.whatsapp.com/send?phone=${phone}`, 'whatsapp_popup', 'width=800,height=600,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,location=no,status=no');
                                     }
                                 }}
                                 className="w-full py-2 bg-green-50 text-green-700 rounded-lg text-sm font-bold hover:bg-green-100 transition-colors flex items-center justify-center gap-2"
