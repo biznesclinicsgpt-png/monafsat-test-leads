@@ -2,17 +2,15 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 // Use the process.env.API_KEY exclusively for initialization.
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
-export interface ICPDraft {
-  industries: string[];
-  titles: string[];
-  description: string;
-  budgetHint: string;
-}
-
 export const generateICPDraft = async (providerDescription: string): Promise<ICPDraft> => {
   try {
+    const apiKey = process.env.API_KEY;
+    if (!apiKey) {
+      console.warn("Gemini API Key is missing");
+      throw new Error("API Key missing");
+    }
+
+    const ai = new GoogleGenAI({ apiKey });
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
       contents: `Based on this provider's business description: "${providerDescription}", generate an Ideal Customer Profile (ICP). 
