@@ -2,6 +2,14 @@
 import { GoogleGenAI, Type } from "@google/genai";
 
 // Use the process.env.API_KEY exclusively for initialization.
+
+export interface ICPDraft {
+  industries: string[];
+  titles: string[];
+  description: string;
+  budgetHint: string;
+}
+
 export const generateICPDraft = async (providerDescription: string): Promise<ICPDraft> => {
   try {
     const apiKey = process.env.API_KEY;
