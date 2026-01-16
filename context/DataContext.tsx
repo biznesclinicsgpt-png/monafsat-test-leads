@@ -59,6 +59,19 @@ const INITIAL_CONTACTS: Contact[] = [
     stage: PipelineStage.NEW,
     source: LeadSource.OUTBOUND_CONTACTS,
     tags: ['مقاولات']
+  },
+  {
+    id: '4',
+    name: 'دكتور عمرو',
+    company: 'عيادات د. عمرو',
+    title: 'Owner',
+    email: { status: 'none' },
+    phone: { number: '+201228806242', status: 'valid' },
+    icpStatus: 'pending',
+    fitScore: 60,
+    stage: PipelineStage.NEW,
+    source: LeadSource.OUTBOUND_CONTACTS,
+    tags: ['طبي']
   }
 ];
 
