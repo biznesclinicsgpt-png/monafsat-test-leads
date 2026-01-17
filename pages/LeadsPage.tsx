@@ -3,12 +3,14 @@ import { useData } from '../context/DataContext';
 import { PipelineStage, Contact } from '../types';
 import ContactsTable from '../components/Contacts/ContactsTable';
 import LeadModal from '../components/Contacts/LeadModal';
+import { CSVImporter } from '../components/Contacts/CSVImporter';
 
 const LeadsPage = () => {
-    const { contacts, loading, addContact, updateContact } = useData();
+    const { contacts, loading, addContact, addContacts, updateContact } = useData();
     const [selectedContact, setSelectedContact] = useState<Contact | undefined>(undefined);
     const [modalMode, setModalMode] = useState<'add' | 'edit' | 'view'>('view');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isImporterOpen, setIsImporterOpen] = useState(false);
     const [saving, setSaving] = useState(false);
 
     // Filter contacts that are considered "Leads"
@@ -56,6 +58,19 @@ const LeadsPage = () => {
         }
     };
 
+    const handleImport = async (importedContacts: Partial<Contact>[]) => {
+        setSaving(true);
+        try {
+            await addContacts(importedContacts);
+            setIsImporterOpen(false);
+        } catch (error) {
+            console.error('Error importing contacts:', error);
+            alert('حدث خطأ أثناء استيراد البيانات.');
+        } finally {
+            setSaving(false);
+        }
+    };
+
     if (loading && contacts.length === 0) {
         return (
             <div className="flex items-center justify-center p-24">
@@ -75,6 +90,13 @@ const LeadsPage = () => {
                     <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-bold">
                         {leads.length} عميل محتمل
                     </div>
+                    <button
+                        onClick={() => setIsImporterOpen(true)}
+                        className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 px-4 py-2 rounded-lg font-bold flex items-center gap-2 shadow-sm transition-all"
+                    >
+                        <svg className="w-5 h-5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" /></svg>
+                        استيراد (CSV)
+                    </button>
                     <button
                         onClick={handleAdd}
                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold flex items-center gap-2 shadow-lg shadow-blue-100 transition-all"
@@ -107,6 +129,13 @@ const LeadsPage = () => {
                     contact={selectedContact}
                     onClose={() => setIsModalOpen(false)}
                     onSave={handleSave}
+                />
+            )}
+
+            {isImporterOpen && (
+                <CSVImporter
+                    onImport={handleImport}
+                    onClose={() => setIsImporterOpen(false)}
                 />
             )}
 

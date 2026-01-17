@@ -7,6 +7,7 @@ interface DataContextType {
   error: string | null;
   refreshContacts: () => Promise<void>;
   addContact: (contact: Contact) => Promise<void>;
+  addContacts: (contacts: Partial<Contact>[]) => Promise<void>;
   updateContact: (id: string, updates: Partial<Contact>) => Promise<void>;
   deleteContact: (id: string) => Promise<void>;
 
@@ -64,6 +65,24 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
         body: JSON.stringify(contact),
       });
       if (!response.ok) throw new Error('Failed to add contact');
+      await refreshContacts();
+    } catch (err: any) {
+      setError(err.message);
+    }
+  };
+
+  const addContacts = async (newContacts: Partial<Contact>[]) => {
+    try {
+      // In a real app, use a bulk API endpoint. For now, loop parallel.
+      const promises = newContacts.map(contact =>
+        fetch('/api/contacts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(contact),
+        })
+      );
+
+      await Promise.all(promises);
       await refreshContacts();
     } catch (err: any) {
       setError(err.message);
@@ -132,6 +151,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       error,
       refreshContacts,
       addContact,
+      addContacts,
       updateContact,
       deleteContact,
       providerICP,
