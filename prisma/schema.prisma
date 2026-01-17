@@ -1,0 +1,375 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model User {
+  id                String    @id @default(uuid())
+  email             String    @unique
+  name              String
+  nameEn            String?
+  phone             String?
+  avatar            String?
+  defaultMode       String    @default("buyer")
+  status            String    @default("active")
+  emailVerified     Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  lastLogin         DateTime?
+  
+  buyerProfile      BuyerProfile?
+  providerProfile   ProviderProfile?
+}
+
+model BuyerProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  
+  companyName     String
+  companyNameEn   String?
+  crNumber        String?
+  industry        String?
+  companySize     String?
+  contactName     String
+  contactRole     String?
+  contactEmail    String
+  contactPhone    String?
+  city            String?
+  country         String
+  profileComplete Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  projects        Project[]
+  shortlist       ShortlistItem[]
+}
+
+model ProviderProfile {
+  id                    String   @id @default(uuid())
+  userId                String   @unique
+  user                  User     @relation(fields: [userId], references: [id])
+  providerId            String?  // Link to Admin entity
+
+  companyName           String
+  companyNameEn         String?
+  tagline               String?
+  taglineEn             String?
+  description           String?
+  descriptionEn         String?
+  logoUrl               String?
+  coverUrl              String?
+  crNumber              String?
+  isSaudiVerified       Boolean  @default(false)
+  foundedYear           Int?
+  companySize           String
+  contactName           String
+  contactRole           String?
+  contactEmail          String
+  contactPhone          String?
+  website               String?
+  headquartersCity      String
+  headquartersCountry   String
+  serviceLocations      String[]
+  linkedinUrl           String?
+  twitterUrl            String?
+  
+  serviceLines          Json[]   // ServiceLine[]
+  industries            Json[]   // IndustryFocus[]
+  
+  clients               ClientReference[]
+  
+  idealClientDescription String?
+  minProjectSize         Int?
+  maxProjectSize         Int?
+  preferredProjectDuration String?
+  certifications        String[]
+  tags                  String[]
+  keywords              String[]
+  capabilities          String[]
+  
+  status                String   @default("draft")
+  profileHealth         Int      @default(0)
+  submittedForReviewAt  DateTime?
+  reviewedAt            DateTime?
+  reviewNotes           String?
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  projectResponses      ProjectResponse[]
+  shortlistedBy         ShortlistItem[]
+}
+
+model ClientReference {
+  id                  String          @id @default(uuid())
+  providerProfileId   String
+  providerProfile     ProviderProfile @relation(fields: [providerProfileId], references: [id])
+  
+  companyName         String
+  projectDescription  String?
+  projectType         String?
+  year                Int?
+  testimonial         String?
+  isPublic            Boolean         @default(false)
+  
+  serviceCategoryId   Int?
+  subserviceId        Int?
+  industrySectorId    Int?
+  subIndustryId       Int?
+}
+
+model Project {
+  id                    String   @id @default(uuid())
+  buyerProfileId        String
+  buyerProfile          BuyerProfile @relation(fields: [buyerProfileId], references: [id])
+  ownerUserId           String
+  
+  title                 String
+  titleEn               String?
+  category              String
+  subcategory           String?
+  description           String
+  descriptionEn         String?
+  deliverables          String[]
+  goals                 String[]
+  attachments           Json[]   // ProjectAttachment[]
+  
+  budgetBand            String
+  budgetMin             Int?
+  budgetMax             Int?
+  timelineStart         DateTime?
+  timelineEnd           DateTime?
+  urgency               String
+  
+  preferredLocations    String[]
+  remoteOk              Boolean  @default(true)
+  saudiPresenceRequired Boolean  @default(false)
+  
+  status                String   @default("draft")
+  invitedProviders      String[]
+  excludedProviders     String[]
+  
+  responsesCount        Int      @default(0)
+  meetingsCount         Int      @default(0)
+  
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  publishedAt           DateTime?
+  closedAt              DateTime?
+
+  responses             ProjectResponse[]
+}
+
+model ProjectResponse {
+  id                  String          @id @default(uuid())
+  projectId           String
+  project             Project         @relation(fields: [projectId], references: [id])
+  providerProfileId   String
+  providerProfile     ProviderProfile @relation(fields: [providerProfileId], references: [id])
+  
+  status              String
+  interestNote        String?
+  declineReason       String?
+  proposedBudget      Int?
+  proposedTimeline    String?
+  
+  invitedAt           DateTime        @default(now())
+  respondedAt         DateTime?
+  updatedAt           DateTime        @updatedAt
+}
+
+model MessageThread {
+  id              String   @id @default(uuid())
+  projectId       String
+  buyerUserId     String
+  providerUserId  String
+  
+  lastMessage     String?
+  lastMessageAt   DateTime?
+  lastSenderType  String?
+  buyerUnread     Int      @default(0)
+  providerUnread  Int      @default(0)
+  isArchived      Boolean  @default(false)
+  isPriority      Boolean  @default(false)
+  createdAt       DateTime @default(now())
+}
+
+model Message {
+  id              String   @id @default(uuid())
+  threadId        String
+  senderId        String
+  senderType      String
+  content         String
+  attachments     Json[]   // ProjectAttachment[]
+  read            Boolean  @default(false)
+  createdAt       DateTime @default(now())
+}
+
+model Meeting {
+  id              String   @id @default(uuid())
+  projectId       String
+  threadId        String?
+  buyerUserId     String
+  providerUserId  String
+  
+  title           String
+  description     String?
+  proposedTimes   String[]
+  scheduledAt     DateTime?
+  durationMinutes Int      @default(30)
+  meetingType     String
+  meetingLink     String?
+  meetingLocation String?
+  status          String   @default("requested")
+  buyerNotes      String?
+  providerNotes   String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model ShortlistItem {
+  id                String          @id @default(uuid())
+  buyerProfileId    String
+  buyerProfile      BuyerProfile    @relation(fields: [buyerProfileId], references: [id])
+  providerProfileId String
+  providerProfile   ProviderProfile @relation(fields: [providerProfileId], references: [id])
+  notes             String?
+  addedAt           DateTime        @default(now())
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  userId      String
+  type        String
+  title       String
+  body        String
+  link        String?
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Contact {
+  id                    String   @id @default(uuid())
+  firstName            String?
+  lastName             String?
+  name                 String
+  email                String   @unique
+  phone                String?
+  title                String?
+  companyName          String
+  
+  address1             String?
+  city                 String?
+  state                String?
+  country              String?
+  postalCode           String?
+  timezone             String?
+  website              String?
+
+  // GHL Custom Fields
+  initialIcebreaker     String?
+  industry2            String?
+  function2            String?
+  companyOfficialName  String?
+  titleDescription     String?
+  linkedinUrl          String?
+  prospectAbout        String?
+  companyDescription   String?
+  phone2               String?
+  size2                String?
+  source               String
+  recordId             String?
+  about                String?
+  companyLinkedinUrl   String?
+  linkedinCompanyUrl   String?
+  openProfile          String?
+  premium              String?
+  linkedinSalesNavigator String?
+  dateOfBirth          String?
+  employeeCount        String?
+  companyCountry       String?
+  arabicSummary        String?
+  callRecordings       String?
+  lowercaseBusinessName String?
+  type                 String?
+  welcomeMessage       String?
+  followUp1            String?
+  followUp2            String?
+  followUp3            String?
+  followUp4            String?
+  subcategory          String?
+  subSubcategory       String?
+  manufacture          String?
+  annualRevenue        String?
+  phoneUpdated         String?
+  profileUniqueId      String?
+  liMessages           String?
+  companyLocation      String?
+  thirdScene           String?
+  subjectF1            String?
+  subjectF2            String?
+  subjectF3            String?
+  thirdSceneSubject    String?
+  industryTier         String?
+  titleTier            String?
+  finalIcpTier         String?
+  industryAr           String?
+  fieldAr              String?
+  profile              String?
+  b2bStatus            String?
+  industry22           String?
+  b2bSummary           String?
+
+  // App Specific
+  icpStatus            String?
+  fitScore             Int?
+  stage                String?
+  tags                 String[]
+  
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
+
+  opportunities        Opportunity[]
+}
+
+model Business {
+  id          String   @id @default(uuid())
+  name        String
+  phone       String?
+  email       String?
+  website     String?
+  address     String?
+  state       String?
+  city        String?
+  description String?
+  postalcode  String?
+  country     String?
+  
+  opportunities Opportunity[]
+}
+
+model Opportunity {
+  id                  String   @id @default(uuid())
+  name                String
+  pipelineId          String
+  pipelineStageId     String
+  status              String
+  monetaryValue       Float?
+  assignedTo          String?
+  source              String?
+  lostReason          String?
+  callRecordUrl       String?
+  feedback            String?
+  
+  contactId           String?
+  contact             Contact? @relation(fields: [contactId], references: [id])
+  businessId          String?
+  business            Business? @relation(fields: [businessId], references: [id])
+  
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
