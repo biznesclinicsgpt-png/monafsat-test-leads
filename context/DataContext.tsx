@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { Contact, ProviderICP, AppUser, BuyerProfile, ProviderProfile, IntegrationProvider } from '../types';
 import { calculateFitScore } from '../services/scoringService';
 import { discoverEmail } from '../services/contactDiscoveryService';
+import { generateCampaignScripts } from '../services/scriptingService';
 
 interface DataContextType {
   contacts: Contact[];
@@ -15,6 +16,7 @@ interface DataContextType {
   enrichLead: (contact: Partial<Contact>) => Promise<Partial<Contact>>;
   scoreContacts: () => void;
   discoverLeadEmail: (contact: Contact) => Promise<void>;
+  generateLeadScripts: (contact: Contact) => Promise<void>;
 
   providerICP: ProviderICP;
   updateProviderICP: (icp: ProviderICP) => void;
@@ -189,6 +191,22 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const generateLeadScripts = async (contact: Contact) => {
+    try {
+      const scripts = await generateCampaignScripts(contact, user?.name || 'Account Manager');
+      await updateContact(contact.id, {
+        welcome_message: scripts.welcome_message,
+        follow_up_1: scripts.follow_up_1,
+        follow_up_2: scripts.follow_up_2,
+        follow_up_3: scripts.follow_up_3,
+        follow_up_4: scripts.follow_up_4,
+      });
+    } catch (e) {
+      console.error("Failed to generate scripts", e);
+      throw e;
+    }
+  };
+
   // Profile API Actions
   const fetchProfile = async (userId: string) => {
     try {
@@ -236,6 +254,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       enrichLead,
       scoreContacts,
       discoverLeadEmail,
+      generateLeadScripts,
       providerICP,
       updateProviderICP,
       user,

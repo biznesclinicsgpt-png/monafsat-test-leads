@@ -10,7 +10,7 @@ interface LeadModalProps {
 }
 
 const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave }) => {
-    const { enrichLead } = useData();
+    const { enrichLead, generateLeadScripts } = useData();
     const [enriching, setEnriching] = useState(false);
     const [formData, setFormData] = useState<Partial<Contact>>({
         name: '',
@@ -39,7 +39,16 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
         size_2: '',
         employee_count: '',
         annual_revenue: '',
+        welcome_message: '',
+        follow_up_1: '',
+        follow_up_2: '',
+        follow_up_3: '',
+        follow_up_4: '',
     });
+
+    // UI State for Tabs
+    const [activeTab, setActiveTab] = useState<'details' | 'scripts'>('details');
+    const [generatingScripts, setGeneratingScripts] = useState(false);
 
     useEffect(() => {
         if (contact && (mode === 'edit' || mode === 'view')) {
@@ -88,6 +97,18 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
         }
     };
 
+    const handleGenerateScripts = async () => {
+        setGeneratingScripts(true);
+        try {
+            await generateLeadScripts(formData as Contact);
+            alert('تم إنشاء الرسائل بنجاح! يرجى تحديث الصفحة لرؤية النتائج إذا لم تظهر.');
+        } catch (error) {
+            alert('فشل إنشاء الرسائل. تأكد من إعداد OpenAI API Key.');
+        } finally {
+            setGeneratingScripts(false);
+        }
+    };
+
     const isViewMode = mode === 'view';
 
     return (
@@ -126,97 +147,164 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                 {/* Body */}
                 <div className="p-8 overflow-y-auto">
                     <form id="leadForm" onSubmit={handleSubmit} className="space-y-8 text-right">
-                        {/* Section 1: Core Contact */}
-                        <section className="space-y-4">
-                            <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات التواصل الأساسية</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل</label>
-                                    <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
-                                    <input type="email" name="email" value={formData.email} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required dir="ltr" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">الهاتف</label>
-                                    <input type="text" name="phone" value={formData.phone} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
-                                </div>
-                            </div>
-                        </section>
 
-                        {/* Section 2: Professional Info */}
-                        <section className="space-y-4">
-                            <h3 className="text-lg font-bold text-blue-600 border-b pb-2">المعلومات المهنية</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">الشركة (اسم العمل)</label>
-                                    <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">المنصب</label>
-                                    <input type="text" name="title" value={formData.title} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn</label>
-                                    <input type="text" name="linkedin_url" value={formData.linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
-                                </div>
-                            </div>
-                        </section>
+                        {/* Tab Navigation */}
+                        <div className="flex items-center gap-4 border-b border-slate-200 mb-6">
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('details')}
+                                className={`pb-2 px-4 font-bold text-sm transition-colors relative ${activeTab === 'details' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                            >
+                                تفاصيل العميل
+                                {activeTab === 'details' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></span>}
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setActiveTab('scripts')}
+                                className={`pb-2 px-4 font-bold text-sm transition-colors relative ${activeTab === 'scripts' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
+                            >
+                                حملات التواصل (Campaigns)
+                                {activeTab === 'scripts' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></span>}
+                            </button>
+                        </div>
 
-                        {/* Section 4: Company Details & Enrichment */}
-                        <section className="space-y-4">
-                            <h3 className="text-lg font-bold text-blue-600 border-b pb-2">تفاصيل الشركة (Enrichment)</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div className="md:col-span-2">
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">وصف الشركة</label>
-                                    <textarea name="company_description" value={formData.company_description} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" placeholder="وصف نشاط الشركة..." />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn للشركة</label>
-                                    <input type="text" name="company_linkedin_url" value={formData.company_linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">عدد الموظفين</label>
-                                    <input type="text" name="employee_count" value={formData.employee_count} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">الإيرادات السنوية</label>
-                                    <input type="text" name="annual_revenue" value={formData.annual_revenue} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">المصدر (Source)</label>
-                                    <input type="text" name="source" value={formData.source} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                </div>
-                            </div>
-                        </section>
+                        {activeTab === 'details' ? (
+                            <>
+                                {/* Section 1: Core Contact */}
+                                <section className="space-y-4">
+                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات التواصل الأساسية</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل</label>
+                                            <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
+                                            <input type="email" name="email" value={formData.email} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required dir="ltr" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">الهاتف</label>
+                                            <input type="text" name="phone" value={formData.phone} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
+                                        </div>
+                                    </div>
+                                </section>
 
-                        {/* Section 5: GHL Custom Fields (Arabic & Strategy) */}
-                        <section className="space-y-4">
-                            <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات خاصة (GHL)</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">ملخص باللغة العربية</label>
-                                    <textarea name="arabic_summary" value={formData.arabic_summary} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                {/* Section 2: Professional Info */}
+                                <section className="space-y-4">
+                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">المعلومات المهنية</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">الشركة (اسم العمل)</label>
+                                            <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">المنصب</label>
+                                            <input type="text" name="title" value={formData.title} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn</label>
+                                            <input type="text" name="linkedin_url" value={formData.linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* Section 4: Company Details & Enrichment */}
+                                <section className="space-y-4">
+                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">تفاصيل الشركة (Enrichment)</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">وصف الشركة</label>
+                                            <textarea name="company_description" value={formData.company_description} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" placeholder="وصف نشاط الشركة..." />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn للشركة</label>
+                                            <input type="text" name="company_linkedin_url" value={formData.company_linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">عدد الموظفين</label>
+                                            <input type="text" name="employee_count" value={formData.employee_count} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">الإيرادات السنوية</label>
+                                            <input type="text" name="annual_revenue" value={formData.annual_revenue} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">المصدر (Source)</label>
+                                            <input type="text" name="source" value={formData.source} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                    </div>
+                                </section>
+
+                                {/* Section 5: GHL Custom Fields (Arabic & Strategy) */}
+                                <section className="space-y-4">
+                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات خاصة (GHL)</h3>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">ملخص باللغة العربية</label>
+                                            <textarea name="arabic_summary" value={formData.arabic_summary} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">رسالة افتتاحية (Icebreaker)</label>
+                                            <textarea name="initial_icebreaker" value={formData.initial_icebreaker} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">المجال (بالعربي)</label>
+                                            <input type="text" name="industry_ar" value={formData.industry_ar} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">المرحلة في المسار</label>
+                                            <select name="stage" value={formData.stage} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500">
+                                                {Object.entries(PipelineStageLabels).map(([key, label]) => (
+                                                    <option key={key} value={key}>{label}</option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </section>
+                            </>
+                        ) : (
+                            <div className="space-y-6 animate-fadeIn">
+                                <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                    <div>
+                                        <h3 className="font-bold text-blue-900">منشئ الحملات الذكي (AI Campaign Builder)</h3>
+                                        <p className="text-sm text-blue-700 mt-1">قم بإنشاء سلسلة رسائل بريدية مخصصة بناءً على بيانات العميل وتفاصيل الشركة.</p>
+                                    </div>
+                                    <button
+                                        type="button"
+                                        onClick={handleGenerateScripts}
+                                        disabled={generatingScripts}
+                                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-blue-200 flex items-center gap-2 disabled:opacity-50 transition-all"
+                                    >
+                                        {generatingScripts ? 'جاري الكتابة...' : '✨ كتابة الحملة (AI)'}
+                                    </button>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">رسالة افتتاحية (Icebreaker)</label>
-                                    <textarea name="initial_icebreaker" value={formData.initial_icebreaker} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">المجال (بالعربي)</label>
-                                    <input type="text" name="industry_ar" value={formData.industry_ar} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">المرحلة في المسار</label>
-                                    <select name="stage" value={formData.stage} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500">
-                                        {Object.entries(PipelineStageLabels).map(([key, label]) => (
-                                            <option key={key} value={key}>{label}</option>
-                                        ))}
-                                    </select>
+
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-bold text-slate-700 mb-1">رسالة ترحيبية (Welcome Message)</label>
+                                        <textarea name="welcome_message" value={formData.welcome_message} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="سيتم إنشاء الرسالة هنا..." />
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 1 (Bump)</label>
+                                            <textarea name="follow_up_1" value={formData.follow_up_1} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 2 (Value/Case Study)</label>
+                                            <textarea name="follow_up_2" value={formData.follow_up_2} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 3 (Booking)</label>
+                                            <textarea name="follow_up_3" value={formData.follow_up_3} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 4 (Breakup)</label>
+                                            <textarea name="follow_up_4" value={formData.follow_up_4} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </section>
+                        )}
                     </form>
                 </div>
 
