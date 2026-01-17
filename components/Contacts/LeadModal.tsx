@@ -115,30 +115,34 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                             </div>
                         </section>
 
-                        {/* Section 3: Location & Online */}
+                        {/* Section 4: Company Details & Enrichment */}
                         <section className="space-y-4">
-                            <h3 className="text-lg font-bold text-blue-600 border-b pb-2">الموقع والويب</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">العنوان</label>
-                                    <input type="text" name="address1" value={formData.address1} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                            <h3 className="text-lg font-bold text-blue-600 border-b pb-2">تفاصيل الشركة (Enrichment)</h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="md:col-span-2">
+                                    <label className="block text-sm font-bold text-slate-700 mb-1">وصف الشركة</label>
+                                    <textarea name="company_description" value={formData.company_description} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" placeholder="وصف نشاط الشركة..." />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">المدينة</label>
-                                    <input type="text" name="city" value={formData.city} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                    <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn للشركة</label>
+                                    <input type="text" name="company_linkedin_url" value={formData.company_linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">الدولة</label>
-                                    <input type="text" name="country" value={formData.country} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                    <label className="block text-sm font-bold text-slate-700 mb-1">عدد الموظفين</label>
+                                    <input type="text" name="employee_count" value={formData.employee_count} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">الموقع الإلكتروني</label>
-                                    <input type="text" name="website" value={formData.website} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
+                                    <label className="block text-sm font-bold text-slate-700 mb-1">الإيرادات السنوية</label>
+                                    <input type="text" name="annual_revenue" value={formData.annual_revenue} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-slate-700 mb-1">المصدر (Source)</label>
+                                    <input type="text" name="source" value={formData.source} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
                                 </div>
                             </div>
                         </section>
 
-                        {/* Section 4: GHL Custom Fields (Arabic & Strategy) */}
+                        {/* Section 5: GHL Custom Fields (Arabic & Strategy) */}
                         <section className="space-y-4">
                             <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات خاصة (GHL)</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
