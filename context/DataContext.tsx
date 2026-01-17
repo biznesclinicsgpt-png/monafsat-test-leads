@@ -27,6 +27,7 @@ interface DataContextType {
   providerProfile: ProviderProfile | null;
   fetchProfile: (userId: string) => Promise<void>;
   updateUserProfile: (profile: Partial<AppUser>) => Promise<void>;
+  updateProviderProfile: (profile: Partial<ProviderProfile>) => Promise<void>;
 
   integrations: IntegrationProvider[];
   updateIntegrations: (integrations: IntegrationProvider[]) => void;
@@ -222,6 +223,23 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const updateProviderProfile = async (profile: Partial<ProviderProfile>) => {
+    if (!user?.id) return;
+    try {
+      const response = await fetch('/api/profiles/provider', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.id, ...profile }),
+      });
+      if (!response.ok) throw new Error('Failed to update profile');
+      const updated = await response.json();
+      setProviderProfile(updated);
+    } catch (e) {
+      console.error("Failed to update provider profile", e);
+      throw e;
+    }
+  };
+
   const updateProviderICP = (icp: ProviderICP) => {
     setProviderICP(icp);
     localStorage.setItem('manafeth_icp', JSON.stringify(icp));
@@ -262,6 +280,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
       providerProfile,
       fetchProfile,
       updateUserProfile,
+      updateProviderProfile,
       integrations,
       updateIntegrations
     }}>
