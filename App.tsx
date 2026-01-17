@@ -14,6 +14,7 @@ import { PlaceholderPage } from './components/PlaceholderPage';
 // Placeholder Pages for Phase 3 implementation
 import FinancialPage from './pages/FinancialPage';
 import ReviewsPage from './pages/ReviewsPage';
+import ProviderIntegrationsPage from './pages/ProviderIntegrationsPage';
 // import { PlaceholderPage } from './components/PlaceholderPage'; // Unused
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="messages" element={<MessagesPage />} />
             <Route path="financial" element={<FinancialPage />} />
             <Route path="reviews" element={<ReviewsPage />} />
+            <Route path="integrations" element={<ProviderIntegrationsPage />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -45,6 +45,8 @@ const MainLayout = () => {
                         <SidebarItem to="/messages" label="صندوق المحادثات" icon={Icons.Messages} />
                         <SidebarItem to="/financial" label="الحسابات والمالية" icon={Icons.Financial} />
                         <SidebarItem to="/reviews" label="تقييمات العملاء" icon={Icons.Reviews} />
+                        <hr className="border-slate-100 my-2" />
+                        <SidebarItem to="/integrations" label="التكاملات" icon={Icons.Settings} badge="جديد" />
                     </nav>
                 </div>
             </aside>

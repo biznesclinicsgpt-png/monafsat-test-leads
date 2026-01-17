@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useData } from '../../context/DataContext';
 import { Contact, LeadSource, PipelineStage, PipelineStageLabels } from '../../types';
 
 interface LeadModalProps {
@@ -9,6 +10,8 @@ interface LeadModalProps {
 }
 
 const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave }) => {
+    const { enrichLead } = useData();
+    const [enriching, setEnriching] = useState(false);
     const [formData, setFormData] = useState<Partial<Contact>>({
         name: '',
         first_name: '',
@@ -59,6 +62,32 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
         onSave(formData as Contact);
     };
 
+    const handleEnrich = async () => {
+        if (!formData.company_name) {
+            alert('الرجاء إدخال اسم الشركة أولاً');
+            return;
+        }
+        setEnriching(true);
+        try {
+            const enriched = await enrichLead(formData);
+            setFormData(prev => ({
+                ...prev,
+                ...enriched,
+                // Preserve existing values if enriched returns empty for them
+                company_description: enriched.company_description || prev.company_description,
+                employee_count: enriched.employee_count || prev.employee_count,
+                annual_revenue: enriched.annual_revenue || prev.annual_revenue,
+                industry_ar: enriched.industry_ar || prev.industry_ar,
+                company_linkedin_url: enriched.company_linkedin_url || prev.company_linkedin_url,
+                source: 'AI_Enriched'
+            }));
+        } catch (error) {
+            alert('فشل التحسين باستخدام AI. تأكد من صحة البيانات.');
+        } finally {
+            setEnriching(false);
+        }
+    };
+
     const isViewMode = mode === 'view';
 
     return (
@@ -69,9 +98,29 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                     <h2 className="text-xl font-bold">
                         {mode === 'add' ? 'إضافة عميل محتمل جديد' : mode === 'edit' ? 'تعديل بيانات العميل' : 'تفاصيل العميل'}
                     </h2>
-                    <button onClick={onClose} className="p-2 hover:bg-blue-700 rounded-lg">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
+                    <div className="flex items-center gap-2">
+                        {!isViewMode && (
+                            <button
+                                onClick={handleEnrich}
+                                disabled={enriching}
+                                className="bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2 transition-all disabled:opacity-50"
+                            >
+                                {enriching ? (
+                                    <>
+                                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/50 border-t-white"></div>
+                                        جاري البحث...
+                                    </>
+                                ) : (
+                                    <>
+                                        ✨ تحسين (AI)
+                                    </>
+                                )}
+                            </button>
+                        )}
+                        <button onClick={onClose} className="p-2 hover:bg-blue-700 rounded-lg">
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
                 </div>
 
                 {/* Body */}

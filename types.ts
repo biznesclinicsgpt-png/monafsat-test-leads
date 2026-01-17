@@ -19,6 +19,22 @@ export enum PipelineStage {
   OPPORTUNITY = 'Opportunity'
 }
 
+export interface IntegrationProvider {
+  id: string;
+  name: string;
+  icon: string; // URL or name
+  apiKey: string;
+  enabled: boolean;
+  priority: number;
+  costPerMatch?: number;
+}
+
+export interface DiscoveryResult {
+  email?: string;
+  status: 'found' | 'not_found' | 'error';
+  providerUsed?: string;
+}
+
 export const PipelineStageLabels: Record<PipelineStage, string> = {
   [PipelineStage.NEW]: 'جديد',
   [PipelineStage.ICP_VERIFIED]: 'تم التحقق (ICP)',

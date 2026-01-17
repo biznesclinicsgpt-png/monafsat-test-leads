@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { useData } from '../../context/DataContext';
 import { Contact, LeadSource, PipelineStageLabels } from '../../types';
 
 interface ContactsTableProps {
@@ -9,6 +10,8 @@ interface ContactsTableProps {
 }
 
 const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, onView, onEdit }) => {
+  const { scoreContacts, providerICP, discoverLeadEmail } = useData();
+
   return (
     <div className="flex flex-col h-full bg-white rounded-xl border border-slate-200" dir="rtl">
       {/* Filters Toolbar */}
@@ -20,8 +23,12 @@ const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, onView, onEdit 
 
         <div className="flex items-center gap-2 border-l border-slate-200 pl-3 ml-1">
           <label className="text-xs font-bold text-slate-500">ملاءمة ICP:</label>
-          <button className="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100 hover:bg-indigo-100 transition-colors">
-            المتحقق منهم فقط
+          <button
+            onClick={scoreContacts}
+            className="px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100 hover:bg-indigo-100 transition-colors flex items-center gap-2"
+          >
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+            تحديث النتائج
           </button>
         </div>
 
@@ -40,6 +47,7 @@ const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, onView, onEdit 
             <tr className="text-slate-500 text-[10px] font-black uppercase tracking-wider border-b border-slate-100">
               <th className="px-6 py-4">الاسم / الشركة</th>
               <th className="px-6 py-4">المجال (GHL)</th>
+              <th className="px-6 py-4 text-center">Fit Score</th>
               <th className="px-6 py-4 text-center">بيانات التواصل</th>
               <th className="px-6 py-4">المرحلة</th>
               <th className="px-6 py-4 text-left">إجراءات</th>
@@ -66,12 +74,32 @@ const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, onView, onEdit 
                     {contact.industry_ar || 'غير محدد'}
                   </span>
                 </td>
+                <td className="px-6 py-4 text-center">
+                  {contact.fitScore !== undefined ? (
+                    <div className={`inline-flex items-center px-2 py-1 rounded-lg border text-xs font-black ${contact.fitScore >= 70 ? 'bg-emerald-50 text-emerald-600 border-emerald-100' :
+                      contact.fitScore >= 40 ? 'bg-yellow-50 text-yellow-600 border-yellow-100' :
+                        'bg-slate-50 text-slate-400 border-slate-100'
+                      }`}>
+                      {contact.fitScore}%
+                    </div>
+                  ) : (
+                    <span className="text-slate-300 text-[10px]">-</span>
+                  )}
+                </td>
                 <td className="px-6 py-4">
                   <div className="flex items-center justify-center gap-2">
-                    {contact.email && (
+                    {contact.email ? (
                       <div className="w-7 h-7 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100" title={contact.email}>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                       </div>
+                    ) : (
+                      <button
+                        onClick={() => discoverLeadEmail(contact)}
+                        className="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-400 p-1.5 rounded-full transition-all"
+                        title="Find Email (Waterfall)"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                      </button>
                     )}
                     {contact.phone && (
                       <div className="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100" title={contact.phone}>
