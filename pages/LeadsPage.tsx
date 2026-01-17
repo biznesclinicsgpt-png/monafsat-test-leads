@@ -5,20 +5,21 @@ import ContactsTable from '../components/Contacts/ContactsTable';
 import LeadModal from '../components/Contacts/LeadModal';
 
 const LeadsPage = () => {
-    const { contacts, addContact, updateContact } = useData();
+    const { contacts, loading, addContact, updateContact } = useData();
     const [selectedContact, setSelectedContact] = useState<Contact | undefined>(undefined);
     const [modalMode, setModalMode] = useState<'add' | 'edit' | 'view'>('view');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [saving, setSaving] = useState(false);
 
-    // Filter contacts that are considered "Leads" (before conversation)
-    const leads = contacts.filter(contact =>
+    // Filter contacts that are considered "Leads"
+    const leads = contacts?.filter(contact =>
         [
             PipelineStage.NEW,
             PipelineStage.ICP_VERIFIED,
             PipelineStage.HIGH_FIT,
             PipelineStage.READY_TO_OUTREACH
         ].includes(contact.stage)
-    );
+    ) || [];
 
     const handleAdd = () => {
         setSelectedContact(undefined);
@@ -38,14 +39,30 @@ const LeadsPage = () => {
         setIsModalOpen(true);
     };
 
-    const handleSave = (contact: Contact) => {
-        if (modalMode === 'add') {
-            addContact(contact);
-        } else {
-            updateContact(contact.id, contact);
+    const handleSave = async (contact: Contact) => {
+        setSaving(true);
+        try {
+            if (modalMode === 'add') {
+                await addContact(contact);
+            } else {
+                await updateContact(contact.id, contact);
+            }
+            setIsModalOpen(false);
+        } catch (error) {
+            console.error('Error saving contact:', error);
+            alert('حدث خطأ أثناء حفظ البيانات. يرجى المحاولة مرة أخرى.');
+        } finally {
+            setSaving(false);
         }
-        setIsModalOpen(false);
     };
+
+    if (loading && contacts.length === 0) {
+        return (
+            <div className="flex items-center justify-center p-24">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-6" dir="rtl">
@@ -68,7 +85,7 @@ const LeadsPage = () => {
                 </div>
             </div>
 
-            <div className="bg-white rounded-xl border border-slate-200 shadow-sm">
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 {leads.length > 0 ? (
                     <ContactsTable
                         contacts={leads}
@@ -76,9 +93,10 @@ const LeadsPage = () => {
                         onEdit={handleEdit}
                     />
                 ) : (
-                    <div className="p-12 text-center text-slate-400">
-                        <div className="text-4xl mb-4">📭</div>
-                        <div>لا يوجد عملاء محتملين في الوقت الحالي</div>
+                    <div className="p-24 text-center text-slate-400">
+                        <div className="text-6xl mb-6 grayscale opacity-50">📭</div>
+                        <div className="text-xl font-bold text-slate-600">لا يوجد عملاء محتملين في الوقت الحالي</div>
+                        <p className="mt-2 text-slate-400">ابدأ بإضافة عملاء جدد باستخدام الزر أعلاه.</p>
                     </div>
                 )}
             </div>
@@ -90,6 +108,15 @@ const LeadsPage = () => {
                     onClose={() => setIsModalOpen(false)}
                     onSave={handleSave}
                 />
+            )}
+
+            {saving && (
+                <div className="fixed inset-0 bg-slate-900/10 backdrop-blur-[1px] z-[60] flex items-center justify-center">
+                    <div className="bg-white p-4 rounded-xl shadow-xl flex items-center gap-3 font-bold text-slate-700">
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                        جاري الحفظ...
+                    </div>
+                </div>
             )}
         </div>
     );

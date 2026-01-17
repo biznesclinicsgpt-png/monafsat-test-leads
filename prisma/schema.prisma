@@ -254,79 +254,79 @@ model Notification {
 
 model Contact {
   id                    String   @id @default(uuid())
-  firstName            String?
-  lastName             String?
+  first_name            String?
+  last_name             String?
   name                 String
   email                String   @unique
   phone                String?
   title                String?
-  companyName          String
+  company_name          String
   
   address1             String?
   city                 String?
   state                String?
   country              String?
-  postalCode           String?
+  postal_code           String?
   timezone             String?
   website              String?
 
   // GHL Custom Fields
-  initialIcebreaker     String?
-  industry2            String?
-  function2            String?
-  companyOfficialName  String?
-  titleDescription     String?
-  linkedinUrl          String?
-  prospectAbout        String?
-  companyDescription   String?
-  phone2               String?
-  size2                String?
+  initial_icebreaker     String?
+  industry_2            String?
+  function_2            String?
+  company_official_name  String?
+  title_description     String?
+  linkedin_url          String?
+  prospect_about        String?
+  company_description   String?
+  phone_2               String?
+  size_2                String?
   source               String
-  recordId             String?
+  record_id             String?
   about                String?
-  companyLinkedinUrl   String?
-  linkedinCompanyUrl   String?
-  openProfile          String?
+  company_linkedin_url   String?
+  linkedin_company_url   String?
+  open_profile          String?
   premium              String?
-  linkedinSalesNavigator String?
-  dateOfBirth          String?
-  employeeCount        String?
-  companyCountry       String?
-  arabicSummary        String?
-  callRecordings       String?
-  lowercaseBusinessName String?
+  linkedin_sales_navigator String?
+  date_of_birth          String?
+  employee_count        String?
+  company_country       String?
+  arabic_summary        String?
+  call_recordings       String?
+  lowercase_business_name String?
   type                 String?
-  welcomeMessage       String?
-  followUp1            String?
-  followUp2            String?
-  followUp3            String?
-  followUp4            String?
+  welcome_message       String?
+  follow_up_1            String?
+  follow_up_2            String?
+  follow_up_3            String?
+  follow_up_4            String?
   subcategory          String?
-  subSubcategory       String?
+  sub_subcategory       String?
   manufacture          String?
-  annualRevenue        String?
-  phoneUpdated         String?
-  profileUniqueId      String?
-  liMessages           String?
-  companyLocation      String?
-  thirdScene           String?
-  subjectF1            String?
-  subjectF2            String?
-  subjectF3            String?
-  thirdSceneSubject    String?
-  industryTier         String?
-  titleTier            String?
-  finalIcpTier         String?
-  industryAr           String?
-  fieldAr              String?
+  annual_revenue        String?
+  phone_updated         String?
+  profile_unique_id      String?
+  li_messages           String?
+  company_location      String?
+  third_scene           String?
+  subject_f1            String?
+  subject_f2            String?
+  subject_f3            String?
+  third_scene_subject    String?
+  industry_tier         String?
+  title_tier            String?
+  final_icp_tier         String?
+  industry_ar           String?
+  field_ar              String?
   profile              String?
-  b2bStatus            String?
-  industry22           String?
-  b2bSummary           String?
+  b2b_status            String?
+  industry_22           String?
+  b2b_summary           String?
 
   // App Specific
-  icpStatus            String?
-  fitScore             Int?
+  icp_status            String?
+  fit_score             Int?
   stage                String?
   tags                 String[]
   
@@ -346,7 +346,7 @@ model Business {
   state       String?
   city        String?
   description String?
-  postalcode  String?
+  postal_code  String?
   country     String?
   
   opportunities Opportunity[]
@@ -355,21 +355,21 @@ model Business {
 model Opportunity {
   id                  String   @id @default(uuid())
   name                String
-  pipelineId          String
-  pipelineStageId     String
+  pipeline_id          String
+  pipeline_stage_id     String
   status              String
-  monetaryValue       Float?
-  assignedTo          String?
+  monetary_value       Float?
+  assigned_to          String?
   source              String?
-  lostReason          String?
-  callRecordUrl       String?
+  lost_reason          String?
+  call_record_url       String?
   feedback            String?
   
-  contactId           String?
-  contact             Contact? @relation(fields: [contactId], references: [id])
-  businessId          String?
-  business            Business? @relation(fields: [businessId], references: [id])
+  contact_id           String?
+  contact             Contact? @relation(fields: [contact_id], references: [id])
+  business_id          String?
+  business            Business? @relation(fields: [business_id], references: [id])
   
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  created_at           DateTime @default(now())
+  updated_at           DateTime @updatedAt
 }

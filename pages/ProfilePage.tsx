@@ -3,20 +3,20 @@ import { useData } from '../context/DataContext';
 import ICPStrategyModal from '../components/Dashboard/ICPStrategyModal';
 
 const ProfilePage = () => {
-    const { userProfile, updateUserProfile, providerICP } = useData();
+    const { user, updateUserProfile, providerICP } = useData();
     const [showICPModal, setShowICPModal] = useState(false);
 
     const [formData, setFormData] = useState({
-        name: userProfile.name,
-        company: userProfile.company
+        name: user?.name || '',
+        company: user?.providerProfile?.company_name || user?.buyerProfile?.company_name || ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSave = () => {
-        updateUserProfile(formData);
+    const handleSave = async () => {
+        await updateUserProfile(formData);
         alert('تم حفظ البيانات بنجاح');
     };
 
@@ -32,7 +32,7 @@ const ProfilePage = () => {
 
                         <div className="space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-1">اسم المسؤول</label>
+                                <label className="block text-sm font-medium text-slate-700 mb-1">الاسم</label>
                                 <input
                                     type="text"
                                     name="name"
@@ -71,9 +71,9 @@ const ProfilePage = () => {
                         <h2 className="text-lg font-bold text-slate-800 mb-4">استراتيجية العميل المثالي (ICP)</h2>
 
                         <div className="flex items-center gap-2 mb-4">
-                            <div className={`w-3 h-3 rounded-full ${providerICP.isSet ? 'bg-green-500' : 'bg-red-500'}`}></div>
+                            <div className={`w-3 h-3 rounded-full ${providerICP?.isSet ? 'bg-green-500' : 'bg-red-500'}`}></div>
                             <span className="text-sm font-bold text-slate-600">
-                                {providerICP.isSet ? 'الاستراتيجية نشطة' : 'لم يتم تحديد الاستراتيجية'}
+                                {providerICP?.isSet ? 'الاستراتيجية نشطة' : 'لم يتم تحديد الاستراتيجية'}
                             </span>
                         </div>
 
@@ -86,7 +86,7 @@ const ProfilePage = () => {
                             className="w-full py-2.5 bg-indigo-50 text-indigo-700 font-bold rounded-lg border border-indigo-100 hover:bg-indigo-100 transition-colors flex items-center justify-center gap-2"
                         >
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            {providerICP.isSet ? 'تحديث الاستراتيجية' : 'إعداد الاستراتيجية'}
+                            {providerICP?.isSet ? 'تحديث الاستراتيجية' : 'إعداد الاستراتيجية'}
                         </button>
                     </div>
                 </div>

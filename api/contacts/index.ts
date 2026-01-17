@@ -29,7 +29,7 @@ export default async function handler(
                     OR: [
                         { name: { contains: search as string, mode: 'insensitive' } },
                         { email: { contains: search as string, mode: 'insensitive' } },
-                        { companyName: { contains: search as string, mode: 'insensitive' } },
+                        { company_name: { contains: search as string, mode: 'insensitive' } },
                     ]
                 } : {},
                 orderBy: { created_at: 'desc' },
