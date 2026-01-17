@@ -1,11 +1,10 @@
-
 import OpenAI from 'openai';
 import { Contact, ProviderProfile } from '../types';
 
-// Initialize OpenAI (Shared instance if possible, or new one)
+// Initialize OpenAI
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY || '',
-    dangerouslyAllowBrowser: true // Client-side usage for demo
+    dangerouslyAllowBrowser: true
 });
 
 interface CampaignScripts {
@@ -19,13 +18,24 @@ interface CampaignScripts {
 export const generateCampaignScripts = async (
     contact: Contact,
     senderName: string = 'Account Manager',
-    senderCompany: string = 'Manafeth'
+    senderCompany: string = 'Manafeth',
+    profile?: ProviderProfile | null
 ): Promise<CampaignScripts> => {
     try {
+        const strategyContext = profile ? `
+        PROVIDER STRATEGY:
+        Value Proposition: ${profile.value_proposition || 'We help companies grow.'}
+        Target Audience: ${profile.target_audience || 'B2B Companies'}
+        Unique Selling Points: ${profile.unique_selling_points?.join(', ') || 'Quality, Speed, Reliability'}
+        Case Studies: ${profile.clients?.map(c => `Client: ${c.company_name} -> Result: ${c.results}`).join('; ') || 'N/A'}
+        ` : '';
+
         const prompt = `
       You are an expert B2B Sales Copywriter.
       Write a 5-step email sequence for the following lead.
       
+      ${strategyContext}
+
       LEAD CONTEXT:
       Name: ${contact.first_name || contact.name}
       Company: ${contact.company_name}

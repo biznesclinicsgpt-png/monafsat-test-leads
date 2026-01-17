@@ -61,6 +61,11 @@ model ProviderProfile {
   taglineEn             String?
   description           String?
   descriptionEn         String?
+  
+  valueProposition      String?
+  uniqueSellingPoints   String[]
+  targetAudience        String?
+  
   logoUrl               String?
   coverUrl              String?
   crNumber              String?
@@ -115,6 +120,11 @@ model ClientReference {
   projectType         String?
   year                Int?
   testimonial         String?
+  
+  challenge           String?
+  solution            String?
+  results             String?
+  
   isPublic            Boolean         @default(false)
   
   serviceCategoryId   Int?

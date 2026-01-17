@@ -277,6 +277,12 @@ export interface ClientReference {
   project_type?: string;
   year?: number;
   testimonial?: string;
+
+  // Case Study Fields (Intelligence)
+  challenge?: string;
+  solution?: string;
+  results?: string;
+
   is_public: boolean;
   // Taxonomy IDs (INTEGER FK to taxonomy tables)
   service_category_id?: number;   // → service_categories.id (Level 2)
@@ -304,6 +310,12 @@ export interface ProviderProfile {
   tagline_en?: string;
   description?: string;
   description_en?: string;
+
+  // Intelligence Fields
+  value_proposition?: string;       // Core logic for Welcome Email
+  unique_selling_points?: string[]; // Handling objections
+  target_audience?: string;         // Defining the "Who"
+
   logo_url?: string;
   cover_url?: string;
 

@@ -159,7 +159,7 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const scoreContacts = async () => {
     const updatedContacts = contacts.map(c => {
-      const { score, status } = calculateFitScore(c, providerICP);
+      const { score, status } = calculateFitScore(c, providerICP, providerProfile);
       return { ...c, fitScore: score, icpStatus: status };
     });
 
@@ -194,7 +194,12 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
 
   const generateLeadScripts = async (contact: Contact) => {
     try {
-      const scripts = await generateCampaignScripts(contact, user?.name || 'Account Manager');
+      const scripts = await generateCampaignScripts(
+        contact,
+        user?.name || 'Account Manager',
+        providerProfile?.company_name || 'Manafeth',
+        providerProfile
+      );
       await updateContact(contact.id, {
         welcome_message: scripts.welcome_message,
         follow_up_1: scripts.follow_up_1,

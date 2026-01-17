@@ -1,12 +1,30 @@
+import { Contact, ProviderICP, PipelineStage, ProviderProfile } from '../types';
 
-import { Contact, ProviderICP, PipelineStage } from '../types';
+export const calculateFitScore = (
+    contact: Contact,
+    icp: ProviderICP,
+    profile?: ProviderProfile | null
+): { score: number; status: 'verified' | 'failed' | 'pending' } => {
 
-export const calculateFitScore = (contact: Contact, icp: ProviderICP): { score: number; status: 'verified' | 'failed' | 'pending' } => {
-    if (!icp.isSet) {
+    // 0. Priority: Profile Strategy
+    let profileScore = 0;
+    if (profile) {
+        const targetText = [
+            profile.target_audience,
+            profile.value_proposition,
+            ...(profile.industries?.map(i => typeof i === 'string' ? i : '') || []) // Handle Json[] roughly for now
+        ].join(' ').toLowerCase();
+
+        // Bonus for Strategy Match
+        if (targetText.length > 5 && contact.title && targetText.includes(contact.title.toLowerCase())) profileScore += 15;
+        if (targetText.length > 5 && contact.industry_ar && targetText.includes(contact.industry_ar.toLowerCase())) profileScore += 15;
+    }
+
+    if (!icp.isSet && profileScore === 0) {
         return { score: 0, status: 'pending' };
     }
 
-    let score = 0;
+    let score = profileScore;
     const maxScore = 100;
 
     // 1. Industry Match (40 points)
