@@ -58,10 +58,10 @@ export const FunnelChart = ({ kpis, leads, won }: { kpis: any, leads: number, wo
 
     // Fallback if KPIs are 0
     const data = [
-        { value: leads, name: 'Leads', fill: '#94a3b8' },
-        { value: meetings, name: 'Meetings', fill: '#38bdf8' },
-        { value: proposals, name: 'Proposals', fill: '#f59e0b' },
-        { value: won, name: 'Closed Won', fill: '#10b981' }
+        { value: leads, name: 'عملاء محتملين', fill: '#94a3b8' },
+        { value: meetings, name: 'اجتماعات', fill: '#38bdf8' },
+        { value: proposals, name: 'عروض أسعار', fill: '#f59e0b' },
+        { value: won, name: 'إغلاق (Won)', fill: '#10b981' }
     ];
 
     return (

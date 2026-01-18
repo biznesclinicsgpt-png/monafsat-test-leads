@@ -1,14 +1,14 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate, AnimatePresence } from 'framer-motion';
 import {
     Menu, ScanLine, ArrowLeft, CheckCircle2, AlertTriangle, Phone, Mail,
     MessageSquare, Linkedin, Search, BrainCircuit, FileSearch, FileText,
     BarChart3, Zap, Quote, X, Loader2, Sparkles, CheckCircle, AlertCircle,
     Database, Activity, ZapOff, PhoneCall, GitMerge, Cpu, Network, FileCheck,
-    Plus, Minus, ArrowDown, MessageCircle
+    Plus, Minus, ArrowDown, MessageCircle, MousePointer2
 } from 'lucide-react';
-// import { GoogleGenAI } from '@google/genai'; // Keeping this commented out to avoid build errors if package missing, using mock for now.
 
 const CTA_LINK = "/app/profile?wizard=true";
 
@@ -20,15 +20,27 @@ interface AnalysisResult {
     recommendations: string[];
 }
 
+// --- ANIMATION VARIANTS ---
+import { type Variants } from 'framer-motion';
+
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: { staggerChildren: 0.1, delayChildren: 0.2 }
+    }
+};
+
+const itemVariants: Variants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { type: "spring", stiffness: 100 } }
+};
+
+
 // --- MOCK AI SERVICE ---
-// In a real implementation, you would call your backend endpoint /api/ai/strategy
 const analyzeTeamHealth = async (input: string): Promise<AnalysisResult> => {
-    // Simulate API delay
     await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Simple mock logic based on input length to vary response slightly
     const randomScore = Math.floor(Math.random() * (85 - 40 + 1)) + 40;
-
     return {
         summary: "بناءً على المعطيات الأولية، يبدو أن هناك فرصاً كبيرة غير مستغلة في قنوات التواصل الحالية. هناك فجوة في المتابعة (Follow-up Cadence) تسبب تسرب العملاء المحتملين.",
         score: randomScore,
@@ -45,165 +57,258 @@ const analyzeTeamHealth = async (input: string): Promise<AnalysisResult> => {
 const Navbar = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
     const [scrolled, setScrolled] = useState(false);
     const navigate = useNavigate();
+    const { scrollY } = useScroll();
 
     useEffect(() => {
-        const handleScroll = () => setScrolled(window.scrollY > 20);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+        const unsubscribe = scrollY.on("change", (latest) => setScrolled(latest > 20));
+        return () => unsubscribe();
+    }, [scrollY]);
 
     return (
-        <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'}`}>
+        <motion.nav
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 0.5 }}
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 w-full ${scrolled ? 'bg-white/80 backdrop-blur-xl shadow-lg border-b border-white/20 py-3' : 'bg-transparent py-5'}`}
+        >
             <div className="px-4 md:px-12 flex justify-between items-center max-w-7xl mx-auto w-full">
-                <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/')}>
-                    <div className="text-brand font-bold text-2xl flex items-center gap-2">
-                        <div className="bg-brand text-white p-1.5 rounded-lg">
-                            <ScanLine className="w-6 h-6" />
-                        </div>
-                        <span className="tracking-tight text-gray-900">Ninja<span className="text-brand">Scanner</span></span>
+                <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate('/')}>
+                    <motion.div
+                        whileHover={{ rotate: 180 }}
+                        className="bg-brand text-white p-1.5 rounded-xl shadow-lg shadow-brand/20"
+                    >
+                        <ScanLine className="w-6 h-6" />
+                    </motion.div>
+                    <div className="text-brand font-bold text-2xl flex items-center gap-1">
+                        <span className="tracking-tight text-slate-800">Ninja</span>
+                        <span className="text-brand relative">
+                            Scanner
+                            <motion.span
+                                className="absolute -bottom-1 left-0 w-full h-0.5 bg-brand rounded-full"
+                                initial={{ width: 0 }}
+                                whileInView={{ width: '100%' }}
+                                transition={{ delay: 1 }}
+                            />
+                        </span>
                     </div>
                 </div>
 
-                <div className="hidden md:flex items-center gap-8 font-medium text-gray-600 text-sm">
-                    <a href="#how-it-works" className="hover:text-brand transition-colors">كيف يعمل؟</a>
-                    <a href="#value-prop" className="hover:text-brand transition-colors">الميزات</a>
-                    <a href="#testimonials" className="hover:text-brand transition-colors">قصص النجاح</a>
-                    <a href="#faq" className="hover:text-brand transition-colors">الأسئلة الشائعة</a>
+                <div className="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">
+                    {['كيف يعمل؟', 'الميزات', 'قصص النجاح', 'الأسئلة الشائعة'].map((item, i) => (
+                        <a key={i} href={`#${item === 'كيف يعمل؟' ? 'how-it-works' : item === 'الميزات' ? 'value-prop' : item === 'قصص النجاح' ? 'testimonials' : 'faq'}`} className="hover:text-brand transition-colors relative group">
+                            {item}
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand transition-all group-hover:w-full rounded-full"></span>
+                        </a>
+                    ))}
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <button
+                    <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                         onClick={onStartDiagnosis}
-                        className="bg-brand hover:bg-brand-dark text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 shadow-lg hover:shadow-brand/25 transform hover:-translate-y-0.5"
+                        className="bg-brand hover:bg-brand-dark text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg shadow-brand/25 relative overflow-hidden group"
                     >
-                        ابدأ التشخيص الآن
-                    </button>
+                        <span className="relative z-10">ابدأ التشخيص الآن</span>
+                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full" />
+                    </motion.button>
                 </div>
             </div>
-        </nav>
+        </motion.nav>
     );
 };
 
 const Hero = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
+    const mouseX = useMotionValue(0);
+    const mouseY = useMotionValue(0);
+
+    function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
+        const { left, top, width, height } = currentTarget.getBoundingClientRect();
+        const xPoint = (clientX - left) / width;
+        const yPoint = (clientY - top) / height;
+        mouseX.set(xPoint);
+        mouseY.set(yPoint);
+    }
+
+    const rotateX = useTransform(mouseY, [0, 1], [10, -10]);
+    const rotateY = useTransform(mouseX, [0, 1], [-10, 10]);
+
     return (
-        <section className="relative pt-36 pb-20 px-4 overflow-hidden min-h-[90vh] flex items-center bg-gradient-to-b from-slate-50 to-white w-full">
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center z-10 relative w-full">
+        <section className="relative pt-32 pb-20 px-4 overflow-hidden min-h-[95vh] flex items-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-100 via-white to-slate-50 w-full" onMouseMove={handleMouseMove}>
 
-                <div className="text-right animate-fade-in-up">
-                    <h1 className="text-4xl lg:text-6xl font-black text-gray-900 leading-[1.4] lg:leading-[1.4] mb-8">
-                        كم فرصة تفقدها يوميًا لأن <br className="hidden lg:block" />
-                        <span className="text-brand inline-block mt-2">قنوات المبيعات</span> عندك غير مستغلة بالكامل؟
-                    </h1>
+            {/* Background Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                <motion.div
+                    animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.3, 0.5, 0.3],
+                    }}
+                    transition={{ duration: 8, repeat: Infinity }}
+                    className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] bg-brand/10 rounded-full blur-[100px]"
+                />
+                <motion.div
+                    animate={{
+                        x: [0, 50, 0],
+                        y: [0, 30, 0],
+                    }}
+                    transition={{ duration: 10, repeat: Infinity }}
+                    className="absolute top-[40%] -left-[10%] w-[500px] h-[500px] bg-cyan-100/40 rounded-full blur-[80px]"
+                />
+            </div>
 
-                    <h2 className="text-xl text-gray-600 leading-loose font-medium mb-10 max-w-2xl ml-auto">
-                        اكتشف حجم الهدر الحقيقي في WhatsApp وLinkedIn وCalls وEmail... واحصل على تشخيص ذكي يزيد فرصك <span className="font-bold text-gray-900 mx-1">4X</span> باستخدام الأتمتة والذكاء الاصطناعي.
-                    </h2>
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center z-10 relative w-full">
 
-                    <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                        <button
+                <motion.div
+                    initial="hidden"
+                    animate="visible"
+                    variants={containerVariants}
+                    className="text-right"
+                >
+                    <motion.div variants={itemVariants} className="inline-flex items-center gap-2 bg-white border border-brand/20 rounded-full px-4 py-1.5 shadow-sm text-brand font-bold text-sm mb-6">
+                        <Sparkles size={16} className="animate-pulse" />
+                        <span>تقنية AI 2026</span>
+                    </motion.div>
+
+                    <motion.h1 variants={itemVariants} className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 leading-[1.2] mb-6">
+                        كم فرصة <br className="hidden lg:block" />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand to-cyan-500 relative">
+                            تفقدها يوميًا؟
+                            <svg className="absolute w-full h-3 -bottom-1 left-0 text-brand/30" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
+                            </svg>
+                        </span>
+                    </motion.h1>
+
+                    <motion.p variants={itemVariants} className="text-xl text-slate-600 leading-relaxed font-medium mb-10 max-w-2xl ml-auto">
+                        اكتشف حجم الهدر في قنوات مبيعاتك (WhatsApp, LinkedIn, Calls) واحصل على خطة تطوير فورية تضاعف نتائجك <span className="font-extrabold text-slate-900 bg-brand/10 px-2 rounded">4X</span>.
+                    </motion.p>
+
+                    <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 mb-10">
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
                             onClick={onStartDiagnosis}
-                            className="bg-brand hover:bg-brand-dark text-white text-lg px-10 py-5 rounded-2xl font-bold transition-all shadow-xl shadow-brand/20 flex items-center justify-center gap-3 hover:-translate-y-1 w-full sm:w-auto"
+                            className="bg-brand hover:bg-brand-dark text-white text-lg px-8 py-5 rounded-2xl font-bold transition-all shadow-[0_10px_30px_-10px_rgba(16,185,129,0.4)] flex items-center justify-center gap-3 w-full sm:w-auto overflow-hidden relative group"
                         >
-                            ابدأ التشخيص المجاني الآن
-                            <ArrowLeft size={20} />
-                        </button>
-                    </div>
+                            <span className="relative z-10 flex items-center gap-3">
+                                ابدأ التشخيص المجاني
+                                <ArrowLeft size={22} className="group-hover:-translate-x-1 transition-transform" />
+                            </span>
+                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-teal-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            <div className="absolute -inset-full top-0 block h-full w-1/2 -skew-x-12 bg-gradient-to-r from-transparent to-white opacity-20 group-hover:animate-shine" />
+                        </motion.button>
 
-                    <div className="flex flex-wrap gap-4 text-sm text-gray-500">
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100 shadow-sm">
-                            <CheckCircle2 size={18} className="text-brand" />
-                            <span className="font-semibold">تحليل 4 قنوات</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100 shadow-sm">
-                            <CheckCircle2 size={18} className="text-brand" />
-                            <span className="font-semibold">خطة تطوير خلال 20-30 دقيقة</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-gray-100 shadow-sm">
-                            <CheckCircle2 size={18} className="text-brand" />
-                            <span className="font-semibold">بدون التزام</span>
-                        </div>
-                    </div>
-                </div>
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="bg-white text-slate-700 hover:text-brand border border-slate-200 hover:border-brand/30 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3 w-full sm:w-auto shadow-sm hover:shadow-lg"
+                        >
+                            <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">
+                                <MousePointer2 size={16} />
+                            </div>
+                            كيف يعمل؟
+                        </motion.button>
+                    </motion.div>
 
-                <div className="relative perspective-1000 lg:mr-auto mt-12 lg:mt-0 w-full flex justify-center">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-teal-100/50 rounded-full blur-3xl -z-10"></div>
+                    <motion.div variants={itemVariants} className="flex flex-wrap gap-4 text-sm text-slate-500 font-medium">
+                        {['تحليل 4 قنوات', 'خطة فورية', 'بدون تسجيل'].map((feat, i) => (
+                            <div key={i} className="flex items-center gap-2 bg-white/60 backdrop-blur-sm px-4 py-2 rounded-full border border-slate-200/60 shadow-sm">
+                                <CheckCircle2 size={16} className="text-brand" />
+                                <span>{feat}</span>
+                            </div>
+                        ))}
+                    </motion.div>
+                </motion.div>
 
-                    <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 p-8 transform rotate-y-6 hover:rotate-0 transition-all duration-700 max-w-md mx-auto w-full">
-                        <div className="flex justify-between items-center mb-8 border-b border-gray-50 pb-6">
-                            <span className="font-bold text-gray-800 text-lg">تقرير الأداء العام</span>
-                            <span className="bg-red-50 text-red-500 text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-1.5 border border-red-100">
-                                <AlertTriangle size={14} /> انتباه
+                {/* 3D Dashboard Card */}
+                <motion.div
+                    style={{ perspective: 1000 }}
+                    className="relative flex justify-center lg:justify-end"
+                >
+                    <motion.div
+                        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                        initial={{ opacity: 0, scale: 0.8, rotateX: 20 }}
+                        animate={{ opacity: 1, scale: 1, rotateX: 0 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="bg-white/80 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-white/50 p-8 w-full max-w-md relative z-10"
+                    >
+                        {/* Floating Badge */}
+                        <motion.div
+                            animate={{ y: [0, -10, 0] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                            className="absolute -top-6 -left-6 bg-white rounded-2xl p-4 shadow-xl border border-gray-100 z-20 flex items-center gap-3"
+                        >
+                            <div className="w-10 h-10 bg-red-50 rounded-full flex items-center justify-center text-red-500">
+                                <AlertTriangle size={20} />
+                            </div>
+                            <div>
+                                <div className="text-xs text-gray-400 font-bold">هدر محتمل</div>
+                                <div className="text-lg font-black text-slate-800">70%</div>
+                            </div>
+                        </motion.div>
+
+                        <div className="flex justify-between items-center mb-8 border-b border-gray-100/50 pb-6">
+                            <span className="font-bold text-slate-800 text-lg">تقرير الأداء العام</span>
+                            <span className="bg-red-50 text-red-500 text-xs px-3 py-1.5 rounded-full font-bold flex items-center gap-1 border border-red-100">
+                                <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse" /> مباشر
                             </span>
                         </div>
 
-                        <div className="text-center mb-10">
-                            <div className="text-sm text-gray-500 font-semibold mb-2">Score جاهزية الفريق</div>
-                            <div className="text-7xl font-black text-brand tracking-tight">42<span className="text-3xl text-gray-300 font-normal">/100</span></div>
-                        </div>
-
-                        <div className="space-y-6">
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600 shadow-sm">
-                                    <MessageSquare size={24} />
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-bold text-gray-800">WhatsApp</span>
-                                        <span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded text-xs">هدر عالي</span>
-                                    </div>
-                                    <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                        <div className="bg-green-500 h-full w-[30%] shadow-[0_0_10px_rgba(34,197,94,0.4)]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 shadow-sm">
-                                    <Linkedin size={24} />
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-bold text-gray-800">LinkedIn</span>
-                                        <span className="text-yellow-500 font-bold bg-yellow-50 px-2 py-0.5 rounded text-xs">يحتاج تحسين</span>
-                                    </div>
-                                    <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                        <div className="bg-blue-500 h-full w-[55%] shadow-[0_0_10px_rgba(59,130,246,0.4)]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600 shadow-sm">
-                                    <Phone size={24} />
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-bold text-gray-800">Calls</span>
-                                        <span className="text-red-500 font-bold bg-red-50 px-2 py-0.5 rounded text-xs">هدر عالي</span>
-                                    </div>
-                                    <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                        <div className="bg-purple-500 h-full w-[25%] shadow-[0_0_10px_rgba(168,85,247,0.4)]"></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 bg-orange-50 rounded-xl flex items-center justify-center text-orange-600 shadow-sm">
-                                    <Mail size={24} />
-                                </div>
-                                <div className="flex-1">
-                                    <div className="flex justify-between text-sm mb-2">
-                                        <span className="font-bold text-gray-800">Email</span>
-                                        <span className="text-gray-500 font-bold bg-gray-100 px-2 py-0.5 rounded text-xs">متوسط</span>
-                                    </div>
-                                    <div className="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
-                                        <div className="bg-orange-500 h-full w-[45%] shadow-[0_0_10px_rgba(249,115,22,0.4)]"></div>
-                                    </div>
-                                </div>
+                        <div className="text-center mb-10 relative">
+                            <svg className="w-40 h-40 mx-auto transform -rotate-90">
+                                <circle cx="80" cy="80" r="70" stroke="#f1f5f9" strokeWidth="12" fill="none" />
+                                <motion.circle
+                                    cx="80" cy="80" r="70"
+                                    stroke="#10b981"
+                                    strokeWidth="12"
+                                    fill="none"
+                                    strokeDasharray="440"
+                                    strokeDashoffset="264" // 40% filled approx
+                                    strokeLinecap="round"
+                                    initial={{ strokeDashoffset: 440 }}
+                                    animate={{ strokeDashoffset: 264 }}
+                                    transition={{ duration: 1.5, delay: 0.5, ease: "easeOut" }}
+                                />
+                            </svg>
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+                                <div className="text-5xl font-black text-slate-800">42</div>
+                                <div className="text-xs text-slate-400 font-bold uppercase tracking-wider">Score</div>
                             </div>
                         </div>
-                    </div>
-                </div>
+
+                        <div className="space-y-5">
+                            {[
+                                { n: 'WhatsApp', v: 30, c: 'bg-green-500', i: MessageSquare },
+                                { n: 'LinkedIn', v: 55, c: 'bg-blue-500', i: Linkedin },
+                                { n: 'Calls', v: 25, c: 'bg-purple-500', i: Phone },
+                            ].map((ch, idx) => (
+                                <div key={idx} className="flex items-center gap-4">
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md ${ch.c.replace('bg-', 'bg-opacity-10 text-opacity-100 ' + ch.c.replace('500', '600'))} bg-opacity-10`}>
+                                        {/* Fallback for simple color classes - utilizing lucid icons directly */}
+                                        <ch.i size={18} className={ch.c.replace('bg-', 'text-')} />
+                                    </div>
+                                    <div className="flex-1">
+                                        <div className="flex justify-between text-xs font-bold text-gray-500 mb-1.5">
+                                            <span>{ch.n}</span>
+                                            <span>{ch.v}%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: `${ch.v}%` }}
+                                                transition={{ duration: 1, delay: 0.8 + (idx * 0.2) }}
+                                                className={`h-full ${ch.c} shadow-[0_0_10px_currentColor]`}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    {/* Decorative Blur Behind Card */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-emerald-200/40 to-cyan-200/40 rounded-full blur-3xl -z-10 animate-pulse-slow" />
+                </motion.div>
             </div>
         </section>
     );
@@ -211,37 +316,43 @@ const Hero = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
 
 const PainSection = () => {
     return (
-        <section className="py-20 bg-white w-full">
+        <section className="py-24 bg-white w-full">
             <div className="max-w-7xl mx-auto px-4 md:px-12 w-full">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-brand/30 transition-all hover:-translate-y-1 group">
-                        <div className="bg-white w-14 h-14 rounded-xl flex items-center justify-center text-red-500 shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                            <Database size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">بيانات القنوات غير مستغلة</h3>
-                        <p className="text-gray-600 leading-relaxed">
-                            نسبة الرد أقل من 20%؟ هذا يعني أن الفرص تضيع وتتبخر قبل حتى أن تبدأ في المحاولة.
-                        </p>
-                    </div>
-                    <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-brand/30 transition-all hover:-translate-y-1 group">
-                        <div className="bg-white w-14 h-14 rounded-xl flex items-center justify-center text-red-500 shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                            <Activity size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">عدم وجود Engine واضح</h3>
-                        <p className="text-gray-600 leading-relaxed">
-                            بدون إيقاع (Cadence) ومتابعة دقيقة، ستضيع الـ Leads الساخنة في فوضى العمل اليومي.
-                        </p>
-                    </div>
-                    <div className="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:border-brand/30 transition-all hover:-translate-y-1 group">
-                        <div className="bg-white w-14 h-14 rounded-xl flex items-center justify-center text-red-500 shadow-sm mb-6 group-hover:scale-110 transition-transform">
-                            <ZapOff size={28} />
-                        </div>
-                        <h3 className="text-xl font-bold text-gray-900 mb-3">غياب الأتمتة</h3>
-                        <p className="text-gray-600 leading-relaxed">
-                            فريقك يجري كل شيء بشكل يدوي ومرهق، لكن النتائج لا تتغير ولا تتناسب مع الجهد المبذول.
-                        </p>
-                    </div>
-                </div>
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={containerVariants}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                >
+                    {[
+                        { icon: Database, color: 'text-red-500', t: "بيانات القنوات غير مستغلة", d: "نسبة الرد أقل من 20%؟ هذا يعني أن الفرص تضيع وتتبخر قبل حتى أن تبدأ في المحاولة." },
+                        { icon: Activity, color: 'text-amber-500', t: "عدم وجود Engine واضح", d: "بدون إيقاع (Cadence) ومتابعة دقيقة، ستضيع الـ Leads الساخنة في فوضى العمل اليومي." },
+                        { icon: ZapOff, color: 'text-gray-500', t: "غياب الأتمتة", d: "فريقك يجري كل شيء بشكل يدوي ومرهق، لكن النتائج لا تتغير ولا تتناسب مع الجهد المبذول." }
+                    ].map((item, i) => (
+                        <motion.div
+                            key={i}
+                            variants={itemVariants}
+                            whileHover={{ y: -10 }}
+                            className="bg-slate-50 p-8 rounded-[2rem] border border-slate-100 relative overflow-hidden group"
+                        >
+                            {/* Scanning Beam Effect */}
+                            <motion.div
+                                animate={{ top: ['-10%', '110%'] }}
+                                transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: i * 1 }}
+                                className="absolute left-0 right-0 h-20 bg-gradient-to-b from-transparent via-brand/5 to-transparent -skew-y-12"
+                            />
+
+                            <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg shadow-gray-200 mb-8 group-hover:scale-110 transition-transform duration-500">
+                                <item.icon size={32} className={item.color} />
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900 mb-4">{item.t}</h3>
+                            <p className="text-gray-600 leading-relaxed font-medium">
+                                {item.d}
+                            </p>
+                        </motion.div>
+                    ))}
+                </motion.div>
             </div>
         </section>
     );
@@ -249,66 +360,119 @@ const PainSection = () => {
 
 const QuantifiedPain = () => {
     return (
-        <section className="py-24 bg-gray-900 text-white overflow-hidden relative w-full">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-brand/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
-            <div className="max-w-7xl mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
-                <div className="space-y-10">
-                    <h2 className="text-3xl md:text-5xl font-black leading-[1.4] md:leading-[1.5]">
-                        الهدر في المبيعات قد يصل إلى <span className="text-red-500 inline-block px-2">70%</span> <br className="hidden md:block" />
+        <section className="py-24 bg-[#0a0f1c] text-white overflow-hidden relative w-full">
+            {/* Animated Background */}
+            <div className="absolute inset-0">
+                <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+                    className="absolute -top-[50%] -right-[20%] w-[1000px] h-[1000px] bg-gradient-to-b from-brand/10 to-transparent rounded-full blur-[100px] opacity-30"
+                />
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center relative z-10 w-full">
+                <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="space-y-12"
+                >
+                    <h2 className="text-3xl md:text-5xl font-black leading-[1.4] md:leading-[1.4]">
+                        الهدر في المبيعات قد يصل إلى <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-rose-400 inline-block px-2">70%</span> <br className="hidden md:block" />
                         قبل الوصول إلى الاجتماع الأول
                     </h2>
                     <div className="space-y-8 pt-4">
-                        {['LinkedIn', 'WhatsApp', 'Calls', 'Email'].map((channel, i) => (
-                            <div key={i} className="flex gap-5 items-start group">
-                                <div className="w-3 h-3 rounded-full bg-red-500 mt-2.5 group-hover:scale-125 transition-transform shadow-[0_0_10px_rgba(239,68,68,0.6)]"></div>
-                                <div>
-                                    <h4 className="font-bold text-2xl text-white mb-1">{channel}</h4>
-                                    <p className="text-gray-400 text-lg leading-relaxed">فقدان فرص محتملة بسبب ضعف الأداء في هذه القناة.</p>
+                        {['LinkedIn, WhatsApp', 'Calls, Email Follow-ups'].map((channel, i) => (
+                            <div key={i} className="flex gap-5 items-center group">
+                                <div className="w-1 absolute" /> {/* Spacer */}
+                                <motion.div
+                                    whileHover={{ scale: 1.5 }}
+                                    className="w-4 h-4 rounded-full bg-red-500 shadow-[0_0_20px_rgba(239,68,68,0.8)]"
+                                />
+                                <div className="pr-8">
+                                    <h4 className="font-bold text-2xl text-white mb-1 group-hover:text-red-400 transition-colors">{channel}</h4>
+                                    <p className="text-slate-400 text-lg">فقدان فرص محتملة بسبب ضعف الأداء.</p>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </div>
-                <div className="bg-gray-800 rounded-[2rem] p-10 border border-gray-700 shadow-2xl">
-                    <div className="flex items-center justify-between mb-10">
-                        <h3 className="font-bold text-xl flex items-center gap-3">
-                            <div className="bg-gray-700 p-2 rounded-lg"><BarChart3 className="text-brand" size={24} /></div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
+                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8 }}
+                    className="bg-slate-900/50 backdrop-blur-xl rounded-[2.5rem] p-10 border border-slate-700/50 shadow-2xl relative"
+                >
+                    {/* Glow effect behind card */}
+                    <div className="absolute inset-0 bg-gradient-to-b from-brand/5 to-transparent rounded-[2.5rem]" />
+
+                    <div className="flex items-center justify-between mb-12 relative z-10">
+                        <h3 className="font-bold text-2xl flex items-center gap-3">
+                            <div className="bg-slate-800 p-2.5 rounded-xl border border-slate-700 shadow-lg"><BarChart3 className="text-brand" size={24} /></div>
                             تحليل الفجوة
                         </h3>
-                        <span className="text-sm text-gray-400 bg-gray-700/50 px-3 py-1 rounded-full">شهرياً</span>
+                        <span className="text-sm text-slate-300 bg-slate-800 border border-slate-700 px-4 py-1.5 rounded-full font-bold">شهرياً</span>
                     </div>
-                    <div className="space-y-8">
+
+                    <div className="space-y-10 relative z-10">
                         <div>
-                            <div className="flex justify-between text-base mb-3">
-                                <span className="text-gray-300">الفرص المتاحة (Leads)</span>
-                                <span className="text-brand font-bold">100%</span>
+                            <div className="flex justify-between text-base mb-4 font-bold">
+                                <span className="text-slate-300">الفرص المتاحة (Leads)</span>
+                                <span className="text-brand">100%</span>
                             </div>
-                            <div className="h-5 bg-gray-700 rounded-full w-full overflow-hidden">
-                                <div className="h-full bg-brand rounded-full w-full shadow-[0_0_15px_rgba(45,212,191,0.3)]"></div>
+                            <div className="h-4 bg-slate-800 rounded-full w-full overflow-hidden border border-slate-700/50">
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: '100%' }}
+                                    transition={{ duration: 1.5, ease: "easeOut" }}
+                                    className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)]"
+                                />
                             </div>
                         </div>
+
                         <div className="relative">
-                            <div className="flex justify-between text-base mb-3">
-                                <span className="text-gray-300">الفرص الفعلية (Converted)</span>
-                                <span className="text-red-400 font-bold">30%</span>
+                            <div className="flex justify-between text-base mb-4 font-bold">
+                                <span className="text-slate-300">الفرص الفعلية (Converted)</span>
+                                <span className="text-red-400">30%</span>
                             </div>
-                            <div className="h-5 bg-gray-700 rounded-full w-full overflow-hidden">
-                                <div className="h-full bg-red-500 rounded-full w-[30%] shadow-[0_0_15px_rgba(239,68,68,0.3)]"></div>
+                            <div className="h-4 bg-slate-800 rounded-full w-full overflow-hidden border border-slate-700/50">
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    whileInView={{ width: '30%' }}
+                                    transition={{ duration: 1.5, ease: "easeOut" }}
+                                    className="h-full bg-gradient-to-r from-red-500 to-rose-500 rounded-full shadow-[0_0_20px_rgba(239,68,68,0.5)]"
+                                />
                             </div>
-                            <div className="absolute top-12 right-[30%] left-0 flex items-center justify-center">
-                                <div className="bg-gray-900 border border-red-500/50 text-red-400 text-sm px-4 py-1.5 rounded-full flex items-center gap-2 shadow-lg animate-bounce">
-                                    <ArrowDown size={14} />
-                                    <span className="font-bold">70% فجوة هدر</span>
+
+                            {/* Animated Gap Indicator */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 10 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 1.5 }}
+                                className="absolute top-10 right-[15%] left-0 flex items-center justify-center pointer-events-none"
+                            >
+                                <div className="bg-[#0f172a] border border-red-500 text-red-400 text-sm px-5 py-2 rounded-full flex items-center gap-2 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                                    <ArrowDown size={16} className="animate-bounce" />
+                                    <span className="font-black">70% فجوة هدر</span>
                                 </div>
-                            </div>
+                            </motion.div>
                         </div>
                     </div>
-                    <div className="mt-16 bg-gray-900/50 p-6 rounded-2xl border border-gray-700 text-center">
-                        <p className="text-base text-gray-300 leading-relaxed">
-                            هذا يعني أنك تدفع تكلفة 100% من التسويق لتحصل على 30% فقط من النتائج.
+
+                    <div className="mt-20 bg-slate-800/50 p-6 rounded-2xl border border-slate-700 text-center relative overflow-hidden">
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"
+                            animate={{ x: ['-100%', '100%'] }}
+                            transition={{ duration: 2, repeat: Infinity, delay: 2 }}
+                        />
+                        <p className="text-lg text-slate-300 leading-relaxed font-medium relative z-10">
+                            أنت تدفع تكلفة 100% من التسويق... <br /> لتحصل على <span className="text-white font-bold underline decoration-red-500">30% فقط</span> من النتائج.
                         </p>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
@@ -347,55 +511,82 @@ const ValueProposition = () => {
 
 const AISection = () => {
     return (
-        <section className="py-24 bg-slate-50 overflow-hidden w-full">
-            <div className="max-w-7xl mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center w-full">
-                <div className="order-2 lg:order-1">
-                    <div className="inline-flex items-center gap-2 bg-brand/10 text-brand px-4 py-1.5 rounded-full text-sm font-bold mb-6">
+        <section className="py-32 bg-slate-50 overflow-hidden w-full relative">
+            <div className="max-w-7xl mx-auto px-4 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-20 items-center w-full z-10 relative">
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    variants={containerVariants}
+                    className="order-2 lg:order-1"
+                >
+                    <motion.div variants={itemVariants} className="inline-flex items-center gap-2 bg-brand/10 text-brand px-4 py-2 rounded-full text-sm font-bold mb-8 border border-brand/20">
                         <Sparkles size={16} />
                         <span>المحرك الذكي</span>
+                    </motion.div>
+
+                    <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl font-black text-slate-900 mb-12 leading-[1.3]">
+                        كيف نستخدم <span className="text-brand relative inline-block">
+                            الذكاء الاصطناعي
+                            <span className="absolute bottom-1 left-0 w-full h-3 bg-brand/20 -z-10 rounded-sm"></span>
+                        </span> <br />
+                        لرفع فرصك من 4 مصادر؟
+                    </motion.h2>
+
+                    <div className="space-y-10">
+                        {[
+                            { i: GitMerge, t: "تحليل متقاطع", d: "كل قناة تُحلل لوحدها... ثم تحلل مجتمعة لكشف الترابطات الخفية." },
+                            { i: Cpu, t: "أولويات ذكية", d: "خوارزميات تحدد بدقة أين تبدأ التحسين لتحصل على أسرع نتائج (Quick Wins)." },
+                            { i: Network, t: "Engine موحد", d: "ربط WhatsApp + LinkedIn + Email + Calls في نظام واحد متناغم." }
+                        ].map((item, i) => (
+                            <motion.div
+                                key={i}
+                                variants={itemVariants}
+                                whileHover={{ x: -10 }}
+                                className="flex gap-6 group"
+                            >
+                                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-slate-200 flex items-center justify-center text-brand flex-shrink-0 group-hover:bg-gradient-to-br group-hover:from-emerald-500 group-hover:to-teal-500 group-hover:text-white transition-all duration-300 group-hover:scale-110 group-hover:rotate-3 shadow-brand/10">
+                                    <item.i size={28} />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-xl text-slate-900 mb-2 group-hover:text-brand transition-colors">{item.t}</h4>
+                                    <p className="text-slate-600 leading-relaxed text-lg font-medium">{item.d}</p>
+                                </div>
+                            </motion.div>
+                        ))}
                     </div>
-                    <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-10 leading-[1.4]">
-                        كيف نستخدم <span className="text-brand">الذكاء الاصطناعي</span> لرفع فرصك من 4 مصادر؟
-                    </h2>
-                    <div className="space-y-8">
-                        <div className="flex gap-6 group">
-                            <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center text-brand flex-shrink-0 group-hover:bg-brand group-hover:text-white transition-colors">
-                                <GitMerge size={24} />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-xl text-gray-900 mb-2">تحليل متقاطع</h4>
-                                <p className="text-gray-600 leading-relaxed text-lg">كل قناة تُحلل لوحدها... ثم تحلل مجتمعة لكشف الترابطات الخفية.</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-6 group">
-                            <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center text-brand flex-shrink-0 group-hover:bg-brand group-hover:text-white transition-colors">
-                                <Cpu size={24} />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-xl text-gray-900 mb-2">أولويات ذكية</h4>
-                                <p className="text-gray-600 leading-relaxed text-lg">خوارزميات تحدد بدقة أين تبدأ التحسين لتحصل على أسرع نتائج (Quick Wins).</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-6 group">
-                            <div className="w-12 h-12 bg-white rounded-2xl shadow-sm border border-gray-100 flex items-center justify-center text-brand flex-shrink-0 group-hover:bg-brand group-hover:text-white transition-colors">
-                                <Network size={24} />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-xl text-gray-900 mb-2">Engine موحد</h4>
-                                <p className="text-gray-600 leading-relaxed text-lg">ربط WhatsApp + LinkedIn + Email + Calls في نظام واحد متناغم.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="order-1 lg:order-2 flex justify-center">
+                </motion.div>
+
+                <div className="order-1 lg:order-2 flex justify-center relative">
                     <div className="relative w-full max-w-md aspect-square">
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-36 h-36 bg-brand rounded-full flex items-center justify-center shadow-2xl shadow-brand/30 z-20 animate-pulse">
+                        {/* Core Pulse */}
+                        <motion.div
+                            animate={{ scale: [1, 1.1, 1], boxShadow: ["0 0 0 0 rgba(16, 185, 129, 0)", "0 0 0 20px rgba(16, 185, 129, 0.2)", "0 0 0 0 rgba(16, 185, 129, 0)"] }}
+                            transition={{ duration: 2, repeat: Infinity }}
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-2xl shadow-brand/40 z-20"
+                        >
                             <div className="text-white text-center">
-                                <Sparkles size={40} className="mx-auto mb-2" />
-                                <span className="font-black text-xl">AI Core</span>
+                                <Sparkles size={48} className="mx-auto mb-2 animate-spin-slow" style={{ animationDuration: '10s' }} />
+                                <span className="font-black text-2xl tracking-widest">AI CORE</span>
                             </div>
-                        </div>
-                        <div className="absolute inset-12 border-2 border-dashed border-gray-300 rounded-full -z-10 animate-spin-slow"></div>
+                        </motion.div>
+
+                        {/* Orbiting Rings */}
+                        {[1, 2, 3].map((r) => (
+                            <motion.div
+                                key={r}
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 10 * r, repeat: Infinity, ease: "linear" }}
+                                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-slate-300 z-10`}
+                                style={{ width: `${r * 120 + 100}%`, height: `${r * 120 + 100}%`, opacity: 0.5 / r }}
+                            >
+                                <motion.div
+                                    className="w-4 h-4 bg-brand rounded-full absolute -top-2 left-1/2 -translate-x-1/2 shadow-lg shadow-brand"
+                                    animate={{ scale: [1, 1.5, 1] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                />
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </div>
@@ -501,8 +692,13 @@ const Features = () => {
         <section id="features" className="py-24 bg-gradient-to-b from-gray-50 to-white overflow-hidden relative w-full">
             <div className="max-w-7xl mx-auto px-4 md:px-12 w-full">
                 <div className="flex flex-col md:flex-row items-center gap-20">
-                    <div className="w-full md:w-1/2 relative perspective-1000">
-                        <div className="relative z-10 bg-gray-900 rounded-[2rem] p-3 shadow-2xl shadow-gray-900/20 border-b-[12px] border-gray-800 transform rotate-y-6 hover:rotate-0 transition-all duration-700 ease-out">
+                    <motion.div
+                        initial={{ opacity: 0, x: 50, rotateY: 10 }}
+                        whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="w-full md:w-1/2 relative perspective-1000"
+                    >
+                        <div className="relative z-10 bg-[#0f172a] rounded-[2rem] p-3 shadow-2xl shadow-gray-900/20 border-b-[12px] border-gray-800 transform rotate-y-6 hover:rotate-0 transition-all duration-700 ease-out group">
                             <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gray-700"></div>
                             <div className="bg-gray-800 rounded-[1.25rem] overflow-hidden aspect-[16/10] relative">
                                 <div className="absolute inset-0 bg-white p-6 flex flex-col">
@@ -515,15 +711,21 @@ const Features = () => {
                                         </div>
                                     </div>
                                     <div className="flex gap-4 mb-4">
-                                        <div className="w-1/3 h-24 bg-teal-50 rounded-xl animate-pulse"></div>
-                                        <div className="w-1/3 h-24 bg-indigo-50 rounded-xl animate-pulse delay-75"></div>
-                                        <div className="w-1/3 h-24 bg-rose-50 rounded-xl animate-pulse delay-150"></div>
+                                        <motion.div animate={{ height: [80, 100, 80] }} transition={{ duration: 3, repeat: Infinity }} className="w-1/3 h-24 bg-teal-50 rounded-xl" />
+                                        <motion.div animate={{ height: [60, 90, 60] }} transition={{ duration: 4, repeat: Infinity, delay: 0.5 }} className="w-1/3 h-24 bg-indigo-50 rounded-xl" />
+                                        <motion.div animate={{ height: [70, 40, 70] }} transition={{ duration: 3.5, repeat: Infinity, delay: 1 }} className="w-1/3 h-24 bg-rose-50 rounded-xl" />
                                     </div>
                                     <div className="flex gap-4 flex-1">
                                         <div className="w-2/3 bg-gray-50 rounded-xl border border-gray-100 p-4 flex flex-col justify-end">
                                             <div className="flex items-end justify-between gap-3 h-32">
                                                 {[40, 75, 50, 95, 60, 85].map((h, i) => (
-                                                    <div key={i} className="w-full bg-brand rounded-t-md transition-all duration-1000" style={{ height: `${h}%`, opacity: 0.7 + (i * 0.05) }}></div>
+                                                    <motion.div
+                                                        key={i}
+                                                        initial={{ height: 0 }}
+                                                        whileInView={{ height: `${h}%` }}
+                                                        transition={{ duration: 1, delay: i * 0.1 }}
+                                                        className="w-full bg-brand rounded-t-md opacity-80 hover:opacity-100 hover:scale-110 transition-all origin-bottom"
+                                                    />
                                                 ))}
                                             </div>
                                         </div>
@@ -536,41 +738,43 @@ const Features = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="w-full md:w-1/2 text-right">
-                        <div className="inline-flex items-center gap-2 bg-brand/10 text-brand px-3 py-1 rounded-md text-sm font-bold mb-6">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true }}
+                        variants={containerVariants}
+                        className="w-full md:w-1/2 text-right"
+                    >
+                        <motion.div variants={itemVariants} className="inline-flex items-center gap-2 bg-brand/10 text-brand px-3 py-1 rounded-md text-sm font-bold mb-6">
                             <Zap size={16} fill="currentColor" />
                             <span>تقنيات متقدمة</span>
-                        </div>
-                        <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
+                        </motion.div>
+                        <motion.h2 variants={itemVariants} className="text-4xl md:text-5xl font-black text-gray-900 mb-6 leading-tight">
                             نظام متكامل <br />
                             <span className="text-brand">لإدارة الأداء</span>
-                        </h2>
-                        <p className="text-gray-500 text-lg mb-10 leading-relaxed">
+                        </motion.h2>
+                        <motion.p variants={itemVariants} className="text-gray-500 text-lg mb-10 leading-relaxed">
                             لا نكتفي بمجرد التحليل، بل نقدم نظاماً بيئياً متكاملاً يربط بين التشخيص والتطوير المستمر لضمان استدامة النتائج.
-                        </p>
+                        </motion.p>
                         <div className="space-y-8">
-                            <div className="flex gap-5 items-start">
-                                <div className="w-12 h-12 bg-white rounded-xl shadow-md border border-gray-100 flex items-center justify-center text-brand flex-shrink-0">
-                                    <FileText size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-xl mb-2 text-gray-900">توصيات قابلة للتنفيذ</h4>
-                                    <p className="text-gray-500 leading-relaxed">خطوات عملية ومحددة يمكن تطبيقها فوراً لتحسين الأداء الفردي والجماعي.</p>
-                                </div>
-                            </div>
-                            <div className="flex gap-5 items-start">
-                                <div className="w-12 h-12 bg-white rounded-xl shadow-md border border-gray-100 flex items-center justify-center text-brand flex-shrink-0">
-                                    <BarChart3 size={24} />
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-xl mb-2 text-gray-900">لوحات بيانات تفاعلية</h4>
-                                    <p className="text-gray-500 leading-relaxed">راقب تقدم فريقك لحظة بلحظة من خلال لوحات تحكم ديناميكية وسهلة القراءة.</p>
-                                </div>
-                            </div>
+                            {[
+                                { i: FileText, t: "توصيات قابلة للتنفيذ", d: "خطوات عملية ومحددة يمكن تطبيقها فوراً لتحسين الأداء الفردي والجماعي." },
+                                { i: BarChart3, t: "لوحات بيانات تفاعلية", d: "راقب تقدم فريقك لحظة بلحظة من خلال لوحات تحكم ديناميكية وسهلة القراءة." }
+                            ].map((item, i) => (
+                                <motion.div key={i} variants={itemVariants} className="flex gap-5 items-start group cursor-default">
+                                    <div className="w-14 h-14 bg-white rounded-xl shadow-md border border-gray-100 flex items-center justify-center text-brand flex-shrink-0 group-hover:bg-brand group-hover:text-white transition-all group-hover:rotate-12">
+                                        <item.i size={28} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-xl mb-2 text-gray-900 group-hover:text-brand transition-colors">{item.t}</h4>
+                                        <p className="text-gray-500 leading-relaxed font-medium">{item.d}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
@@ -606,34 +810,57 @@ const Testimonials = () => {
     ];
 
     return (
-        <section id="testimonials" className="py-24 bg-slate-50 w-full">
+        <section id="testimonials" className="py-24 bg-slate-50 w-full overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 md:px-12 w-full">
-                <div className="text-center mb-16">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    className="text-center mb-16"
+                >
                     <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-4">
                         قصص <span className="text-brand">نجاح حقيقية</span>
                     </h2>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                </motion.div>
+                <motion.div
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ margin: "-50px" }}
+                    variants={containerVariants}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                >
                     {data.map((t) => (
-                        <div key={t.id} className="bg-white rounded-2xl p-8 shadow-md border border-gray-100 hover:shadow-xl transition-all">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand/20">
-                                    <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                        <motion.div
+                            key={t.id}
+                            variants={itemVariants}
+                            whileHover={{ y: -10 }}
+                            className="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 hover:shadow-2xl hover:shadow-brand/10 transition-all cursor-default relative overflow-hidden group"
+                        >
+                            <div className="absolute top-0 right-0 w-20 h-20 bg-brand/5 rounded-bl-[4rem] transition-all group-hover:scale-150" />
+
+                            <div className="flex items-center gap-4 mb-6 relative z-10">
+                                <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-brand/20 p-0.5">
+                                    <img src={t.image} alt={t.name} className="w-full h-full object-cover rounded-full" />
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-gray-900 text-sm">{t.name}</h4>
-                                    <span className="text-xs text-gray-500">{t.role}</span>
+                                    <h4 className="font-bold text-gray-900 text-lg">{t.name}</h4>
+                                    <span className="text-sm text-gray-500 font-medium">{t.role}</span>
                                 </div>
                             </div>
+
                             {t.result && (
-                                <div className="bg-brand/10 text-brand font-bold px-4 py-2 rounded-lg inline-block mb-4 text-sm">
+                                <div className="bg-emerald-50 text-emerald-600 font-bold px-4 py-2 rounded-xl inline-block mb-6 text-sm border border-emerald-100/50">
                                     🚀 {t.result}
                                 </div>
                             )}
-                            <p className="text-gray-600 leading-relaxed text-sm">"{t.quote}"</p>
-                        </div>
+
+                            <p className="text-gray-600 leading-relaxed font-medium text-lg relative z-10">
+                                <Quote className="inline-block transform rotate-180 text-brand/20 ml-2 -mt-2" size={20} />
+                                {t.quote}
+                            </p>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );
@@ -652,23 +879,52 @@ const FAQ = () => {
     return (
         <section id="faq" className="py-24 bg-white w-full">
             <div className="max-w-3xl mx-auto px-4 w-full">
-                <h2 className="text-3xl font-black text-center text-gray-900 mb-12">الأسئلة المتكررة</h2>
+                <motion.h2
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="text-3xl font-black text-center text-gray-900 mb-12"
+                >
+                    الأسئلة المتكررة
+                </motion.h2>
                 <div className="space-y-4">
                     {data.map((item, index) => (
-                        <div key={index} className="border border-gray-200 rounded-2xl overflow-hidden transition-all hover:border-brand/50">
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1 }}
+                            className="border border-gray-200 rounded-2xl overflow-hidden transition-all hover:border-brand/50"
+                        >
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                                 className="w-full flex items-center justify-between p-6 text-right bg-white hover:bg-gray-50 transition-colors"
                             >
                                 <span className="font-bold text-gray-900 text-lg">{item.q}</span>
-                                <span className="text-brand">{openIndex === index ? <Minus size={20} /> : <Plus size={20} />}</span>
+                                <span className="text-brand">
+                                    <motion.div
+                                        animate={{ rotate: openIndex === index ? 180 : 0 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        {openIndex === index ? <Minus size={20} /> : <Plus size={20} />}
+                                    </motion.div>
+                                </span>
                             </button>
-                            <div className={`overflow-hidden transition-all duration-300 ${openIndex === index ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
-                                <div className="p-6 pt-0 text-gray-600 leading-relaxed border-t border-gray-100 bg-gray-50/50">
-                                    {item.a}
-                                </div>
-                            </div>
-                        </div>
+                            <AnimatePresence>
+                                {openIndex === index && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: "auto", opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                                    >
+                                        <div className="p-6 pt-0 text-gray-600 leading-relaxed border-t border-gray-100 bg-gray-50/50">
+                                            {item.a}
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </motion.div>
                     ))}
                 </div>
             </div>
@@ -679,24 +935,50 @@ const FAQ = () => {
 const FinalCTA = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
     return (
         <section className="py-24 bg-brand text-white text-center relative overflow-hidden w-full">
+            {/* Animated Background Elements */}
+            <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.2, 0.1] }}
+                transition={{ duration: 5, repeat: Infinity }}
+                className="absolute top-0 right-0 w-[500px] h-[500px] bg-white rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"
+            />
+            <motion.div
+                animate={{ scale: [1, 1.5, 1], opacity: [0.05, 0.1, 0.05] }}
+                transition={{ duration: 7, repeat: Infinity, delay: 1 }}
+                className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-teal-400 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2 pointer-events-none"
+            />
+
             <div className="max-w-4xl mx-auto px-4 relative z-10 w-full">
-                <h2 className="text-3xl md:text-5xl font-black mb-10 leading-[1.5]">
-                    لا تخسر فرص إضافية هذا الشهر... <br className="hidden md:block" />
-                    <span className="text-teal-200 block mt-3">اكشف الهدر الآن وابدأ تحسين قنواتك الأربعة فوراً.</span>
-                </h2>
-                <button
-                    onClick={onStartDiagnosis}
-                    className="bg-white text-brand hover:bg-gray-100 text-xl px-14 py-6 rounded-2xl font-black transition-all transform hover:-translate-y-1 shadow-2xl flex items-center justify-center gap-3 mx-auto"
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
                 >
-                    🎯 ابدأ التشخيص الآن
-                </button>
-                <p className="mt-8 text-teal-100 font-medium text-lg opacity-90 tracking-wide">
-                    20-30 دقيقة فقط • بدون التزام • تقرير جاهز للتنفيذ
-                </p>
+                    <h2 className="text-3xl md:text-5xl font-black mb-10 leading-[1.5]">
+                        لا تخسر فرص إضافية هذا الشهر... <br className="hidden md:block" />
+                        <span className="text-teal-200 block mt-3">اكشف الهدر الآن وابدأ تحسين قنواتك الأربعة فوراً.</span>
+                    </h2>
+                    <motion.button
+                        onClick={onStartDiagnosis}
+                        whileHover={{ scale: 1.05, boxShadow: "0 20px 40px rgba(0,0,0,0.2)" }}
+                        whileTap={{ scale: 0.95 }}
+                        className="bg-white text-brand hover:bg-gray-100 text-xl px-14 py-6 rounded-2xl font-black transition-all shadow-2xl flex items-center justify-center gap-3 mx-auto relative overflow-hidden group"
+                    >
+                        <span className="relative z-10 flex items-center gap-2">🎯 ابدأ التشخيص الآن</span>
+                        <motion.div
+                            className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-100 to-transparent w-1/2 skew-x-12"
+                            animate={{ x: ['-150%', '200%'] }}
+                            transition={{ repeat: Infinity, duration: 2, ease: "linear", repeatDelay: 1 }}
+                        />
+                    </motion.button>
+                    <p className="mt-8 text-teal-100 font-medium text-lg opacity-90 tracking-wide">
+                        20-30 دقيقة فقط • بدون التزام • تقرير جاهز للتنفيذ
+                    </p>
+                </motion.div>
             </div>
         </section>
     );
 };
+
 
 const Footer = () => (
     <footer className="bg-gray-900 text-white py-12 border-t border-gray-800 w-full">

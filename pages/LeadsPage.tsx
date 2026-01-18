@@ -83,8 +83,8 @@ const LeadsPage = () => {
         <div className="space-y-6" dir="rtl">
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-slate-800">العملاء المحتملين (Leads)</h1>
-                    <p className="text-slate-500 text-sm">قائمة العملاء المحتملين الذين لم يتم التواصل معهم بعد.</p>
+                    <h1 className="text-2xl font-bold text-slate-800">العملاء المحتملين</h1>
+                    <p className="text-slate-500 text-sm">قائمة العملاء المحتملين وتحديثات مراحل البيع.</p>
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="bg-blue-50 text-blue-700 px-4 py-2 rounded-lg font-bold">

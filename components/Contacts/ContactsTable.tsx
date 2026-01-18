@@ -46,8 +46,8 @@ const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, onView, onEdit 
           <thead className="sticky top-0 bg-white shadow-sm z-10">
             <tr className="text-slate-500 text-[10px] font-black uppercase tracking-wider border-b border-slate-100">
               <th className="px-6 py-4">الاسم / الشركة</th>
-              <th className="px-6 py-4">المجال (GHL)</th>
-              <th className="px-6 py-4 text-center">Fit Score</th>
+              <th className="px-6 py-4">مجال العمل</th>
+              <th className="px-6 py-4 text-center">مؤشر التوافق</th>
               <th className="px-6 py-4 text-center">بيانات التواصل</th>
               <th className="px-6 py-4">المرحلة</th>
               <th className="px-6 py-4 text-left">إجراءات</th>
@@ -96,7 +96,7 @@ const ContactsTable: React.FC<ContactsTableProps> = ({ contacts, onView, onEdit 
                       <button
                         onClick={() => discoverLeadEmail(contact)}
                         className="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-400 p-1.5 rounded-full transition-all"
-                        title="Find Email (Waterfall)"
+                        title="البحث عن البريد"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                       </button>

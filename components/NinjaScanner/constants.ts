@@ -1,62 +1,62 @@
 import { NinjaFormData } from './types';
 
 export const INDUSTRIES = [
-    'SaaS / Software',
-    'Real Estate',
-    'Fintech',
-    'Consulting',
-    'Agency / Marketing',
-    'Healthcare',
-    'Manufacturing',
-    'Logistics',
-    'Retail / E-commerce',
-    'Education'
+    'البرمجيات / SaaS',
+    'العقارات',
+    'التقنية المالية (Fintech)',
+    'الاستشارات',
+    'التسويق / الوكالات',
+    'الرعاية الصحية',
+    'التصنيع',
+    'الخدمات اللوجستية',
+    'التجزئة / التجارة الإلكترونية',
+    'التعليم والتدريب'
 ];
 
 export const COUNTRIES = [
-    'Saudi Arabia',
-    'UAE',
-    'Egypt',
-    'Kuwait',
-    'Qatar',
-    'Oman',
-    'Bahrain',
-    'Jordan',
-    'Other'
+    'المملكة العربية السعودية',
+    'الإمارات العربية المتحدة',
+    'مصر',
+    'الكويت',
+    'قطر',
+    'سلطنة عمان',
+    'البحرين',
+    'الأردن',
+    'أخرى'
 ];
 
 export const WHY_NOW_OPTIONS = [
-    'New Product Launch',
-    'Missed Quarterly Targets',
-    'Expansion / New Market',
-    'Investment Pressure',
-    'Competitor Pressure',
-    'Internal Restructuring'
+    'إطلاق منتج جديد',
+    'عدم تحقيق المستهدفات ربع السنوية',
+    'توسع في سوق جديد',
+    'ضغط من المستثمرين',
+    'منافسة شرسة',
+    'إعادة هيكلة داخلية'
 ];
 
 export const LEAK_OPTIONS = [
-    'Low Lead Quality',
-    'No Response (Ghosting)',
-    'Stalled Negotiations',
-    'Price Objection',
-    'Competitor Win'
+    'جودة Leads منخفضة',
+    'عدم الرد (Ghosting)',
+    'مفاوضات طويلة ومتعثرة',
+    'اعتراضات على السعر',
+    'الخسارة أمام المنافسين'
 ];
 
 export const TITLES_OPTIONS = [
-    'CEO / Founder',
-    'CTO / CIO',
-    'Marketing Director',
-    'Sales Director',
-    'HR Manager',
-    'Operations Manager'
+    'CEO / المؤسس',
+    'CTO / مدير التقنية',
+    'مدير التسويق',
+    'مدير المبيعات',
+    'مدير الموارد البشرية',
+    'مدير التشغيل'
 ];
 
 export const COMPANY_SIZE_OPTIONS = [
-    '1-10 Employees',
-    '11-50 Employees',
-    '51-200 Employees',
-    '201-500 Employees',
-    '500+ Employees'
+    '1-10 موظفين',
+    '11-50 موظف',
+    '51-200 موظف',
+    '201-500 موظف',
+    '500+ موظف'
 ];
 
 export const INITIAL_STATE: NinjaFormData = {

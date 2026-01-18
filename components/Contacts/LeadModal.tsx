@@ -133,7 +133,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                     </>
                                 ) : (
                                     <>
-                                        ✨ تحسين (AI)
+                                        ✨ تحسين البيانات
                                     </>
                                 )}
                             </button>
@@ -163,7 +163,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                 onClick={() => setActiveTab('scripts')}
                                 className={`pb-2 px-4 font-bold text-sm transition-colors relative ${activeTab === 'scripts' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
                             >
-                                حملات التواصل (Campaigns)
+                                حملات التواصل
                                 {activeTab === 'scripts' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></span>}
                             </button>
                         </div>
@@ -229,7 +229,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                             <input type="text" name="annual_revenue" value={formData.annual_revenue} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">المصدر (Source)</label>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">المصدر</label>
                                             <input type="text" name="source" value={formData.source} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
                                         </div>
                                     </div>
@@ -237,7 +237,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
 
                                 {/* Section 5: GHL Custom Fields (Arabic & Strategy) */}
                                 <section className="space-y-4">
-                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات خاصة (GHL)</h3>
+                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات إضافية</h3>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label className="block text-sm font-bold text-slate-700 mb-1">ملخص باللغة العربية</label>
@@ -266,7 +266,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                             <div className="space-y-6 animate-fadeIn">
                                 <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
                                     <div>
-                                        <h3 className="font-bold text-blue-900">منشئ الحملات الذكي (AI Campaign Builder)</h3>
+                                        <h3 className="font-bold text-blue-900">منشئ الحملات الذكي (AI)</h3>
                                         <p className="text-sm text-blue-700 mt-1">قم بإنشاء سلسلة رسائل بريدية مخصصة بناءً على بيانات العميل وتفاصيل الشركة.</p>
                                     </div>
                                     <button
@@ -275,30 +275,30 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                         disabled={generatingScripts}
                                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-blue-200 flex items-center gap-2 disabled:opacity-50 transition-all"
                                     >
-                                        {generatingScripts ? 'جاري الكتابة...' : '✨ كتابة الحملة (AI)'}
+                                        {generatingScripts ? 'جاري الكتابة...' : '✨ كتابة الحملة'}
                                     </button>
                                 </div>
 
                                 <div className="space-y-4">
                                     <div>
-                                        <label className="block text-sm font-bold text-slate-700 mb-1">رسالة ترحيبية (Welcome Message)</label>
+                                        <label className="block text-sm font-bold text-slate-700 mb-1">رسالة ترحيبية</label>
                                         <textarea name="welcome_message" value={formData.welcome_message} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="سيتم إنشاء الرسالة هنا..." />
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 1 (Bump)</label>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 1 (تذكير)</label>
                                             <textarea name="follow_up_1" value={formData.follow_up_1} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 2 (Value/Case Study)</label>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 2 (قيمة مضافة)</label>
                                             <textarea name="follow_up_2" value={formData.follow_up_2} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 3 (Booking)</label>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 3 (حجز موعد)</label>
                                             <textarea name="follow_up_3" value={formData.follow_up_3} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
                                         </div>
                                         <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">Follow Up 4 (Breakup)</label>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 4 (الأخيرة)</label>
                                             <textarea name="follow_up_4" value={formData.follow_up_4} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
                                         </div>
                                     </div>
