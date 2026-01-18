@@ -7,7 +7,7 @@ import {
     MessageSquare, Linkedin, Search, BrainCircuit, FileSearch, FileText,
     BarChart3, Zap, Quote, X, Loader2, Sparkles, CheckCircle, AlertCircle,
     Database, Activity, ZapOff, PhoneCall, GitMerge, Cpu, Network, FileCheck,
-    Plus, Minus, ArrowDown, MessageCircle, MousePointer2
+    Plus, Minus, ArrowDown, MessageCircle, Lock as LockIcon, MousePointer2
 } from 'lucide-react';
 
 const CTA_LINK = "/app/profile?wizard=true";
@@ -698,43 +698,129 @@ const Features = () => {
                         transition={{ duration: 0.8 }}
                         className="w-full md:w-1/2 relative perspective-1000"
                     >
-                        <div className="relative z-10 bg-[#0f172a] rounded-[2rem] p-3 shadow-2xl shadow-gray-900/20 border-b-[12px] border-gray-800 transform rotate-y-6 hover:rotate-0 transition-all duration-700 ease-out group">
-                            <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-gray-700"></div>
-                            <div className="bg-gray-800 rounded-[1.25rem] overflow-hidden aspect-[16/10] relative">
-                                <div className="absolute inset-0 bg-white p-6 flex flex-col">
-                                    <div className="flex items-center justify-between mb-6 border-b border-gray-100 pb-4">
-                                        <div className="w-24 h-4 bg-gray-200 rounded-full"></div>
-                                        <div className="flex gap-2">
-                                            <div className="w-2 h-2 rounded-full bg-red-400"></div>
-                                            <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
-                                            <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                                        </div>
+                        <div className="relative z-10 bg-white rounded-[1.5rem] shadow-2xl shadow-gray-200/50 border border-gray-100 overflow-hidden transform rotate-y-6 hover:rotate-0 transition-all duration-700 ease-out group">
+                            {/* Mock Window Controls */}
+                            <div className="bg-slate-900 px-4 py-3 flex items-center gap-2">
+                                <div className="flex gap-1.5">
+                                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                    <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                                    <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+                                </div>
+                                <div className="ml-4 bg-slate-800 rounded-md px-3 py-1 flex-1 text-[10px] text-slate-400 font-mono text-center flex items-center justify-center gap-1">
+                                    <LockIcon size={8} />
+                                    app.monafsat.com/dashboard
+                                </div>
+                            </div>
+
+                            <div className="flex h-[400px] bg-slate-50">
+                                {/* Sidebar Mock */}
+                                <div className="w-48 bg-white border-l border-gray-100 flex flex-col p-4 hidden md:flex">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <div className="w-6 h-6 bg-brand rounded-md"></div>
+                                        <span className="font-black text-slate-800 text-sm">منافذ</span>
                                     </div>
-                                    <div className="flex gap-4 mb-4">
-                                        <motion.div animate={{ height: [80, 100, 80] }} transition={{ duration: 3, repeat: Infinity }} className="w-1/3 h-24 bg-teal-50 rounded-xl" />
-                                        <motion.div animate={{ height: [60, 90, 60] }} transition={{ duration: 4, repeat: Infinity, delay: 0.5 }} className="w-1/3 h-24 bg-indigo-50 rounded-xl" />
-                                        <motion.div animate={{ height: [70, 40, 70] }} transition={{ duration: 3.5, repeat: Infinity, delay: 1 }} className="w-1/3 h-24 bg-rose-50 rounded-xl" />
-                                    </div>
-                                    <div className="flex gap-4 flex-1">
-                                        <div className="w-2/3 bg-gray-50 rounded-xl border border-gray-100 p-4 flex flex-col justify-end">
-                                            <div className="flex items-end justify-between gap-3 h-32">
-                                                {[40, 75, 50, 95, 60, 85].map((h, i) => (
-                                                    <motion.div
-                                                        key={i}
-                                                        initial={{ height: 0 }}
-                                                        whileInView={{ height: `${h}%` }}
-                                                        transition={{ duration: 1, delay: i * 0.1 }}
-                                                        className="w-full bg-brand rounded-t-md opacity-80 hover:opacity-100 hover:scale-110 transition-all origin-bottom"
-                                                    />
-                                                ))}
+                                    <div className="space-y-1">
+                                        {['لوحة التحكم', 'العملاء المحتملين', 'الفرص البيعية', 'التقارير'].map((item, i) => (
+                                            <div key={i} className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-bold ${i === 1 ? 'bg-brand/5 text-brand' : 'text-slate-500'}`}>
+                                                <div className={`w-1.5 h-1.5 rounded-full ${i === 1 ? 'bg-brand' : 'bg-slate-300'}`}></div>
+                                                {item}
                                             </div>
+                                        ))}
+                                    </div>
+                                    <div className="mt-auto bg-slate-50 p-3 rounded-xl border border-slate-100">
+                                        <div className="text-[10px] text-slate-400 mb-1">الهدف الشهري</div>
+                                        <div className="h-1.5 bg-slate-200 rounded-full overflow-hidden mb-1">
+                                            <div className="h-full bg-brand w-[75%]"></div>
                                         </div>
-                                        <div className="w-1/3 bg-gray-50 rounded-xl border border-gray-100 p-3 space-y-2">
-                                            <div className="w-full h-2 bg-gray-200 rounded-full"></div>
-                                            <div className="w-3/4 h-2 bg-gray-200 rounded-full"></div>
-                                            <div className="w-full h-2 bg-gray-200 rounded-full mt-4"></div>
+                                        <div className="text-xs font-bold text-slate-700">75% مكتمل</div>
+                                    </div>
+                                </div>
+
+                                {/* Main Content Mock */}
+                                <div className="flex-1 p-6 overflow-hidden relative">
+                                    <div className="flex justify-between items-center mb-6">
+                                        <div>
+                                            <h3 className="font-bold text-lg text-slate-800">قائمة العملاء (Live)</h3>
+                                            <p className="text-xs text-slate-400">آخر تحديث: قبل دقيقة</p>
+                                        </div>
+                                        <div className="bg-brand text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-lg shadow-brand/20">
+                                            <span>+ إضافة عميل</span>
                                         </div>
                                     </div>
+
+                                    {/* Stats Row */}
+                                    <div className="grid grid-cols-3 gap-3 mb-6">
+                                        {[
+                                            { l: 'إجمالي العملاء', v: '1,240', c: 'text-slate-700' },
+                                            { l: 'فرص ساخنة', v: '85', c: 'text-rose-500' },
+                                            { l: 'تم الإغلاق', v: '32', c: 'text-emerald-600' }
+                                        ].map((stat, i) => (
+                                            <div key={i} className="bg-white p-3 rounded-xl border border-gray-100 shadow-sm">
+                                                <div className="text-[10px] text-slate-400 mb-1 font-bold">{stat.l}</div>
+                                                <div className={`text-lg font-black ${stat.c}`}>{stat.v}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Table Mock */}
+                                    <div className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+                                        <table className="w-full text-right">
+                                            <thead className="bg-slate-50 border-b border-gray-100">
+                                                <tr>
+                                                    {['العميل', 'المجال', 'الحالة', 'الإجراء'].map((h, i) => (
+                                                        <th key={i} className="px-4 py-2 text-[10px] font-bold text-slate-500">{h}</th>
+                                                    ))}
+                                                </tr>
+                                            </thead>
+                                            <tbody className="divide-y divide-gray-50">
+                                                {[
+                                                    { n: 'شركة التقنية المتقدمة', i: 'SaaS', s: 'جديد', sc: 'bg-blue-50 text-blue-600' },
+                                                    { n: 'مجموعة العمران', i: 'Real Estate', s: 'مفاوضات', sc: 'bg-amber-50 text-amber-600' },
+                                                    { n: 'حلول المستقبل', i: 'Fintech', s: 'عميل', sc: 'bg-emerald-50 text-emerald-600' },
+                                                    { n: 'رواد الأعمال', i: 'Education', s: 'متابعة', sc: 'bg-indigo-50 text-indigo-600' }
+                                                ].map((row, idx) => (
+                                                    <motion.tr
+                                                        key={idx}
+                                                        initial={{ opacity: 0, x: 20 }}
+                                                        whileInView={{ opacity: 1, x: 0 }}
+                                                        transition={{ delay: idx * 0.1 }}
+                                                        className="hover:bg-slate-50/50"
+                                                    >
+                                                        <td className="px-4 py-3">
+                                                            <div className="flex items-center gap-2">
+                                                                <div className="w-6 h-6 rounded-full bg-slate-100 text-[10px] flex items-center justify-center font-bold text-slate-500">
+                                                                    {row.n[0]}
+                                                                </div>
+                                                                <span className="text-xs font-bold text-slate-700">{row.n}</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-4 py-3 text-[10px] text-slate-500 font-medium">{row.i}</td>
+                                                        <td className="px-4 py-3">
+                                                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${row.sc}`}>{row.s}</span>
+                                                        </td>
+                                                        <td className="px-4 py-3">
+                                                            <div className="h-1.5 w-12 bg-slate-100 rounded-full overflow-hidden">
+                                                                <motion.div
+                                                                    initial={{ width: 0 }}
+                                                                    whileInView={{ width: '60%' }}
+                                                                    className="h-full bg-slate-300"
+                                                                />
+                                                            </div>
+                                                        </td>
+                                                    </motion.tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    {/* Cursor Animation */}
+                                    <motion.div
+                                        animate={{ x: [0, 100, 100, 0], y: [0, 50, 0, 0] }}
+                                        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                                        className="absolute top-1/2 right-1/2 pointer-events-none"
+                                    >
+                                        <MousePointer2 className="fill-slate-900 text-white drop-shadow-xl" size={24} />
+                                    </motion.div>
                                 </div>
                             </div>
                         </div>
