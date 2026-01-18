@@ -366,6 +366,46 @@ const GrowthSystemPage = () => {
         </section>
     );
 
+    const OurNumbers = () => (
+        <section className="py-12 relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden shadow-2xl text-center">
+                    {/* Background Glows */}
+                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-500/20 rounded-full blur-[100px]"></div>
+                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-[100px]"></div>
+
+                    <div className="relative z-10 mb-16">
+                        <div className="inline-flex items-center gap-2 bg-white/10 text-brand-300 px-4 py-2 rounded-full text-sm font-bold mb-6 border border-white/10 backdrop-blur-sm">
+                            <TrendingUp size={16} />
+                            <span>نتائج حقيقية ملموسة</span>
+                        </div>
+                        <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
+                            أرقامنا في <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-200">2025</span>
+                        </h2>
+                        <p className="text-xl md:text-3xl text-slate-300 font-bold leading-relaxed">
+                            وبإذن الله جاهزين نضاعف أرقامنا <span className="text-white border-b-4 border-brand-500">لعملائنا ولينا</span> في 2026 🚀
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        {[
+                            { value: "+4,230", label: "فرصة حقيقية (Leads)", desc: "تم توليدها لعملائنا", color: "text-brand-400" },
+                            { value: "63", label: "شركة سعودية", desc: "نخدمها في مختلف القطاعات", color: "text-purple-400" },
+                            { value: "+128M", label: "ريال سعودي", desc: "إجمالي قيمة عروض التسعير", color: "text-emerald-400" },
+                            { value: "+11M", label: "ريال سعودي", desc: "مبيعات محققة (Closed Won)", color: "text-blue-400" }
+                        ].map((stat, i) => (
+                            <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-all group">
+                                <div className={`text-4xl md:text-5xl font-black mb-2 ${stat.color}`}>{stat.value}</div>
+                                <div className="text-lg font-bold text-white mb-1">{stat.label}</div>
+                                <div className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">{stat.desc}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+
     const AIAgentDemo = () => (
         <section className="py-24 bg-white overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -923,7 +963,10 @@ const GrowthSystemPage = () => {
                     {/* 2. Tech */}
                     <TechStack />
 
-                    {/* 3. Agent */}
+                    {/* 3. Numbers */}
+                    <OurNumbers />
+
+                    {/* 4. Agent */}
                     <AIAgentDemo />
                 </div>
             </div>
