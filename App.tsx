@@ -22,6 +22,7 @@ import ProviderIntegrationsPage from './pages/ProviderIntegrationsPage';
 // import { PlaceholderPage } from './components/PlaceholderPage'; // Unused
 
 import LoginPage from './pages/LoginPage';
+import GrowthSystemPage from './pages/GrowthSystemPage';
 
 const App = () => {
   return (
@@ -29,7 +30,10 @@ const App = () => {
       <DataProvider>
         <Routes>
           {/* Public Routes */}
-          <Route path="/" element={<LandingPage />} />
+          <Route path="/" element={<GrowthSystemPage />} />
+          <Route path="/growth" element={<GrowthSystemPage />} />
+          <Route path="/investment" element={<GrowthSystemPage />} />
+          <Route path="/landing-legacy" element={<LandingPage />} />
           <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
           <Route path="/login" element={<LoginPage />} />
 

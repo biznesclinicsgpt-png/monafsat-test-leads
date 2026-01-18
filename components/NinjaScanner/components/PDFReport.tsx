@@ -12,7 +12,7 @@ interface PDFReportProps {
 export const PDFReport: React.FC<PDFReportProps> = ({ data, results, reportRef }) => {
     return (
         <div style={{ position: 'absolute', top: -10000, left: -10000 }}>
-            <div ref={reportRef} className="p-10 bg-white text-slate-900 w-[210mm] min-h-[297mm]" dir="rtl">
+            <div ref={reportRef} className="p-8 bg-white text-slate-900 w-[190mm] min-h-[297mm]" dir="rtl">
                 {/* Header */}
                 <div className="flex justify-between items-center border-b pb-8 mb-8 border-slate-200">
                     <div className="text-right">
