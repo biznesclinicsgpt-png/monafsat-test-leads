@@ -825,27 +825,27 @@ const AnalysisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 };
 
 const LandingPage = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = () => setIsModalOpen(true);
+    const navigate = useNavigate();
+    const startDiagnosis = () => navigate('/app/diagnosis');
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-brand selection:text-white scroll-smooth w-full overflow-x-hidden" dir="rtl">
-            <Navbar onStartDiagnosis={openModal} />
+            <Navbar onStartDiagnosis={startDiagnosis} />
             <main className="w-full">
-                <Hero onStartDiagnosis={openModal} />
+                <Hero onStartDiagnosis={startDiagnosis} />
                 <PainSection />
                 <QuantifiedPain />
                 <ValueProposition />
                 <AISection />
-                <WhatYouGet onStartDiagnosis={openModal} />
+                <WhatYouGet onStartDiagnosis={startDiagnosis} />
                 <HowItWorks />
                 <Features />
                 <Testimonials />
                 <FAQ />
-                <FinalCTA onStartDiagnosis={openModal} />
+                <FinalCTA onStartDiagnosis={startDiagnosis} />
             </main>
             <Footer />
-            <AnalysisModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            {/* AnalysisModal removed as we redirect to full page */}
         </div>
     );
 };
