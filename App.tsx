@@ -9,6 +9,7 @@ import OpportunitiesPage from './pages/OpportunitiesPage';
 import ProfilePage from './pages/ProfilePage';
 import ProjectsPage from './pages/ProjectsPage';
 import MessagesPage from './pages/MessagesPage';
+import LandingPage from './pages/LandingPage';
 import { PlaceholderPage } from './components/PlaceholderPage';
 
 // Placeholder Pages for Phase 3 implementation
@@ -22,12 +23,16 @@ const App = () => {
     <BrowserRouter>
       <DataProvider>
         <Routes>
-          <Route path="/" element={<MainLayout />}>
+          {/* Landing Page Route */}
+          <Route path="/" element={<LandingPage />} />
+
+          {/* App Routes (Protected/Layout Wrapped) */}
+          <Route path="/app" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="contacts" element={<ContactsManager />} />
+            <Route path="profile" element={<ProfilePage />} />
 
             {/* Placeholder Routes */}
-            <Route path="profile" element={<ProfilePage />} />
             <Route path="leads" element={<LeadsPage />} />
             <Route path="opportunities" element={<OpportunitiesPage />} />
             <Route path="projects" element={<ProjectsPage />} />
@@ -35,10 +40,10 @@ const App = () => {
             <Route path="financial" element={<FinancialPage />} />
             <Route path="reviews" element={<ReviewsPage />} />
             <Route path="integrations" element={<ProviderIntegrationsPage />} />
-
-            {/* Fallback */}
-            <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </DataProvider>
     </BrowserRouter>

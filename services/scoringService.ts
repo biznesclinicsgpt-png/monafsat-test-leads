@@ -9,15 +9,38 @@ export const calculateFitScore = (
     // 0. Priority: Profile Strategy
     let profileScore = 0;
     if (profile) {
+        // A. Basic Text Match
         const targetText = [
             profile.target_audience,
             profile.value_proposition,
-            ...(profile.industries?.map(i => typeof i === 'string' ? i : '') || []) // Handle Json[] roughly for now
+            ...(profile.industries?.map(i => typeof i === 'string' ? i : '') || [])
         ].join(' ').toLowerCase();
 
-        // Bonus for Strategy Match
-        if (targetText.length > 5 && contact.title && targetText.includes(contact.title.toLowerCase())) profileScore += 15;
-        if (targetText.length > 5 && contact.industry_ar && targetText.includes(contact.industry_ar.toLowerCase())) profileScore += 15;
+        // Bonus for Strategy Text Match
+        if (targetText.length > 5 && contact.title && targetText.includes(contact.title.toLowerCase())) profileScore += 10;
+        if (targetText.length > 5 && contact.industry_ar && targetText.includes(contact.industry_ar.toLowerCase())) profileScore += 10;
+
+        // B. Visual Strategy Match (Phase 7 Activation)
+        if (profile.icp_structured) {
+            // 1. Decision Maker Match (+25) - High Priority
+            const isDecisionMaker = profile.icp_structured.decision_makers?.some(role =>
+                contact.title?.toLowerCase().includes(role.toLowerCase())
+            );
+            if (isDecisionMaker) profileScore += 25;
+
+            // 2. Company Size Match (+15)
+            const isSizeMatch = profile.icp_structured.company_size_ideal?.some(size =>
+                contact.employee_count === size || contact.employee_count?.includes(size)
+            );
+            if (isSizeMatch) profileScore += 15;
+
+            // 3. Pain Point Relevancy (+10) 
+            // (If their industry/description hints at the pain point keywords - simpler check)
+            const painKeywords = profile.icp_structured.pain_points?.join(' ').toLowerCase();
+            if (painKeywords && contact.company_description && painKeywords.split(' ').some(w => w.length > 4 && contact.company_description?.toLowerCase().includes(w))) {
+                profileScore += 10;
+            }
+        }
     }
 
     if (!icp.isSet && profileScore === 0) {

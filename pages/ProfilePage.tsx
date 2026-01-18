@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { ProviderProfile, ServiceLine, ClientReference } from '../types';
+import ProviderWizard from '../components/Wizard/ProviderWizard';
 
 const ProfilePage = () => {
     const { user, providerProfile, updateProviderProfile } = useData();
     const [activeTab, setActiveTab] = useState<'company' | 'strategy' | 'services' | 'clients'>('company');
     const [saving, setSaving] = useState(false);
+    const [showWizard, setShowWizard] = useState(false);
 
     // Initial state based on providerProfile
     const [formData, setFormData] = useState<Partial<ProviderProfile>>({
@@ -24,6 +26,12 @@ const ProfilePage = () => {
         value_proposition: '',
         target_audience: '',
         unique_selling_points: [], // Will handle as string in UI
+        icp_structured: {
+            decision_makers: [],
+            pain_points: [],
+            business_goals: [],
+            company_size_ideal: []
+        },
 
         service_lines: [],
         clients: []
@@ -111,8 +119,10 @@ const ProfilePage = () => {
 
             {/* Content Area */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-8 min-h-[400px]">
+
                 {activeTab === 'company' && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 animate-fadeIn">
+                        {/* ... (Keep existing company fields) ... */}
                         <div className="space-y-6">
                             <h3 className="text-lg font-bold text-slate-800 border-b pb-2">الهوية التجارية</h3>
                             <div>
@@ -156,59 +166,280 @@ const ProfilePage = () => {
 
                 {activeTab === 'strategy' && (
                     <div className="space-y-6 animate-fadeIn max-w-3xl">
-                        <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 mb-6">
-                            <h3 className="font-bold text-blue-900">🧠 عقل المحرك (The Engine Brain)</h3>
-                            <p className="text-sm text-blue-700 mt-1">
-                                هذه المعلومات ستستخدم لتدريب الذكاء الاصطناعي عند كتابة رسائل البريد الإلكتروني وعند البحث عن عملاء محتملين.
-                            </p>
+                        <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-6 flex justify-between items-start">
+                            <div>
+                                <h3 className="font-bold text-blue-900">🧠 عقل المحرك (The Engine Brain)</h3>
+                                <p className="text-sm text-blue-700 mt-1 mb-2 max-w-xl">
+                                    هذه المعلومات تبني "ملف العميل المثالي" (ICP) وتستخدم لتوجيه الذكاء الاصطناعي في البحث وكتابة الرسائل.
+                                </p>
+                            </div>
+                            <button
+                                onClick={async () => {
+                                    if (!formData.company_name && !formData.description) return alert("يرجى تعبئة اسم الشركة ووصفها في تبويب 'معلومات الشركة' أولاً.");
+                                    const btn = document.getElementById('ai-btn');
+                                    if (btn) btn.innerText = "جاري التحليل... 🧠";
+
+                                    try {
+                                        const res = await fetch('/api/ai/strategy', {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify({
+                                                company_name: formData.company_name,
+                                                description: formData.description,
+                                                website: formData.website
+                                            })
+                                        });
+                                        const data = await res.json();
+                                        if (data.value_proposition) {
+                                            const newIcp = data.icp_structured || {
+                                                decision_makers: [],
+                                                pain_points: [],
+                                                business_goals: [],
+                                                company_size_ideal: []
+                                            };
+
+                                            setFormData(prev => ({
+                                                ...prev,
+                                                value_proposition: data.value_proposition,
+                                                target_audience: data.target_audience,
+                                                unique_selling_points: data.unique_selling_points,
+                                                icp_structured: newIcp
+                                            }));
+                                            setUspString(data.unique_selling_points.join('\n'));
+                                            alert("تم بناء استراتيجية العميل المثالي بنجاح! 🚀");
+                                        }
+                                    } catch (e) {
+                                        alert("حدث خطأ أثناء التوليد. تأكد من اتصالك بالإنترنت.");
+                                    } finally {
+                                        if (btn) btn.innerText = "✨ توليد الاستراتيجية بالذكاء الاصطناعي";
+                                    }
+                                }}
+                                id="ai-btn"
+                                className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-6 py-2.5 rounded-xl shadow-md text-sm font-bold transition-all transform hover:scale-105"
+                            >
+                                ✨ توليد الاستراتيجية بالذكاء الاصطناعي
+                            </button>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1">القيمة المقترحة (Value Proposition)</label>
-                            <p className="text-xs text-slate-500 mb-2">جملة واحدة قوية تشرح لماذا يجب على العميل التعامل معك.</p>
+                        {/* Value Prop Banner */}
+                        <div className="bg-gradient-to-r from-slate-800 to-slate-900 text-white p-6 rounded-2xl shadow-lg mb-8">
+                            <label className="block text-xs font-bold text-slate-300 uppercase mb-2 tracking-wider">القيمة المقترحة (Value Proposition)</label>
                             <textarea
                                 name="value_proposition"
                                 value={formData.value_proposition}
                                 onChange={handleChange}
-                                rows={3}
-                                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500"
-                                placeholder="مثال: نساعد الشركات العقارية على زيادة المبيعات بنسبة 30% من خلال التسويق الرقمي المؤتمت."
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1">الجمهور المستهدف (Target Audience)</label>
-                            <textarea
-                                name="target_audience"
-                                value={formData.target_audience}
-                                onChange={handleChange}
                                 rows={2}
-                                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500"
-                                placeholder="مثال: مدراء التسويق في شركات التجزئة الكبرى في الرياض وجدة."
+                                className="w-full bg-transparent border-none text-xl font-bold placeholder-slate-500 focus:ring-0 text-white resize-none"
+                                placeholder="مثال: نساعد الشركات العقارية على زيادة المبيعات بنسبة 30%..."
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1">نقاط التميز (USPs)</label>
-                            <p className="text-xs text-slate-500 mb-2">اكتب كل نقطة في سطر جديد.</p>
+                        {/* Visual ICP Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            {/* Card 1: Decision Makers */}
+                            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">صناع القرار (Decision Makers)</h3>
+                                </div>
+                                <div className="space-y-2">
+                                    {(formData.icp_structured?.decision_makers?.length ? formData.icp_structured.decision_makers : ['']).map((role, idx) => (
+                                        <input
+                                            key={idx}
+                                            type="text"
+                                            value={role}
+                                            onChange={(e) => {
+                                                const newRoles = [...(formData.icp_structured?.decision_makers || [])];
+                                                newRoles[idx] = e.target.value;
+                                                setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, decision_makers: newRoles } }));
+                                            }}
+                                            className="w-full px-3 py-2 bg-slate-50 border border-slate-100 rounded-lg text-sm font-medium text-slate-700 focus:bg-white focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
+                                            placeholder="Role title..."
+                                        />
+                                    ))}
+                                    <button
+                                        onClick={() => setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, decision_makers: [...(prev.icp_structured?.decision_makers || []), ''] } }))}
+                                        className="text-xs text-purple-600 font-bold hover:underline"
+                                    >
+                                        + إضافة دور
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Card 2: Pain Points */}
+                            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">نقاط الألم (Pain Points)</h3>
+                                </div>
+                                <div className="space-y-2">
+                                    {(formData.icp_structured?.pain_points?.length ? formData.icp_structured.pain_points : ['']).map((pain, idx) => (
+                                        <input
+                                            key={idx}
+                                            type="text"
+                                            value={pain}
+                                            onChange={(e) => {
+                                                const newPain = [...(formData.icp_structured?.pain_points || [])];
+                                                newPain[idx] = e.target.value;
+                                                setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, pain_points: newPain } }));
+                                            }}
+                                            className="w-full px-3 py-2 bg-slate-50 border border-slate-100 rounded-lg text-sm font-medium text-slate-700 focus:bg-white focus:border-red-300 focus:ring-2 focus:ring-red-100"
+                                            placeholder="Pain point..."
+                                        />
+                                    ))}
+                                    <button
+                                        onClick={() => setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, pain_points: [...(prev.icp_structured?.pain_points || []), ''] } }))}
+                                        className="text-xs text-red-600 font-bold hover:underline"
+                                    >
+                                        + إضافة مشكلة
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Card 3: Business Goals */}
+                            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">أهداف العمل (Business Goals)</h3>
+                                </div>
+                                <div className="space-y-2">
+                                    {(formData.icp_structured?.business_goals?.length ? formData.icp_structured.business_goals : ['']).map((goal, idx) => (
+                                        <input
+                                            key={idx}
+                                            type="text"
+                                            value={goal}
+                                            onChange={(e) => {
+                                                const newGoals = [...(formData.icp_structured?.business_goals || [])];
+                                                newGoals[idx] = e.target.value;
+                                                setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, business_goals: newGoals } }));
+                                            }}
+                                            className="w-full px-3 py-2 bg-slate-50 border border-slate-100 rounded-lg text-sm font-medium text-slate-700 focus:bg-white focus:border-emerald-300 focus:ring-2 focus:ring-emerald-100"
+                                            placeholder="Goal..."
+                                        />
+                                    ))}
+                                    <button
+                                        onClick={() => setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, business_goals: [...(prev.icp_structured?.business_goals || []), ''] } }))}
+                                        className="text-xs text-emerald-600 font-bold hover:underline"
+                                    >
+                                        + إضافة هدف
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Card 4: Company Profile */}
+                            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all group">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                                    </div>
+                                    <h3 className="font-bold text-slate-800">بيانات الشركة (Firmographics)</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="text-xs font-bold text-slate-500 uppercase">حجم الشركة المثالي</label>
+                                        <input
+                                            type="text"
+                                            value={formData.icp_structured?.company_size_ideal?.[0] || ''}
+                                            onChange={(e) => setFormData(prev => ({ ...prev, icp_structured: { ...prev.icp_structured!, company_size_ideal: [e.target.value] } }))}
+                                            className="w-full mt-1 px-3 py-2 bg-slate-50 border border-slate-100 rounded-lg text-sm font-medium text-slate-700 focus:bg-white focus:border-blue-300"
+                                            placeholder="e.g. 50-200 employees"
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className="text-xs font-bold text-slate-500 uppercase">وصف الجمهور (Target Audience)</label>
+                                        <textarea
+                                            name="target_audience"
+                                            value={formData.target_audience}
+                                            onChange={handleChange}
+                                            rows={2}
+                                            className="w-full mt-1 px-3 py-2 bg-slate-50 border border-slate-100 rounded-lg text-sm font-medium text-slate-700 focus:bg-white focus:border-blue-300 resize-none"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {/* USPs Section (Full Width) */}
+                        <div className="mt-8">
+                            <label className="block text-sm font-bold text-slate-700 mb-2">نقاط التميز (Unique Selling Points)</label>
                             <textarea
                                 value={uspString}
                                 onChange={handleUspChange}
-                                rows={5}
-                                className="w-full px-4 py-2 rounded-lg border border-slate-300 focus:ring-2 focus:ring-blue-500"
-                                placeholder="- خبرة 10 سنوات
-- فريق معتمد من Google
-- دعم فني 24/7"
+                                rows={3}
+                                className="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 text-sm"
+                                placeholder="- نقطة تميز 1..."
                             />
                         </div>
                     </div>
                 )}
 
                 {activeTab === 'services' && (
-                    <div className="space-y-6 animate-fadeIn">
-                        <div className="text-center py-12 bg-slate-50 rounded-xl border border-dashed border-slate-300">
-                            <p className="text-slate-500">🚧 سيتم إضافة أداة تخصيص الخدمات والقطاعات قريباً.</p>
-                            <p className="text-sm text-slate-400 mt-2">حالياً يعتمد النظام على الوصف العام للشركة.</p>
+                    <div className="space-y-8 animate-fadeIn">
+                        {/* Services Selection */}
+                        <div>
+                            <h3 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">📌 خدماتنا (Our Services)</h3>
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                {['Digital Marketing', 'Software Development', 'SEO', 'Content Creation', 'Consulting', 'Legal Services', 'Accounting', 'HR Services', 'Event Management', 'Cybersecurity'].map(service => (
+                                    <label key={service} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${formData.service_lines?.some((s: any) => s.name === service) ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-slate-200 hover:border-slate-300'}`}>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.service_lines?.some((s: any) => s.name === service)}
+                                            onChange={(e) => {
+                                                const checked = e.target.checked;
+                                                setFormData(prev => {
+                                                    const current = prev.service_lines || [];
+                                                    if (checked) {
+                                                        return { ...prev, service_lines: [...current, { name: service, id: Date.now() }] };
+                                                    } else {
+                                                        return { ...prev, service_lines: current.filter((s: any) => s.name !== service) };
+                                                    }
+                                                });
+                                            }}
+                                            className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                        />
+                                        <span className="font-medium text-sm">{service}</span>
+                                    </label>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Industries Selection */}
+                        <div>
+                            <h3 className="text-lg font-bold text-slate-800 mb-4 border-b pb-2">🏭 القطاعات المستهدفة (Target Industries)</h3>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                                {['E-commerce', 'Fintech', 'Real Estate', 'Healthcare', 'Education', 'Construction', 'Government', 'Retail', 'Logistics', 'Energy'].map(ind => (
+                                    <label key={ind} className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all ${formData.industries?.some((i: any) => (i.name || i) === ind) ? 'border-emerald-500 bg-emerald-50 text-emerald-700' : 'border-slate-200 hover:border-slate-300'}`}>
+                                        <input
+                                            type="checkbox"
+                                            checked={formData.industries?.some((i: any) => (i.name || i) === ind)}
+                                            onChange={(e) => {
+                                                const checked = e.target.checked;
+                                                setFormData(prev => {
+                                                    const current = prev.industries || [];
+                                                    // Handle both string and object structure (legacy vs new)
+                                                    const isString = current.length > 0 && typeof current[0] === 'string';
+
+                                                    if (checked) {
+                                                        return { ...prev, industries: [...current, ind] }; // Simplified for now
+                                                    } else {
+                                                        return { ...prev, industries: current.filter((i: any) => (i.name || i) !== ind) };
+                                                    }
+                                                });
+                                            }}
+                                            className="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500"
+                                        />
+                                        <span className="font-medium text-sm">{ind}</span>
+                                    </label>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 )}

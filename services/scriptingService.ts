@@ -27,6 +27,12 @@ export const generateCampaignScripts = async (
         Value Proposition: ${profile.value_proposition || 'We help companies grow.'}
         Target Audience: ${profile.target_audience || 'B2B Companies'}
         Unique Selling Points: ${profile.unique_selling_points?.join(', ') || 'Quality, Speed, Reliability'}
+        
+        VISUAL ICP INSIGHTS (Use these to personalize deeply):
+        - PAIN POINTS (Agitate these): ${profile.icp_structured?.pain_points?.join(', ') || 'Inefficiency, High Costs'}
+        - DESIRED GOALS (Promise these): ${profile.icp_structured?.business_goals?.join(', ') || 'Growth, Automation'}
+        - TARGET ROLES (Write for them): ${profile.icp_structured?.decision_makers?.join(', ') || 'Decision Makers'}
+
         Case Studies: ${profile.clients?.map(c => `Client: ${c.company_name} -> Result: ${c.results}`).join('; ') || 'N/A'}
         ` : '';
 
