@@ -39,14 +39,18 @@ const GrowthSystemPage = () => {
                     </div>
 
                     <div className="hidden md:flex items-center gap-8">
-                        <a href="#problem" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">المشكلة</a>
-                        <a href="#ninja-os" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">Ninja OS</a>
+                        <a href="#ninja-os" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">نظام Ninja OS</a>
+                        <button key="scanner-link" onClick={() => navigate('/scanner')} className="text-slate-600 hover:text-brand-600 font-bold transition-colors flex items-center gap-2">
+                            <Layout size={18} />
+                            عن تشخيص النينجا
+                        </button>
                         <a href="#pricing" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">الأسعار</a>
                         <button
                             onClick={() => navigate('/diagnosis')}
-                            className="bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/20"
+                            className="bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2"
                         >
-                            احجز استشارة
+                            <Zap size={18} className="fill-white" />
+                            ابدأ تشخيص النينجا (مجاناً)
                         </button>
                     </div>
 
@@ -67,11 +71,12 @@ const GrowthSystemPage = () => {
                         className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
                     >
                         <div className="px-4 py-6 space-y-4">
-                            <a href="#problem" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">المشكلة</a>
-                            <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">Ninja OS</a>
+                            <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">نظام Ninja OS</a>
+                            <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
                             <a href="#pricing" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">الأسعار</a>
-                            <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold">
-                                احجز استشارة
+                            <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
+                                <Zap size={18} className="fill-white" />
+                                ابدأ تشخيص النينجا (مجاناً)
                             </button>
                         </div>
                     </motion.div>
@@ -118,16 +123,16 @@ const GrowthSystemPage = () => {
                     >
                         <button
                             onClick={() => navigate('/diagnosis')}
-                            className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-lg px-8 py-5 rounded-2xl font-bold transition-all shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1 flex items-center justify-center gap-3"
+                            className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-lg px-8 py-5 rounded-2xl font-black transition-all shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1 flex items-center justify-center gap-3"
                         >
-                            احجز جلسة تشخيص 30 دقيقة
-                            <ArrowLeft size={20} />
+                            <Zap size={24} className="fill-white" />
+                            ابدأ تشخيص النينجا مجاناً
                         </button>
                         <button
-                            onClick={() => document.getElementById('ninja-os')?.scrollIntoView({ behavior: 'smooth' })}
+                            onClick={() => navigate('/scanner')}
                             className="w-full sm:w-auto bg-white hover:bg-gray-50 text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center"
                         >
-                            تعرّف هل Ninja OS مناسب لك؟
+                            كيف يعمل التشخيص؟
                         </button>
                     </motion.div>
 
