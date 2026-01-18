@@ -233,119 +233,166 @@ const GrowthSystemPage = () => {
         </section>
     );
 
+
     const TechStack = () => (
         <section className="py-24 bg-slate-50 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">نظام سعودي... <span className="text-brand-600">بقلب عالمي</span></h2>
-                    <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
-                        ما نمزح في التقنية. دمجنا أقوى أدوات الذكاء الاصطناعي العالمية مع فهمنا العميق للسوق السعودي.
+                <div className="text-center mb-20">
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6">كيف يعمل"المحرك"؟ <span className="text-brand-600">خطوة بخطوة</span></h2>
+                    <p className="text-xl text-slate-500 font-medium max-w-3xl mx-auto">
+                        نظامنا لا يعتمد على العشوائية. صممنا Pipeline دقيق يرحل العميل من مجرد "رقم" إلى "صفقة" عبر 4 مراحل ذكية.
                     </p>
                 </div>
 
-                {/* Tech Ecosystem Canvas */}
                 <div className="relative">
-                    {/* Connecting Lines (Background) */}
-                    <div className="absolute inset-x-0 top-1/2 h-1 bg-slate-200 -z-10 hidden lg:block"></div>
+                    {/* Central Line */}
+                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-brand-100 hidden md:block transform -translate-x-1/2"></div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+                    <div className="space-y-12 relative z-10">
 
-                        {/* 1. Lead Generation (The Source) */}
-                        <div className="lg:col-span-7 space-y-6">
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="bg-slate-900 text-white text-xs font-black px-2 py-1 rounded uppercase tracking-wider">المرحلة 1</span>
-                                <h3 className="font-bold text-slate-700">Lead Generation (التوليد)</h3>
-                            </div>
-
-                            <div className="grid grid-cols-1 gap-4 h-full">
-                                {/* Outbound Zone - Primary Focus */}
-                                <div className="bg-slate-200/50 p-6 rounded-3xl border border-slate-300 relative group overflow-hidden">
-                                    <div className="absolute top-0 right-0 bg-slate-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">Outbound</div>
-                                    <div className="space-y-6">
-                                        <div>
-                                            <p className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Data & Intent</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-slate-200">
-                                                    🧱 Clay
-                                                </div>
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-slate-200">ZoomInfo</div>
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-slate-200">Apollo</div>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Sales Engagement</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-slate-200">
-                                                    💌 Lemlist
-                                                </div>
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-slate-200">
-                                                    🔥 Smartlead
-                                                </div>
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-slate-200">Instantly</div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        {/* Stage 1: Generation */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="md:w-1/2 md:text-left md:pl-12 order-2 md:order-1">
+                                <div className="bg-white p-2 inline-block rounded-xl shadow-sm border border-brand-100 mb-4">
+                                    <span className="bg-brand-600 text-white font-black px-3 py-1 rounded-lg text-sm">المرحلة 1</span>
                                 </div>
-
-
-                            </div>
-                        </div>
-
-                        {/* 2. Lead Capture & Management */}
-                        <div className="lg:col-span-5 space-y-6">
-                            <div className="flex items-center gap-3 mb-2">
-                                <span className="bg-slate-900 text-white text-xs font-black px-2 py-1 rounded uppercase tracking-wider">المرحلة 2 & 3</span>
-                                <h3 className="font-bold text-slate-700">Capture & Close (الإغلاق)</h3>
-                            </div>
-
-                            <div className="space-y-4">
-                                {/* Capture Zone */}
-                                <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-100 relative">
-                                    <div className="absolute top-0 right-0 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">Capture</div>
-                                    <div className="flex flex-wrap gap-2">
-                                        <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-blue-100">Typeform</div>
-                                        <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-blue-100">Calendly</div>
-                                        <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-blue-100">Website Visitor ID</div>
-                                    </div>
+                                <h3 className="text-3xl font-black text-slate-900 mb-4">Lead Generation (التوليد)</h3>
+                                <p className="text-slate-500 text-lg leading-relaxed mb-6">
+                                    نجمع البيانات بدقة من مصادر موثوقة (Data) ونطلق حملات الوصول (Engagement) عبر قنوات متعددة لضمان الوصول للإنبوكس.
+                                </p>
+                                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
+                                    {['Clay', 'ZoomInfo', 'Apollo', 'Lemlist', 'Smartlead', 'Instantly'].map((tool, i) => (
+                                        <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-sm font-bold border border-slate-200">{tool}</span>
+                                    ))}
                                 </div>
-
-                                {/* Management & Close Zone */}
-                                <div className="bg-purple-50/50 p-6 rounded-3xl border border-purple-100 relative">
-                                    <div className="absolute top-0 right-0 bg-purple-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">Management & AI</div>
+                            </div>
+                            <div className="md:w-1/2 order-1 md:order-2">
+                                <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 relative overflow-hidden group hover:border-brand-300 transition-all">
+                                    <div className="absolute top-0 right-0 bg-slate-100 text-slate-500 text-xs font-bold px-3 py-1 rounded-bl-xl border-b border-l border-slate-200">System Source</div>
                                     <div className="grid grid-cols-2 gap-4">
-                                        <div>
-                                            <p className="text-xs font-bold text-purple-600 mb-2 uppercase tracking-wide">CRM & Auto</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-purple-100">HubSpot</div>
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-purple-100">Zapier</div>
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2 text-sm font-black text-slate-700"><Database size={16} className="text-brand-500" /> Data & Intent</div>
+                                            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><div className="w-2 h-2 bg-green-500 rounded-full"></div> <span className="text-xs font-bold">Clay</span></div>
+                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><div className="w-2 h-2 bg-blue-500 rounded-full"></div> <span className="text-xs font-bold">ZoomInfo</span></div>
+                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><div className="w-2 h-2 bg-yellow-500 rounded-full"></div> <span className="text-xs font-bold">Apollo</span></div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <p className="text-xs font-bold text-purple-600 mb-2 uppercase tracking-wide">Intelligence</p>
-                                            <div className="flex flex-wrap gap-2">
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-purple-100">
-                                                    🤖 OpenAI
-                                                </div>
-                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-purple-100">Gong</div>
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2 text-sm font-black text-slate-700"><Mail size={16} className="text-brand-500" /> Engagement</div>
+                                            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
+                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><span className="text-xs font-bold">💌 Lemlist</span></div>
+                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><span className="text-xs font-bold">🔥 Smartlead</span></div>
+                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><span className="text-xs font-bold">⚡ Instantly</span></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        {/* Stage 2: Enrichment (AI) */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="md:w-1/2 md:text-right md:pr-12 order-2">
+                                <div className="bg-white p-2 inline-block rounded-xl shadow-sm border border-purple-100 mb-4">
+                                    <span className="bg-purple-600 text-white font-black px-3 py-1 rounded-lg text-sm">المرحلة 2</span>
+                                </div>
+                                <h3 className="text-3xl font-black text-slate-900 mb-4">AI Enrichment (الإثراء الذكي)</h3>
+                                <p className="text-slate-500 text-lg leading-relaxed mb-6">
+                                    قبل ما نكلمه، بنعرف عنه كل شيء. عملاء ذكاء اصطناعي (Agents) يحللون الشركة، الشخص، والأخبار الأخيرة لبناء سياق قوي.
+                                </p>
+                            </div>
+                            <div className="md:w-1/2 order-1">
+                                <div className="bg-white rounded-3xl shadow-xl border border-purple-100 p-6 relative overflow-hidden group hover:border-purple-300 transition-all">
+                                    <div className="absolute top-0 right-0 bg-purple-50 text-purple-600 text-xs font-bold px-3 py-1 rounded-bl-xl border-b border-l border-purple-100">Deep Research 🧠</div>
+
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="w-12 h-12 bg-slate-200 rounded-full flex-shrink-0 flex items-center justify-center text-2xl">👨‍⚕️</div>
+                                        <div className="flex-1 space-y-2">
+                                            <div className="h-4 bg-slate-100 rounded w-3/4 flex items-center px-2 text-xs font-bold text-slate-500">Dr. Amr...</div>
+                                            <div className="h-3 bg-slate-50 rounded w-1/2"></div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <div className="flex items-center gap-3 text-sm p-3 bg-purple-50 rounded-xl border border-purple-100">
+                                            <Sparkles size={18} className="text-purple-600" />
+                                            <span className="text-slate-700 font-bold">تحليل الإيرادات السنوية...</span>
+                                            <span className="mr-auto text-green-600 font-bold text-xs">تم ✅</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-sm p-3 bg-purple-50 rounded-xl border border-purple-100">
+                                            <Sparkles size={18} className="text-purple-600" />
+                                            <span className="text-slate-700 font-bold">فحص منشورات LinkedIn الأخيرة...</span>
+                                            <span className="mr-auto text-green-600 font-bold text-xs">تم ✅</span>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-sm p-3 bg-purple-50 rounded-xl border border-purple-100">
+                                            <Sparkles size={18} className="text-purple-600" />
+                                            <span className="text-slate-700 font-bold">تحديد صناع القرار (Decision Makers)...</span>
+                                            <span className="mr-auto text-green-600 font-bold text-xs">تم ✅</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Stage 3: Scoring & ICP */}
+                        <div className="flex flex-col md:flex-row items-center gap-8">
+                            <div className="md:w-1/2 md:text-left md:pl-12 order-2 md:order-1">
+                                <div className="bg-white p-2 inline-block rounded-xl shadow-sm border border-rose-100 mb-4">
+                                    <span className="bg-rose-600 text-white font-black px-3 py-1 rounded-lg text-sm">المرحلة 3</span>
+                                </div>
+                                <h3 className="text-3xl font-black text-slate-900 mb-4">Scoring & ICP (الفلترة)</h3>
+                                <p className="text-slate-500 text-lg leading-relaxed mb-6">
+                                    مش أي عميل يستاهل وقتك. بنظام Scoring متقدم، بنحدد مدى تطابق العميل مع مواصفاتك (ICP Match) بنسبة مئوية.
+                                </p>
+                            </div>
+                            <div className="md:w-1/2 order-1 md:order-2">
+                                <div className="bg-white rounded-3xl shadow-xl border border-rose-100 p-6 relative overflow-hidden group hover:border-rose-300 transition-all">
+                                    <div className="absolute top-0 right-0 bg-rose-50 text-rose-600 text-xs font-bold px-3 py-1 rounded-bl-xl border-b border-l border-rose-100">Qualification Logic</div>
+
+                                    <div className="flex items-center justify-between mb-6 pt-4">
+                                        <div className="text-center">
+                                            <div className="text-4xl font-black text-slate-800">92<span className="text-lg text-slate-400">/100</span></div>
+                                            <div className="text-xs font-bold text-slate-400 uppercase mt-1">ICP Score</div>
+                                        </div>
+                                        <div className="h-12 w-px bg-slate-100"></div>
+                                        <div className="text-center">
+                                            <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full font-black text-sm">Qualified ✅</span>
+                                            <div className="text-xs font-bold text-slate-400 uppercase mt-1">Status</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-2">
+                                        <div className="flex justify-between items-center text-sm font-medium text-slate-600">
+                                            <span>حجم الشركة</span>
+                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-full bg-green-500"></div></div>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm font-medium text-slate-600">
+                                            <span>الميزانية المتوقعة</span>
+                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-[80%] bg-green-500"></div></div>
+                                        </div>
+                                        <div className="flex justify-between items-center text-sm font-medium text-slate-600">
+                                            <span>القطاع المحدد</span>
+                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-full bg-green-500"></div></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    {/* The Secret Sauce */}
-                    <div className="mt-12 text-center bg-slate-900 text-white p-8 rounded-3xl max-w-4xl mx-auto border border-slate-800 relative overflow-hidden shadow-2xl">
+                    {/* The Recipe Footer */}
+                    <div className="mt-20 text-center bg-slate-900 text-white p-8 rounded-3xl max-w-4xl mx-auto border border-slate-800 relative overflow-hidden shadow-2xl">
                         <div className="absolute top-0 right-0 w-40 h-40 bg-brand-500 rounded-full blur-[80px] opacity-20"></div>
                         <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500 rounded-full blur-[80px] opacity-20"></div>
                         <div className="relative z-10">
                             <h4 className="text-2xl font-bold text-brand-400 mb-4 flex items-center justify-center gap-2">
                                 <Sparkles size={24} />
-                                السر مش في الأداة... السر في "الخلطة"! 🧪
+                                النتيجة؟ فرص حقيقية (Opportunities)
                             </h4>
                             <p className="text-lg md:text-xl leading-relaxed text-slate-200">
-                                "كيف نستخدم <span className="text-white font-black">Clay</span> عشان نطلع رقم جوال المدير المباشر في شركة مقاولات في الرياض ونكلمه <span className="text-white font-black">واتساب</span> بلهجة سعودية؟ <span className="text-white border-b-2 border-brand-500 font-bold">هنا لعبتنا.</span>"
+                                لما يوصلك العميل، بيكون <strong className="text-white border-b-2 border-brand-500">جاهز، فاهم، ومؤهل.</strong> دورك بس تقفل الصفقة.
                             </p>
                         </div>
                     </div>
