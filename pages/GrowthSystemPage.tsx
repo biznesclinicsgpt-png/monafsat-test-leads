@@ -44,7 +44,7 @@ const GrowthSystemPage = () => {
                             <Layout size={18} />
                             عن تشخيص النينجا
                         </button>
-                        <a href="#pricing" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">الأسعار</a>
+
                         <button
                             onClick={() => navigate('/diagnosis')}
                             className="bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2"
@@ -73,7 +73,7 @@ const GrowthSystemPage = () => {
                         <div className="px-4 py-6 space-y-4">
                             <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">نظام Ninja OS</a>
                             <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
-                            <a href="#pricing" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">الأسعار</a>
+
                             <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
                                 <Zap size={18} className="fill-white" />
                                 ابدأ تشخيص النينجا (مجاناً)
@@ -115,13 +115,6 @@ const GrowthSystemPage = () => {
                         <span className="font-bold text-slate-800">شراكه تغنيك عن التوظيف وشراء الأدوات.</span>
                         <br />
                         ندير العملية بالكامل <span className="text-brand-600 font-black bg-brand-50 px-2 rounded">من الوصول للعميل المحتمل وحتى إغلاق الصفقة</span>، بفريق من 6 خبراء بتكلفة موظف واحد.
-                    </motion.p>
-
-                    <motion.p
-                        initial="hidden" animate="visible" variants={fadeInUp}
-                        className="text-lg md:text-xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed font-medium bg-white/50 backdrop-blur-sm p-4 rounded-2xl border border-slate-100 shadow-sm"
-                    >
-                        فريق مخصص لشركتك يدير نظام سعودي متكامل مع أدوات الذكاء الاصطناعي، مع تخصيص الرسائل الموجهة لعميلك المحتمل بشكل احترافي للوصول إلى الفرص قبل منافسينك.
                     </motion.p>
 
                     <motion.div
@@ -231,7 +224,7 @@ const GrowthSystemPage = () => {
 
                         <div className="pt-8 border-t border-white/10 text-center">
                             <p className="text-lg font-bold text-brand-200">استثمارك الشهري:</p>
-                            <p className="text-4xl font-black text-white">5,000 ريال فقط</p>
+                            <p className="text-3xl font-black text-white">تكلفة موظف واحد</p>
                             <p className="text-sm text-slate-400 mt-2">شامل الفريق والأدوات والإدارة</p>
                         </div>
                     </div>
@@ -710,68 +703,7 @@ const GrowthSystemPage = () => {
         );
     };
 
-    const Pricing = () => (
-        <section id="pricing" className="py-24 bg-brand-900 relative overflow-hidden">
-            {/* Abstract Shapes */}
-            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-800 rounded-full blur-[100px] opacity-50"></div>
-            <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-indigo-900 rounded-full blur-[100px] opacity-50"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">تسعير (Q1 2026)</h2>
-                    <p className="text-xl text-brand-100 font-bold bg-brand-800/50 inline-block px-4 py-2 rounded-full border border-brand-700">باكدج واضحة بدون تعقيد</p>
-                </div>
-
-                <div className="max-w-lg mx-auto bg-white rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-                    <div className="bg-gradient-to-r from-yellow-400 to-amber-500 p-3 text-center text-white text-sm font-black tracking-widest uppercase shadow-md">
-                        🔥 الأكثر طلباً للنمو
-                    </div>
-                    <div className="p-10 md:p-14 text-center">
-                        <h3 className="text-3xl font-black text-slate-900 mb-2">Ninja OS</h3>
-                        <p className="text-slate-500 mb-10 font-bold">نظام التشغيل المتكامل</p>
-
-                        <div className="flex justify-center items-end mb-8 gap-2">
-                            <span className="text-6xl font-black text-brand-600 tracking-tighter">5,000</span>
-                            <div className="text-left mb-3">
-                                <span className="block text-base text-slate-900 font-bold">ريال</span>
-                                <span className="block text-sm text-slate-400 font-medium">/ شهرياً</span>
-                            </div>
-                        </div>
-
-                        <div className="inline-block bg-brand-50 rounded-xl px-5 py-3 mb-10 border border-brand-100">
-                            <span className="text-brand-700 font-bold text-sm">✨ أو 9,000 ريال ربع سنوي (وفر 6,000 ريال)</span>
-                        </div>
-
-                        <ul className="text-right space-y-5 mb-12">
-                            {[
-                                "تشغيل متعدد القنوات (LinkedIn, Email, Calls)",
-                                "تحديد دقيق للـ ICP وبناء الداتا",
-                                "دعم استراتيجي وتقني كامل (Ninja Support)",
-                                "تقارير أداء دورية (Bi-Weekly)",
-                                "بدون رسوم خفية",
-                                "بدون التزام طويل المدى (شهر بشهر)"
-                            ].map((feature, i) => (
-                                <li key={i} className="flex items-center gap-4 text-slate-700 font-medium">
-                                    <div className="flex-shrink-0 w-6 h-6 bg-brand-100 rounded-full flex items-center justify-center">
-                                        <Check size={14} className="text-brand-600 font-bold" />
-                                    </div>
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
-
-                        <button
-                            onClick={() => navigate('/diagnosis')}
-                            className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-5 rounded-2xl transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 text-lg mb-4"
-                        >
-                            🚀 ابدأ الآن
-                        </button>
-                        <p className="text-xs text-slate-400 font-medium">باكدج ثابتة لبداية 2026 - العرض محدود</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
 
     const AudienceAndFooter = () => (
         <>
@@ -878,19 +810,48 @@ const GrowthSystemPage = () => {
         </span>
     );
 
+    const StrategicAdvantage = () => (
+        <section className="py-24 bg-slate-50 relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-24">
+                    <span className="text-brand-600 font-bold bg-brand-100 px-4 py-1.5 rounded-full text-sm tracking-wide">الخلطة السرية</span>
+                    <h2 className="text-4xl md:text-6xl font-black text-slate-900 mt-6 mb-8 leading-tight">
+                        كيف نصل للفرص قبل <span className="text-brand-600 relative">
+                            منافسينك؟
+                            <svg className="absolute w-full h-3 -bottom-1 left-0 text-brand-200 -z-10" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
+                            </svg>
+                        </span>
+                    </h2>
+                    <p className="text-xl md:text-2xl text-slate-600 max-w-4xl mx-auto leading-relaxed font-bold">
+                        فريق مخصص لشركتك يدير نظام سعودي متكامل مع أدوات الذكاء الاصطناعي، مع تخصيص الرسائل الموجهة لعميلك المحتمل بشكل احترافي.
+                    </p>
+                </div>
+
+                <div className="space-y-32">
+                    {/* 1. Team */}
+                    <TeamComparison />
+
+                    {/* 2. Tech */}
+                    <TechStack />
+
+                    {/* 3. Agent */}
+                    <AIAgentDemo />
+                </div>
+            </div>
+        </section>
+    );
+
     return (
         <div className="min-h-screen bg-slate-50 font-cairo" dir="rtl">
             <Navbar />
             <Hero />
-            <TeamComparison />
-            <TechStack />
-            <AIAgentDemo />
-            <ManafethInbound />
             <ProblemSection />
             <MakeSolution />
+            <StrategicAdvantage />
+            <ManafethInbound />
             <NinjaOS />
             <Process />
-            <Pricing />
             <AudienceAndFooter />
         </div>
     );
