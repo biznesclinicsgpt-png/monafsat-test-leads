@@ -5,7 +5,8 @@ import {
     Menu, X, ChevronDown, CheckCircle2, Phone, TrendingUp, Target, ShieldCheck,
     XCircle, Briefcase, Zap, ArrowLeft, AlertTriangle, Users, MousePointerClick,
     ArrowRight, Settings, Linkedin, Mail, MessageCircle, Database, Layout, Shield,
-    Search, Rocket, Filter, CheckSquare, Handshake, Check, CheckCircle, Sparkles
+    Search, Rocket, Filter, CheckSquare, Handshake, Check, CheckCircle, Sparkles,
+    Bot, MessageSquare, Eye, Headphones, Calendar, FileText
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -234,166 +235,130 @@ const GrowthSystemPage = () => {
     );
 
 
+
     const TechStack = () => (
-        <section className="py-24 bg-slate-50 overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-24 bg-slate-50 relative overflow-hidden">
+            {/* Background Decorations */}
+            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6">كيف يعمل"المحرك"؟ <span className="text-brand-600">خطوة بخطوة</span></h2>
-                    <p className="text-xl text-slate-500 font-medium max-w-3xl mx-auto">
-                        نظامنا لا يعتمد على العشوائية. صممنا Pipeline دقيق يرحل العميل من مجرد "رقم" إلى "صفقة" عبر 4 مراحل ذكية.
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
+                        رحلة العميل داخل <span className="text-brand-600">"المحرك"</span>
+                    </h2>
+                    <p className="text-xl text-slate-600 font-medium max-w-3xl mx-auto leading-relaxed">
+                        نظام متكامل من 10 مراحل يضمن تحويل "البيانات الخام" إلى "صفقات مغلقة"، بدقة متناهية وبدون تدخل منك.
                     </p>
                 </div>
 
                 <div className="relative">
-                    {/* Central Line */}
-                    <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-brand-100 hidden md:block transform -translate-x-1/2"></div>
+                    {/* Vertical Line */}
+                    <div className="absolute right-8 md:right-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-200 via-brand-500 to-brand-200 rounded-full"></div>
 
-                    <div className="space-y-12 relative z-10">
+                    <div className="space-y-12">
+                        {[
+                            {
+                                step: "01",
+                                title: "جمع البيانات الخام",
+                                desc: "تجميع دقيق للشركات المستهدفة من مصادر متعددة وموثوقة لبناء قاعدة بيانات أولية.",
+                                icon: <Database size={24} className="text-white" />,
+                                color: "bg-blue-500"
+                            },
+                            {
+                                step: "02",
+                                title: "التحليل الذكي (AI)",
+                                desc: "نستخدم عملاء ذكاء اصطناعي لتحليل كل شركة وشخص: الأخبار، الوضع المالي، والتوجهات الحالية.",
+                                icon: <Bot size={24} className="text-white" />,
+                                color: "bg-indigo-500"
+                            },
+                            {
+                                step: "03",
+                                title: "التصنيف والفلترة",
+                                desc: "يتم منح كل عميل درجة (Score) بناءً على مدى مطابقته لمواصفات عميلك المثالي. لا نضيع وقتك مع غير المؤهلين.",
+                                icon: <Filter size={24} className="text-white" />,
+                                color: "bg-purple-500"
+                            },
+                            {
+                                step: "04",
+                                title: "إثراء بيانات التواصل",
+                                desc: "استخراج أرقام الهواتف الشخصية والإيميلات المباشرة لصناع القرار بدقة عالية.",
+                                icon: <Phone size={24} className="text-white" />,
+                                color: "bg-pink-500"
+                            },
+                            {
+                                step: "05",
+                                title: "سلاسل المراسلة المخصصة",
+                                desc: "بناء رسائل مخصصة لكل قناة (واتساب، بريد إلكتروني، لينكدإن) تعكس فهمنا لاحتياج العميل.",
+                                icon: <MessageSquare size={24} className="text-white" />,
+                                color: "bg-rose-500"
+                            },
+                            {
+                                step: "06",
+                                title: "رصد الاهتمام المبكر",
+                                desc: "مراقبة سلوك العميل (فتح الرسائل، زيارة الموقع) للتدخل في اللحظة المناسبة قبل المنافسين.",
+                                icon: <Eye size={24} className="text-white" />,
+                                color: "bg-orange-500"
+                            },
+                            {
+                                step: "07",
+                                title: "مكالمة الفرز والتأهيل",
+                                desc: "مكالمة مدتها 10 دقائق يجريها فريقنا للتأكد من جدية العميل وملاءمته لخدمتك قبل نقله لك.",
+                                icon: <Headphones size={24} className="text-white" />,
+                                color: "bg-amber-500"
+                            },
+                            {
+                                step: "08",
+                                title: "إدارة وحجز الاجتماع",
+                                desc: "جدولة الاجتماع في تقويمك، وإرسال تذكيرات للعميل، والتأكد من حضوره.",
+                                icon: <Calendar size={24} className="text-white" />,
+                                color: "bg-emerald-500"
+                            },
+                            {
+                                step: "09",
+                                title: "تقديم العرض والمفاوضة",
+                                desc: "متابعة إرسال عرض السعر نيابة عنك، وإدارة جولات المفاوضات الأولية بمهنية.",
+                                icon: <FileText size={24} className="text-white" />,
+                                color: "bg-teal-500"
+                            },
+                            {
+                                step: "10",
+                                title: "إغلاق الصفقة",
+                                desc: "الوصول للمحطة النهائية: توقيع العقد واحتفالنا بالنجاح، أو تسجيل أسباب الرفض للتحسين.",
+                                icon: <CheckCircle2 size={24} className="text-white" />,
+                                color: "bg-green-600"
+                            }
+                        ].map((item, index) => (
+                            <div key={index} className={`relative flex items-center justify-between md:justify-normal gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
+                                {/* Timeline Dot (Mobile: Right, Desktop: Center) */}
+                                <div className={`absolute right-8 md:right-1/2 transform translate-x-1/2 w-12 h-12 rounded-full border-4 border-white shadow-lg flex items-center justify-center z-10 ${item.color}`}>
+                                    {item.icon}
+                                </div>
 
-                        {/* Stage 1: Generation */}
-                        <div className="flex flex-col md:flex-row items-center gap-8">
-                            <div className="md:w-1/2 md:text-left md:pl-12 order-2 md:order-1">
-                                <div className="bg-white p-2 inline-block rounded-xl shadow-sm border border-brand-100 mb-4">
-                                    <span className="bg-brand-600 text-white font-black px-3 py-1 rounded-lg text-sm">المرحلة 1</span>
-                                </div>
-                                <h3 className="text-3xl font-black text-slate-900 mb-4">Lead Generation (التوليد)</h3>
-                                <p className="text-slate-500 text-lg leading-relaxed mb-6">
-                                    نجمع البيانات بدقة من مصادر موثوقة (Data) ونطلق حملات الوصول (Engagement) عبر قنوات متعددة لضمان الوصول للإنبوكس.
-                                </p>
-                                <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-                                    {['Clay', 'ZoomInfo', 'Apollo', 'Lemlist', 'Smartlead', 'Instantly'].map((tool, i) => (
-                                        <span key={i} className="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-sm font-bold border border-slate-200">{tool}</span>
-                                    ))}
-                                </div>
-                            </div>
-                            <div className="md:w-1/2 order-1 md:order-2">
-                                <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 relative overflow-hidden group hover:border-brand-300 transition-all">
-                                    <div className="absolute top-0 right-0 bg-slate-100 text-slate-500 text-xs font-bold px-3 py-1 rounded-bl-xl border-b border-l border-slate-200">System Source</div>
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-sm font-black text-slate-700"><Database size={16} className="text-brand-500" /> Data & Intent</div>
-                                            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
-                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><div className="w-2 h-2 bg-green-500 rounded-full"></div> <span className="text-xs font-bold">Clay</span></div>
-                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><div className="w-2 h-2 bg-blue-500 rounded-full"></div> <span className="text-xs font-bold">ZoomInfo</span></div>
-                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><div className="w-2 h-2 bg-yellow-500 rounded-full"></div> <span className="text-xs font-bold">Apollo</span></div>
-                                            </div>
+                                {/* Content Spacer for Desktop Alternating Layout */}
+                                <div className="hidden md:block w-1/2"></div>
+
+                                {/* Content Card */}
+                                <div className="w-[calc(100%-80px)] md:w-1/2 p-4">
+                                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 hover:border-brand-200 transition-all hover:-translate-y-1 relative">
+                                        {/* Step Number Badge */}
+                                        <div className="absolute -top-4 left-6 bg-slate-900 text-white text-sm font-black px-3 py-1 rounded-lg shadow-md">
+                                            مرحلة {item.step}
                                         </div>
-                                        <div className="space-y-3">
-                                            <div className="flex items-center gap-2 text-sm font-black text-slate-700"><Mail size={16} className="text-brand-500" /> Engagement</div>
-                                            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
-                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><span className="text-xs font-bold">💌 Lemlist</span></div>
-                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><span className="text-xs font-bold">🔥 Smartlead</span></div>
-                                                <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-sm border border-slate-100"><span className="text-xs font-bold">⚡ Instantly</span></div>
-                                            </div>
-                                        </div>
+                                        <h3 className="text-xl font-bold text-slate-900 mb-3 mt-2">{item.title}</h3>
+                                        <p className="text-slate-600 leading-relaxed text-sm">
+                                            {item.desc}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        {/* Stage 2: Enrichment (AI) */}
-                        <div className="flex flex-col md:flex-row items-center gap-8">
-                            <div className="md:w-1/2 md:text-right md:pr-12 order-2">
-                                <div className="bg-white p-2 inline-block rounded-xl shadow-sm border border-purple-100 mb-4">
-                                    <span className="bg-purple-600 text-white font-black px-3 py-1 rounded-lg text-sm">المرحلة 2</span>
-                                </div>
-                                <h3 className="text-3xl font-black text-slate-900 mb-4">AI Enrichment (الإثراء الذكي)</h3>
-                                <p className="text-slate-500 text-lg leading-relaxed mb-6">
-                                    قبل ما نكلمه، بنعرف عنه كل شيء. عملاء ذكاء اصطناعي (Agents) يحللون الشركة، الشخص، والأخبار الأخيرة لبناء سياق قوي.
-                                </p>
-                            </div>
-                            <div className="md:w-1/2 order-1">
-                                <div className="bg-white rounded-3xl shadow-xl border border-purple-100 p-6 relative overflow-hidden group hover:border-purple-300 transition-all">
-                                    <div className="absolute top-0 right-0 bg-purple-50 text-purple-600 text-xs font-bold px-3 py-1 rounded-bl-xl border-b border-l border-purple-100">Deep Research 🧠</div>
-
-                                    <div className="flex items-start gap-4 mb-4">
-                                        <div className="w-12 h-12 bg-slate-200 rounded-full flex-shrink-0 flex items-center justify-center text-2xl">👨‍⚕️</div>
-                                        <div className="flex-1 space-y-2">
-                                            <div className="h-4 bg-slate-100 rounded w-3/4 flex items-center px-2 text-xs font-bold text-slate-500">Dr. Amr...</div>
-                                            <div className="h-3 bg-slate-50 rounded w-1/2"></div>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-3">
-                                        <div className="flex items-center gap-3 text-sm p-3 bg-purple-50 rounded-xl border border-purple-100">
-                                            <Sparkles size={18} className="text-purple-600" />
-                                            <span className="text-slate-700 font-bold">تحليل الإيرادات السنوية...</span>
-                                            <span className="mr-auto text-green-600 font-bold text-xs">تم ✅</span>
-                                        </div>
-                                        <div className="flex items-center gap-3 text-sm p-3 bg-purple-50 rounded-xl border border-purple-100">
-                                            <Sparkles size={18} className="text-purple-600" />
-                                            <span className="text-slate-700 font-bold">فحص منشورات LinkedIn الأخيرة...</span>
-                                            <span className="mr-auto text-green-600 font-bold text-xs">تم ✅</span>
-                                        </div>
-                                        <div className="flex items-center gap-3 text-sm p-3 bg-purple-50 rounded-xl border border-purple-100">
-                                            <Sparkles size={18} className="text-purple-600" />
-                                            <span className="text-slate-700 font-bold">تحديد صناع القرار (Decision Makers)...</span>
-                                            <span className="mr-auto text-green-600 font-bold text-xs">تم ✅</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Stage 3: Scoring & ICP */}
-                        <div className="flex flex-col md:flex-row items-center gap-8">
-                            <div className="md:w-1/2 md:text-left md:pl-12 order-2 md:order-1">
-                                <div className="bg-white p-2 inline-block rounded-xl shadow-sm border border-rose-100 mb-4">
-                                    <span className="bg-rose-600 text-white font-black px-3 py-1 rounded-lg text-sm">المرحلة 3</span>
-                                </div>
-                                <h3 className="text-3xl font-black text-slate-900 mb-4">Scoring & ICP (الفلترة)</h3>
-                                <p className="text-slate-500 text-lg leading-relaxed mb-6">
-                                    مش أي عميل يستاهل وقتك. بنظام Scoring متقدم، بنحدد مدى تطابق العميل مع مواصفاتك (ICP Match) بنسبة مئوية.
-                                </p>
-                            </div>
-                            <div className="md:w-1/2 order-1 md:order-2">
-                                <div className="bg-white rounded-3xl shadow-xl border border-rose-100 p-6 relative overflow-hidden group hover:border-rose-300 transition-all">
-                                    <div className="absolute top-0 right-0 bg-rose-50 text-rose-600 text-xs font-bold px-3 py-1 rounded-bl-xl border-b border-l border-rose-100">Qualification Logic</div>
-
-                                    <div className="flex items-center justify-between mb-6 pt-4">
-                                        <div className="text-center">
-                                            <div className="text-4xl font-black text-slate-800">92<span className="text-lg text-slate-400">/100</span></div>
-                                            <div className="text-xs font-bold text-slate-400 uppercase mt-1">ICP Score</div>
-                                        </div>
-                                        <div className="h-12 w-px bg-slate-100"></div>
-                                        <div className="text-center">
-                                            <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full font-black text-sm">Qualified ✅</span>
-                                            <div className="text-xs font-bold text-slate-400 uppercase mt-1">Status</div>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <div className="flex justify-between items-center text-sm font-medium text-slate-600">
-                                            <span>حجم الشركة</span>
-                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-full bg-green-500"></div></div>
-                                        </div>
-                                        <div className="flex justify-between items-center text-sm font-medium text-slate-600">
-                                            <span>الميزانية المتوقعة</span>
-                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-[80%] bg-green-500"></div></div>
-                                        </div>
-                                        <div className="flex justify-between items-center text-sm font-medium text-slate-600">
-                                            <span>القطاع المحدد</span>
-                                            <div className="h-2 w-24 bg-slate-100 rounded-full overflow-hidden"><div className="h-full w-full bg-green-500"></div></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        ))}
                     </div>
 
-                    {/* The Recipe Footer */}
-                    <div className="mt-20 text-center bg-slate-900 text-white p-8 rounded-3xl max-w-4xl mx-auto border border-slate-800 relative overflow-hidden shadow-2xl">
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-brand-500 rounded-full blur-[80px] opacity-20"></div>
-                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500 rounded-full blur-[80px] opacity-20"></div>
-                        <div className="relative z-10">
-                            <h4 className="text-2xl font-bold text-brand-400 mb-4 flex items-center justify-center gap-2">
-                                <Sparkles size={24} />
-                                النتيجة؟ فرص حقيقية (Opportunities)
-                            </h4>
-                            <p className="text-lg md:text-xl leading-relaxed text-slate-200">
-                                لما يوصلك العميل، بيكون <strong className="text-white border-b-2 border-brand-500">جاهز، فاهم، ومؤهل.</strong> دورك بس تقفل الصفقة.
-                            </p>
+                    {/* Final Success Badge */}
+                    <div className="mt-20 text-center relative z-10">
+                        <div className="inline-flex items-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl border-4 border-brand-500">
+                            <Sparkles className="text-brand-400" />
+                            <span className="font-bold text-lg">نظام يعمل كالساعة، بينما أنت تركز على "تقديم الخدمة".</span>
                         </div>
                     </div>
                 </div>
