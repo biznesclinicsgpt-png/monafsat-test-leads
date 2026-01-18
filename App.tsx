@@ -21,14 +21,17 @@ import ReviewsPage from './pages/ReviewsPage';
 import ProviderIntegrationsPage from './pages/ProviderIntegrationsPage';
 // import { PlaceholderPage } from './components/PlaceholderPage'; // Unused
 
+import LoginPage from './pages/LoginPage';
+
 const App = () => {
   return (
     <BrowserRouter>
       <DataProvider>
         <Routes>
-          {/* Landing Page Route */}
+          {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
+          <Route path="/login" element={<LoginPage />} />
 
           {/* App Routes (Protected/Layout Wrapped) */}
           <Route path="/app" element={<MainLayout />}>

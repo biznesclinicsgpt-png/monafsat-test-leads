@@ -103,14 +103,20 @@ const Navbar = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
                 </div>
 
                 <div className="flex items-center gap-4">
+                    <button
+                        onClick={() => navigate('/login')}
+                        className="hidden md:block text-slate-600 font-bold hover:text-brand transition-colors text-sm"
+                    >
+                        تسجيل الدخول
+                    </button>
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         onClick={onStartDiagnosis}
-                        className="bg-brand hover:bg-brand-dark text-white px-6 py-2.5 rounded-full font-bold text-sm transition-all shadow-lg shadow-brand/25 relative overflow-hidden group"
+                        className="bg-brand text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-xl shadow-brand/20 hover:shadow-2xl hover:shadow-brand/30 transition-all flex items-center gap-2"
                     >
-                        <span className="relative z-10">ابدأ التشخيص الآن</span>
-                        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full" />
+                        <Sparkles size={16} className="animate-pulse" />
+                        ابدا تحليلك مجانا
                     </motion.button>
                 </div>
             </div>
