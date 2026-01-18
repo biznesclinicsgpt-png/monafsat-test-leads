@@ -223,7 +223,7 @@ const GrowthSystemPage = () => {
                         </div>
 
                         <div className="pt-8 border-t border-white/10 text-center">
-                            <p className="text-lg font-bold text-brand-200">استثمارك الشهري:</p>
+                            <p className="text-lg font-bold text-brand-200">استثمارك الربع سنوي:</p>
                             <p className="text-3xl font-black text-white">تكلفة موظف واحد</p>
                             <p className="text-sm text-slate-400 mt-2">شامل الفريق والأدوات والإدارة</p>
                         </div>
