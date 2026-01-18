@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from 'framer-motion';
 import {
     Menu, X, ChevronDown, CheckCircle2, Phone, TrendingUp, Target, ShieldCheck,
     XCircle, Briefcase, Zap, ArrowLeft, AlertTriangle, Users, MousePointerClick,
@@ -10,9 +10,20 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+// --- MOTION VARIANTS ---
 const fadeInUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" as const } }
+};
+
+const fadeInUpSlow = {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" as const, delay: 0.2 } }
+};
+
+const scaleIn = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }
 };
 
 const staggerContainer = {
@@ -20,9 +31,23 @@ const staggerContainer = {
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.2
+            staggerChildren: 0.15,
+            delayChildren: 0.2
         }
     }
+};
+
+const textVariant = {
+    hidden: { opacity: 0, y: 20 },
+    visible: (i: number) => ({
+        opacity: 1,
+        y: 0,
+        transition: {
+            delay: i * 0.05,
+            duration: 0.5,
+            ease: "easeOut" as const
+        }
+    })
 };
 
 const GrowthSystemPage = () => {
@@ -31,135 +56,157 @@ const GrowthSystemPage = () => {
 
     // --- COMPONENTS ---
 
-    const Navbar = () => (
-        <nav className="fixed w-full bg-white/90 backdrop-blur-xl z-50 border-b border-gray-100 font-cairo">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-20 items-center">
-                    <div className="flex-shrink-0 flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-                        <img src="/logo_full.png" alt="BiznesClinics" className="h-10 w-auto object-contain" />
-                    </div>
+    const Navbar = () => {
+        const { scrollY } = useScroll();
+        const [scrolled, setScrolled] = useState(false);
 
-                    <div className="hidden md:flex items-center gap-8">
-                        <a href="#ninja-os" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">نظام Ninja OS</a>
-                        <button key="scanner-link" onClick={() => navigate('/scanner')} className="text-slate-600 hover:text-brand-600 font-bold transition-colors flex items-center gap-2">
-                            <Layout size={18} />
-                            عن تشخيص النينجا
-                        </button>
+        React.useEffect(() => {
+            return scrollY.onChange((latest) => {
+                setScrolled(latest > 50);
+            });
+        }, [scrollY]);
 
-                        <button
-                            onClick={() => navigate('/diagnosis')}
-                            className="bg-brand-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-brand-700 transition-all shadow-lg shadow-brand-500/20 flex items-center gap-2"
-                        >
-                            <Zap size={18} className="fill-white" />
-                            ابدأ تشخيص النينجا (مجاناً)
-                        </button>
-                    </div>
+        return (
+            <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm py-2' : 'bg-transparent py-4'}`}>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center">
+                        <div className="flex-shrink-0 flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+                            <img src="/logo_full.png" alt="BiznesClinics" className={`transition-all duration-300 ${scrolled ? 'h-10' : 'h-12'}`} />
+                        </div>
 
-                    <div className="md:hidden flex items-center">
-                        <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-600 hover:text-brand-600">
-                            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-                        </button>
-                    </div>
-                </div>
-            </div>
+                        <div className="hidden md:flex items-center gap-8">
+                            <a href="#ninja-os" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">نظام Ninja OS</a>
+                            <button key="scanner-link" onClick={() => navigate('/scanner')} className="text-slate-600 hover:text-brand-600 font-bold transition-colors flex items-center gap-2">
+                                <Layout size={18} />
+                                عن تشخيص النينجا
+                            </button>
 
-            <AnimatePresence>
-                {isMenuOpen && (
-                    <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="md:hidden bg-white border-b border-gray-100 overflow-hidden"
-                    >
-                        <div className="px-4 py-6 space-y-4">
-                            <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">نظام Ninja OS</a>
-                            <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
-
-                            <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
-                                <Zap size={18} className="fill-white" />
+                            <button
+                                onClick={() => navigate('/diagnosis')}
+                                className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg flex items-center gap-2 ${scrolled ? 'bg-brand-600 text-white hover:bg-brand-700 shadow-brand-500/20' : 'bg-white text-brand-600 hover:bg-brand-50 shadow-white/20'}`}
+                            >
+                                <Zap size={18} className={scrolled ? "fill-white" : "fill-brand-600"} />
                                 ابدأ تشخيص النينجا (مجاناً)
                             </button>
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
-        </nav>
-    );
 
-    const Hero = () => (
-        <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-slate-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center max-w-4xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-50 text-brand-700 font-bold text-sm mb-8 border border-brand-100 shadow-sm"
-                    >
-                        <span className="relative flex h-3 w-3">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
-                        </span>
-                        مخصص للشركات السعودية
-                    </motion.div>
-
-                    <motion.h1
-                        initial="hidden" animate="visible" variants={fadeInUp}
-                        className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 mb-8 leading-tight tracking-tight"
-                    >
-                        ضاعف مبيعاتك الربع القادم بأتمتة <span className="text-brand-500">الذكاء الاصطناعي</span> في السعودية
-                    </motion.h1>
-
-                    <motion.p
-                        initial="hidden" animate="visible" variants={fadeInUp}
-                        className="text-xl md:text-2xl text-slate-500 mb-10 max-w-4xl mx-auto leading-relaxed"
-                    >
-                        <span className="font-bold text-slate-800">شراكه تغنيك عن التوظيف وشراء الأدوات.</span>
-                        <br />
-                        ندير العملية بالكامل <span className="text-brand-600 font-black bg-brand-50 px-2 rounded">من الوصول للعميل المحتمل وحتى إغلاق الصفقة</span>، بفريق من 6 خبراء بتكلفة موظف واحد.
-                    </motion.p>
-
-                    <motion.div
-                        initial="hidden" animate="visible" variants={fadeInUp}
-                        className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-                    >
-                        <button
-                            onClick={() => navigate('/diagnosis')}
-                            className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-lg px-8 py-5 rounded-2xl font-black transition-all shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1 flex items-center justify-center gap-3"
-                        >
-                            <Zap size={24} className="fill-white" />
-                            ابدأ التشخيص مجاناً
-                        </button>
-                        <button
-                            onClick={() => navigate('/scanner')}
-                            className="w-full sm:w-auto bg-white hover:bg-gray-50 text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center"
-                        >
-                            كيف يعمل التشخيص؟
-                        </button>
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                        className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-slate-600 font-bold"
-                    >
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
-                            <CheckCircle2 size={18} className="text-brand-500" />
-                            <span> فريق كامل (6 أفراد) براتب واحد</span>
+                        <div className="md:hidden flex items-center">
+                            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-slate-600 hover:text-brand-600">
+                                {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                            </button>
                         </div>
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
-                            <CheckCircle2 size={18} className="text-brand-500" />
-                            <span> تقني + مبيعات + استراتيجي</span>
-                        </div>
-                    </motion.div>
+                    </div>
                 </div>
-            </div>
 
-            {/* Background Gradients */}
-            <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none opacity-40">
-                <div className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-brand-200 blur-[120px]"></div>
-                <div className="absolute top-[40%] -left-[10%] w-[400px] h-[400px] rounded-full bg-blue-200 blur-[100px]"></div>
-            </div>
-        </section>
-    );
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="md:hidden bg-white border-b border-gray-100 overflow-hidden absolute w-full top-full"
+                        >
+                            <div className="px-4 py-6 space-y-4 shadow-xl">
+                                <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">نظام Ninja OS</a>
+                                <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
+
+                                <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
+                                    <Zap size={18} className="fill-white" />
+                                    ابدأ تشخيص النينجا (مجاناً)
+                                </button>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </nav>
+        );
+    };
+
+    const Hero = () => {
+        const { scrollY } = useScroll();
+        const y1 = useTransform(scrollY, [0, 500], [0, 200]);
+        const y2 = useTransform(scrollY, [0, 500], [0, -150]);
+        const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+        return (
+            <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-gradient-to-b from-slate-50 to-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center max-w-5xl mx-auto">
+                        <motion.div
+                            variants={scaleIn}
+                            initial="hidden" animate="visible"
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-brand-700 font-bold text-sm mb-8 border border-brand-100 shadow-sm"
+                        >
+                            <span className="relative flex h-3 w-3">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
+                            </span>
+                            مخصص للشركات السعودية
+                        </motion.div>
+
+                        <motion.h1
+                            initial="hidden" animate="visible" variants={staggerContainer}
+                            className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 mb-8 leading-tight tracking-tight drop-shadow-sm"
+                        >
+                            <span className="block mb-2">ضاعف مبيعاتك الربع القادم</span>
+                            <span className="inline-block">بأتمتة <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-brand-400">الذكاء الاصطناعي</span></span>
+                        </motion.h1>
+
+                        <motion.p
+                            initial="hidden" animate="visible" variants={fadeInUp}
+                            className="text-xl md:text-2xl text-slate-500 mb-12 max-w-4xl mx-auto leading-relaxed"
+                        >
+                            <span className="font-bold text-slate-800">شراكه تغنيك عن التوظيف وشراء الأدوات.</span>
+                            <br />
+                            ندير العملية بالكامل <span className="text-brand-700 font-black bg-brand-50 px-3 py-0.5 rounded-lg inline-block my-1 border border-brand-100">من الوصول للعميل وحتى الإغلاق</span>، بفريق كامل بتكلفة موظف واحد.
+                        </motion.p>
+
+                        <motion.div
+                            initial="hidden" animate="visible" variants={fadeInUpSlow}
+                            className="flex flex-col sm:flex-row gap-5 justify-center items-center"
+                        >
+                            <motion.button
+                                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                                onClick={() => navigate('/diagnosis')}
+                                className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-lg px-8 py-5 rounded-2xl font-black transition-all shadow-xl shadow-brand-500/30 flex items-center justify-center gap-3 relative overflow-hidden group"
+                            >
+                                <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer"></div>
+                                <Zap size={24} className="fill-white" />
+                                ابدأ التشخيص مجاناً
+                            </motion.button>
+                            <motion.button
+                                whileHover={{ scale: 1.02, backgroundColor: "#f8fafc" }} whileTap={{ scale: 0.98 }}
+                                onClick={() => navigate('/scanner')}
+                                className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center"
+                            >
+                                كيف يعمل التشخيص؟
+                            </motion.button>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
+                            className="mt-16 flex flex-wrap justify-center gap-4 text-sm font-bold text-slate-600"
+                        >
+                            <div className="flex items-center gap-2 bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200/60">
+                                <Users size={18} className="text-brand-500" />
+                                <span> فريق كامل (6 أفراد) براتب واحد</span>
+                            </div>
+                            <div className="flex items-center gap-2 bg-white px-5 py-3 rounded-2xl shadow-sm border border-slate-200/60">
+                                <Briefcase size={18} className="text-brand-500" />
+                                <span> تقني + مبيعات + استراتيجي</span>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Parallax Backgrounds */}
+                <motion.div style={{ y: y1 }} className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-500/10 rounded-full blur-[120px] -z-10 pointer-events-none" />
+                <motion.div style={{ y: y2 }} className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-500/10 rounded-full blur-[100px] -z-10 pointer-events-none" />
+                {/* Grid Pattern */}
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay"></div>
+            </section>
+        );
+    };
 
     const TeamComparison = () => (
         <section className="py-24 bg-white relative overflow-hidden">
@@ -171,7 +218,7 @@ const GrowthSystemPage = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
                     {/* Traditional Way */}
-                    <div className="bg-slate-50 p-8 rounded-3xl border border-slate-200 opacity-60 hover:opacity-100 transition-opacity">
+                    <div className="bg-slate-50 p-8 rounded-3xl border border-slate-200 opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 duration-500">
                         <h3 className="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-2">
                             <XCircle className="text-slate-400" /> الطريقة التقليدية (التوظيف)
                         </h3>
@@ -200,15 +247,18 @@ const GrowthSystemPage = () => {
                     </div>
 
                     {/* Biznes Clinics Way */}
-                    <div className="bg-gradient-to-br from-brand-900 to-slate-900 p-10 rounded-3xl text-white shadow-2xl relative transform md:scale-105 border border-brand-500/30">
-                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500 rounded-full blur-[80px] opacity-30"></div>
+                    <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        className="bg-gradient-to-br from-brand-900 to-slate-900 p-10 rounded-3xl text-white shadow-2xl relative transform md:scale-105 border border-brand-500/30 overflow-hidden"
+                    >
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500 rounded-full blur-[80px] opacity-30 animate-pulse"></div>
 
-                        <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                        <h3 className="text-2xl font-bold mb-8 flex items-center gap-3 relative z-10">
                             <CheckCircle className="text-brand-400" />
                             Biznes Clinics Growth Team
                         </h3>
 
-                        <div className="grid grid-cols-2 gap-4 mb-8">
+                        <div className="grid grid-cols-2 gap-4 mb-8 relative z-10">
                             {[
                                 "مدير حساب (Account Manager)",
                                 "استراتيجي نمو (Strategist)",
@@ -217,18 +267,21 @@ const GrowthSystemPage = () => {
                                 "باحث بيانات (Data Researcher)",
                                 "أخصائي إغلاق (Closer Support)"
                             ].map((role, i) => (
-                                <div key={i} className="flex items-center gap-2 text-sm bg-white/10 p-2 rounded-lg border border-white/5">
+                                <motion.div
+                                    whileHover={{ backgroundColor: "rgba(255,255,255,0.2)" }}
+                                    key={i} className="flex items-center gap-2 text-sm bg-white/10 p-2 rounded-lg border border-white/5 cursor-default transition-colors"
+                                >
                                     <Users size={14} className="text-brand-400" /> {role}
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
 
-                        <div className="pt-8 border-t border-white/10 text-center">
+                        <div className="pt-8 border-t border-white/10 text-center relative z-10">
                             <p className="text-lg font-bold text-brand-200">استثمارك الربع سنوي:</p>
-                            <p className="text-3xl font-black text-white">تكلفة موظف واحد</p>
+                            <div className="text-3xl font-black text-white bg-clip-text text-transparent bg-gradient-to-r from-white to-brand-200">تكلفة موظف واحد</div>
                             <p className="text-sm text-slate-400 mt-2">شامل الفريق والأدوات والإدارة</p>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
@@ -236,170 +289,283 @@ const GrowthSystemPage = () => {
 
 
 
-    const TechStack = () => (
-        <section className="py-24 bg-slate-50 relative overflow-hidden">
-            {/* Background Decorations */}
-            <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
+    const TechStack = () => {
+        const ref = React.useRef(null);
+        const { scrollYProgress } = useScroll({
+            target: ref,
+            offset: ["start end", "end start"]
+        });
 
-            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="text-center mb-20">
-                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6 leading-tight">
-                        رحلة العميل داخل <span className="text-brand-600">"المحرك"</span>
-                    </h2>
-                    <p className="text-xl text-slate-600 font-medium max-w-3xl mx-auto leading-relaxed">
-                        نظام متكامل من 10 مراحل يضمن تحويل "البيانات الخام" إلى "صفقات مغلقة"، بدقة متناهية وبدون تدخل منك.
-                    </p>
-                </div>
+        const scaleY = useSpring(scrollYProgress, {
+            stiffness: 100,
+            damping: 30,
+            restDelta: 0.001
+        });
 
-                <div className="relative">
-                    {/* Vertical Line */}
-                    <div className="absolute right-8 md:right-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-200 via-brand-500 to-brand-200 rounded-full"></div>
+        return (
+            <section ref={ref} className="py-24 bg-slate-50 relative overflow-hidden">
+                {/* Background Decorations */}
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
 
-                    <div className="space-y-12">
-                        {[
-                            {
-                                step: "01",
-                                title: "جمع البيانات الخام",
-                                desc: "تجميع دقيق للشركات المستهدفة من مصادر متعددة وموثوقة لبناء قاعدة بيانات أولية.",
-                                icon: <Database size={24} className="text-white" />,
-                                color: "bg-blue-500"
-                            },
-                            {
-                                step: "02",
-                                title: "التحليل الذكي (AI)",
-                                desc: "نستخدم عملاء ذكاء اصطناعي لتحليل كل شركة وشخص: الأخبار، الوضع المالي، والتوجهات الحالية.",
-                                icon: <Bot size={24} className="text-white" />,
-                                color: "bg-indigo-500"
-                            },
-                            {
-                                step: "03",
-                                title: "التصنيف والفلترة",
-                                desc: "يتم منح كل عميل درجة (Score) بناءً على مدى مطابقته لمواصفات عميلك المثالي. لا نضيع وقتك مع غير المؤهلين.",
-                                icon: <Filter size={24} className="text-white" />,
-                                color: "bg-purple-500"
-                            },
-                            {
-                                step: "04",
-                                title: "إثراء بيانات التواصل",
-                                desc: "استخراج أرقام الهواتف الشخصية والإيميلات المباشرة لصناع القرار بدقة عالية.",
-                                icon: <Phone size={24} className="text-white" />,
-                                color: "bg-pink-500"
-                            },
-                            {
-                                step: "05",
-                                title: "سلاسل المراسلة المخصصة",
-                                desc: "بناء رسائل مخصصة لكل قناة (واتساب، بريد إلكتروني، لينكدإن) تعكس فهمنا لاحتياج العميل.",
-                                icon: <MessageSquare size={24} className="text-white" />,
-                                color: "bg-rose-500"
-                            },
-                            {
-                                step: "06",
-                                title: "رصد الاهتمام المبكر",
-                                desc: "مراقبة سلوك العميل (فتح الرسائل، زيارة الموقع) للتدخل في اللحظة المناسبة قبل المنافسين.",
-                                icon: <Eye size={24} className="text-white" />,
-                                color: "bg-orange-500"
-                            },
-                            {
-                                step: "07",
-                                title: "مكالمة الفرز والتأهيل",
-                                desc: "مكالمة مدتها 10 دقائق يجريها فريقنا للتأكد من جدية العميل وملاءمته لخدمتك قبل نقله لك.",
-                                icon: <Headphones size={24} className="text-white" />,
-                                color: "bg-amber-500"
-                            },
-                            {
-                                step: "08",
-                                title: "إدارة وحجز الاجتماع",
-                                desc: "جدولة الاجتماع في تقويمك، وإرسال تذكيرات للعميل، والتأكد من حضوره.",
-                                icon: <Calendar size={24} className="text-white" />,
-                                color: "bg-emerald-500"
-                            },
-                            {
-                                step: "09",
-                                title: "تقديم العرض والمفاوضة",
-                                desc: "متابعة إرسال عرض السعر نيابة عنك، وإدارة جولات المفاوضات الأولية بمهنية.",
-                                icon: <FileText size={24} className="text-white" />,
-                                color: "bg-teal-500"
-                            },
-                            {
-                                step: "10",
-                                title: "إغلاق الصفقة",
-                                desc: "الوصول للمحطة النهائية: توقيع العقد واحتفالنا بالنجاح، أو تسجيل أسباب الرفض للتحسين.",
-                                icon: <CheckCircle2 size={24} className="text-white" />,
-                                color: "bg-green-600"
-                            }
-                        ].map((item, index) => (
-                            <div key={index} className={`relative flex items-center justify-between md:justify-normal gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}>
-                                {/* Timeline Dot (Mobile: Right, Desktop: Center) */}
-                                <div className={`absolute right-8 md:right-1/2 transform translate-x-1/2 w-12 h-12 rounded-full border-4 border-white shadow-lg flex items-center justify-center z-10 ${item.color}`}>
-                                    {item.icon}
-                                </div>
-
-                                {/* Content Spacer for Desktop Alternating Layout */}
-                                <div className="hidden md:block w-1/2"></div>
-
-                                {/* Content Card */}
-                                <div className="w-[calc(100%-80px)] md:w-1/2 p-4">
-                                    <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 hover:border-brand-200 transition-all hover:-translate-y-1 relative">
-                                        {/* Step Number Badge */}
-                                        <div className="absolute -top-4 left-6 bg-slate-900 text-white text-sm font-black px-3 py-1 rounded-lg shadow-md">
-                                            مرحلة {item.step}
-                                        </div>
-                                        <h3 className="text-xl font-bold text-slate-900 mb-3 mt-2">{item.title}</h3>
-                                        <p className="text-slate-600 leading-relaxed text-sm">
-                                            {item.desc}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Final Success Badge */}
-                    <div className="mt-20 text-center relative z-10">
-                        <div className="inline-flex items-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl border-4 border-brand-500">
-                            <Sparkles className="text-brand-400" />
-                            <span className="font-bold text-lg">نظام يعمل كالساعة، بينما أنت تركز على "تقديم الخدمة".</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
-
-    const OurNumbers = () => (
-        <section className="py-12 relative overflow-hidden">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden shadow-2xl text-center">
-                    {/* Background Glows */}
-                    <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-brand-500/20 rounded-full blur-[100px]"></div>
-                    <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-purple-500/20 rounded-full blur-[100px]"></div>
-
-                    <div className="relative z-10 mb-16">
-                        <div className="inline-flex items-center gap-2 bg-white/10 text-brand-300 px-4 py-2 rounded-full text-sm font-bold mb-6 border border-white/10 backdrop-blur-sm">
-                            <TrendingUp size={16} />
-                            <span>نتائج حقيقية ملموسة</span>
-                        </div>
-                        <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                            أرقامنا في <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-200">2025</span>
-                        </h2>
-                        <p className="text-xl md:text-3xl text-slate-300 font-bold leading-relaxed">
-                            وبإذن الله جاهزين نضاعف أرقامنا <span className="text-white border-b-4 border-brand-500">لعملائنا ولينا</span> في 2026 🚀
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="text-center mb-20">
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            className="text-3xl md:text-5xl font-black text-slate-900 mb-6 leading-tight"
+                        >
+                            رحلة العميل داخل <span className="text-brand-600">"المحرك"</span>
+                        </motion.h2>
+                        <p className="text-xl text-slate-600 font-medium max-w-3xl mx-auto leading-relaxed">
+                            نظام متكامل من 10 مراحل يضمن تحويل "البيانات الخام" إلى "صفقات مغلقة"، بدقة متناهية وبدون تدخل منك.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                        {[
-                            { value: "+4,230", label: "فرصة حقيقية (Leads)", desc: "تم توليدها لعملائنا", color: "text-brand-400" },
-                            { value: "63", label: "شركة سعودية", desc: "نخدمها في مختلف القطاعات", color: "text-purple-400" },
-                            { value: "+128M", label: "ريال سعودي", desc: "إجمالي قيمة عروض التسعير", color: "text-emerald-400" },
-                            { value: "+11M", label: "ريال سعودي", desc: "مبيعات محققة (Closed Won)", color: "text-blue-400" }
-                        ].map((stat, i) => (
-                            <div key={i} className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition-all group">
-                                <div className={`text-4xl md:text-5xl font-black mb-2 ${stat.color}`}>{stat.value}</div>
-                                <div className="text-lg font-bold text-white mb-1">{stat.label}</div>
-                                <div className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors">{stat.desc}</div>
+                    <div className="relative">
+                        {/* Vertical Line Container */}
+                        <div className="absolute right-8 md:right-1/2 top-0 bottom-0 w-1 bg-slate-200 rounded-full transform translate-x-1/2"></div>
+
+                        {/* Animated Progress Line */}
+                        <motion.div
+                            style={{ scaleY, originY: 0 }}
+                            className="absolute right-8 md:right-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-brand-500 via-purple-500 to-emerald-500 rounded-full transform translate-x-1/2 origin-top"
+                        ></motion.div>
+
+                        <div className="space-y-12">
+                            {[
+                                {
+                                    step: "01",
+                                    title: "جمع البيانات الخام",
+                                    desc: "تجميع دقيق للشركات المستهدفة من مصادر متعددة وموثوقة لبناء قاعدة بيانات أولية.",
+                                    icon: <Database size={24} className="text-white" />,
+                                    color: "bg-blue-500 shadow-blue-500/40"
+                                },
+                                {
+                                    step: "02",
+                                    title: "التحليل الذكي (AI)",
+                                    desc: "نستخدم عملاء ذكاء اصطناعي لتحليل كل شركة وشخص: الأخبار، الوضع المالي، والتوجهات الحالية.",
+                                    icon: <Bot size={24} className="text-white" />,
+                                    color: "bg-indigo-500 shadow-indigo-500/40"
+                                },
+                                {
+                                    step: "03",
+                                    title: "التصنيف والفلترة",
+                                    desc: "يتم منح كل عميل درجة (Score) بناءً على مدى مطابقته لمواصفات عميلك المثالي. لا نضيع وقتك مع غير المؤهلين.",
+                                    icon: <Filter size={24} className="text-white" />,
+                                    color: "bg-purple-500 shadow-purple-500/40"
+                                },
+                                {
+                                    step: "04",
+                                    title: "إثراء بيانات التواصل",
+                                    desc: "استخراج أرقام الهواتف الشخصية والإيميلات المباشرة لصناع القرار بدقة عالية.",
+                                    icon: <Phone size={24} className="text-white" />,
+                                    color: "bg-pink-500 shadow-pink-500/40"
+                                },
+                                {
+                                    step: "05",
+                                    title: "سلاسل المراسلة المخصصة",
+                                    desc: "بناء رسائل مخصصة لكل قناة (واتساب، بريد إلكتروني، لينكدإن) تعكس فهمنا لاحتياج العميل.",
+                                    icon: <MessageSquare size={24} className="text-white" />,
+                                    color: "bg-rose-500 shadow-rose-500/40"
+                                },
+                                {
+                                    step: "06",
+                                    title: "رصد الاهتمام المبكر",
+                                    desc: "مراقبة سلوك العميل (فتح الرسائل، زيارة الموقع) للتدخل في اللحظة المناسبة قبل المنافسين.",
+                                    icon: <Eye size={24} className="text-white" />,
+                                    color: "bg-orange-500 shadow-orange-500/40"
+                                },
+                                {
+                                    step: "07",
+                                    title: "مكالمة الفرز والتأهيل",
+                                    desc: "مكالمة مدتها 10 دقائق يجريها فريقنا للتأكد من جدية العميل وملاءمته لخدمتك قبل نقله لك.",
+                                    icon: <Headphones size={24} className="text-white" />,
+                                    color: "bg-amber-500 shadow-amber-500/40"
+                                },
+                                {
+                                    step: "08",
+                                    title: "إدارة وحجز الاجتماع",
+                                    desc: "جدولة الاجتماع في تقويمك، وإرسال تذكيرات للعميل، والتأكد من حضوره.",
+                                    icon: <Calendar size={24} className="text-white" />,
+                                    color: "bg-emerald-500 shadow-emerald-500/40"
+                                },
+                                {
+                                    step: "09",
+                                    title: "تقديم العرض والمفاوضة",
+                                    desc: "متابعة إرسال عرض السعر نيابة عنك، وإدارة جولات المفاوضات الأولية بمهنية.",
+                                    icon: <FileText size={24} className="text-white" />,
+                                    color: "bg-teal-500 shadow-teal-500/40"
+                                },
+                                {
+                                    step: "10",
+                                    title: "إغلاق الصفقة",
+                                    desc: "الوصول للمحطة النهائية: توقيع العقد واحتفالنا بالنجاح، أو تسجيل أسباب الرفض للتحسين.",
+                                    icon: <CheckCircle2 size={24} className="text-white" />,
+                                    color: "bg-green-600 shadow-green-600/40"
+                                }
+                            ].map((item, index) => (
+                                <motion.div
+                                    key={index}
+                                    initial={{ opacity: 0, y: 50 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                                    className={`relative flex items-center justify-between md:justify-normal gap-8 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
+                                >
+                                    {/* Timeline Dot (Mobile: Right, Desktop: Center) */}
+                                    <div className={`absolute right-8 md:right-1/2 transform translate-x-1/2 w-14 h-14 rounded-full border-4 border-white shadow-xl flex items-center justify-center z-10 ${item.color} transition-transform hover:scale-110`}>
+                                        {item.icon}
+                                    </div>
+
+                                    {/* Content Spacer for Desktop Alternating Layout */}
+                                    <div className="hidden md:block w-1/2"></div>
+
+                                    {/* Content Card */}
+                                    <div className="w-[calc(100%-80px)] md:w-1/2 p-4">
+                                        <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 hover:border-brand-200 transition-all hover:-translate-y-2 relative group">
+                                            {/* Step Number Badge */}
+                                            <div className="absolute -top-4 left-6 bg-slate-900 text-white text-sm font-black px-3 py-1 rounded-lg shadow-md group-hover:bg-brand-600 transition-colors">
+                                                مرحلة {item.step}
+                                            </div>
+                                            <h3 className="text-xl font-bold text-slate-900 mb-3 mt-2">{item.title}</h3>
+                                            <p className="text-slate-600 leading-relaxed text-sm">
+                                                {item.desc}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Final Success Badge */}
+                        <div className="mt-20 text-center relative z-10">
+                            <motion.div
+                                whileHover={{ scale: 1.05 }}
+                                className="inline-flex items-center gap-3 bg-slate-900 text-white px-8 py-4 rounded-full shadow-2xl border-4 border-brand-500 cursor-default"
+                            >
+                                <Sparkles className="text-brand-400" />
+                                <span className="font-bold text-lg">نظام يعمل كالساعة، بينما أنت تركز على "تقديم الخدمة".</span>
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    };
+
+    const Counter = ({ from, to, duration = 2 }: { from: number, to: number, duration?: number }) => {
+        const nodeRef = React.useRef<HTMLSpanElement>(null);
+        const inView = React.useRef(false); // reliable mutable ref for callback
+
+        React.useEffect(() => {
+            const node = nodeRef.current;
+            if (!node) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !inView.current) {
+                    inView.current = true;
+                    // Start animation
+                    let startTimestamp: number | null = null;
+                    const step = (timestamp: number) => {
+                        if (!startTimestamp) startTimestamp = timestamp;
+                        const progress = Math.min((timestamp - startTimestamp) / (duration * 1000), 1);
+                        node.textContent = Math.floor(progress * (to - from) + from).toLocaleString();
+                        if (progress < 1) {
+                            window.requestAnimationFrame(step);
+                        } else {
+                            node.textContent = to.toLocaleString(); // Ensure final value is exact
+                        }
+                    };
+                    window.requestAnimationFrame(step);
+                    observer.disconnect();
+                }
+            }, { threshold: 0.5 });
+
+            observer.observe(node);
+            return () => observer.disconnect();
+        }, [from, to, duration]);
+
+        return <span ref={nodeRef}>{from}</span>;
+    };
+
+    const OurNumbers = () => (
+        <section className="py-12 relative overflow-hidden">
+            <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-slate-50 to-transparent -z-10"></div>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="bg-slate-900 rounded-[3rem] p-12 md:p-20 relative overflow-hidden shadow-2xl text-center">
+                    {/* Background Glows */}
+                    <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+                    <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay"></div>
+
+                    <motion.div
+                        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
+                    >
+                        <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
+                            أرقامنا في <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-200">2025</span>
+                        </h2>
+                        <p className="text-xl md:text-3xl text-slate-300 font-bold leading-relaxed max-w-4xl mx-auto mb-16">
+                            وبإذن الله جاهزين نضاعف أرقامنا <span className="text-white border-b-4 border-brand-500">لعملائنا ولينا</span> في 2026 🚀
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+                        {/* Card 1 */}
+                        <motion.div
+                            whileHover={{ y: -5, borderColor: 'rgba(56, 189, 248, 0.5)' }}
+                            className="bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-3xl"
+                        >
+                            <p className="text-slate-400 font-bold mb-2">فرص محققة (Opportunities)</p>
+                            <div className="text-4xl lg:text-5xl font-black text-white mb-2">
+                                +<Counter from={0} to={4230} />
                             </div>
-                        ))}
+                            <div className="text-xs text-brand-300 bg-brand-900/50 px-3 py-1 rounded-full inline-block border border-brand-500/30">
+                                ↗ 120% نمو سنوي
+                            </div>
+                        </motion.div>
+
+                        {/* Card 2 */}
+                        <motion.div
+                            whileHover={{ y: -5, borderColor: 'rgba(168, 85, 247, 0.5)' }}
+                            className="bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-3xl"
+                        >
+                            <p className="text-slate-400 font-bold mb-2">شريك نجاح (Saudi Co.)</p>
+                            <div className="text-4xl lg:text-5xl font-black text-white mb-2">
+                                <Counter from={0} to={63} />
+                            </div>
+                            <div className="text-xs text-purple-300 bg-purple-900/50 px-3 py-1 rounded-full inline-block border border-purple-500/30">
+                                قطاعات مختلفة
+                            </div>
+                        </motion.div>
+
+                        {/* Card 3 */}
+                        <motion.div
+                            whileHover={{ y: -5, borderColor: 'rgba(52, 211, 153, 0.5)' }}
+                            className="bg-white/5 backdrop-blur-lg border border-white/10 p-8 rounded-3xl"
+                        >
+                            <p className="text-slate-400 font-bold mb-2">إجمالي العروض (Proposals)</p>
+                            <div className="text-4xl lg:text-5xl font-black text-white mb-2">
+                                +<Counter from={0} to={128} />M
+                            </div>
+                            <div className="text-xs text-emerald-300 bg-emerald-900/50 px-3 py-1 rounded-full inline-block border border-emerald-500/30">
+                                ريال سعودي
+                            </div>
+                        </motion.div>
+
+                        {/* Card 4 */}
+                        <motion.div
+                            whileHover={{ y: -5, borderColor: 'rgba(251, 191, 36, 0.5)' }}
+                            className="bg-gradient-to-br from-brand-600/20 to-brand-900/20 backdrop-blur-lg border border-brand-500/30 p-8 rounded-3xl shadow-[0_0_30px_rgba(14,165,233,0.15)]"
+                        >
+                            <p className="text-brand-100 font-bold mb-2">مبيعات مغلقة (Closed Sales)</p>
+                            <div className="text-4xl lg:text-5xl font-black text-white mb-2">
+                                +<Counter from={0} to={11} />M
+                            </div>
+                            <div className="text-xs text-white bg-brand-500 px-3 py-1 rounded-full inline-block shadow-lg shadow-brand-500/20">
+                                🔥 إنجاز قياسي
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>
@@ -578,12 +744,20 @@ const GrowthSystemPage = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
                         {problems.map((item, index) => (
-                            <motion.div variants={fadeInUp} key={index} className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:border-rose-200 hover:shadow-xl hover:-translate-y-1 transition-all group">
-                                <div className="w-14 h-14 bg-white border border-slate-200 text-rose-500 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-rose-500 group-hover:text-white group-hover:border-rose-500 transition-colors shadow-sm">
+                            <motion.div
+                                variants={fadeInUp}
+                                key={index}
+                                whileHover={{ y: -10, transition: { duration: 0.3 } }}
+                                className="bg-slate-50 p-8 rounded-3xl border border-slate-100 relative overflow-hidden group hover:shadow-2xl hover:shadow-rose-100 transition-all"
+                            >
+                                <div className="absolute inset-0 border-2 border-transparent group-hover:border-rose-200 rounded-3xl transition-colors pointer-events-none"></div>
+                                <div className="absolute -right-20 -top-20 w-40 h-40 bg-rose-500/10 rounded-full blur-[50px] group-hover:bg-rose-500/20 transition-all"></div>
+
+                                <div className="w-14 h-14 bg-white border border-slate-200 text-rose-500 rounded-2xl flex items-center justify-center mb-6 z-10 relative shadow-sm group-hover:scale-110 transition-transform duration-300">
                                     <item.icon size={26} />
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">{item.title}</h3>
-                                <p className="text-slate-500 leading-relaxed font-medium">{item.desc}</p>
+                                <h3 className="text-xl font-bold text-slate-900 mb-3 relative z-10">{item.title}</h3>
+                                <p className="text-slate-500 leading-relaxed font-medium relative z-10">{item.desc}</p>
                             </motion.div>
                         ))}
                     </motion.div>
@@ -604,7 +778,7 @@ const GrowthSystemPage = () => {
     const MakeSolution = () => (
         <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
             <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/20 rounded-full blur-[120px]"></div>
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-500/20 rounded-full blur-[120px] animate-pulse-slow"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 flex flex-col md:flex-row items-center justify-between gap-16">
                 <div className="md:w-1/2">
@@ -626,39 +800,83 @@ const GrowthSystemPage = () => {
                 </div>
 
                 <motion.div
-                    initial={{ x: 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }}
-                    className="md:w-1/2 bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2rem] shadow-2xl"
+                    initial={{ x: 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.8 }}
+                    className="md:w-1/2 bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[2rem] shadow-2xl relative"
                 >
-                    <div className="flex items-center gap-4 mb-8">
-                        <div className="flex-1 bg-white/5 h-20 rounded-2xl flex items-center justify-center font-bold text-slate-400">تواصل</div>
-                        <ArrowRight className="text-brand-500" />
-                        <div className="flex-1 bg-brand-500 h-24 rounded-2xl flex items-center justify-center font-bold text-white shadow-xl shadow-brand-500/20 border border-brand-400 scale-110 relative z-10">فرص حقيقية</div>
-                        <ArrowRight className="text-brand-500" />
-                        <div className="flex-1 bg-white/5 h-20 rounded-2xl flex items-center justify-center font-bold text-slate-400">صفقات</div>
+                    <div className="absolute inset-x-0 top-1/2 h-1 bg-white/10 -translate-y-1/2 hidden md:block"></div>
+
+                    <div className="flex flex-col md:flex-row items-center gap-4 relative z-10">
+                        <div className="flex-1 w-full bg-slate-800/80 h-24 rounded-2xl flex flex-col items-center justify-center font-bold text-slate-400 border border-white/5">
+                            <Users size={20} className="mb-2" />
+                            <span>تواصل</span>
+                        </div>
+
+                        <div className="hidden md:flex text-brand-500">
+                            <motion.div
+                                animate={{ x: [0, 5, 0] }}
+                                transition={{ repeat: Infinity, duration: 2 }}
+                            >
+                                <ArrowRight size={24} />
+                            </motion.div>
+                        </div>
+
+                        <div className="flex-1 w-full bg-brand-500 h-28 rounded-2xl flex flex-col items-center justify-center font-bold text-white shadow-xl shadow-brand-500/20 border border-brand-400 scale-110 relative z-20">
+                            <Target size={24} className="mb-2" />
+                            <span>فرص حقيقية</span>
+                            <span className="text-xs font-normal opacity-80 mt-1">Focus Zone</span>
+                        </div>
+
+                        <div className="hidden md:flex text-brand-500">
+                            <motion.div
+                                animate={{ x: [0, 5, 0] }}
+                                transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
+                            >
+                                <ArrowRight size={24} />
+                            </motion.div>
+                        </div>
+
+                        <div className="flex-1 w-full bg-emerald-500/10 h-24 rounded-2xl flex flex-col items-center justify-center font-bold text-emerald-400 border border-emerald-500/20">
+                            <Handshake size={20} className="mb-2" />
+                            <span>صفقات</span>
+                        </div>
                     </div>
-                    <p className="text-center text-slate-400 font-medium">
-                        نقوم بفلترة الضوضاء والتركيز فقط على ما يحقق العائد.
-                    </p>
                 </motion.div>
             </div>
         </section>
     );
 
     const NinjaOS = () => (
-        <section id="ninja-os" className="py-24 bg-slate-50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="ninja-os" className="py-24 bg-slate-50 relative overflow-hidden">
+            {/* Subtle background element */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-100/50 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="text-center mb-20">
-                    <span className="text-brand-600 font-bold tracking-wider uppercase text-sm bg-brand-100 px-3 py-1 rounded-full">المنتج الأساسي</span>
-                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 mt-4 mb-6">
+                    <motion.span
+                        initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+                        className="text-brand-600 font-bold tracking-wider uppercase text-sm bg-brand-100 px-3 py-1 rounded-full"
+                    >
+                        المنتج الأساسي
+                    </motion.span>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+                        className="text-4xl md:text-5xl font-black text-slate-900 mt-4 mb-6"
+                    >
                         Ninja OS — Outbound Growth Engine
-                    </h2>
-                    <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+                    </motion.h2>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                        className="text-xl text-slate-500 max-w-2xl mx-auto font-medium"
+                    >
                         نظام تشغيل خروج مصمم خصيصًا للسوق السعودي. هدفه: <span className="text-brand-600 font-bold bg-brand-50 px-2 rounded-md">فرص حقيقية مش مجرد نشاط.</span>
-                    </p>
+                    </motion.p>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start mb-16">
-                    <div className="bg-white p-8 lg:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white relative overflow-hidden group hover:border-brand-200 transition-all">
+                    <motion.div
+                        initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}
+                        className="bg-white p-8 lg:p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white relative overflow-hidden group hover:border-brand-200 transition-all"
+                    >
                         <div className="absolute top-0 right-0 w-full h-2 bg-gradient-to-l from-brand-500 to-transparent"></div>
                         <h3 className="text-2xl font-bold mb-8 flex items-center gap-4">
                             <span className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900"><Zap /></span>
@@ -668,18 +886,18 @@ const GrowthSystemPage = () => {
                         <div className="mb-10">
                             <h4 className="font-bold text-lg mb-4 text-slate-800">تشغيل شهري متعدد القنوات:</h4>
                             <div className="grid grid-cols-2 gap-4">
-                                <div className="flex items-center gap-3 p-4 bg-blue-50/50 rounded-2xl text-blue-700 font-bold border border-blue-100">
+                                <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 bg-blue-50/50 rounded-2xl text-blue-700 font-bold border border-blue-100 cursor-default">
                                     <Linkedin size={20} /> LinkedIn
-                                </div>
-                                <div className="flex items-center gap-3 p-4 bg-indigo-50/50 rounded-2xl text-indigo-700 font-bold border border-indigo-100">
+                                </motion.div>
+                                <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 bg-indigo-50/50 rounded-2xl text-indigo-700 font-bold border border-indigo-100 cursor-default">
                                     <Mail size={20} /> Email
-                                </div>
-                                <div className="flex items-center gap-3 p-4 bg-green-50/50 rounded-2xl text-green-700 font-bold border border-green-100">
+                                </motion.div>
+                                <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 bg-green-50/50 rounded-2xl text-green-700 font-bold border border-green-100 cursor-default">
                                     <MessageCircle size={20} /> WhatsApp
-                                </div>
-                                <div className="flex items-center gap-3 p-4 bg-orange-50/50 rounded-2xl text-orange-700 font-bold border border-orange-100">
+                                </motion.div>
+                                <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-3 p-4 bg-orange-50/50 rounded-2xl text-orange-700 font-bold border border-orange-100 cursor-default">
                                     <Phone size={20} /> Calls
-                                </div>
+                                </motion.div>
                             </div>
                         </div>
 
@@ -700,24 +918,27 @@ const GrowthSystemPage = () => {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </motion.div>
 
                     <div className="space-y-8">
-                        <div className="bg-slate-900 text-white p-10 rounded-[2rem] shadow-2xl relative overflow-hidden">
-                            <div className="absolute -right-10 -top-10 w-40 h-40 bg-brand-500 rounded-full opacity-20 blur-3xl"></div>
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.2 }}
+                            className="bg-slate-900 text-white p-10 rounded-[2rem] shadow-2xl relative overflow-hidden"
+                        >
+                            <div className="absolute -right-10 -top-10 w-40 h-40 bg-brand-500 rounded-full opacity-20 blur-3xl animate-pulse"></div>
 
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
                                 <Sparkles className="text-yellow-400 fill-yellow-400" size={32} /> الأهم في Ninja OS
                             </h3>
                             <ul className="space-y-6 text-lg">
-                                <li className="flex items-start gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
+                                <li className="flex items-start gap-4 p-4 bg-white/5 rounded-2xl border border-white/5 hover:bg-white/10 transition-colors">
                                     <span className="text-rose-400 font-bold text-2xl">❌</span>
                                     <div>
                                         <span className="font-bold block text-rose-200">مفيش دفع على الاجتماعات</span>
                                         <span className="text-sm text-slate-400">لا نحاسبك على مجرد "لقاء" بدون نتيجة.</span>
                                     </div>
                                 </li>
-                                <li className="flex items-start gap-4 p-4 bg-brand-900/40 rounded-2xl border border-brand-500/30">
+                                <li className="flex items-start gap-4 p-4 bg-brand-900/40 rounded-2xl border border-brand-500/30 hover:bg-brand-900/60 transition-colors">
                                     <span className="text-brand-400 font-bold text-2xl">✅</span>
                                     <div>
                                         <span className="font-bold block text-brand-200">القياس على Opportunity حقيقية</span>
@@ -725,9 +946,12 @@ const GrowthSystemPage = () => {
                                     </div>
                                 </li>
                             </ul>
-                        </div>
+                        </motion.div>
 
-                        <div className="bg-white p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white">
+                        <motion.div
+                            initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.4 }}
+                            className="bg-white p-10 rounded-[2rem] shadow-xl shadow-slate-200/50 border border-white"
+                        >
                             <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                                 <Database size={24} className="text-brand-500" />
                                 أكتر من مجرد تشغيل
@@ -738,12 +962,15 @@ const GrowthSystemPage = () => {
                             <div className="bg-slate-100 p-4 rounded-xl text-sm text-slate-600 font-bold text-center border border-slate-200">
                                 مش بنبعث رسائل وخلاص، بنبني نظام مبيعات يشتغل معاك.
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
 
                 {/* Opportunity Definition */}
-                <div className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200">
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
+                    className="bg-white rounded-[2.5rem] shadow-xl overflow-hidden border border-slate-200"
+                >
                     <div className="grid grid-cols-1 md:grid-cols-2">
                         <div className="p-12 bg-emerald-50/50">
                             <h3 className="text-2xl font-black text-emerald-900 mb-8 flex items-center gap-3">
@@ -786,7 +1013,7 @@ const GrowthSystemPage = () => {
                             </ul>
                         </div>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </section>
     );
@@ -802,17 +1029,26 @@ const GrowthSystemPage = () => {
         ];
 
         return (
-            <section className="py-24 bg-white">
+            <section className="py-24 bg-white relative">
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-slate-50 rounded-full blur-[80px] -z-10"></div>
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">كيف نشتغل معاك؟</h2>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                            className="text-3xl md:text-5xl font-black text-slate-900 mb-4"
+                        >
+                            كيف نشتغل معاك؟
+                        </motion.h2>
                         <p className="text-xl text-slate-500 font-bold">كل خطوة مقاسة ومتوثقة</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <motion.div
+                        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                    >
                         {steps.map((step, index) => (
-                            <div key={index} className="relative group">
-                                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all h-full z-10 relative">
+                            <motion.div variants={fadeInUp} key={index} className="relative group">
+                                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all h-full z-10 relative group-hover:bg-white group-hover:border-brand-200">
                                     <div className="w-16 h-16 bg-white border-2 border-brand-100 rounded-2xl flex items-center justify-center text-brand-600 mb-6 group-hover:border-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
                                         <step.icon size={28} />
                                     </div>
@@ -823,9 +1059,9 @@ const GrowthSystemPage = () => {
                                 {index !== steps.length - 1 && index !== 2 && index !== 5 && (
                                     <div className="hidden lg:block absolute top-1/2 -left-8 w-16 h-0.5 bg-slate-200 z-0 transform -translate-y-1/2 border-t-2 border-dashed border-slate-200"></div>
                                 )}
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
         );
@@ -889,24 +1125,34 @@ const GrowthSystemPage = () => {
             {/* Final CTA */}
             <section id="contact" className="py-32 bg-slate-900 text-white relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600/20 rounded-full blur-[150px] pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-600/20 rounded-full blur-[150px] pointer-events-none animate-pulse-slow"></div>
 
                 <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-                    <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight">جاهز تبني Pipeline مبيعات <br /> <span className="text-brand-500">حقيقي في السعودية؟</span></h2>
+                    <motion.h2
+                        initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }}
+                        className="text-4xl md:text-6xl font-black mb-8 leading-tight"
+                    >
+                        جاهز تبني Pipeline مبيعات <br /> <span className="text-brand-500">حقيقي في السعودية؟</span>
+                    </motion.h2>
                     <p className="text-xl text-slate-300 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
                         احجز جلسة تشخيص 30 دقيقة، نشوف هل Ninja OS مناسب لنشاطك، ولو مش مناسب... هنقولك بصراحة.
                     </p>
                     <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <button
+                        <motion.button
+                            whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                             onClick={() => navigate('/diagnosis')}
-                            className="bg-brand-500 hover:bg-brand-600 text-white text-xl px-10 py-5 rounded-2xl font-bold transition-all transform hover:scale-105 shadow-2xl shadow-brand-500/40"
+                            className="bg-brand-500 hover:bg-brand-600 text-white text-xl px-10 py-5 rounded-2xl font-bold transition-all shadow-2xl shadow-brand-500/40 relative overflow-hidden"
                         >
-                            احجز جلسة تشخيص
-                        </button>
-                        <button className="bg-transparent border-2 border-slate-700 hover:bg-white/5 text-white text-xl px-10 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3">
+                            <span className="relative z-10">احجز جلسة تشخيص</span>
+                            <div className="absolute inset-0 rounded-2xl ring-4 ring-white/30 animate-pulse"></div>
+                        </motion.button>
+                        <motion.button
+                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.05)" }} whileTap={{ scale: 0.95 }}
+                            className="bg-transparent border-2 border-slate-700 text-white text-xl px-10 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-3"
+                        >
                             <Phone size={24} />
                             كلّمنا على واتساب
-                        </button>
+                        </motion.button>
                     </div>
                 </div>
             </section>
