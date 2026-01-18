@@ -503,7 +503,7 @@ const GrowthSystemPage = () => {
                         initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}
                     >
                         <h2 className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight">
-                            أرقامنا في <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-brand-200">2025</span>
+                            أرقامنا في <span className="text-brand-400">2025</span>
                         </h2>
                         <p className="text-xl md:text-3xl text-slate-300 font-bold leading-relaxed max-w-4xl mx-auto mb-16">
                             وبإذن الله جاهزين نضاعف أرقامنا <span className="text-white border-b-4 border-brand-500">لعملائنا ولينا</span> في 2026 🚀
