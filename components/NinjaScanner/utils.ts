@@ -148,84 +148,128 @@ export const calculateResults = (data: NinjaFormData) => {
     // 3. Deep Recommendations Generation
     const recommendations: Recommendation[] = [];
 
-    // Strategy & Focus Gap
-    if (data.companyAge < 2 && data.icpIndustries.length > 2) {
+    // --- Deep Consultant Logic (Brain of the Ninja) ---
+
+    // 1. Strategic Focus Analysis (Focus vs Experience)
+    const industryCount = data.icpIndustries.length;
+    if (data.companyAge < 1 && industryCount > 3) {
         recommendations.push({
             type: 'critical',
             category: 'Strategy',
-            title: 'خطر التشتت (Lack of Focus)',
-            icon: '🎯',
-            problem: `عمر الشركة صغير (${data.companyAge} سنوات) وتستهدف ${data.icpIndustries.length} قطاعات.`,
-            impact: 'عدم بناء خبرة تراكمية (Domain Authority) وصعوبة الإقناع.',
-            solution: 'التزم بقطاع واحد فقط (Niche) لمدة 6 أشهر حتى تثبت النموذج.',
-            tools: 'Positioning'
+            title: 'خطر التشتت القاتل (Lack of Focus)',
+            icon: '🛑',
+            problem: `شركتك عمرها أقل من سنة وتستهدف ${industryCount} قطاعات مختلفة في آن واحد.`,
+            impact: 'لن تتمكن من بناء "سلطة معرفية" (Domain Authority) في أي قطاع، مما يجعل إغلاق الصفقات صعباً ومكلفاً.',
+            solution: 'يجب اختيار "قطاع واحد فقط" (Niche Market) والتركيز عليه لمدة 6 أشهر حتى تثبت نموذج العمل وتجمع دراسات حالة قوية.',
+            tools: 'Positioning Canvas'
         });
     }
 
-    // Asset Gaps
+    // 2. Asset Readiness (The Trust Foundation)
+    if (!data.hasCompanyProfile || !data.hasProfessionalWebsite) {
+        recommendations.push({
+            type: 'critical',
+            category: 'Assets',
+            title: 'بناء الهوية الرقمية (Digital Trust)',
+            icon: '🏗️',
+            problem: 'غياب الموقع الاحترافي أو ملف الشركة المحدث يفقدك المصداقية قبل بدء الاجتماع.',
+            impact: 'العميل السعودي يبحث عنك أونلاين فوراً. عدم وجودك يعني "شركة وهمية" أو "غير محترفة" في نظره.',
+            solution: 'بناء Landing Page تركز على النتائج (Case Studies) وليس الخدمات، وتحديث ملف الشركة ليشرح "كيف نساعدك" وليس "من نحن".',
+            tools: 'Framer / Canva'
+        });
+    }
+
     if (!data.hasPitchDeck) {
         recommendations.push({
             type: 'critical',
             category: 'Assets',
-            title: 'غياب العرض الاستثماري (Pitch Deck)',
+            title: 'هندسة القصة البيعية (Sales Narrative)',
             icon: '📂',
-            problem: 'لا يوجد ملف Sales Pitch Deck يحكي قصة الشركة.',
-            impact: 'العميل لا يفهم القيمة المضافة، والاعتماد كلياً على مهارة البائع الشفهية.',
-            solution: 'بناء عرض تقديمي يركز على المشكلة، الحل، والعائد على الاستثمار (ROI Story).',
-            tools: 'Canva / PPT'
+            problem: 'تعتمد على الكلام الشفهي أو ملفات عامة، ولا تملك "قصة بيعية" (Pitch Deck) تحكي معاناة العميل.',
+            impact: 'صعوبة إقناع صناع القرار بالعائد على الاستثمار، مما يطيل دورة البيع ويخفض معدل الإغلاق.',
+            solution: 'صناعة Pitch Deck مكون من 10 شرائح يركز على: المشكلة، الحل، العائد المالي (ROI)، وقصص النجاح.',
+            tools: 'Storybrand Framework'
         });
     }
 
-    if (!data.hasSalesNavigator && data.monthlyTarget > 50000) {
+    if (!data.hasPricingFile) {
         recommendations.push({
-            type: 'critical',
-            category: 'Tech',
-            title: 'تفعيل Sales Navigator فوراً',
-            icon: '💎',
-            problem: 'تستهدف صفقات كبيرة بدون أداة الوصول لصناع القرار.',
-            impact: 'العمل "بالعمياني" وضياع وقت في البحث اليدوي.',
-            solution: 'تفعيل رخصة Sales Navigator واستخدام فلاتر متقدمة (Headcount, Growth).',
-            tools: 'LinkedIn Sales Nav'
+            type: 'warning',
+            category: 'Assets',
+            title: 'وضوح هيكل التسعير (Pricing Clarity)',
+            icon: '💰',
+            problem: 'لا يوجد ملف تسعير واضح يشرح الباقات والقيمة مقابل المال.',
+            impact: 'تذبذب الأسعار، وارتباك العميل، وضياع وقت في المفاوضات غير المجدية.',
+            solution: 'تصميم ملف "باقات استثمارية" (Investment Packages) يربط السعر بالمخرجات والنتائج المتوقعة.',
+            tools: 'Pricing Psychology'
         });
     }
 
-    // Volume Gaps (The 100 Club)
-    if (data.dailyCalls < 50 && data.dailyWhatsapp < 50 && data.dailyLinkedin < 50) {
+    // 3. The 100 Club (Daily Activity Benchmarks)
+    const totalActivity = data.dailyCalls + data.dailyWhatsapp + data.dailyLinkedin + data.dailyEmails;
+    if (totalActivity < 300) {
         recommendations.push({
             type: 'warning',
             category: 'Volume',
-            title: 'رفع نشاط الـ Outbound (نادي الـ 100)',
+            title: 'رفع وتيرة الوصول (Volume Game)',
             icon: '🔥',
-            problem: 'معدلات النشاط اليومي ضعيفة جداً لا تكفي لبناء Pipeline.',
-            impact: 'جفاف في الاجتماعات المؤهلة.',
-            solution: 'رفع المعدل اليومي ليكون: 100 مكالمة، 100 واتساب، 100 لينكدان.',
+            problem: `معدل نشاطك اليومي (${totalActivity} محاولة) أقل من المعدل الطبيعي للنمو السريع (400+).`,
+            impact: 'جفاف خط الأنابيب (Pipeline Starvation) وعدم وجود فرص كافية للإغلاق نهاية الشهر.',
+            solution: 'تطبيق نظام "نادي الـ 100": 100 مكالمة، 100 واتساب، 100 تواصل لينكدان، 100 إيميل يومياً.',
             tools: 'Auto-Dialer / Automation'
         });
     }
 
-    if (!data.recordsCalls) {
+    if (!data.hasSalesNavigator && data.icpIndustries.length > 0) {
         recommendations.push({
             type: 'info',
-            category: 'Quality',
-            title: 'تسجيل وتحليل المكالمات',
-            icon: '🎙️',
-            problem: 'لا يوجد آلية لمراجعة جودة المكالمات.',
-            impact: 'تكرار نفس الأخطاء البيعية وعدم تطوير الفريق.',
-            solution: 'تفعيل تسجيل المكالمات وتحليلها أسبوعياً (Coaching Sessions).',
-            tools: 'Fireflies / Gong'
+            category: 'Tech',
+            title: 'تفعيل رادار العملاء (Sales Nav)',
+            icon: '💎',
+            problem: 'تحاول الوصول لعملاء B2B بدون أداة التنقيب الأساسية LinkedIn Sales Navigator.',
+            impact: 'العمل بشكل عشوائي واستهلاك وقت الفريق في البحث عن "الإيميل الصحيح" بدلاً من البيع.',
+            solution: 'الاستثمار فوراً في رخصة Sales Navigator واستخدام فلاتر "Headcount Growth" لمعرفة الشركات التي تملك ميزانية.',
+            tools: 'LinkedIn Sales Navigator'
         });
     }
 
-    if (data.leadsPerMonth < 500) {
+    if (!data.usesAIAgents) {
+        recommendations.push({
+            type: 'info',
+            category: 'Tech',
+            title: 'تبني الذكاء الاصطناعي (AI Force)',
+            icon: '🤖',
+            problem: 'تعتمد على الجهد اليدوي البحت في عصر الأتمتة.',
+            impact: 'منافسوك يستخدمون AI Agents للوصول لـ 10 أضعاف عملائك بنفس الجهد.',
+            solution: 'أتمتة الرسائل الأولية (First Touch) باستخدام AI Agents للتركيز بشرياً فقط على العملاء المهتمين.',
+            tools: 'Bifrost / Instantly'
+        });
+    }
+
+    // 4. Pipeline Health (Monthly Benchmarks)
+    if (data.leadsPerMonth < 800) {
         recommendations.push({
             type: 'warning',
             category: 'Pipeline',
-            title: 'تغذية الـ Database',
+            title: 'محرك توليد الفرص (Lead Engine)',
             icon: '🛢️',
-            problem: `عدد العملاء المحتملين (${data.leadsPerMonth}) أقل من الحد الأدنى الصحي (1000).`,
-            impact: 'نقص حاد في الفرص المستقبلية.',
-            solution: 'بناء List Building System يضخ 1000 عميل محتمل شهرياً.',
-            tools: 'Apollo / Lusha'
+            problem: `عدد العملاء المحتملين الجدد شهرياً (${data.leadsPerMonth}) لا يكفي لتحقيق هدفك المالي. الحد الآمن هو 1000+.`,
+            impact: 'ستضطر لقبول صفقات ضعيفة أو بأسعار منخفضة فقط "لتمشية العمل".',
+            solution: 'بناء نظام Lead Gen يضمن دخول 1000 عميل محتمل لـ CRM شهرياً بحد أدنى.',
+            tools: 'Apollo / Lead Sourcing'
+        });
+    }
+
+    if (data.meetingsPerMonth < 20) {
+        recommendations.push({
+            type: 'critical',
+            category: 'Pipeline',
+            title: 'تأهيل الاجتماعات (Meeting Flow)',
+            icon: '🤝',
+            problem: `عدد الاجتماعات المؤهلة (${data.meetingsPerMonth}) منخفض جداً. المعدل الصحي هو 20-30 اجتماع شهرياً.`,
+            impact: 'احتمالية عدم إغلاق أي صفقة تزيد عن 60% هذا الشهر.',
+            solution: 'مراجعة "رسالة الدعوة" (Offer Script) لأنها السبب الرئيسي لرفض الاجتماع.',
+            tools: 'Irresistible Offer'
         });
     }
 

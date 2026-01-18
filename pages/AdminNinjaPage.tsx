@@ -6,23 +6,16 @@ import {
     Building2, Activity, FileText, AlertTriangle
 } from 'lucide-react';
 
+import { useData } from '../context/DataContext';
+import { ProviderProfile } from '../types';
+
 const AdminNinjaPage = () => {
+    const { providerProfile } = useData();
     const [searchTerm, setSearchTerm] = useState('');
     const [filterTier, setFilterTier] = useState('all');
 
-    // Mock Data based on new Type structure
-    const providers = [
-        {
-            id: '1',
-            company_name: 'TechFlow Solutions',
-            industry: 'SaaS',
-            contact_name: 'Ahmed Ali',
-            ninja_score: 88,
-            tier: 'نينجا محترف 🥷',
-            assets_ready: { profile: true, deck: true, website: true, pricing: true, social: true },
-            icp_status: 'Defined',
-            last_active: '2h ago'
-        },
+    // Mock Data (Static)
+    const staticProviders = [
         {
             id: '2',
             company_name: 'Gulf Construction',
@@ -57,6 +50,32 @@ const AdminNinjaPage = () => {
             last_active: '3d ago'
         },
     ];
+
+    // Merge Real Profile if exists
+    let providers = [...staticProviders];
+    if (providerProfile) {
+        const diag = providerProfile.ninja_diagnosis || {};
+        const assets = providerProfile.assets_readiness || {};
+
+        const realProvider = {
+            id: providerProfile.id || '1',
+            company_name: providerProfile.company_name || 'My Company',
+            industry: providerProfile.industries?.[0]?.name || 'Technology',
+            contact_name: providerProfile.contact_name || 'You',
+            ninja_score: diag.scores?.overallScore || 0,
+            tier: diag.scores?.tierLabel || 'غير مصنف',
+            assets_ready: {
+                profile: assets.has_profile || false,
+                deck: assets.has_deck || false,
+                website: assets.has_website || false,
+                pricing: assets.has_pricing || false,
+                social: assets.has_social || false
+            },
+            icp_status: providerProfile.icp_structured?.industries?.length ? 'Defined' : 'Missing',
+            last_active: 'Now (You)'
+        };
+        providers = [realProvider, ...staticProviders];
+    }
 
     const getScoreColor = (score: number) => {
         if (score >= 80) return 'text-emerald-500 bg-emerald-50 border-emerald-200';

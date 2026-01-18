@@ -352,32 +352,56 @@ const NinjaScanner = () => {
                 </div>
 
                 <div className="h-4"></div>
+
+                <h3 className="text-white/80 font-bold mb-4 flex items-center gap-2">
+                    <span className="text-xl">🛢️</span>
+                    قوة قاعدة البيانات (Database Power)
+                </h3>
+                <div className="grid grid-cols-2 gap-4">
+                    <InputGroup label="حجم قاعدة العملاء (leads/mo)" id="db" type="number" value={formData.leadsPerMonth} onChange={v => updateField('leadsPerMonth', v)} placeholder="e.g. 1000" />
+                    <InputGroup label="عدد الاجتماع المؤهلة (Qualified Meetings)" id="mtg" type="number" value={formData.meetingsPerMonth} onChange={v => updateField('meetingsPerMonth', v)} />
+                </div>
+
+                <div className="h-4"></div>
                 <InputGroup label="لماذا الآن؟ (Why Now)" id="why" type="select" options={['--', ...WHY_NOW_OPTIONS]} value={formData.whyNow} onChange={v => updateField('whyNow', v)} />
             </div>
         </div>
     );
     // ... renderAnalysis unchanged ...
     const renderAnalysis = () => (
-        <div className="flex flex-col items-center justify-center text-center py-20 h-full">
+        <div className="flex flex-col items-center justify-center text-center py-20 h-full relative overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] animate-pulse"></div>
+
             <motion.div
-                animate={{ rotate: 360, scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                className="w-40 h-40 mb-8 relative"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="relative z-10"
             >
-                <div className="absolute inset-0 rounded-full border-4 border-emerald-500/20"></div>
-                <div className="absolute inset-0 rounded-full border-t-4 border-emerald-500 animate-spin"></div>
-                <div className="absolute inset-4 rounded-full border-4 border-cyan-500/20"></div>
-                <div className="absolute inset-4 rounded-full border-r-4 border-cyan-500 animate-spin-reverse"></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <Sparkles size={40} className="text-white animate-pulse" />
+                <div className="w-32 h-32 mb-8 relative mx-auto">
+                    <div className="absolute inset-0 rounded-full border-4 border-emerald-500/20"></div>
+                    <div className="absolute inset-0 rounded-full border-t-4 border-emerald-500 animate-spin"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <Sparkles size={32} className="text-emerald-400 animate-pulse" />
+                    </div>
+                </div>
+                <h2 className="text-3xl font-bold text-white mb-4">جاري تشخيص نظامك...</h2>
+                <div className="space-y-3 font-mono text-sm text-emerald-200/70">
+                    <div className="flex items-center gap-2 justify-center">
+                        <CheckCircle size={14} className="text-emerald-500" />
+                        <span>فحص جاهزية الأصول الرقمية</span>
+                    </div>
+                    <div className="flex items-center gap-2 justify-center">
+                        <CheckCircle size={14} className="text-emerald-500" />
+                        <span>مقارنة الأداء مع "نادي الـ 100"</span>
+                    </div>
+                    <div className="flex items-center gap-2 justify-center">
+                        <CheckCircle size={14} className="text-emerald-500" />
+                        <span>تحليل فجوات الاستراتيجية</span>
+                    </div>
                 </div>
             </motion.div>
-            <h2 className="text-3xl font-black text-white mb-4 animate-pulse">جاري تحليل بيانات النينجا...</h2>
-            <div className="space-y-2 text-gray-400 font-mono text-sm">
-                <p>Checking Asset Readiness...</p>
-                <p>Benchmarking vs Top 1%...</p>
-                <p>Analyzing Funnel Leaks...</p>
-            </div>
         </div>
     );
 
@@ -385,58 +409,93 @@ const NinjaScanner = () => {
         const ResultTabBtn = ({ id, label, icon: Icon }: any) => (
             <button
                 onClick={() => setResultTab(id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-full font-bold transition-all ${resultTab === id ? 'bg-emerald-500 text-white shadow-lg' : 'bg-white/5 text-gray-400 hover:bg-white/10'}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${resultTab === id ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500 shadow-xl shadow-emerald-900/20 scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800 hover:text-white'}`}
             >
                 <Icon size={18} /> {label}
             </button>
         );
 
         return (
-            <div className="max-w-7xl mx-auto">
-                <div className="text-center mb-10">
-                    <h2 className="text-4xl font-black dark:text-white mb-2">تقرير النينجا الاستراتيجي 🥷</h2>
-                    <p className="text-gray-500">حقيقتك الرقمية + خطة السيطرة على السوق.</p>
+            <div className="max-w-7xl mx-auto pb-20">
+                <div className="text-center mb-12 relative">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-emerald-500/5 blur-[120px] pointer-events-none"></div>
+                    <h2 className="text-5xl font-black text-white mb-4 tracking-tight drop-shadow-xl relative z-10">
+                        تقرير النينجا الاستراتيجي <span className="text-emerald-500">.</span>
+                    </h2>
+                    <p className="text-slate-400 text-lg relative z-10">تشخيص عميق يكشف لك الحقيقة الرقمية وخارطة الطريق للسيطرة.</p>
                 </div>
 
-                <div className="flex justify-center flex-wrap gap-4 mb-10">
-                    <ResultTabBtn id="scores" label="النتيجة الشاملة" icon={Trophy} />
-                    <ResultTabBtn id="kpis" label="تحليل الفجوات" icon={BarChart3} />
-                    <ResultTabBtn id="recs" label="التوصيات والحلول" icon={Lightbulb} />
-                    <ResultTabBtn id="pdf" label="تصدير (PDF)" icon={Download} />
+                <div className="flex justify-center flex-wrap gap-4 mb-12 relative z-10">
+                    <ResultTabBtn id="scores" label="النتيجة والتحليل" icon={Trophy} />
+                    <ResultTabBtn id="kpis" label="فجوات النمو" icon={BarChart3} />
+                    <ResultTabBtn id="recs" label="خارطة الطريق (التوصيات)" icon={Lightbulb} />
+                    <ResultTabBtn id="pdf" label="تحميل التقرير (PDF)" icon={Download} />
                 </div>
 
-                <div className="bg-gray-900/60 backdrop-blur-2xl rounded-[2.5rem] p-10 border border-white/10 min-h-[600px] shadow-2xl">
+                <div className="bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 border border-slate-700/50 min-h-[600px] shadow-2xl relative z-10 overflow-hidden">
+                    {/* Decorative Grid */}
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
+
                     {resultTab === 'scores' && (
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-                            {/* Main Score */}
-                            <div className="lg:col-span-4 text-center bg-white/5 rounded-3xl p-8 border border-white/5">
-                                <h3 className="text-lg font-bold text-gray-400 mb-6">مؤشر الجاهزية</h3>
-                                <div className="relative w-48 h-48 mx-auto mb-6 flex items-center justify-center">
-                                    <div className="absolute inset-0 rounded-full border-8 border-white/5"></div>
-                                    <div className={`absolute inset-0 rounded-full border-8 border-emerald-500`} style={{ clipPath: `polygon(0 0, 100% 0, 100% ${results.scores.overallScore}%, 0 ${results.scores.overallScore}%)` }}></div>
-                                    <div className="text-6xl font-black text-white">{results.scores.overallScore}</div>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+                            {/* Main Score - Enhanced Visuals */}
+                            <div className="lg:col-span-4 text-center bg-gradient-to-b from-slate-800/80 to-slate-900/80 rounded-3xl p-8 border border-slate-700 shadow-inner ring-1 ring-white/5">
+                                <h3 className="text-xl font-bold text-slate-300 mb-8 flex items-center justify-center gap-2">
+                                    <Sparkles size={18} className="text-emerald-400" />
+                                    مؤشر جاهزية النينجا
+                                </h3>
+
+                                <div className="relative w-56 h-56 mx-auto mb-8 flex items-center justify-center">
+                                    {/* Score Rings */}
+                                    <svg className="w-full h-full -rotate-90">
+                                        <circle cx="112" cy="112" r="90" fill="none" stroke="#1e293b" strokeWidth="12" />
+                                        <circle
+                                            cx="112" cy="112" r="90" fill="none" stroke={getStatusColor(results.scores.overallScore, 80, 50).includes('emerald') ? '#10b981' : results.scores.overallScore > 50 ? '#f59e0b' : '#ef4444'}
+                                            strokeWidth="12"
+                                            strokeDasharray={`${2 * Math.PI * 90}`}
+                                            strokeDashoffset={`${2 * Math.PI * 90 * (1 - results.scores.overallScore / 100)}`}
+                                            strokeLinecap="round"
+                                            className="transition-all duration-1000 ease-out"
+                                        />
+                                    </svg>
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span className={`text-6xl font-black tracking-tighter ${results.scores.overallScore >= 80 ? 'text-emerald-400' : 'text-white'}`}>
+                                            {results.scores.overallScore}
+                                        </span>
+                                        <span className="text-slate-500 text-sm font-medium mt-1">من 100</span>
+                                    </div>
                                 </div>
-                                <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
+
+                                <div className={`inline-flex items-center gap-2 px-6 py-2 rounded-full font-bold border ${results.scores.overallScore >= 80 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-800 text-slate-300 border-slate-700'}`}>
                                     {results.scores.tierLabel}
                                 </div>
                             </div>
 
                             {/* Deep Analysis Grid */}
                             <div className="lg:col-span-8 space-y-8">
-                                <div className="grid grid-cols-2 gap-4">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     {[
-                                        { label: "الأصول (Assets)", score: results.scores.teamScore, icon: "📂" },
-                                        { label: "النشاط (Volume)", score: results.scores.outboundScore, icon: "🔥" },
-                                        { label: "التقنية (Tech)", score: results.scores.crmScore, icon: "🤖" },
-                                        { label: "الاستراتيجية (Fit)", score: results.scores.icpScore, icon: "🎯" }
+                                        { label: "الأصول (Assets)", sub: "الجاهزية الرقمية", score: results.scores.teamScore, icon: "📂", color: "text-blue-400" },
+                                        { label: "النشاط (Volume)", sub: "وتيرة الوصول", score: results.scores.outboundScore, icon: "🔥", color: "text-orange-400" },
+                                        { label: "التقنية (Tech)", sub: "أدوات الذكاء", score: results.scores.crmScore, icon: "🤖", color: "text-purple-400" },
+                                        { label: "الاستراتيجية (Fit)", sub: "دقة الاستهداف", score: results.scores.icpScore, icon: "🎯", color: "text-rose-400" }
                                     ].map((stat, idx) => (
-                                        <div key={idx} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex items-center justify-between">
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-2xl">{stat.icon}</span>
-                                                <span className="font-bold text-gray-300">{stat.label}</span>
+                                        <div key={idx} className="group bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors flex items-center justify-between relative overflow-hidden">
+                                            <div className="flex items-center gap-5 relative z-10">
+                                                <div className={`w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center text-2xl border border-slate-700 group-hover:scale-110 transition-transform`}>{stat.icon}</div>
+                                                <div>
+                                                    <div className="font-bold text-white text-lg">{stat.label}</div>
+                                                    <div className="text-slate-500 text-xs font-mono">{stat.sub}</div>
+                                                </div>
                                             </div>
-                                            <div className={`text-2xl font-black ${getStatusColor(stat.score, 80, 50).split(' ')[0]}`}>
-                                                {stat.score}%
+                                            <div className="relative z-10">
+                                                <div className={`text-3xl font-black font-mono ${stat.score >= 80 ? 'text-emerald-400' : stat.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                                                    {stat.score}%
+                                                </div>
+                                            </div>
+                                            {/* Progress Bar Bottom */}
+                                            <div className="absolute bottom-0 left-0 h-1 bg-slate-700 w-full">
+                                                <div className={`h-full ${stat.score >= 80 ? 'bg-emerald-500' : 'bg-amber-500'}`} style={{ width: `${stat.score}%` }}></div>
                                             </div>
                                         </div>
                                     ))}
