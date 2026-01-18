@@ -6,7 +6,7 @@ import {
     Download, Printer, Building2, DollarSign, Flame, Zap, Users,
     Database, Target, Search, Mail, Linkedin, Phone, MessageCircle,
     Sun, Moon, Save, ArrowRight, ArrowLeft, CheckCircle, Sparkles,
-    Trophy, AlertTriangle, Play, Loader2
+    Trophy, AlertTriangle, Play, Loader2, Filter
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -20,6 +20,7 @@ import { calculateResults, fmtCurrency, getStatusColor } from './utils';
 import { InputGroup } from './components/InputGroup';
 import { RadarChart, FunnelChart } from './components/Charts';
 import { PDFReport } from './components/PDFReport';
+import { SelectionCard, ToggleCard, VisualSlider } from './components/Interactions';
 import { useData } from '../../context/DataContext';
 
 // Define TS for html2pdf
@@ -210,25 +211,52 @@ const NinjaScanner = () => {
     // --- RENDER STEPS ---
 
     const renderIntro = () => (
-        <div className="flex flex-col items-center justify-center text-center py-20">
+        <div className="flex flex-col items-center justify-center text-center py-12 md:py-20 relative overflow-hidden">
+            {/* Background Matrix Effect (Simulated) */}
+            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
+                <div className="absolute top-10 left-10 text-xs font-mono text-emerald-500">INIT_SYSTEM... OK</div>
+                <div className="absolute top-20 right-20 text-xs font-mono text-emerald-500">LOADING_MODULES... 100%</div>
+                <div className="absolute bottom-10 left-1/3 text-xs font-mono text-emerald-500">SCANNING_PORTS...</div>
+            </div>
+
             <motion.div
                 initial={{ scale: 0 }} animate={{ scale: 1 }}
-                className="w-auto h-32 flex items-center justify-center mb-8"
+                className="w-auto h-24 md:h-32 flex items-center justify-center mb-8 relative z-10"
             >
-                {/* Brand Logo Upgrade */}
                 <img src="/logo_full.png" alt="BiznesClinics" className="h-full w-auto object-contain drop-shadow-2xl" />
             </motion.div>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
-                هل أنت مستعد لمضاعفة أرقامك؟
-            </h1>
-            <p className="text-xl text-slate-500 dark:text-gray-400 max-w-2xl mb-12 leading-relaxed">
-                في أقل من 3 دقائق، سنقوم بتشخيص كامل لعملية المبيعات لديك، نحدد الثغرات، ونعطيك خطة عمل جاهزة للتنفيذ. بدون مجاملات، فقط أرقام وحقائق.
-            </p>
-            <button onClick={nextStep} className="group relative px-12 py-5 bg-brand-500 hover:bg-brand-600 rounded-lg text-white font-black text-xl shadow-2xl shadow-brand-500/40 transition-all hover:scale-105 flex items-center gap-3 overflow-hidden">
-                <span className="relative z-10">🚀 ابدأ التشخيص الآن</span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-lg" />
+
+            <div className="relative z-10 max-w-3xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                    className="inline-block px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-mono text-sm mb-6"
+                >
+                    System Status: <span className="animate-pulse font-bold">READY_TO_SCAN</span>
+                </motion.div>
+
+                <h1 className="text-4xl md:text-7xl font-black mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-400 bg-clip-text text-transparent leading-tight">
+                    هل أنت مستعد <br />
+                    <span className="text-emerald-500">لمضاعفة أرقامك؟</span>
+                </h1>
+
+                <div className="bg-slate-900 text-slate-300 font-mono text-right p-6 rounded-xl border border-slate-700 shadow-2xl max-w-2xl mx-auto mb-12 text-sm md:text-base leading-relaxed overflow-hidden relative group">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-500"></div>
+                    <p className="typing-effect">
+                        {">"} جاري تهيئة نظام الفحص... <br />
+                        {">"} الهدف: كشف ثغرات المبيعات الخفية. <br />
+                        {">"} المدة المتوقعة: 180 ثانية. <br />
+                        <span className="text-emerald-400 font-bold">{">"} هل تسمح لنا بالدخول؟</span> <span className="animate-pulse">_</span>
+                    </p>
+                </div>
+            </div>
+
+            <button onClick={nextStep} className="group relative px-12 py-5 bg-emerald-500 hover:bg-emerald-600 rounded-xl text-white font-black text-xl shadow-2xl shadow-emerald-500/40 transition-all hover:scale-105 flex items-center gap-3 overflow-hidden z-10 hover:skew-x-3">
+                <Zap className="fill-white group-hover:animate-bounce" />
+                <span className="relative z-10">ابدأ التشخيص الآن 🚀</span>
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-xl" />
             </button>
-            <div className="mt-8 flex gap-8 text-sm text-gray-500 font-bold opacity-60">
+
+            <div className="mt-8 flex gap-8 text-xs md:text-sm text-gray-500 font-bold opacity-60 z-10">
                 <span className="flex items-center gap-1"><CheckCircle size={14} /> مجاني 100%</span>
                 <span className="flex items-center gap-1"><CheckCircle size={14} /> تقرير سري</span>
                 <span className="flex items-center gap-1"><CheckCircle size={14} /> نتائج فورية</span>
@@ -237,26 +265,67 @@ const NinjaScanner = () => {
     );
 
     const renderIdentity = () => (
-        <div className="max-w-2xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-8">
             <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold dark:text-white mb-2">لنبدأ بالأساسيات 🏗️</h2>
                 <p className="text-gray-500">عرّفنا بشركتك لنقارنك بالسوق بشكل صحيح.</p>
             </div>
-            <div className="bg-white dark:bg-gray-800/50 p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl">
-                <InputGroup label="1. اسم الشركة" id="n" value={formData.companyName} onChange={v => updateField('companyName', v)} />
-                <div className="h-4"></div>
-                <div className="grid grid-cols-2 gap-4">
-                    <InputGroup label="2. الصناعة" id="ind" type="select" options={['--', ...INDUSTRIES]} value={formData.industry} onChange={v => updateField('industry', v)} />
-                    <InputGroup label="3. البلد" id="co" type="select" options={['--', ...COUNTRIES]} value={formData.country} onChange={v => updateField('country', v)} />
+
+            <div className="space-y-8">
+                {/* 1. Name */}
+                <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl">
+                    <InputGroup label="1. اسم الشركة" id="n" value={formData.companyName} onChange={v => updateField('companyName', v)} />
                 </div>
-                <div className="h-4"></div>
-                <InputGroup label="4. الموقع الإلكتروني (Website)" id="web" value={formData.website} onChange={v => updateField('website', v)} />
-                <div className="h-4"></div>
-                <div className="grid grid-cols-2 gap-4">
-                    <InputGroup label="عمر الشركة (سنوات)" id="age" type="number" value={formData.companyAge} onChange={v => updateField('companyAge', v)} />
-                    <InputGroup label="مستوى التخصص (1-10)" id="spec" type="number" value={formData.specializationFocus} onChange={v => updateField('specializationFocus', v)} />
+
+                {/* 2. Industry - Visual Grid */}
+                <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-4 px-2">2. قطاع العمل (Industry)</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {INDUSTRIES.map((ind, i) => (
+                            <SelectionCard
+                                key={i} title={ind} selected={formData.industry === ind}
+                                onClick={() => updateField('industry', ind)}
+                            />
+                        ))}
+                    </div>
                 </div>
-                <p className="text-xs text-gray-400 mt-2">* التخصص: هل تقدم خدمات محددة جداً لعملاء محددين؟ (10 = تخصص دقيق)</p>
+
+                {/* 3. Country - Visual Grid */}
+                <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-4 px-2">3. المقر الرئيسي (HQ)</label>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                        {COUNTRIES.map((cnt, i) => (
+                            <SelectionCard
+                                key={i} title={cnt} selected={formData.country === cnt}
+                                onClick={() => updateField('country', cnt)}
+                            />
+                        ))}
+                    </div>
+                </div>
+
+                {/* 4. Details */}
+                <div className="bg-white dark:bg-gray-800/50 p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl space-y-6">
+                    <InputGroup label="4. الموقع الإلكتروني (Website)" id="web" value={formData.website} onChange={v => updateField('website', v)} />
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <VisualSlider
+                            label="عمر الشركة (سنوات)"
+                            value={formData.companyAge}
+                            onChange={v => updateField('companyAge', v)}
+                            min={0} max={20} step={1}
+                            icon={Building2}
+                            colorClass="blue"
+                        />
+                        <VisualSlider
+                            label="مستوى التخصص (Focus)"
+                            value={formData.specializationFocus}
+                            onChange={v => updateField('specializationFocus', v)}
+                            min={1} max={10} step={1}
+                            icon={Target}
+                            colorClass="rose"
+                        />
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -269,19 +338,51 @@ const NinjaScanner = () => {
                 <p className="text-gray-500">حجم الفريق والأهداف المالية يحدد قواعد اللعبة.</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg">
-                    <h3 className="font-bold mb-4 flex items-center gap-2 dark:text-emerald-400"><DollarSign size={18} /> الأهداف المالية</h3>
-                    <InputGroup label="الهدف الشهري (SAR)" id="tgt" type="number" value={formData.monthlyTarget} onChange={v => updateField('monthlyTarget', v)} />
-                    <div className="h-4"></div>
-                    <InputGroup label="متوسط قيمة الصفقة (SAR)" id="deal" type="number" value={formData.avgDealSize} onChange={v => updateField('avgDealSize', v)} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                    <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-3xl -z-10"></div>
+                        <h3 className="font-bold mb-6 flex items-center gap-2 dark:text-emerald-400"><DollarSign size={18} /> الأهداف المالية</h3>
+
+                        <VisualSlider
+                            label="الهدف الشهري"
+                            value={formData.monthlyTarget}
+                            onChange={v => updateField('monthlyTarget', v)}
+                            min={10000} max={1000000} step={10000}
+                            prefix="SAR "
+                            colorClass="emerald"
+                        />
+                        <div className="h-4"></div>
+                        <VisualSlider
+                            label="متوسط الصفقة"
+                            value={formData.avgDealSize}
+                            onChange={v => updateField('avgDealSize', v)}
+                            min={1000} max={100000} step={1000}
+                            prefix="SAR "
+                            colorClass="emerald"
+                        />
+                    </div>
                 </div>
 
-                <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg">
-                    <h3 className="font-bold mb-4 flex items-center gap-2 dark:text-blue-400"><Users size={18} /> قوة الفريق</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <InputGroup label="SDRs" id="sdr" type="number" value={formData.sdrs} onChange={v => updateField('sdrs', v)} />
-                        <InputGroup label="AEs" id="ae" type="number" value={formData.aes} onChange={v => updateField('aes', v)} />
+                <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg relative overflow-hidden h-fit">
+                    <div className="absolute top-0 left-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -z-10"></div>
+                    <h3 className="font-bold mb-6 flex items-center gap-2 dark:text-blue-400"><Users size={18} /> قوة الفريق</h3>
+
+                    <div className="space-y-6">
+                        <VisualSlider
+                            label="SDRs (تطوير مبيعات)"
+                            value={formData.sdrs}
+                            onChange={v => updateField('sdrs', v)}
+                            min={0} max={20} step={1}
+                            colorClass="blue"
+                        />
+                        <VisualSlider
+                            label="AEs (إغلاق صفقات)"
+                            value={formData.aes}
+                            onChange={v => updateField('aes', v)}
+                            min={0} max={20} step={1}
+                            colorClass="blue"
+                        />
                     </div>
                 </div>
             </div>
@@ -290,81 +391,100 @@ const NinjaScanner = () => {
 
 
     const renderStrategy = () => (
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-5xl mx-auto space-y-12">
             <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold dark:text-white mb-2">الجاهزية والأدوات 🛠️</h2>
                 <p className="text-gray-500">هل تمتلك الأسلحة اللازمة للمعركة؟</p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Assets Checklist (Original Request: Deck, Pricing, Website, etc) */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Assets Checklist */}
                 <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg">
-                    <h3 className="font-bold mb-4 text-violet-500">📁 الملفات والأصول (Assets)</h3>
-                    <div className="space-y-4">
-                        <InputGroup label="ملف تعريفي (Company Profile)" id="prf" type="toggle" value={formData.hasCompanyProfile} onChange={v => updateField('hasCompanyProfile', v)} />
-                        <InputGroup label="عرض بيعي قصصي (Sales Deck)" id="dck" type="toggle" value={formData.hasPitchDeck} onChange={v => updateField('hasPitchDeck', v)} />
-                        <InputGroup label="ملف تسعير (ROI-Based)" id="prc" type="toggle" value={formData.hasPricingFile} onChange={v => updateField('hasPricingFile', v)} />
-                        <InputGroup label="موقع إلكتروني احترافي" id="web_ex" type="toggle" value={formData.hasProfessionalWebsite} onChange={v => updateField('hasProfessionalWebsite', v)} />
-                        <InputGroup label="تواجد قوي (LinkedIn/Twitter)" id="soc" type="toggle" value={formData.hasSocialPresence} onChange={v => updateField('hasSocialPresence', v)} />
+                    <h3 className="font-bold mb-6 text-violet-500 flex items-center gap-2">
+                        <FileText size={20} /> الملفات والأصول (Assets)
+                    </h3>
+                    <div className="grid grid-cols-1 gap-3">
+                        <ToggleCard icon={FileText} label="ملف تعريفي (Profile)" value={formData.hasCompanyProfile} onChange={v => updateField('hasCompanyProfile', v)} />
+                        <ToggleCard icon={LayoutDashboard} label="عرض بيعي (Sales Deck)" value={formData.hasPitchDeck} onChange={v => updateField('hasPitchDeck', v)} />
+                        <ToggleCard icon={DollarSign} label="ملف تسعير (Pricing ROI)" value={formData.hasPricingFile} onChange={v => updateField('hasPricingFile', v)} />
+                        <ToggleCard icon={Building2} label="موقع إلكتروني احترافي" value={formData.hasProfessionalWebsite} onChange={v => updateField('hasProfessionalWebsite', v)} />
+                        <ToggleCard icon={Linkedin} label="تواجد قوي (LinkedIn)" value={formData.hasSocialPresence} onChange={v => updateField('hasSocialPresence', v)} />
                     </div>
                 </div>
 
                 {/* Tech Stack */}
                 <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg">
-                    <h3 className="font-bold mb-4 text-rose-500">🤖 التقنية والعمليات</h3>
-                    <div className="space-y-4">
-                        <InputGroup label="Sales Navigator (مفعل)" id="nav" type="toggle" value={formData.hasSalesNavigator} onChange={v => updateField('hasSalesNavigator', v)} />
-                        <InputGroup label="تسجيل المكالمات (للتدريب)" id="rec" type="toggle" value={formData.recordsCalls} onChange={v => updateField('recordsCalls', v)} />
-                        <InputGroup label="تحليل المحادثات (AI)" id="anl" type="toggle" value={formData.analyzesConversations} onChange={v => updateField('analyzesConversations', v)} />
-                        <InputGroup label="استخدام AI Agents" id="aia" type="toggle" value={formData.usesAIAgents} onChange={v => updateField('usesAIAgents', v)} />
-                        <InputGroup label="رسائل مخصصة (Hyper-Personalized)" id="hyp" type="toggle" value={formData.hyperPersonalized} onChange={v => updateField('hyperPersonalized', v)} />
+                    <h3 className="font-bold mb-6 text-rose-500 flex items-center gap-2">
+                        <Zap size={20} /> التقنية والعمليات
+                    </h3>
+                    <div className="grid grid-cols-1 gap-3">
+                        <ToggleCard icon={Search} label="Sales Navigator (مفعل)" value={formData.hasSalesNavigator} onChange={v => updateField('hasSalesNavigator', v)} />
+                        <ToggleCard icon={Phone} label="تسجيل المكالمات (للتدريب)" value={formData.recordsCalls} onChange={v => updateField('recordsCalls', v)} />
+                        <ToggleCard icon={BarChart3} label="تحليل المحادثات (AI)" value={formData.analyzesConversations} onChange={v => updateField('analyzesConversations', v)} />
+                        <ToggleCard icon={Sparkles} label="استخدام AI Agents" value={formData.usesAIAgents} onChange={v => updateField('usesAIAgents', v)} />
+                        <ToggleCard icon={Mail} label="رسائل مخصصة (Personalized)" value={formData.hyperPersonalized} onChange={v => updateField('hyperPersonalized', v)} />
                     </div>
                 </div>
             </div>
 
             {/* Outbound Quick Stats - THE 100 CLUB */}
-            <div className="bg-slate-100 dark:bg-white/5 p-6 rounded-3xl border border-dashed border-gray-300 dark:border-white/10">
-                <h3 className="font-bold mb-4 text-center">نشاط الفريق الحالي (يومياً) - نادي الـ 100 💯</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <InputGroup label="📞 Calls" id="c_vol" type="number" value={formData.dailyCalls} onChange={v => updateField('dailyCalls', v)} />
-                    <InputGroup label="💬 WhatsApp" id="w_vol" type="number" value={formData.dailyWhatsapp} onChange={v => updateField('dailyWhatsapp', v)} />
-                    <InputGroup label="🔗 LinkedIn" id="l_vol" type="number" value={formData.dailyLinkedin} onChange={v => updateField('dailyLinkedin', v)} />
-                    <InputGroup label="📧 Emails" id="e_vol" type="number" value={formData.dailyEmails} onChange={v => updateField('dailyEmails', v)} />
+            <div className="bg-slate-900/5 dark:bg-slate-900/50 p-8 rounded-[2rem] border border-dashed border-slate-300 dark:border-slate-700 relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-brand-500 to-transparent opacity-50"></div>
+                <h3 className="font-bold mb-8 text-center text-xl dark:text-white">
+                    🔥 نشاط الفريق اليومي (Per Person) - <span className="text-brand-500">نادي الـ 100</span>
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <VisualSlider label="Calls 📞" value={formData.dailyCalls} onChange={v => updateField('dailyCalls', v)} min={0} max={100} step={5} colorClass="brand" />
+                    <VisualSlider label="WhatsApp 💬" value={formData.dailyWhatsapp} onChange={v => updateField('dailyWhatsapp', v)} min={0} max={100} step={5} colorClass="emerald" />
+                    <VisualSlider label="LinkedIn 🔗" value={formData.dailyLinkedin} onChange={v => updateField('dailyLinkedin', v)} min={0} max={100} step={5} colorClass="blue" />
+                    <VisualSlider label="Emails 📧" value={formData.dailyEmails} onChange={v => updateField('dailyEmails', v)} min={0} max={100} step={5} colorClass="rose" />
                 </div>
-                <p className="text-center text-xs text-gray-400 mt-2">كم محاولة يقوم بها كل بائع يومياً في كل قناة؟</p>
             </div>
         </div>
     );
 
     // ... renderPain unchanged ... 
     const renderPain = () => (
-        <div className="max-w-2xl mx-auto space-y-8">
+        <div className="max-w-5xl mx-auto space-y-12">
             <div className="text-center mb-10">
                 <h2 className="text-3xl font-bold dark:text-white mb-2">الأداء الحالي 📉</h2>
                 <p className="text-gray-500">أين تقف الآن من حيث النتائج؟</p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800/50 p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                    <InputGroup label="Leads شهرياً" id="lds" type="number" value={formData.leadsPerMonth} onChange={v => updateField('leadsPerMonth', v)} />
-                    <InputGroup label="Leads مؤهلة (SQLs)" id="sql" type="number" value={formData.meetingsPerMonth} onChange={v => updateField('meetingsPerMonth', v)} />
-                    <InputGroup label="عروض أسعار (Proposals)" id="prp" type="number" value={formData.proposalsPerMonth} onChange={v => updateField('proposalsPerMonth', v)} />
-                    <InputGroup label="صفقات مغلقة (Won)" id="won" type="number" value={formData.closedWonPerMonth} onChange={v => updateField('closedWonPerMonth', v)} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="space-y-6">
+                    <div className="bg-white dark:bg-gray-800/50 p-8 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-xl h-full">
+                        <h3 className="font-bold mb-6 flex items-center gap-2 dark:text-white">
+                            <Filter size={20} className="text-blue-500" />
+                            Pipeline Health
+                        </h3>
+                        <div className="space-y-6">
+                            <VisualSlider label="Leads شهرياً" value={formData.leadsPerMonth} onChange={v => updateField('leadsPerMonth', v)} min={0} max={1000} step={10} colorClass="blue" />
+                            <VisualSlider label="Leads مؤهلة (SQLs)" value={formData.meetingsPerMonth} onChange={v => updateField('meetingsPerMonth', v)} min={0} max={200} step={5} colorClass="emerald" />
+                            <VisualSlider label="عروض (Proposals)" value={formData.proposalsPerMonth} onChange={v => updateField('proposalsPerMonth', v)} min={0} max={100} step={5} colorClass="brand" />
+                            <VisualSlider label="إغلاق (Won Deals)" value={formData.closedWonPerMonth} onChange={v => updateField('closedWonPerMonth', v)} min={0} max={50} step={1} colorClass="rose" />
+                        </div>
+                    </div>
                 </div>
 
-                <div className="h-4"></div>
-
-                <h3 className="text-white/80 font-bold mb-4 flex items-center gap-2">
-                    <span className="text-xl">🛢️</span>
-                    قوة قاعدة البيانات (Database Power)
-                </h3>
-                <div className="grid grid-cols-2 gap-4">
-                    <InputGroup label="حجم قاعدة العملاء (leads/mo)" id="db" type="number" value={formData.leadsPerMonth} onChange={v => updateField('leadsPerMonth', v)} placeholder="e.g. 1000" />
-                    <InputGroup label="عدد الاجتماع المؤهلة (Qualified Meetings)" id="mtg" type="number" value={formData.meetingsPerMonth} onChange={v => updateField('meetingsPerMonth', v)} />
+                <div className="space-y-6">
+                    <div className="bg-white dark:bg-gray-800/50 p-8 rounded-[2rem] border border-gray-100 dark:border-white/5 shadow-xl h-full">
+                        <h3 className="font-bold mb-6 flex items-center gap-2 dark:text-white">
+                            <AlertTriangle size={20} className="text-amber-500" />
+                            لماذا الآن؟ (Why Now)
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {WHY_NOW_OPTIONS.map((opt, i) => (
+                                <SelectionCard
+                                    key={i}
+                                    title={opt}
+                                    selected={formData.whyNow === opt}
+                                    onClick={() => updateField('whyNow', opt)}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
-
-                <div className="h-4"></div>
-                <InputGroup label="لماذا الآن؟ (Why Now)" id="why" type="select" options={['--', ...WHY_NOW_OPTIONS]} value={formData.whyNow} onChange={v => updateField('whyNow', v)} />
             </div>
         </div>
     );
@@ -373,34 +493,58 @@ const NinjaScanner = () => {
         <div className="flex flex-col items-center justify-center text-center py-20 h-full relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-[100px] animate-pulse"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-[100px] animate-pulse"></div>
 
             <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="relative z-10"
+                className="relative z-10 w-full max-w-md"
             >
-                <div className="w-32 h-32 mb-8 relative mx-auto">
-                    <div className="absolute inset-0 rounded-full border-4 border-brand-500/20"></div>
-                    <div className="absolute inset-0 rounded-full border-t-4 border-brand-500 animate-spin"></div>
+                <div className="w-40 h-40 mb-10 relative mx-auto">
+                    <div className="absolute inset-0 rounded-full border-4 border-slate-700"></div>
+                    <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                        className="absolute inset-0 rounded-full border-t-4 border-emerald-500"
+                    ></motion.div>
+                    <motion.div
+                        animate={{ rotate: -360 }}
+                        transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                        className="absolute inset-0 rounded-full border-r-4 border-emerald-500/50"
+                    ></motion.div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <Sparkles size={32} className="text-brand-400 animate-pulse" />
+                        <span className="text-4xl">🥷</span>
                     </div>
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-4">جاري تشخيص نظامك...</h2>
-                <div className="space-y-3 font-mono text-sm text-brand-200/70">
-                    <div className="flex items-center gap-2 justify-center">
-                        <CheckCircle size={14} className="text-brand-500" />
-                        <span>فحص جاهزية الأصول الرقمية</span>
-                    </div>
-                    <div className="flex items-center gap-2 justify-center">
-                        <CheckCircle size={14} className="text-brand-500" />
-                        <span>مقارنة الأداء مع "نادي الـ 100"</span>
-                    </div>
-                    <div className="flex items-center gap-2 justify-center">
-                        <CheckCircle size={14} className="text-brand-500" />
-                        <span>تحليل فجوات الاستراتيجية</span>
-                    </div>
+
+                <h2 className="text-3xl font-bold text-white mb-2">جاري تحليل البيانات...</h2>
+                <p className="text-emerald-500 font-mono text-sm mb-8 animate-pulse">Running System Diagnostics v2.0</p>
+
+                <div className="bg-slate-900/50 rounded-xl border border-slate-700 p-6 text-left font-mono text-sm space-y-3 max-w-sm mx-auto shadow-2xl">
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}
+                        className="flex items-center gap-3 text-emerald-400"
+                    >
+                        <CheckCircle size={14} /> <span>Checking Asset Readiness...</span>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.2 }}
+                        className="flex items-center gap-3 text-emerald-400"
+                    >
+                        <CheckCircle size={14} /> <span>Benchmarking vs 100 Club...</span>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.9 }}
+                        className="flex items-center gap-3 text-emerald-400"
+                    >
+                        <CheckCircle size={14} /> <span>Calculating Gap Analysis...</span>
+                    </motion.div>
+                    <motion.div
+                        initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 2.5 }}
+                        className="flex items-center gap-3 text-white"
+                    >
+                        <Loader2 size={14} className="animate-spin" /> <span>Finalizing Strategy...</span>
+                    </motion.div>
                 </div>
             </motion.div>
         </div>
