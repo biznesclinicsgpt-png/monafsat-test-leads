@@ -100,6 +100,15 @@ const NinjaScanner = () => {
     const handleSaveToProfile = () => {
         setIsSaving(true);
         setTimeout(() => {
+            // Guest Mode: Save locally and redirect
+            if (!providerProfile) {
+                localStorage.setItem('ninja_guest_data', JSON.stringify(formData));
+                // Assuming /app/profile will trigger login/registration if not auth
+                window.location.href = '/app/profile?wizard=true';
+                return;
+            }
+
+            // Logged-in Mode
             if (providerProfile) {
                 const updated = {
                     ...providerProfile,
@@ -165,8 +174,8 @@ const NinjaScanner = () => {
         <button
             onClick={() => setActiveTab(id)}
             className={`flex items-center gap-2 px-5 py-3 rounded-xl font-bold transition-all duration-300 ${activeTab === id
-                    ? 'bg-gradient-to-br from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/20'
-                    : 'text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-gradient-to-br from-emerald-500 to-cyan-500 text-white shadow-lg shadow-emerald-500/20'
+                : 'text-slate-500 dark:text-gray-400 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
                 }`}
         >
             <Icon size={18} />
@@ -200,7 +209,7 @@ const NinjaScanner = () => {
                             className="flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 text-white font-bold shadow-lg hover:bg-emerald-700 transition-all hover:scale-105 disabled:opacity-50"
                         >
                             {isSaving ? <span className="animate-spin">⏳</span> : <Save size={20} />}
-                            <span>{isSaving ? 'جاري الحفظ...' : 'حفظ في الملف'}</span>
+                            <span>{isSaving ? 'جاري المعالجة...' : (!providerProfile ? '👉 التسجيل وبدء الاستراتيجية' : 'حفظ في الملف')}</span>
                         </button>
 
                         <button
@@ -465,8 +474,8 @@ const NinjaScanner = () => {
                                 </div>
 
                                 <div className={`mt-6 px-6 py-2 rounded-full font-bold text-lg ${results.scores.tier === 'Tier 1' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-400 dark:border-emerald-500/50' :
-                                        results.scores.tier === 'Tier 2' ? 'bg-amber-50 text-amber-600 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/50' :
-                                            'bg-rose-50 text-rose-600 border border-rose-200 dark:bg-rose-500/20 dark:text-rose-400 dark:border-rose-500/50'
+                                    results.scores.tier === 'Tier 2' ? 'bg-amber-50 text-amber-600 border border-amber-200 dark:bg-amber-500/20 dark:text-amber-400 dark:border-amber-500/50' :
+                                        'bg-rose-50 text-rose-600 border border-rose-200 dark:bg-rose-500/20 dark:text-rose-400 dark:border-rose-500/50'
                                     }`}>
                                     {results.scores.tier} – {results.scores.tierLabel}
                                 </div>
@@ -547,13 +556,13 @@ const NinjaScanner = () => {
                             <div className="grid grid-cols-1 gap-6">
                                 {results.recommendations.map((rec, i) => (
                                     <div key={i} className={`p-6 rounded-2xl border bg-white dark:bg-gray-900/50 backdrop-blur-sm relative overflow-hidden group hover:-translate-y-1 transition-transform shadow-sm dark:shadow-none ${rec.type === 'critical' ? 'border-rose-200 dark:border-rose-500/30 hover:bg-rose-50 dark:hover:bg-rose-500/5' :
-                                            rec.type === 'warning' ? 'border-amber-200 dark:border-amber-500/30 hover:bg-amber-50 dark:hover:bg-amber-500/5' :
-                                                rec.type === 'success' ? 'border-emerald-200 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-500/5' :
-                                                    'border-cyan-200 dark:border-cyan-500/30 hover:bg-cyan-50 dark:hover:bg-cyan-500/5'
+                                        rec.type === 'warning' ? 'border-amber-200 dark:border-amber-500/30 hover:bg-amber-50 dark:hover:bg-amber-500/5' :
+                                            rec.type === 'success' ? 'border-emerald-200 dark:border-emerald-500/30 hover:bg-emerald-50 dark:hover:bg-emerald-500/5' :
+                                                'border-cyan-200 dark:border-cyan-500/30 hover:bg-cyan-50 dark:hover:bg-cyan-500/5'
                                         }`}>
                                         <div className={`absolute top-0 right-0 w-1.5 h-full ${rec.type === 'critical' ? 'bg-rose-500' :
-                                                rec.type === 'warning' ? 'bg-amber-500' :
-                                                    rec.type === 'success' ? 'bg-emerald-500' : 'bg-cyan-500'
+                                            rec.type === 'warning' ? 'bg-amber-500' :
+                                                rec.type === 'success' ? 'bg-emerald-500' : 'bg-cyan-500'
                                             }`} />
 
                                         <div className="flex gap-4 mb-4">

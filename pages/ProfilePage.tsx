@@ -53,6 +53,40 @@ const ProfilePage = () => {
                 contact_phone: user?.phone || ''
             }));
         }
+
+        // Check for Guest Diagnosis Data (from /diagnosis)
+        const guestData = localStorage.getItem('ninja_guest_data');
+        if (guestData) {
+            try {
+                const parsed = JSON.parse(guestData);
+                // console.log("Found guest diagnosis data, applying...", parsed);
+
+                setFormData(prev => ({
+                    ...prev,
+                    company_name: parsed.companyName || prev.company_name,
+                    headquarters_country: parsed.country || prev.headquarters_country,
+                    industries: parsed.industry ? [{ id: '99', name: parsed.industry, created_at: '', updated_at: '' }] : prev.industries, // Mock ServiceLine
+                    ninja_diagnosis: parsed,
+                    // Pre-fill ICP Strategy
+                    icp_structured: {
+                        ...prev.icp_structured!,
+                        decision_makers: parsed.icpTitles?.length ? parsed.icpTitles : prev.icp_structured?.decision_makers,
+                        company_size_ideal: parsed.icpCompanySize?.length ? parsed.icpCompanySize : prev.icp_structured?.company_size_ideal,
+                    }
+                }));
+
+                // Auto-open wizard if URL param exists (it usually does from the redirect)
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('wizard') === 'true') {
+                    setShowWizard(true);
+                }
+
+                // Clear after applying? Maybe safer to keep until save.
+                // localStorage.removeItem('ninja_guest_data'); 
+            } catch (e) {
+                console.error("Failed to parse guest data", e);
+            }
+        }
     }, [providerProfile, user]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

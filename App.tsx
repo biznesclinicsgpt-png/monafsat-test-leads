@@ -26,6 +26,7 @@ const App = () => {
         <Routes>
           {/* Landing Page Route */}
           <Route path="/" element={<LandingPage />} />
+          <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
 
           {/* App Routes (Protected/Layout Wrapped) */}
           <Route path="/app" element={<MainLayout />}>

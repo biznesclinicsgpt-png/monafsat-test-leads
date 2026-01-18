@@ -826,7 +826,7 @@ const AnalysisModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 
 const LandingPage = () => {
     const navigate = useNavigate();
-    const startDiagnosis = () => navigate('/app/diagnosis');
+    const startDiagnosis = () => navigate('/diagnosis');
 
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-brand selection:text-white scroll-smooth w-full overflow-x-hidden" dir="rtl">
