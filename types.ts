@@ -368,8 +368,28 @@ export interface ProviderProfile {
   status: ProviderProfileStatus;
   profile_health: number; // 0-100
 
-  // Ninja Diagnosis Data
-  ninja_diagnosis?: any; // Stores the full 35-point diagnosis data
+  // Ninja Diagnosis Data - Full Data Sync
+  ninja_diagnosis?: any; // Stores the full NinjaForm Data
+
+  // Structured ICP for Matching Engines
+  icp_structured?: {
+    industries?: string[];
+    decision_makers?: string[];
+    company_size_ideal?: string[];
+    pain_points?: string[];
+    business_goals?: string[];
+    buying_triggers?: string[]; // Why now
+    negative_signals?: string[]; // Disqualifiers
+  };
+
+  // Readiness Checklist (Assets)
+  assets_readiness?: {
+    has_profile?: boolean;
+    has_deck?: boolean;
+    has_pricing?: boolean;
+    has_website?: boolean;
+    has_social?: boolean;
+  };
 
   // Review
   submitted_for_review_at?: string;

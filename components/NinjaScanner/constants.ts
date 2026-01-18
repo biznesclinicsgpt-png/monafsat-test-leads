@@ -64,47 +64,53 @@ export const INITIAL_STATE: NinjaFormData = {
     employees: 0,
     industry: '',
     country: '',
-    competitor: '',
+    website: '',
+    companyAge: 0,
+    specializationFocus: 5,
+
+    // ICP
     icpIndustries: [],
     icpTitles: [],
     icpCompanySize: [],
+
+    // Commercial
     avgDealSize: 0,
     monthlyTarget: 0,
     salesCycle: 0,
     decisionMakerAccess: 1,
     budgetStatus: 1,
-    readinessLevel: 1,
-    whyNow: '',
+
+    // Readiness
+    hasCompanyProfile: false,
+    hasPitchDeck: false,
+    hasPricingFile: false,
+    hasProfessionalWebsite: false,
+    hasSocialPresence: false,
+
+    // Tech
+    hasSalesNavigator: false,
+    recordsCalls: false,
+    analyzesConversations: false,
+    usesAIAgents: false,
+    hyperPersonalized: false,
+
+    // Pipeline
     leadsPerMonth: 0,
     meetingsPerMonth: 0,
     proposalsPerMonth: 0,
     closedWonPerMonth: 0,
     pipelineValue: 0,
     biggestLeak: '',
-    emailVolume: 0,
-    emailOpenRate: 0,
-    emailTools: 1,
-    emailOpportunities: 0,
-    linkedinConnects: 0,
-    linkedinContent: 1,
-    linkedinNav: false,
-    linkedinOpportunities: 0,
-    callsVolume: 0,
-    callsConnectRate: 0,
-    callsScript: 1,
-    callsOpportunities: 0,
-    whatsappVolume: 0,
-    whatsappType: 1,
-    whatsappOpportunities: 0,
+    whyNow: '',
+
+    // Daily Activity
+    dailyCalls: 0,
+    dailyWhatsapp: 0,
+    dailyLinkedin: 0,
+    dailyEmails: 0,
+
+    // Team
     sdrs: 0,
-    aes: 0,
-    teamExperience: 1,
-    followUp: 1,
-    crm: 1,
-    crmUsage: 1,
-    dataQuality: 1,
-    icpClarity: 1,
-    usePitchDeck: false,
-    useProposalDeck: false,
-    clarificationMeetings: 0
+    aes: 0
 };
+

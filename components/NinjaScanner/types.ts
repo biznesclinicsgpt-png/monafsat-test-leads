@@ -3,7 +3,9 @@ export interface NinjaFormData {
     employees: number;
     industry: string;
     country: string;
-    competitor: string;
+    website: string; // New
+    companyAge: number; // New: Years in market
+    specializationFocus: number; // New: 1-10
 
     // ICP Details
     icpIndustries: string[];
@@ -17,55 +19,37 @@ export interface NinjaFormData {
     decisionMakerAccess: number; // 1-5
     budgetStatus: number; // 1-5
 
-    // Readiness
-    readinessLevel: number; // 1-5
-    whyNow: string;
+    // Readiness (Assets Checklist) - New
+    hasCompanyProfile: boolean;
+    hasPitchDeck: boolean; // Storytelling
+    hasPricingFile: boolean; // ROI-based
+    hasProfessionalWebsite: boolean;
+    hasSocialPresence: boolean; // LinkedIn/Twitter
 
-    // Pipeline
-    leadsPerMonth: number;
-    meetingsPerMonth: number;
-    proposalsPerMonth: number;
-    closedWonPerMonth: number;
+    // Tech Stack & Process - New
+    hasSalesNavigator: boolean;
+    recordsCalls: boolean; // Saudi Standard
+    analyzesConversations: boolean; // WA/LI/Email
+    usesAIAgents: boolean; // Automation
+    hyperPersonalized: boolean; // Segmented Messaging
+
+    // Pipeline (Monthly)
+    leadsPerMonth: number; // Benchmark: 1000
+    meetingsPerMonth: number; // Benchmark: 20-30
+    proposalsPerMonth: number; // Benchmark: 10-15
+    closedWonPerMonth: number; // Benchmark: 1+
     pipelineValue: number;
     biggestLeak: string;
+    whyNow: string;
 
-    // Outbound - Email
-    emailVolume: number;
-    emailOpenRate: number;
-    emailTools: number; // 1-5
-    emailOpportunities: number;
-
-    // Outbound - LinkedIn
-    linkedinConnects: number;
-    linkedinContent: number; // 1-5
-    linkedinNav: boolean;
-    linkedinOpportunities: number;
-
-    // Outbound - Phone
-    callsVolume: number;
-    callsConnectRate: number;
-    callsScript: number; // 1-5
-    callsOpportunities: number;
-
-    // Outbound - WhatsApp
-    whatsappVolume: number;
-    whatsappType: number; // 1-5
-    whatsappOpportunities: number;
+    // Daily Activity Benchmarks (The 100 Club) - New
+    dailyCalls: number; // Target 100
+    dailyWhatsapp: number; // Target 100
+    dailyLinkedin: number; // Target 100 (Connect + Msg)
+    dailyEmails: number; // Target 100
 
     // Team
     sdrs: number;
     aes: number;
-    teamExperience: number; // 1-5
-    followUp: number; // 1-5
-
-    // Systems
-    crm: number; // 1-5
-    crmUsage: number; // 1-5
-    dataQuality: number; // 1-5
-
-    // Discovery
-    icpClarity: number; // 1-5
-    usePitchDeck: boolean;
-    useProposalDeck: boolean;
-    clarificationMeetings: number;
 }
+

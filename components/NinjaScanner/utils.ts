@@ -49,169 +49,183 @@ interface Recommendation {
 }
 
 export const calculateResults = (data: NinjaFormData) => {
-    // 1. KPI Calculations
-    const winRate = data.proposalsPerMonth > 0 ? (data.closedWonPerMonth / data.proposalsPerMonth) * 100 : 0;
-    const leadToMeeting = data.leadsPerMonth > 0 ? (data.meetingsPerMonth / data.leadsPerMonth) * 100 : 0;
-    const meetingToProposal = data.meetingsPerMonth > 0 ? (data.proposalsPerMonth / data.meetingsPerMonth) * 100 : 0;
-    const proposalToClose = data.proposalsPerMonth > 0 ? (data.closedWonPerMonth / data.proposalsPerMonth) * 100 : 0; // Same as win rate usually but contextually diff
+    // 1. KPI Calculations & Pipeline Health
+    // Benchmarks: Leads (1000), Meetings (20), Proposals (10), Deals (1)
+    const pipelineScoreRaw = (
+        (Math.min(data.leadsPerMonth, 1000) / 1000 * 30) +
+        (Math.min(data.meetingsPerMonth, 20) / 20 * 30) +
+        (Math.min(data.proposalsPerMonth, 10) / 10 * 20) +
+        (Math.min(data.closedWonPerMonth, 2) / 2 * 20)
+    );
 
+    const winRate = data.proposalsPerMonth > 0 ? (data.closedWonPerMonth / data.proposalsPerMonth) * 100 : 0;
     const projectedRevenue = data.closedWonPerMonth * data.avgDealSize;
     const revenueGap = Math.max(0, data.monthlyTarget - projectedRevenue);
 
-    // Coverage: Pipeline Value / Target (Ideal 3x-4x)
-    const pipelineCoverage = data.monthlyTarget > 0 ? (data.pipelineValue / data.monthlyTarget) : 0;
-
-    // Velocity: (Leads * DealSize * WinRate%) / Cycle
-    // Simplified: (Opportunities * Avg Deal * Win Rate%) / Sales Cycle
-    // Here: (ClosedWon * DealSize) basically / Cycle -- Normalized to Daily
-    const salesVelocity = data.salesCycle > 0 ? (projectedRevenue / data.salesCycle) : 0;
+    // Sales Velocity with new simple formula: (Meetings * WinRate * DealSize) / Cycle
+    const salesVelocity = data.salesCycle > 0
+        ? (data.meetingsPerMonth * (winRate / 100) * data.avgDealSize) / data.salesCycle
+        : 0;
 
     const kpis: KpiResult = {
         winRate,
-        leadToMeeting,
-        meetingToProposal,
-        proposalToClose,
-        pipelineCoverage,
+        leadToMeeting: data.leadsPerMonth > 0 ? (data.meetingsPerMonth / data.leadsPerMonth) * 100 : 0,
+        meetingToProposal: data.meetingsPerMonth > 0 ? (data.proposalsPerMonth / data.meetingsPerMonth) * 100 : 0,
+        proposalToClose: winRate,
+        pipelineCoverage: data.monthlyTarget > 0 ? (data.pipelineValue / data.monthlyTarget) : 0,
         salesVelocity,
         projectedRevenue,
         revenueGap
     };
 
-    // 2. Scores Calculation (0-100)
+    // 2. Deep Scoring (0-100)
 
-    // ICP & Offer (20%)
-    const icpScoreRaw = (
-        (data.icpClarity / 5 * 40) +
-        (data.decisionMakerAccess / 5 * 30) +
-        (data.whyNow ? 30 : 0)
+    // A. Foundation & Assets (20%)
+    // Checklist: Profile, Deck, Pricing, Website, Social
+    const assetsScoreRaw = (
+        (data.hasCompanyProfile ? 20 : 0) +
+        (data.hasPitchDeck ? 20 : 0) +
+        (data.hasPricingFile ? 20 : 0) +
+        (data.hasProfessionalWebsite ? 20 : 0) +
+        (data.hasSocialPresence ? 20 : 0)
     );
 
-    // Data & CRM (20%)
-    const crmScoreRaw = (
-        (data.crm / 5 * 30) +
-        (data.crmUsage / 5 * 30) +
-        (data.dataQuality / 5 * 40)
+    // B. Outbound Volume (The 100 Club) (30%)
+    // Targets: Call(100), WA(100), LI(100), Email(100)
+    // We cap at 100 to avoid skewing
+    const volumeScoreRaw = (
+        (Math.min(data.dailyCalls, 100) / 100 * 25) +
+        (Math.min(data.dailyWhatsapp, 100) / 100 * 25) +
+        (Math.min(data.dailyLinkedin, 100) / 100 * 25) +
+        (Math.min(data.dailyEmails, 100) / 100 * 25)
     );
 
-    // Outbound Engine (30%)
-    // Normalize volumes against targets? no just raw effort + quality
-    const emailScore = (Math.min(data.emailVolume, 100) / 100 * 20) + (Math.min(data.emailOpenRate, 50) / 50 * 30) + (data.emailTools / 5 * 50);
-    const liScore = (Math.min(data.linkedinConnects, 50) / 50 * 20) + (data.linkedinContent / 5 * 40) + (data.linkedinNav ? 40 : 0);
-    const phoneScore = (Math.min(data.callsVolume, 50) / 50 * 20) + (Math.min(data.callsConnectRate, 30) / 30 * 40) + (data.callsScript / 5 * 40);
-
-    const outboundScoreRaw = (emailScore + liScore + phoneScore) / 3;
-
-    // Team (15%)
-    const teamScoreRaw = (
-        (data.teamExperience / 5 * 50) +
-        (data.followUp / 5 * 50)
+    // C. Tech & Process (20%)
+    const techScoreRaw = (
+        (data.hasSalesNavigator ? 20 : 0) +
+        (data.recordsCalls ? 20 : 0) +
+        (data.analyzesConversations ? 20 : 0) +
+        (data.usesAIAgents ? 20 : 0) +
+        (data.hyperPersonalized ? 20 : 0)
     );
 
-    // Mindset (15%)
-    const mindsetScoreRaw = (
-        (data.readinessLevel / 5 * 50) +
-        (data.budgetStatus / 5 * 50)
-    );
+    // D. Strategy & Fit (30%)
+    // Age vs Focus, ICP Clarity (implied by inputs)
+    // If Age < 1 and Industry Count > 3, penalty
+    let strategyPenalty = 0;
+    if (data.companyAge < 2 && data.icpIndustries.length > 3) strategyPenalty = -30;
 
+    const strategyScoreRaw = Math.max(0, (data.specializationFocus * 10) + strategyPenalty);
+
+    // Weighted Overall Score
     const overallScore = Math.round(
-        (icpScoreRaw * 0.2) +
-        (crmScoreRaw * 0.2) +
-        (outboundScoreRaw * 0.3) +
-        (teamScoreRaw * 0.15) +
-        (mindsetScoreRaw * 0.15)
+        (assetsScoreRaw * 0.20) +
+        (volumeScoreRaw * 0.30) +
+        (techScoreRaw * 0.20) +
+        (strategyScoreRaw * 0.15) +
+        (pipelineScoreRaw * 0.15)
     );
 
-    // Tier Logic
-    let tier = 'Tier 3';
-    let tierLabel = 'Needs Assessment';
-    if (overallScore >= 80) { tier = 'Tier 1'; tierLabel = 'Market Leader'; }
-    else if (overallScore >= 50) { tier = 'Tier 2'; tierLabel = 'Scalable Player'; }
+    let tier = 'مبتدئ';
+    if (overallScore >= 85) tier = 'نينجا محترف 🥷';
+    else if (overallScore >= 60) tier = 'متقدم 📈';
+    else if (overallScore >= 40) tier = 'متوسط 😐';
 
     const scores: ScoreResult = {
         overallScore,
         tier,
-        tierLabel,
-        icpScore: Math.round(icpScoreRaw),
-        crmScore: Math.round(crmScoreRaw),
-        outboundScore: Math.round(outboundScoreRaw),
-        teamScore: Math.round(teamScoreRaw),
-        mindsetScore: Math.round(mindsetScoreRaw),
-        segment: data.employees > 100 ? 'Enterprise' : 'SMB',
+        tierLabel: tier,
+        icpScore: Math.round(strategyScoreRaw),
+        crmScore: Math.round(techScoreRaw),
+        outboundScore: Math.round(volumeScoreRaw),
+        teamScore: Math.round(assetsScoreRaw), // Mapping Assets to Team/Readiness visual
+        mindsetScore: Math.round(pipelineScoreRaw),
+        segment: data.employees > 50 ? 'Enterprise' : 'SMB',
         acv: data.avgDealSize,
-        credits: overallScore * 10 // Mock
+        credits: overallScore * 10
     };
 
-
-    // 3. Recommendations Logic
+    // 3. Deep Recommendations Generation
     const recommendations: Recommendation[] = [];
 
-    // ICP Gap
-    if (data.icpClarity < 3) {
+    // Strategy & Focus Gap
+    if (data.companyAge < 2 && data.icpIndustries.length > 2) {
         recommendations.push({
             type: 'critical',
             category: 'Strategy',
-            title: 'Define Your ICP Clearly',
+            title: 'خطر التشتت (Lack of Focus)',
             icon: '🎯',
-            problem: 'الجمهور المستهدف غير محدد بدقة، مما يؤدي لهدر الموارد على عملاء غير مناسبين.',
-            impact: 'ارتفاع تكلفة الاستحواذ (CAC) وضياع وقت الفريق.',
-            solution: 'عقد ورشة عمل لتحديد الـ ICP بدقة (Firmographics, Demographics, Psychographics).',
-            tools: 'Clay / Apollo Filters'
+            problem: `عمر الشركة صغير (${data.companyAge} سنوات) وتستهدف ${data.icpIndustries.length} قطاعات.`,
+            impact: 'عدم بناء خبرة تراكمية (Domain Authority) وصعوبة الإقناع.',
+            solution: 'التزم بقطاع واحد فقط (Niche) لمدة 6 أشهر حتى تثبت النموذج.',
+            tools: 'Positioning'
         });
     }
 
-    // CRM Usage
-    if (data.crmUsage < 3) {
+    // Asset Gaps
+    if (!data.hasPitchDeck) {
         recommendations.push({
             type: 'critical',
-            category: 'Systems',
-            title: 'Implement/Fix CRM Usage',
-            icon: '🗄️',
-            problem: 'غياب مصدر واحد للحقيقة (Source of Truth). البيانات مشتتة.',
-            impact: 'فقدان متابعة العملاء وصعوبة التنبؤ بالمبيعات (Forecasting).',
-            solution: 'فرض استخدام CRM كشرط لاحتساب العمولة. ربط CRM بجميع القنوات.',
-            tools: 'HubSpot / Pipedrive'
+            category: 'Assets',
+            title: 'غياب العرض الاستثماري (Pitch Deck)',
+            icon: '📂',
+            problem: 'لا يوجد ملف Sales Pitch Deck يحكي قصة الشركة.',
+            impact: 'العميل لا يفهم القيمة المضافة، والاعتماد كلياً على مهارة البائع الشفهية.',
+            solution: 'بناء عرض تقديمي يركز على المشكلة، الحل، والعائد على الاستثمار (ROI Story).',
+            tools: 'Canva / PPT'
         });
     }
 
-    // Outbound Volume
-    if (data.emailVolume < 20 && data.linkedinConnects < 10 && data.callsVolume < 10) {
+    if (!data.hasSalesNavigator && data.monthlyTarget > 50000) {
+        recommendations.push({
+            type: 'critical',
+            category: 'Tech',
+            title: 'تفعيل Sales Navigator فوراً',
+            icon: '💎',
+            problem: 'تستهدف صفقات كبيرة بدون أداة الوصول لصناع القرار.',
+            impact: 'العمل "بالعمياني" وضياع وقت في البحث اليدوي.',
+            solution: 'تفعيل رخصة Sales Navigator واستخدام فلاتر متقدمة (Headcount, Growth).',
+            tools: 'LinkedIn Sales Nav'
+        });
+    }
+
+    // Volume Gaps (The 100 Club)
+    if (data.dailyCalls < 50 && data.dailyWhatsapp < 50 && data.dailyLinkedin < 50) {
         recommendations.push({
             type: 'warning',
-            category: 'Outbound',
-            title: 'Increase Activity Volume',
-            icon: '📉',
-            problem: 'مستوى النشاط منخفض جداً ولا يكفي لبناء Pipeline صحي.',
-            impact: 'جفاف الـ Pipeline وعدم تحقيق المستهدف.',
-            solution: 'تصميم Cadence يومي يتطلب 50 لمسة (Touchpoints) لكل SDR.',
-            tools: 'Instantly / Lexprompt'
+            category: 'Volume',
+            title: 'رفع نشاط الـ Outbound (نادي الـ 100)',
+            icon: '🔥',
+            problem: 'معدلات النشاط اليومي ضعيفة جداً لا تكفي لبناء Pipeline.',
+            impact: 'جفاف في الاجتماعات المؤهلة.',
+            solution: 'رفع المعدل اليومي ليكون: 100 مكالمة، 100 واتساب، 100 لينكدان.',
+            tools: 'Auto-Dialer / Automation'
         });
     }
 
-    // Follow Up
-    if (data.followUp < 3) {
+    if (!data.recordsCalls) {
+        recommendations.push({
+            type: 'info',
+            category: 'Quality',
+            title: 'تسجيل وتحليل المكالمات',
+            icon: '🎙️',
+            problem: 'لا يوجد آلية لمراجعة جودة المكالمات.',
+            impact: 'تكرار نفس الأخطاء البيعية وعدم تطوير الفريق.',
+            solution: 'تفعيل تسجيل المكالمات وتحليلها أسبوعياً (Coaching Sessions).',
+            tools: 'Fireflies / Gong'
+        });
+    }
+
+    if (data.leadsPerMonth < 500) {
         recommendations.push({
             type: 'warning',
-            category: 'Process',
-            title: 'Optimize Follow-up Cadence',
-            icon: '🔄',
-            problem: 'المتابعة تتوقف مبكراً جداً (بعد محاولتين غالباً).',
-            impact: 'خسارة 80% من الفرص التي تحتاج 5-12 متابعة.',
-            solution: 'تطبيق 12-Step Cadence عبر قنوات متعددة (Omni-channel).',
-            tools: 'Sequences'
-        });
-    }
-
-    // Add success if score high
-    if (overallScore > 80) {
-        recommendations.push({
-            type: 'success',
-            category: 'Growth',
-            title: 'Scale & Automate',
-            icon: '🚀',
-            problem: 'الأساسيات ممتازة. التحدي الآن هو التوسع (Scaling).',
-            impact: 'فرصة لمضاعفة الإيرادات بتقليل التدخل البشري.',
-            solution: 'استخدام AI Agents لأتمتة البحث والتواصل الأولي بالكامل.',
-            tools: 'BiznesClinics Auto-Pilot'
+            category: 'Pipeline',
+            title: 'تغذية الـ Database',
+            icon: '🛢️',
+            problem: `عدد العملاء المحتملين (${data.leadsPerMonth}) أقل من الحد الأدنى الصحي (1000).`,
+            impact: 'نقص حاد في الفرص المستقبلية.',
+            solution: 'بناء List Building System يضخ 1000 عميل محتمل شهرياً.',
+            tools: 'Apollo / Lusha'
         });
     }
 
@@ -220,7 +234,7 @@ export const calculateResults = (data: NinjaFormData) => {
         scores,
         recommendations,
         pkg: {
-            wallet: 'High', // Mock
+            wallet: 'High',
             priority: 'Immediate',
             mode: 'Aggressive'
         }

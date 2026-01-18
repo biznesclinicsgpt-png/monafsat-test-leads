@@ -65,7 +65,7 @@ const ProfilePage = () => {
                     ...prev,
                     company_name: parsed.companyName || prev.company_name,
                     headquarters_country: parsed.country || prev.headquarters_country,
-                    industries: parsed.industry ? [{ id: '99', name: parsed.industry, created_at: '', updated_at: '' }] : prev.industries, // Mock ServiceLine
+                    industries: parsed.industry ? [{ id: '99', name: parsed.industry, allocation: 100 }] : prev.industries, // Mock ServiceLine
                     ninja_diagnosis: parsed,
                     // Pre-fill ICP Strategy
                     icp_structured: {
@@ -431,7 +431,7 @@ const ProfilePage = () => {
                                                 setFormData(prev => {
                                                     const current = prev.service_lines || [];
                                                     if (checked) {
-                                                        return { ...prev, service_lines: [...current, { name: service, id: Date.now() }] };
+                                                        return { ...prev, service_lines: [...current, { id: String(Date.now()), name: service, allocation: 100 }] };
                                                     } else {
                                                         return { ...prev, service_lines: current.filter((s: any) => s.name !== service) };
                                                     }
@@ -462,7 +462,7 @@ const ProfilePage = () => {
                                                     const isString = current.length > 0 && typeof current[0] === 'string';
 
                                                     if (checked) {
-                                                        return { ...prev, industries: [...current, ind] }; // Simplified for now
+                                                        return { ...prev, industries: [...current, { id: String(Date.now()), name: ind, allocation: 100 }] };
                                                     } else {
                                                         return { ...prev, industries: current.filter((i: any) => (i.name || i) !== ind) };
                                                     }

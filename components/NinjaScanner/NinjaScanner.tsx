@@ -6,7 +6,7 @@ import {
     Download, Printer, Building2, DollarSign, Flame, Zap, Users,
     Database, Target, Search, Mail, Linkedin, Phone, MessageCircle,
     Sun, Moon, Save, ArrowRight, ArrowLeft, CheckCircle, Sparkles,
-    Trophy, AlertTriangle, Play
+    Trophy, AlertTriangle, Play, Loader2
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -136,6 +136,7 @@ const NinjaScanner = () => {
         setIsSaving(true);
         setTimeout(() => {
             if (!providerProfile) {
+                // Save complete deep data for Guest
                 localStorage.setItem('ninja_guest_data', JSON.stringify(formData));
                 window.location.href = '/app/profile?wizard=true';
                 return;
@@ -146,14 +147,31 @@ const NinjaScanner = () => {
                     ninja_diagnosis: formData,
                     company_name: formData.companyName || providerProfile.company_name,
                     headquarters_country: formData.country || providerProfile.headquarters_country,
+                    website: formData.website || providerProfile.website,
+
+                    // Deep ICP Sync
                     icp_structured: {
                         ...providerProfile.icp_structured,
                         company_size_ideal: formData.icpCompanySize.length > 0 ? formData.icpCompanySize : providerProfile.icp_structured?.company_size_ideal,
-                        decision_makers: formData.icpTitles.length > 0 ? formData.icpTitles : providerProfile.icp_structured?.decision_makers
-                    }
+                        decision_makers: formData.icpTitles.length > 0 ? formData.icpTitles : providerProfile.icp_structured?.decision_makers,
+                        industries: formData.icpIndustries.length > 0 ? formData.icpIndustries : providerProfile.icp_structured?.industries,
+                        buying_triggers: formData.whyNow ? [formData.whyNow] : providerProfile.icp_structured?.buying_triggers
+                    },
+
+                    // Assets & Readiness Sync (For Admin/Search Engines)
+                    assets_readiness: {
+                        has_profile: formData.hasCompanyProfile,
+                        has_deck: formData.hasPitchDeck,
+                        has_pricing: formData.hasPricingFile,
+                        has_website: formData.hasProfessionalWebsite,
+                        has_social: formData.hasSocialPresence
+                    },
+
+                    // Profile enrichment
+                    founded_year: formData.companyAge > 0 ? (new Date().getFullYear() - formData.companyAge) : providerProfile.founded_year
                 };
                 updateProviderProfile(updated);
-                alert('تم حفظ نتائج التشخيص في ملفك الشخصي بنجاح! 💾');
+                alert('عظيم! تم حفظ تحليل النينجا وتحديث ملفك بنجاح 🥷💾');
             }
             setIsSaving(false);
         }, 800);
@@ -226,13 +244,23 @@ const NinjaScanner = () => {
             <div className="bg-white dark:bg-gray-800/50 p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl">
                 <InputGroup label="1. اسم الشركة" id="n" value={formData.companyName} onChange={v => updateField('companyName', v)} />
                 <div className="h-4"></div>
-                <InputGroup label="2. الصناعة" id="ind" type="select" options={['--', ...INDUSTRIES]} value={formData.industry} onChange={v => updateField('industry', v)} />
+                <div className="grid grid-cols-2 gap-4">
+                    <InputGroup label="2. الصناعة" id="ind" type="select" options={['--', ...INDUSTRIES]} value={formData.industry} onChange={v => updateField('industry', v)} />
+                    <InputGroup label="3. البلد" id="co" type="select" options={['--', ...COUNTRIES]} value={formData.country} onChange={v => updateField('country', v)} />
+                </div>
                 <div className="h-4"></div>
-                <InputGroup label="3. البلد" id="co" type="select" options={['--', ...COUNTRIES]} value={formData.country} onChange={v => updateField('country', v)} />
+                <InputGroup label="4. الموقع الإلكتروني (Website)" id="web" value={formData.website} onChange={v => updateField('website', v)} />
+                <div className="h-4"></div>
+                <div className="grid grid-cols-2 gap-4">
+                    <InputGroup label="عمر الشركة (سنوات)" id="age" type="number" value={formData.companyAge} onChange={v => updateField('companyAge', v)} />
+                    <InputGroup label="مستوى التخصص (1-10)" id="spec" type="number" value={formData.specializationFocus} onChange={v => updateField('specializationFocus', v)} />
+                </div>
+                <p className="text-xs text-gray-400 mt-2">* التخصص: هل تقدم خدمات محددة جداً لعملاء محددين؟ (10 = تخصص دقيق)</p>
             </div>
         </div>
     );
 
+    // ... renderScale unchanged ...
     const renderScale = () => (
         <div className="max-w-4xl mx-auto space-y-8">
             <div className="text-center mb-10">
@@ -254,72 +282,81 @@ const NinjaScanner = () => {
                         <InputGroup label="SDRs" id="sdr" type="number" value={formData.sdrs} onChange={v => updateField('sdrs', v)} />
                         <InputGroup label="AEs" id="ae" type="number" value={formData.aes} onChange={v => updateField('aes', v)} />
                     </div>
-                    <div className="h-4"></div>
-                    <InputGroup label="الموظفين (الإجمالي)" id="sz" type="number" value={formData.employees} onChange={v => updateField('employees', v)} />
                 </div>
             </div>
         </div>
     );
+
 
     const renderStrategy = () => (
         <div className="max-w-4xl mx-auto space-y-8">
             <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold dark:text-white mb-2">كيف تصطاد؟ 🏹</h2>
-                <p className="text-gray-500">تفاصيل العميل المثالي وقنوات الوصول.</p>
+                <h2 className="text-3xl font-bold dark:text-white mb-2">الجاهزية والأدوات 🛠️</h2>
+                <p className="text-gray-500">هل تمتلك الأسلحة اللازمة للمعركة؟</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Assets Checklist (Original Request: Deck, Pricing, Website, etc) */}
                 <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg">
-                    <h3 className="font-bold mb-4 text-violet-500">🎯 الجمهور المستهدف (ICP)</h3>
-                    <InputGroup label="قطاعات مستهدفة" id="icp_ind" type="collapsible-multiselect" options={INDUSTRIES} value={formData.icpIndustries} onChange={v => updateField('icpIndustries', v)} />
-                    <div className="h-4"></div>
-                    <InputGroup label="مسميات القرار" id="icp_ti" type="collapsible-multiselect" options={TITLES_OPTIONS} value={formData.icpTitles} onChange={v => updateField('icpTitles', v)} />
+                    <h3 className="font-bold mb-4 text-violet-500">📁 الملفات والأصول (Assets)</h3>
+                    <div className="space-y-4">
+                        <InputGroup label="ملف تعريفي (Company Profile)" id="prf" type="toggle" value={formData.hasCompanyProfile} onChange={v => updateField('hasCompanyProfile', v)} />
+                        <InputGroup label="عرض بيعي قصصي (Sales Deck)" id="dck" type="toggle" value={formData.hasPitchDeck} onChange={v => updateField('hasPitchDeck', v)} />
+                        <InputGroup label="ملف تسعير (ROI-Based)" id="prc" type="toggle" value={formData.hasPricingFile} onChange={v => updateField('hasPricingFile', v)} />
+                        <InputGroup label="موقع إلكتروني احترافي" id="web_ex" type="toggle" value={formData.hasProfessionalWebsite} onChange={v => updateField('hasProfessionalWebsite', v)} />
+                        <InputGroup label="تواجد قوي (LinkedIn/Twitter)" id="soc" type="toggle" value={formData.hasSocialPresence} onChange={v => updateField('hasSocialPresence', v)} />
+                    </div>
                 </div>
 
+                {/* Tech Stack */}
                 <div className="bg-white dark:bg-gray-800/50 p-6 rounded-3xl border border-gray-100 dark:border-white/5 shadow-lg">
-                    <h3 className="font-bold mb-4 text-rose-500">⚙️ محرك العمليات</h3>
-                    <InputGroup label="دورة البيع (أيام)" id="cyc" type="number" value={formData.salesCycle} onChange={v => updateField('salesCycle', v)} />
-                    <div className="h-4"></div>
-                    <InputGroup label="سهولة الوصول لصانع القرار" id="dm" type="select" options={[
-                        { value: '1', label: 'صعب جداً (No Access)' }, { value: '3', label: 'متوسط (Gatekeepers)' }, { value: '5', label: 'سهل/مباشر' }
-                    ]} value={formData.decisionMakerAccess} onChange={v => updateField('decisionMakerAccess', parseInt(v.toString()))} />
+                    <h3 className="font-bold mb-4 text-rose-500">🤖 التقنية والعمليات</h3>
+                    <div className="space-y-4">
+                        <InputGroup label="Sales Navigator (مفعل)" id="nav" type="toggle" value={formData.hasSalesNavigator} onChange={v => updateField('hasSalesNavigator', v)} />
+                        <InputGroup label="تسجيل المكالمات (للتدريب)" id="rec" type="toggle" value={formData.recordsCalls} onChange={v => updateField('recordsCalls', v)} />
+                        <InputGroup label="تحليل المحادثات (AI)" id="anl" type="toggle" value={formData.analyzesConversations} onChange={v => updateField('analyzesConversations', v)} />
+                        <InputGroup label="استخدام AI Agents" id="aia" type="toggle" value={formData.usesAIAgents} onChange={v => updateField('usesAIAgents', v)} />
+                        <InputGroup label="رسائل مخصصة (Hyper-Personalized)" id="hyp" type="toggle" value={formData.hyperPersonalized} onChange={v => updateField('hyperPersonalized', v)} />
+                    </div>
                 </div>
             </div>
 
-            {/* Outbound Quick Stats */}
+            {/* Outbound Quick Stats - THE 100 CLUB */}
             <div className="bg-slate-100 dark:bg-white/5 p-6 rounded-3xl border border-dashed border-gray-300 dark:border-white/10">
-                <h3 className="font-bold mb-4 text-center">نشاط الفريق الحالي (يومياً)</h3>
-                <div className="grid grid-cols-3 gap-4">
-                    <InputGroup label="📞 Call Volume" id="c_vol" type="number" value={formData.callsVolume} onChange={v => updateField('callsVolume', v)} />
-                    <InputGroup label="📧 Email Volume" id="e_vol" type="number" value={formData.emailVolume} onChange={v => updateField('emailVolume', v)} />
-                    <InputGroup label="🔗 LinkedIn Requests" id="l_vol" type="number" value={formData.linkedinConnects} onChange={v => updateField('linkedinConnects', v)} />
+                <h3 className="font-bold mb-4 text-center">نشاط الفريق الحالي (يومياً) - نادي الـ 100 💯</h3>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <InputGroup label="📞 Calls" id="c_vol" type="number" value={formData.dailyCalls} onChange={v => updateField('dailyCalls', v)} />
+                    <InputGroup label="💬 WhatsApp" id="w_vol" type="number" value={formData.dailyWhatsapp} onChange={v => updateField('dailyWhatsapp', v)} />
+                    <InputGroup label="🔗 LinkedIn" id="l_vol" type="number" value={formData.dailyLinkedin} onChange={v => updateField('dailyLinkedin', v)} />
+                    <InputGroup label="📧 Emails" id="e_vol" type="number" value={formData.dailyEmails} onChange={v => updateField('dailyEmails', v)} />
                 </div>
+                <p className="text-center text-xs text-gray-400 mt-2">كم محاولة يقوم بها كل بائع يومياً في كل قناة؟</p>
             </div>
         </div>
     );
 
+    // ... renderPain unchanged ... 
     const renderPain = () => (
         <div className="max-w-2xl mx-auto space-y-8">
             <div className="text-center mb-10">
-                <h2 className="text-3xl font-bold dark:text-white mb-2">ضع يدك على الجرح 🤕</h2>
-                <p className="text-gray-500">لكي نعالج المشكلة، يجب أن نعترف بها أولاً.</p>
+                <h2 className="text-3xl font-bold dark:text-white mb-2">الأداء الحالي 📉</h2>
+                <p className="text-gray-500">أين تقف الآن من حيث النتائج؟</p>
             </div>
 
             <div className="bg-white dark:bg-gray-800/50 p-8 rounded-3xl border border-gray-100 dark:border-white/5 shadow-xl space-y-6">
-                <InputGroup label="لماذا الآن؟ (Why Now)" id="why" type="select" options={['--', ...WHY_NOW_OPTIONS]} value={formData.whyNow} onChange={v => updateField('whyNow', v)} />
-
-                <div className="p-4 bg-rose-50 dark:bg-rose-900/10 rounded-xl border border-rose-100 dark:border-rose-500/20">
-                    <InputGroup label="🩸 أين أكبر تسريب للعملاء؟" id="leak" type="select" options={LEAK_OPTIONS} value={formData.biggestLeak} onChange={v => updateField('biggestLeak', v)} />
-                </div>
-
                 <div className="grid grid-cols-2 gap-4">
                     <InputGroup label="Leads شهرياً" id="lds" type="number" value={formData.leadsPerMonth} onChange={v => updateField('leadsPerMonth', v)} />
-                    <InputGroup label="Closed Deals شهرياً" id="cld" type="number" value={formData.closedWonPerMonth} onChange={v => updateField('closedWonPerMonth', v)} />
+                    <InputGroup label="Leads مؤهلة (SQLs)" id="sql" type="number" value={formData.meetingsPerMonth} onChange={v => updateField('meetingsPerMonth', v)} />
+                    <InputGroup label="عروض أسعار (Proposals)" id="prp" type="number" value={formData.proposalsPerMonth} onChange={v => updateField('proposalsPerMonth', v)} />
+                    <InputGroup label="صفقات مغلقة (Won)" id="won" type="number" value={formData.closedWonPerMonth} onChange={v => updateField('closedWonPerMonth', v)} />
                 </div>
+
+                <div className="h-4"></div>
+                <InputGroup label="لماذا الآن؟ (Why Now)" id="why" type="select" options={['--', ...WHY_NOW_OPTIONS]} value={formData.whyNow} onChange={v => updateField('whyNow', v)} />
             </div>
         </div>
     );
-
+    // ... renderAnalysis unchanged ...
     const renderAnalysis = () => (
         <div className="flex flex-col items-center justify-center text-center py-20 h-full">
             <motion.div
@@ -337,15 +374,14 @@ const NinjaScanner = () => {
             </motion.div>
             <h2 className="text-3xl font-black text-white mb-4 animate-pulse">جاري تحليل بيانات النينجا...</h2>
             <div className="space-y-2 text-gray-400 font-mono text-sm">
-                <p>Checking ICP Fit...</p>
-                <p>Calculating Sales Velocity...</p>
-                <p>Identifying Leaks...</p>
+                <p>Checking Asset Readiness...</p>
+                <p>Benchmarking vs Top 1%...</p>
+                <p>Analyzing Funnel Leaks...</p>
             </div>
         </div>
     );
 
     const renderResults = () => {
-        // ... Reusing logic from previous component but cleaner
         const ResultTabBtn = ({ id, label, icon: Icon }: any) => (
             <button
                 onClick={() => setResultTab(id)}
@@ -358,47 +394,103 @@ const NinjaScanner = () => {
         return (
             <div className="max-w-7xl mx-auto">
                 <div className="text-center mb-10">
-                    <h2 className="text-4xl font-black dark:text-white mb-2">نتائج التشخيص 🎯</h2>
-                    <p className="text-gray-500">إليك تقرير أداء شركتك وخطة العمل المقترحة.</p>
+                    <h2 className="text-4xl font-black dark:text-white mb-2">تقرير النينجا الاستراتيجي 🥷</h2>
+                    <p className="text-gray-500">حقيقتك الرقمية + خطة السيطرة على السوق.</p>
                 </div>
 
-                {/* Results Nav */}
                 <div className="flex justify-center flex-wrap gap-4 mb-10">
-                    <ResultTabBtn id="scores" label="النتيجة والتحليل" icon={Calculator} />
-                    <ResultTabBtn id="kpis" label="مؤشرات الأداء" icon={BarChart3} />
-                    <ResultTabBtn id="recs" label="خطة العمل" icon={Lightbulb} />
-                    <ResultTabBtn id="pdf" label="تصدير PDF" icon={Download} />
+                    <ResultTabBtn id="scores" label="النتيجة الشاملة" icon={Trophy} />
+                    <ResultTabBtn id="kpis" label="تحليل الفجوات" icon={BarChart3} />
+                    <ResultTabBtn id="recs" label="التوصيات والحلول" icon={Lightbulb} />
+                    <ResultTabBtn id="pdf" label="تصدير (PDF)" icon={Download} />
                 </div>
 
-                <div className="bg-gray-900/40 backdrop-blur-xl rounded-[2rem] p-8 border border-white/5 min-h-[600px]">
+                <div className="bg-gray-900/60 backdrop-blur-2xl rounded-[2.5rem] p-10 border border-white/10 min-h-[600px] shadow-2xl">
                     {resultTab === 'scores' && (
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                            <div className="text-center">
-                                <div className="text-8xl font-black bg-gradient-to-br from-emerald-400 to-cyan-400 bg-clip-text text-transparent mb-4">{results.scores.overallScore}</div>
-                                <div className={`inline-block px-6 py-2 rounded-full text-xl font-bold mb-8 ${getStatusColor(results.scores.overallScore, 80, 50).replace('text-', 'bg-').replace('500', '500/20 text-white')}`}>
-                                    {results.scores.tier}
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                            {/* Main Score */}
+                            <div className="lg:col-span-4 text-center bg-white/5 rounded-3xl p-8 border border-white/5">
+                                <h3 className="text-lg font-bold text-gray-400 mb-6">مؤشر الجاهزية</h3>
+                                <div className="relative w-48 h-48 mx-auto mb-6 flex items-center justify-center">
+                                    <div className="absolute inset-0 rounded-full border-8 border-white/5"></div>
+                                    <div className={`absolute inset-0 rounded-full border-8 border-emerald-500`} style={{ clipPath: `polygon(0 0, 100% 0, 100% ${results.scores.overallScore}%, 0 ${results.scores.overallScore}%)` }}></div>
+                                    <div className="text-6xl font-black text-white">{results.scores.overallScore}</div>
                                 </div>
-                                <RadarChart scores={results.scores} />
+                                <div className="inline-block px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/30">
+                                    {results.scores.tierLabel}
+                                </div>
                             </div>
-                            <div className="space-y-6">
-                                <h3 className="text-2xl font-bold text-white mb-6">نقاط القوة والضعف</h3>
-                                {[
-                                    { l: '🎯 ICP & Offer', s: results.scores.icpScore, c: 'bg-emerald-500' },
-                                    { l: '⚡ Outbound', s: results.scores.outboundScore, c: 'bg-amber-500' },
-                                    { l: '👥 Team', s: results.scores.teamScore, c: 'bg-rose-500' },
-                                    { l: '🗄️ CRM & Data', s: results.scores.crmScore, c: 'bg-blue-500' },
-                                ].map((m, i) => (
-                                    <div key={i}>
-                                        <div className="flex justify-between text-gray-400 mb-2 font-bold">
-                                            <span>{m.l}</span>
-                                            <span>{m.s}/100</span>
+
+                            {/* Deep Analysis Grid */}
+                            <div className="lg:col-span-8 space-y-8">
+                                <div className="grid grid-cols-2 gap-4">
+                                    {[
+                                        { label: "الأصول (Assets)", score: results.scores.teamScore, icon: "📂" },
+                                        { label: "النشاط (Volume)", score: results.scores.outboundScore, icon: "🔥" },
+                                        { label: "التقنية (Tech)", score: results.scores.crmScore, icon: "🤖" },
+                                        { label: "الاستراتيجية (Fit)", score: results.scores.icpScore, icon: "🎯" }
+                                    ].map((stat, idx) => (
+                                        <div key={idx} className="bg-white/5 p-6 rounded-2xl border border-white/5 flex items-center justify-between">
+                                            <div className="flex items-center gap-4">
+                                                <span className="text-2xl">{stat.icon}</span>
+                                                <span className="font-bold text-gray-300">{stat.label}</span>
+                                            </div>
+                                            <div className={`text-2xl font-black ${getStatusColor(stat.score, 80, 50).split(' ')[0]}`}>
+                                                {stat.score}%
+                                            </div>
                                         </div>
-                                        <div className="h-4 bg-white/5 rounded-full overflow-hidden">
-                                            <div className={`h-full ${m.c}`} style={{ width: `${m.s}%` }} />
+                                    ))}
+                                </div>
+
+                                {/* Benchmark Comparison */}
+                                <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
+                                    <h4 className="font-bold text-white mb-4 flex items-center gap-2">
+                                        <Target size={18} className="text-rose-500" />
+                                        مقارنة مع المعيار العالمي (The 100 Club)
+                                    </h4>
+                                    <div className="space-y-4">
+                                        {[
+                                            { l: 'Calls', v: formData.dailyCalls, t: 100 },
+                                            { l: 'WhatsApp', v: formData.dailyWhatsapp, t: 100 },
+                                            { l: 'LinkedIn', v: formData.dailyLinkedin, t: 100 },
+                                            { l: 'Emails', v: formData.dailyEmails, t: 100 }
+                                        ].map((b, i) => (
+                                            <div key={i} className="flex items-center gap-4 text-sm">
+                                                <div className="w-24 font-bold text-gray-400">{b.l}</div>
+                                                <div className="flex-1 h-3 bg-gray-800 rounded-full overflow-hidden">
+                                                    <div className={`h-full ${b.v >= b.t ? 'bg-emerald-500' : 'bg-rose-500'}`} style={{ width: `${Math.min((b.v / b.t) * 100, 100)}%` }}></div>
+                                                </div>
+                                                <div className="w-16 font-mono text-white text-right">{b.v}/{b.t}</div>
+                                                <div className="w-6">
+                                                    {b.v >= b.t ? <CheckCircle size={14} className="text-emerald-500" /> : <AlertTriangle size={14} className="text-rose-500" />}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {resultTab === 'recs' && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[600px] overflow-y-auto px-2">
+                            {results.recommendations.map((rec, i) => (
+                                <div key={i} className={`p-6 rounded-2xl border ${rec.type === 'critical' ? 'bg-rose-500/10 border-rose-500/30' : 'bg-white/5 border-white/5'} hover:bg-white/10 transition-colors`}>
+                                    <div className="flex items-start gap-4">
+                                        <div className="text-3xl bg-white/10 p-3 rounded-xl">{rec.icon}</div>
+                                        <div>
+                                            <div className="flex items-center gap-2 mb-2">
+                                                {rec.type === 'critical' && <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">CRITICAL</span>}
+                                                <h4 className="font-bold text-white text-lg">{rec.title}</h4>
+                                            </div>
+                                            <p className="text-gray-400 text-sm mb-3">{rec.problem}</p>
+                                            <p className="text-emerald-400 font-bold text-sm bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20">
+                                                💡 {rec.solution}
+                                            </p>
                                         </div>
                                     </div>
-                                ))}
-                            </div>
+                                </div>
+                            ))}
                         </div>
                     )}
 
@@ -426,30 +518,14 @@ const NinjaScanner = () => {
                         </div>
                     )}
 
-                    {resultTab === 'recs' && (
-                        <div className="space-y-4 max-h-[600px] overflow-y-auto pr-2 custom-scrollbar">
-                            {results.recommendations.map((rec, i) => (
-                                <div key={i} className="bg-white/5 border border-white/5 p-6 rounded-2xl hover:bg-white/10 transition-colors">
-                                    <div className="flex gap-4">
-                                        <div className="text-3xl">{rec.icon}</div>
-                                        <div>
-                                            <h4 className="text-lg font-bold text-white mb-1">{rec.title}</h4>
-                                            <p className="text-emerald-400 font-bold text-sm mb-2">💡 الحل: {rec.solution}</p>
-                                            <p className="text-gray-400 text-sm">{rec.problem}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-
                     {resultTab === 'pdf' && (
                         <div className="text-center py-20">
                             <FileText size={80} className="mx-auto text-emerald-500 mb-6" />
                             <h3 className="text-2xl font-bold text-white mb-4">تقرير احترافي جاهز</h3>
-                            <p className="text-gray-400 mb-8">قم بتحميل التقرير الكامل لمشاركته مع فريقك.</p>
-                            <button onClick={handleDownloadPDF} disabled={isGenerating} className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition-all hover:scale-105 disabled:opacity-50">
-                                {isGenerating ? 'جاري التحضير...' : '📥 تحميل التقرير (PDF)'}
+                            <p className="text-gray-400 mb-8 max-w-md mx-auto">قم بتحميل التقرير الكامل بصيغة PDF لمشاركته مع فريقك، يحتوي على التحليل التفصيلي وخطة العمل.</p>
+                            <button onClick={handleDownloadPDF} disabled={isGenerating} className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg shadow-lg transition-all hover:scale-105 disabled:opacity-50 flex items-center gap-2 mx-auto">
+                                {isGenerating ? <Loader2 className="animate-spin" /> : <Download />}
+                                {isGenerating ? 'جاري التحضير...' : 'تحميل التقرير (PDF)'}
                             </button>
                         </div>
                     )}

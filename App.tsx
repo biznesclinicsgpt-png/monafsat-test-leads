@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { DataProvider } from './context/DataContext';
+import AdminLayout from './layouts/AdminLayout';
+import AdminNinjaPage from './pages/AdminNinjaPage';
 import MainLayout from './layouts/MainLayout';
 import Dashboard from './components/Dashboard';
 import ContactsManager from './components/Contacts/ContactsManager';
@@ -43,6 +45,13 @@ const App = () => {
             <Route path="financial" element={<FinancialPage />} />
             <Route path="reviews" element={<ReviewsPage />} />
             <Route path="integrations" element={<ProviderIntegrationsPage />} />
+          </Route>
+
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<div className="p-10 text-2xl font-bold">Admin Dashboard Overview (Coming Soon)</div>} />
+            <Route path="ninja" element={<AdminNinjaPage />} />
+            <Route path="providers" element={<div className="p-10 text-2xl font-bold">Providers Management (Coming Soon)</div>} />
           </Route>
 
           {/* Fallback */}
