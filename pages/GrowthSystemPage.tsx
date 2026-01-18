@@ -574,76 +574,103 @@ const GrowthSystemPage = () => {
 
     const AIAgentDemo = () => (
         <section className="py-24 bg-white overflow-hidden">
+            <div className="absolute top-1/2 left-0 w-[800px] h-[800px] bg-brand-50/50 rounded-full blur-[120px] -translate-y-1/2 -z-10 pointer-events-none"></div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
-                    <div className="lg:w-1/2">
-                        <span className="text-brand-600 font-bold bg-brand-50 px-3 py-1 rounded-full text-sm">AI Agent السعودي</span>
-                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mt-4 mb-6 leading-tight">
+                    <motion.div
+                        initial="hidden" whileInView="visible" viewport={{ once: true }} variants={staggerContainer}
+                        className="lg:w-1/2"
+                    >
+                        <motion.div variants={fadeInUp} className="inline-block px-4 py-2 bg-brand-50 text-brand-700 rounded-full font-bold text-sm mb-6 border border-brand-100">
+                            ✨ AI Agent السعودي
+                        </motion.div>
+                        <motion.h2 variants={fadeInUp} className="text-3xl md:text-5xl font-black text-slate-900 mt-4 mb-6 leading-tight">
                             يتكلم لغتك... <br />
                             <span className="text-brand-600">ويقنع عميلك.</span>
-                        </h2>
-                        <p className="text-xl text-slate-500 mb-8 leading-relaxed">
-                            نستخدم AI مدرب بكفاءة على منتجاتك وخدماتك، والاهم... مدرب على <strong className="text-slate-900">اللهجة السعودية (White-label)</strong>.
-                            <br />
-                            ما يبين إنه بوت، يبين إنه "عبدالعزيز" أو "سارة" من فريقك.
-                        </p>
-                        <ul className="space-y-4">
-                            <li className="flex items-center gap-3 font-bold text-slate-700">
-                                <CheckCircle className="text-brand-500" size={20} />
-                                تخصيص الرسائل حسب قطاع العميل (Construction vs Tech)
-                            </li>
-                            <li className="flex items-center gap-3 font-bold text-slate-700">
-                                <CheckCircle className="text-brand-500" size={20} />
-                                ردود فورية ذكية على الاستفسارات
-                            </li>
-                            <li className="flex items-center gap-3 font-bold text-slate-700">
-                                <CheckCircle className="text-brand-500" size={20} />
-                                حجز اجتماعات في الكالندر تلقائياً
-                            </li>
-                        </ul>
-                    </div>
+                        </motion.h2>
+                        <motion.p variants={fadeInUp} className="text-xl text-slate-600 mb-10 leading-relaxed font-medium">
+                            نستخدم AI مدرب بكفاءة على منتجاتك وخدماتك، والاهم... مدرب على <strong className="text-slate-900">اللهجة السعودية (White-label)</strong>. ما يبين إنه بوت، يبين إنه "عبدالعزيز" أو "سارة" من فريقك.
+                        </motion.p>
 
-                    <div className="lg:w-1/2 relative">
-                        <div className="absolute inset-0 bg-brand-500/20 blur-[100px] rounded-full"></div>
+                        <div className="space-y-6">
+                            {[
+                                { desc: "تخصيص الرسائل حسب قطاع العميل (Construction vs Tech)" },
+                                { desc: "ردود فورية ذكية على الاستفسارات" },
+                                { desc: "حجز اجتماعات في الكالندر تلقائياً" }
+                            ].map((item, index) => (
+                                <motion.div
+                                    variants={fadeInUp} key={index}
+                                    className="flex items-center gap-4 text-lg text-slate-700 font-bold"
+                                >
+                                    <div className="w-6 h-6 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 flex-shrink-0">
+                                        <Check size={16} />
+                                    </div>
+                                    {item.desc}
+                                </motion.div>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}
+                        className="lg:w-1/2 relative"
+                    >
+                        <div className="absolute top-10 right-10 w-20 h-20 bg-yellow-400 rounded-full blur-[60px] opacity-20 animate-pulse"></div>
+                        <div className="absolute bottom-10 left-10 w-32 h-32 bg-brand-600 rounded-full blur-[80px] opacity-20"></div>
+
                         {/* Chat UI Mockup */}
                         <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 relative z-10 max-w-md mx-auto">
-                            <div className="flex items-center gap-4 border-b border-slate-100 pb-4 mb-4">
-                                <div className="w-12 h-12 rounded-full bg-slate-200 overflow-hidden">
-                                    <img src="https://ui-avatars.com/api/?name=Saud+Manager&background=0D8ABC&color=fff" alt="Avatar" />
+                            <div className="flex items-center gap-4 border-b border-slate-100 pb-4 mb-6">
+                                <div className="w-12 h-12 rounded-full bg-brand-600 flex items-center justify-center text-white font-bold text-lg">
+                                    SM
                                 </div>
                                 <div>
-                                    <h4 className="font-bold text-slate-900">أبو عبدالله (المدير العام)</h4>
-                                    <span className="text-xs text-green-500 font-bold flex items-center gap-1"><span className="w-2 h-2 bg-green-500 rounded-full"></span> متصل الآن</span>
+                                    <h3 className="font-bold text-slate-900">أبو عبدالله (المدير العام)</h3>
+                                    <div className="flex items-center gap-1.5 text-xs text-green-500 font-bold">
+                                        <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                                        متصل الآن
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-4 text-sm font-bold">
-                                {/* Agent Msg */}
-                                <div className="flex items-start gap-3">
-                                    <div className="bg-brand-50 text-slate-800 p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-brand-100">
-                                        <p>مساك الله بالخير أبو عبدالله، معك فيصل من بزنس كلينيك. 👋</p>
-                                        <p className="mt-2">كنت أقرأ عن توسعاتكم الأخيرة في مشروع القدية، ما شاء الله شغل جبار.</p>
-                                        <p className="mt-2">حبيت أتواصل معك بخصوص...</p>
-                                    </div>
-                                </div>
+                            <div className="space-y-4 mb-6">
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+                                    className="bg-brand-50 rounded-2xl p-4 rounded-tr-none text-slate-800 text-sm leading-relaxed border border-brand-100"
+                                >
+                                    مساك الله بالخير أبو عبدالله، معك فيصل من بزنس كلينيك. 👋
+                                    <br />
+                                    كنت أقرأ عن توسعاتكم الأخيرة في مشروع القدية، ما شاء الله شغل جبار.
+                                    <br />
+                                    حبيت أتواصل معك بخصوص...
+                                </motion.div>
 
-                                {/* User Msg */}
-                                <div className="flex items-start gap-3 flex-row-reverse">
-                                    <div className="bg-slate-100 text-slate-800 p-3 rounded-2xl rounded-tl-none max-w-[85%]">
-                                        <p>ياهلا فيصل، الله يحييك. تفضل اسمعك</p>
-                                    </div>
-                                </div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
+                                    className="bg-slate-100 text-slate-800 rounded-2xl p-4 rounded-tl-none text-sm leading-relaxed self-end w-fit mr-auto font-bold"
+                                >
+                                    ياهلا فيصل، الله يحييك. تفضل اسمعك
+                                </motion.div>
 
-                                {/* Agent Msg */}
-                                <div className="flex items-start gap-3">
-                                    <div className="bg-brand-50 text-slate-800 p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-brand-100">
-                                        <p>الله يسلمك. طال عمرك لاحظت انكم تستخدمون X حالياً، واحنا طورنا نظام يساعدكم توفرون 30% من التكاليف..</p>
-                                        <p className="mt-2">متى يناسبك ناخذ اتصال سريع 5 دقايق اشرح لك الفكرة؟</p>
-                                    </div>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 1.5 }}
+                                    className="bg-brand-50 rounded-2xl p-4 rounded-tr-none text-slate-800 text-sm leading-relaxed border border-brand-100"
+                                >
+                                    الله يسلمك. طال عمرك لاحظت انكم تستخدمون X حالياً، واحنا طورنا نظام يساعدكم توفرون 30% من التكاليف..
+                                    <br /><br />
+                                    <span className="font-bold">متى يناسبك ناخذ اتصال سريع 5 دقايق اشرح لك الفكرة؟</span>
+                                </motion.div>
+                            </div>
+
+                            <div className="relative">
+                                <input type="text" placeholder="اكتب ردك هنا..." className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 px-4 text-sm text-right focus:outline-none focus:border-brand-300 transition-colors" disabled />
+                                <div className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-500 opacity-50">
+                                    <Sparkles size={18} />
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </section>
