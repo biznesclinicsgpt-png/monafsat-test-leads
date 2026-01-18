@@ -73,24 +73,9 @@ const Navbar = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
         >
             <div className="px-4 md:px-12 flex justify-between items-center max-w-7xl mx-auto w-full">
                 <div className="flex items-center gap-2 cursor-pointer group" onClick={() => navigate('/')}>
-                    <motion.div
-                        whileHover={{ rotate: 180 }}
-                        className="bg-brand text-white p-1.5 rounded-xl shadow-lg shadow-brand/20"
-                    >
-                        <ScanLine className="w-6 h-6" />
-                    </motion.div>
-                    <div className="text-brand font-bold text-2xl flex items-center gap-1">
-                        <span className="tracking-tight text-slate-800">Ninja</span>
-                        <span className="text-brand relative">
-                            Scanner
-                            <motion.span
-                                className="absolute -bottom-1 left-0 w-full h-0.5 bg-brand rounded-full"
-                                initial={{ width: 0 }}
-                                whileInView={{ width: '100%' }}
-                                transition={{ delay: 1 }}
-                            />
-                        </span>
-                    </div>
+                    <img src="/logo_full.png" alt="BiznesClinics" className="h-12 w-auto object-contain" />
+                    <div className="h-8 w-px bg-slate-200 mx-2"></div>
+                    <span className="font-bold text-slate-700 tracking-tight">Ninja Scanner</span>
                 </div>
 
                 <div className="hidden md:flex items-center gap-8 font-medium text-slate-600 text-sm">

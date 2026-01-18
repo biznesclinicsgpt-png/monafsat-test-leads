@@ -31,8 +31,7 @@ const MainLayout = () => {
             <aside className="w-64 bg-white border-l border-slate-200 sticky top-0 h-screen overflow-y-auto hidden md:block z-10">
                 <div className="p-6">
                     <div className="flex items-center gap-2 mb-8 justify-start">
-                        <div className="w-8 h-8 bg-blue-600 rounded-md"></div>
-                        <span className="text-xl font-bold text-slate-800">منافذ</span>
+                        <img src="/logo_full.png" alt="BiznesClinics" className="h-10 w-auto object-contain" />
                     </div>
 
                     <nav className="space-y-1">

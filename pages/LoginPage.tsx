@@ -41,11 +41,9 @@ const LoginPage = () => {
                 className="bg-white p-10 rounded-3xl shadow-xl w-full max-w-md border border-slate-100"
             >
                 <div className="text-center mb-10">
-                    <div className="w-16 h-16 bg-blue-600 rounded-xl mx-auto mb-4 flex items-center justify-center text-white text-3xl font-black">
-                        م
-                    </div>
-                    <h1 className="text-2xl font-bold text-slate-900 mb-2">تسجيل الدخول لمنفذ</h1>
-                    <p className="text-slate-500">مرحباً بك مجدداً في بوابة المزودين</p>
+                    <img src="/logo_full.png" alt="BiznesClinics" className="h-16 w-auto mx-auto mb-6 object-contain" />
+                    <h1 className="text-2xl font-bold text-slate-900 mb-2">تسجيل الدخول - بوابة المزودين</h1>
+                    <p className="text-slate-500">مرحباً بك مجدداً في BiznesClinics</p>
                 </div>
 
                 <form onSubmit={handleLogin} className="space-y-6">
