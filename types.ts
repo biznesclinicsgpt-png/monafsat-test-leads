@@ -368,6 +368,9 @@ export interface ProviderProfile {
   status: ProviderProfileStatus;
   profile_health: number; // 0-100
 
+  // Ninja Diagnosis Data
+  ninja_diagnosis?: any; // Stores the full 35-point diagnosis data
+
   // Review
   submitted_for_review_at?: string;
   reviewed_at?: string;

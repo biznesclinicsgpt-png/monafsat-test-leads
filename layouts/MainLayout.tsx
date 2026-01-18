@@ -36,17 +36,18 @@ const MainLayout = () => {
                     </div>
 
                     <nav className="space-y-1">
-                        <SidebarItem to="/" label="لوحة التحكم" icon={Icons.Dashboard} />
-                        <SidebarItem to="/profile" label="الملف الشخصي" icon={Icons.Profile} />
-                        <SidebarItem to="/contacts" label="جهات الاتصال" icon={Icons.Contacts} badge="جديد" />
-                        <SidebarItem to="/leads" label="العملاء المحتملين" icon={Icons.Opportunities} />
-                        <SidebarItem to="/opportunities" label="الفرص البيعية" icon={Icons.Opportunities} />
-                        <SidebarItem to="/projects" label="إدارة المشاريع" icon={Icons.Projects} />
-                        <SidebarItem to="/messages" label="صندوق المحادثات" icon={Icons.Messages} />
-                        <SidebarItem to="/financial" label="الحسابات والمالية" icon={Icons.Financial} />
-                        <SidebarItem to="/reviews" label="تقييمات العملاء" icon={Icons.Reviews} />
+                        <SidebarItem to="/app" label="لوحة التحكم" icon={Icons.Dashboard} />
+                        <SidebarItem to="/app/profile" label="الملف الشخصي" icon={Icons.Profile} />
+                        <SidebarItem to="/app/diagnosis" label="🥷 تشخيص النينجا" icon={Icons.Settings} badge="هام" />
+                        <SidebarItem to="/app/contacts" label="جهات الاتصال" icon={Icons.Contacts} badge="جديد" />
+                        <SidebarItem to="/app/leads" label="العملاء المحتملين" icon={Icons.Opportunities} />
+                        <SidebarItem to="/app/opportunities" label="الفرص البيعية" icon={Icons.Opportunities} />
+                        <SidebarItem to="/app/projects" label="إدارة المشاريع" icon={Icons.Projects} />
+                        <SidebarItem to="/app/messages" label="صندوق المحادثات" icon={Icons.Messages} />
+                        <SidebarItem to="/app/financial" label="الحسابات والمالية" icon={Icons.Financial} />
+                        <SidebarItem to="/app/reviews" label="تقييمات العملاء" icon={Icons.Reviews} />
                         <hr className="border-slate-100 my-2" />
-                        <SidebarItem to="/integrations" label="التكاملات" icon={Icons.Settings} badge="جديد" />
+                        <SidebarItem to="/app/integrations" label="التكاملات" icon={Icons.Settings} badge="جديد" />
                     </nav>
                 </div>
             </aside>

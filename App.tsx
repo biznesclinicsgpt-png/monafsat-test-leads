@@ -10,6 +10,7 @@ import ProfilePage from './pages/ProfilePage';
 import ProjectsPage from './pages/ProjectsPage';
 import MessagesPage from './pages/MessagesPage';
 import LandingPage from './pages/LandingPage';
+import NinjaDiagnosisPage from './pages/NinjaDiagnosisPage';
 import { PlaceholderPage } from './components/PlaceholderPage';
 
 // Placeholder Pages for Phase 3 implementation
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/app" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="contacts" element={<ContactsManager />} />
+            <Route path="diagnosis" element={<NinjaDiagnosisPage />} />
             <Route path="profile" element={<ProfilePage />} />
 
             {/* Placeholder Routes */}

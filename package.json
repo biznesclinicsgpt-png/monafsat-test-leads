@@ -16,16 +16,19 @@
     "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^5.22.0",
     "@types/papaparse": "^5.5.2",
+    "@types/recharts": "^1.8.29",
     "@vercel/node": "^5.5.23",
     "@vercel/postgres": "^0.10.0",
     "dotenv": "^17.2.3",
+    "html2pdf.js": "^0.14.0",
     "lucide-react": "^0.562.0",
     "openai": "^6.16.0",
     "papaparse": "^5.5.3",
     "prisma": "^5.22.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-router-dom": "^7.12.0"
+    "react-router-dom": "^7.12.0",
+    "recharts": "^3.6.0"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
