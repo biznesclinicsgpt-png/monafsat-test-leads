@@ -234,7 +234,7 @@ const GrowthSystemPage = () => {
     );
 
     const TechStack = () => (
-        <section className="py-24 bg-slate-50">
+        <section className="py-24 bg-slate-50 overflow-hidden">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">نظام سعودي... <span className="text-brand-600">بقلب عالمي</span></h2>
@@ -243,35 +243,111 @@ const GrowthSystemPage = () => {
                     </p>
                 </div>
 
-                <div className="bg-white rounded-[2.5rem] p-12 shadow-xl border border-slate-100 relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-brand-500 to-purple-500"></div>
+                {/* Tech Ecosystem Canvas */}
+                <div className="relative">
+                    {/* Connecting Lines (Background) */}
+                    <div className="absolute inset-x-0 top-1/2 h-1 bg-slate-200 -z-10 hidden lg:block"></div>
 
-                    <div className="flex flex-wrap justify-center gap-12 md:gap-20 opacity-80 mb-12 grayscale hover:grayscale-0 transition-all duration-500">
-                        {/* Text Placeholders for Logos per user request context implied */}
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-purple-600 transition-colors">Clay</div>
-                            <span className="text-xs font-bold text-slate-400">Data Enrichment</span>
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+
+                        {/* 1. Lead Generation (The Source) */}
+                        <div className="lg:col-span-7 space-y-6">
+                            <div className="flex items-center gap-3 mb-2">
+                                <span className="bg-slate-900 text-white text-xs font-black px-2 py-1 rounded uppercase tracking-wider">المرحلة 1</span>
+                                <h3 className="font-bold text-slate-700">Lead Generation (التوليد)</h3>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-4 h-full">
+                                {/* Outbound Zone - Primary Focus */}
+                                <div className="bg-slate-200/50 p-6 rounded-3xl border border-slate-300 relative group overflow-hidden">
+                                    <div className="absolute top-0 right-0 bg-slate-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">Outbound</div>
+                                    <div className="space-y-6">
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Data & Intent</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-slate-200">
+                                                    🧱 Clay
+                                                </div>
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-slate-200">ZoomInfo</div>
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-slate-200">Apollo</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Sales Engagement</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-slate-200">
+                                                    💌 Lemlist
+                                                </div>
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-slate-200">
+                                                    🔥 Smartlead
+                                                </div>
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-slate-200">Instantly</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
                         </div>
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-pink-600 transition-colors">Lemlist</div>
-                            <span className="text-xs font-bold text-slate-400">Email Outreach</span>
-                        </div>
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Smartlead</div>
-                            <span className="text-xs font-bold text-slate-400">Inbox Warmup</span>
-                        </div>
-                        <div className="text-center group">
-                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-green-600 transition-colors">OpenAI</div>
-                            <span className="text-xs font-bold text-slate-400">Generative AI</span>
+
+                        {/* 2. Lead Capture & Management */}
+                        <div className="lg:col-span-5 space-y-6">
+                            <div className="flex items-center gap-3 mb-2">
+                                <span className="bg-slate-900 text-white text-xs font-black px-2 py-1 rounded uppercase tracking-wider">المرحلة 2 & 3</span>
+                                <h3 className="font-bold text-slate-700">Capture & Close (الإغلاق)</h3>
+                            </div>
+
+                            <div className="space-y-4">
+                                {/* Capture Zone */}
+                                <div className="bg-blue-50/50 p-6 rounded-3xl border border-blue-100 relative">
+                                    <div className="absolute top-0 right-0 bg-blue-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">Capture</div>
+                                    <div className="flex flex-wrap gap-2">
+                                        <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-blue-100">Typeform</div>
+                                        <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-blue-100">Calendly</div>
+                                        <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-blue-100">Website Visitor ID</div>
+                                    </div>
+                                </div>
+
+                                {/* Management & Close Zone */}
+                                <div className="bg-purple-50/50 p-6 rounded-3xl border border-purple-100 relative">
+                                    <div className="absolute top-0 right-0 bg-purple-400 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">Management & AI</div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <p className="text-xs font-bold text-purple-600 mb-2 uppercase tracking-wide">CRM & Auto</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-purple-100">HubSpot</div>
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-purple-100">Zapier</div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-purple-600 mb-2 uppercase tracking-wide">Intelligence</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-black text-slate-800 flex items-center gap-2 border border-purple-100">
+                                                    🤖 OpenAI
+                                                </div>
+                                                <div className="bg-white px-3 py-2 rounded-lg shadow-sm font-bold text-slate-600 border border-purple-100">Gong</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="text-center bg-slate-900 text-white p-6 rounded-2xl max-w-3xl mx-auto border border-slate-800">
-                        <p className="text-lg font-bold">
-                            <span className="text-brand-400">السر مش في الأداة... السر في "الخلطة"!</span>
-                            <br />
-                            كيف نستخدم Clay عشان نطلع رقم جوال المدير المباشر في شركة مقاولات في الرياض ونكلمه واتساب بلهجة سعودية؟ هنا لعبتنا.
-                        </p>
+                    {/* The Secret Sauce */}
+                    <div className="mt-12 text-center bg-slate-900 text-white p-8 rounded-3xl max-w-4xl mx-auto border border-slate-800 relative overflow-hidden shadow-2xl">
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-brand-500 rounded-full blur-[80px] opacity-20"></div>
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-purple-500 rounded-full blur-[80px] opacity-20"></div>
+                        <div className="relative z-10">
+                            <h4 className="text-2xl font-bold text-brand-400 mb-4 flex items-center justify-center gap-2">
+                                <Sparkles size={24} />
+                                السر مش في الأداة... السر في "الخلطة"! 🧪
+                            </h4>
+                            <p className="text-lg md:text-xl leading-relaxed text-slate-200">
+                                "كيف نستخدم <span className="text-white font-black">Clay</span> عشان نطلع رقم جوال المدير المباشر في شركة مقاولات في الرياض ونكلمه <span className="text-white font-black">واتساب</span> بلهجة سعودية؟ <span className="text-white border-b-2 border-brand-500 font-bold">هنا لعبتنا.</span>"
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
