@@ -813,10 +813,10 @@ const GrowthSystemPage = () => {
 
                         <div className="hidden md:flex text-brand-500">
                             <motion.div
-                                animate={{ x: [0, 5, 0] }}
+                                animate={{ x: [0, -5, 0] }}
                                 transition={{ repeat: Infinity, duration: 2 }}
                             >
-                                <ArrowRight size={24} />
+                                <ArrowLeft size={24} />
                             </motion.div>
                         </div>
 
@@ -828,10 +828,10 @@ const GrowthSystemPage = () => {
 
                         <div className="hidden md:flex text-brand-500">
                             <motion.div
-                                animate={{ x: [0, 5, 0] }}
+                                animate={{ x: [0, -5, 0] }}
                                 transition={{ repeat: Infinity, duration: 2, delay: 0.5 }}
                             >
-                                <ArrowRight size={24} />
+                                <ArrowLeft size={24} />
                             </motion.div>
                         </div>
 
