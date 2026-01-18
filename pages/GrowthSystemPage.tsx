@@ -98,23 +98,30 @@ const GrowthSystemPage = () => {
                             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
                             <span className="relative inline-flex rounded-full h-3 w-3 bg-brand-500"></span>
                         </span>
-                        مخصص للسوق السعودي B2B
+                        مخصص للشركات السعودية
                     </motion.div>
 
                     <motion.h1
                         initial="hidden" animate="visible" variants={fadeInUp}
                         className="text-4xl md:text-6xl lg:text-7xl font-black text-slate-900 mb-8 leading-tight tracking-tight"
                     >
-                        نظام تشغيل نمو لشركات <span className="text-brand-500">B2B</span> في السعودية
+                        ضاعف مبيعاتك الربع القادم بأتمتة <span className="text-brand-500">الذكاء الاصطناعي</span> في السعودية
                     </motion.h1>
 
                     <motion.p
                         initial="hidden" animate="visible" variants={fadeInUp}
-                        className="text-xl md:text-2xl text-slate-500 mb-10 max-w-3xl mx-auto leading-relaxed"
+                        className="text-xl md:text-2xl text-slate-500 mb-6 max-w-4xl mx-auto leading-relaxed"
                     >
-                        <span className="font-bold text-slate-800">Pipeline حقيقي… فرص واضحة… صفقات مقفولة.</span>
+                        <span className="font-bold text-slate-800">شراكه تغنيك عن التوظيف وشراء الأدوات.</span>
                         <br />
-                        تساعد Biznes Clinics الشركات السعودية على بناء خط مبيعات مستدام عبر نظام ذكي يجمع بين Outbound و Inbound بدون هدر ميزانيات.
+                        ندير العملية بالكامل <span className="text-brand-600 font-black bg-brand-50 px-2 rounded">من الوصول للعميل المحتمل وحتى إغلاق الصفقة</span>، بفريق من 6 خبراء بتكلفة موظف واحد.
+                    </motion.p>
+
+                    <motion.p
+                        initial="hidden" animate="visible" variants={fadeInUp}
+                        className="text-lg md:text-xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed font-medium bg-white/50 backdrop-blur-sm p-4 rounded-2xl border border-slate-100 shadow-sm"
+                    >
+                        فريق مخصص لشركتك يدير نظام سعودي متكامل مع أدوات الذكاء الاصطناعي، مع تخصيص الرسائل الموجهة لعميلك المحتمل بشكل احترافي للوصول إلى الفرص قبل منافسينك.
                     </motion.p>
 
                     <motion.div
@@ -126,7 +133,7 @@ const GrowthSystemPage = () => {
                             className="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white text-lg px-8 py-5 rounded-2xl font-black transition-all shadow-xl hover:shadow-brand-500/30 hover:-translate-y-1 flex items-center justify-center gap-3"
                         >
                             <Zap size={24} className="fill-white" />
-                            ابدأ تشخيص النينجا مجاناً
+                            ابدأ التشخيص مجاناً
                         </button>
                         <button
                             onClick={() => navigate('/scanner')}
@@ -138,19 +145,19 @@ const GrowthSystemPage = () => {
 
                     <motion.div
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-                        className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-slate-500 font-bold"
+                        className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-slate-600 font-bold"
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
                             <CheckCircle2 size={18} className="text-brand-500" />
-                            <span>بدون اجتماعات غير مؤهلة</span>
+                            <span>فريق كامل (6 أفراد) براتب واحد</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
                             <CheckCircle2 size={18} className="text-brand-500" />
-                            <span>نظام Outbound + Inbound</span>
+                            <span>بدون تكاليف توظيف أو أدوات</span>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
                             <CheckCircle2 size={18} className="text-brand-500" />
-                            <span>نتائج قابلة للقياس</span>
+                            <span>معك من الوصول حتى الإغلاق</span>
                         </div>
                     </motion.div>
                 </div>
