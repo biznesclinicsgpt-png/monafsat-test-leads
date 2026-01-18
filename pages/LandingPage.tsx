@@ -881,7 +881,7 @@ const Testimonials = () => {
             id: 2,
             name: "سارة العمري",
             role: "رئيسة مبيعات - GrowthInc",
-            image: "https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?auto=format&fit=crop&q=80&w=200&h=200",
+            image: "https://images.unsplash.com/photo-1531123414780-f74242c2b052?auto=format&fit=crop&q=80&w=200&h=200",
             quote: "الأداة الأقوى لتشخيص الثغرات في التواصل. التقارير دقيقة بشكل مخيف.",
             result: "3X معدل الرد في LinkedIn"
         },
