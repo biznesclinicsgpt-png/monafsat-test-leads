@@ -213,19 +213,20 @@ const NinjaScanner = () => {
         <div className="flex flex-col items-center justify-center text-center py-20">
             <motion.div
                 initial={{ scale: 0 }} animate={{ scale: 1 }}
-                className="w-32 h-32 bg-emerald-500/10 rounded-full flex items-center justify-center mb-8 border-4 border-emerald-500/20"
+                className="w-auto h-32 flex items-center justify-center mb-8"
             >
-                <div className="text-6xl">🥷</div>
+                {/* Brand Logo Upgrade */}
+                <img src="/logo_full.png" alt="BiznesClinics" className="h-full w-auto object-contain drop-shadow-2xl" />
             </motion.div>
-            <h1 className="text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-black mb-6 bg-gradient-to-r from-brand-400 to-brand-600 bg-clip-text text-transparent">
                 هل أنت مستعد لمضاعفة أرقامك؟
             </h1>
             <p className="text-xl text-slate-500 dark:text-gray-400 max-w-2xl mb-12 leading-relaxed">
                 في أقل من 3 دقائق، سنقوم بتشخيص كامل لعملية المبيعات لديك، نحدد الثغرات، ونعطيك خطة عمل جاهزة للتنفيذ. بدون مجاملات، فقط أرقام وحقائق.
             </p>
-            <button onClick={nextStep} className="group relative px-12 py-5 bg-emerald-500 hover:bg-emerald-600 rounded-full text-white font-black text-xl shadow-2xl shadow-emerald-500/40 transition-all hover:scale-105 flex items-center gap-3 overflow-hidden">
+            <button onClick={nextStep} className="group relative px-12 py-5 bg-brand-500 hover:bg-brand-600 rounded-lg text-white font-black text-xl shadow-2xl shadow-brand-500/40 transition-all hover:scale-105 flex items-center gap-3 overflow-hidden">
                 <span className="relative z-10">🚀 ابدأ التشخيص الآن</span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-full" />
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-lg" />
             </button>
             <div className="mt-8 flex gap-8 text-sm text-gray-500 font-bold opacity-60">
                 <span className="flex items-center gap-1"><CheckCircle size={14} /> مجاني 100%</span>
@@ -372,7 +373,7 @@ const NinjaScanner = () => {
         <div className="flex flex-col items-center justify-center text-center py-20 h-full relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] animate-pulse"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-500/10 rounded-full blur-[100px] animate-pulse"></div>
 
             <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -380,24 +381,24 @@ const NinjaScanner = () => {
                 className="relative z-10"
             >
                 <div className="w-32 h-32 mb-8 relative mx-auto">
-                    <div className="absolute inset-0 rounded-full border-4 border-emerald-500/20"></div>
-                    <div className="absolute inset-0 rounded-full border-t-4 border-emerald-500 animate-spin"></div>
+                    <div className="absolute inset-0 rounded-full border-4 border-brand-500/20"></div>
+                    <div className="absolute inset-0 rounded-full border-t-4 border-brand-500 animate-spin"></div>
                     <div className="absolute inset-0 flex items-center justify-center">
-                        <Sparkles size={32} className="text-emerald-400 animate-pulse" />
+                        <Sparkles size={32} className="text-brand-400 animate-pulse" />
                     </div>
                 </div>
                 <h2 className="text-3xl font-bold text-white mb-4">جاري تشخيص نظامك...</h2>
-                <div className="space-y-3 font-mono text-sm text-emerald-200/70">
+                <div className="space-y-3 font-mono text-sm text-brand-200/70">
                     <div className="flex items-center gap-2 justify-center">
-                        <CheckCircle size={14} className="text-emerald-500" />
+                        <CheckCircle size={14} className="text-brand-500" />
                         <span>فحص جاهزية الأصول الرقمية</span>
                     </div>
                     <div className="flex items-center gap-2 justify-center">
-                        <CheckCircle size={14} className="text-emerald-500" />
+                        <CheckCircle size={14} className="text-brand-500" />
                         <span>مقارنة الأداء مع "نادي الـ 100"</span>
                     </div>
                     <div className="flex items-center gap-2 justify-center">
-                        <CheckCircle size={14} className="text-emerald-500" />
+                        <CheckCircle size={14} className="text-brand-500" />
                         <span>تحليل فجوات الاستراتيجية</span>
                     </div>
                 </div>
@@ -409,7 +410,7 @@ const NinjaScanner = () => {
         const ResultTabBtn = ({ id, label, icon: Icon }: any) => (
             <button
                 onClick={() => setResultTab(id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${resultTab === id ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500 shadow-xl shadow-emerald-900/20 scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800 hover:text-white'}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${resultTab === id ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white border-brand-500 shadow-xl shadow-brand-900/20 scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800 hover:text-white'}`}
             >
                 <Icon size={18} /> {label}
             </button>
@@ -418,9 +419,9 @@ const NinjaScanner = () => {
         return (
             <div className="max-w-7xl mx-auto pb-20">
                 <div className="text-center mb-12 relative">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-emerald-500/5 blur-[120px] pointer-events-none"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand-500/5 blur-[120px] pointer-events-none"></div>
                     <h2 className="text-5xl font-black text-white mb-4 tracking-tight drop-shadow-xl relative z-10">
-                        تقرير النينجا الاستراتيجي <span className="text-emerald-500">.</span>
+                        تقرير النينجا الاستراتيجي <span className="text-brand-500">.</span>
                     </h2>
                     <p className="text-slate-400 text-lg relative z-10">تشخيص عميق يكشف لك الحقيقة الرقمية وخارطة الطريق للسيطرة.</p>
                 </div>
@@ -440,8 +441,8 @@ const NinjaScanner = () => {
                         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
                             {/* Main Score - Enhanced Visuals */}
                             <div className="lg:col-span-4 text-center bg-gradient-to-b from-slate-800/80 to-slate-900/80 rounded-3xl p-8 border border-slate-700 shadow-inner ring-1 ring-white/5">
-                                <h3 className="text-xl font-bold text-slate-300 mb-8 flex items-center justify-center gap-2">
-                                    <Sparkles size={18} className="text-emerald-400" />
+                                <h3 className="text-xl font-bold text-slate-300 mb-8 flex items-center gap-2">
+                                    <Sparkles size={18} className="text-brand-400" />
                                     مؤشر جاهزية النينجا
                                 </h3>
 
@@ -450,7 +451,7 @@ const NinjaScanner = () => {
                                     <svg className="w-full h-full -rotate-90">
                                         <circle cx="112" cy="112" r="90" fill="none" stroke="#1e293b" strokeWidth="12" />
                                         <circle
-                                            cx="112" cy="112" r="90" fill="none" stroke={getStatusColor(results.scores.overallScore, 80, 50).includes('emerald') ? '#10b981' : results.scores.overallScore > 50 ? '#f59e0b' : '#ef4444'}
+                                            cx="112" cy="112" r="90" fill="none" stroke={results.scores.overallScore >= 80 ? '#5BB5C7' : results.scores.overallScore >= 50 ? '#f59e0b' : '#ef4444'}
                                             strokeWidth="12"
                                             strokeDasharray={`${2 * Math.PI * 90}`}
                                             strokeDashoffset={`${2 * Math.PI * 90 * (1 - results.scores.overallScore / 100)}`}

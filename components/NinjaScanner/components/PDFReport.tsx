@@ -14,22 +14,28 @@ export const PDFReport: React.FC<PDFReportProps> = ({ data, results, reportRef }
         <div style={{ position: 'absolute', top: -10000, left: -10000 }}>
             <div ref={reportRef} className="p-10 bg-white text-slate-900 w-[210mm] min-h-[297mm]" dir="rtl">
                 {/* Header */}
-                <div className="text-center border-b pb-8 mb-8 border-slate-200">
-                    <h1 className="text-4xl font-black text-emerald-600 mb-2">تقرير نينجا الاستراتيجي 🥷</h1>
-                    <h2 className="text-2xl font-bold text-slate-700">{data.companyName || 'مقدمة لشركة'}</h2>
-                    <div className="flex justify-center gap-6 mt-4 text-sm text-slate-500">
-                        <span>🗓️ {new Date().toLocaleDateString('ar-SA')}</span>
-                        <span>🏢 {data.industry}</span>
-                        <span>📍 {data.country}</span>
+                <div className="flex justify-between items-center border-b pb-8 mb-8 border-slate-200">
+                    <div className="text-right">
+                        <h1 className="text-4xl font-black text-brand-600 mb-2">تقرير نينجا الاستراتيجي 🥷</h1>
+                        <h2 className="text-2xl font-bold text-slate-700">{data.companyName || 'مقدمة لشركة'}</h2>
                     </div>
+                    <div>
+                        <img src="/logo_full.png" alt="BiznesClinics" className="h-16 w-auto object-contain" />
+                    </div>
+                </div>
+
+                <div className="flex justify-between gap-6 mb-8 text-sm text-slate-500 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                    <span>🗓️ التاريخ: {new Date().toLocaleDateString('ar-SA')}</span>
+                    <span>🏢 الصناعة: {data.industry}</span>
+                    <span>📍 المقر: {data.country}</span>
                 </div>
 
                 {/* Score Summary */}
                 <div className="grid grid-cols-3 gap-8 mb-10 text-center">
-                    <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100 col-span-1">
-                        <div className="text-xs uppercase font-bold text-emerald-800 mb-2">مؤشر الجاهزية</div>
-                        <div className="text-6xl font-black text-emerald-600 mb-2">{results.scores.overallScore}</div>
-                        <div className="text-sm font-bold text-emerald-700 bg-emerald-200/50 inline-block px-3 py-1 rounded-full">
+                    <div className="bg-brand-50 p-6 rounded-2xl border border-brand-100 col-span-1">
+                        <div className="text-xs uppercase font-bold text-brand-800 mb-2">مؤشر الجاهزية</div>
+                        <div className="text-6xl font-black text-brand-600 mb-2">{results.scores.overallScore}</div>
+                        <div className="text-sm font-bold text-brand-700 bg-brand-200/50 inline-block px-3 py-1 rounded-full">
                             {results.scores.tierLabel}
                         </div>
                     </div>
