@@ -110,7 +110,7 @@ const GrowthSystemPage = () => {
 
                     <motion.p
                         initial="hidden" animate="visible" variants={fadeInUp}
-                        className="text-xl md:text-2xl text-slate-500 mb-6 max-w-4xl mx-auto leading-relaxed"
+                        className="text-xl md:text-2xl text-slate-500 mb-10 max-w-4xl mx-auto leading-relaxed"
                     >
                         <span className="font-bold text-slate-800">شراكه تغنيك عن التوظيف وشراء الأدوات.</span>
                         <br />
@@ -149,15 +149,11 @@ const GrowthSystemPage = () => {
                     >
                         <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
                             <CheckCircle2 size={18} className="text-brand-500" />
-                            <span>فريق كامل (6 أفراد) براتب واحد</span>
+                            <span> فريق كامل (6 أفراد) براتب واحد</span>
                         </div>
                         <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
                             <CheckCircle2 size={18} className="text-brand-500" />
-                            <span>بدون تكاليف توظيف أو أدوات</span>
-                        </div>
-                        <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm border border-slate-100">
-                            <CheckCircle2 size={18} className="text-brand-500" />
-                            <span>معك من الوصول حتى الإغلاق</span>
+                            <span> تقني + مبيعات + استراتيجي</span>
                         </div>
                     </motion.div>
                 </div>
@@ -167,6 +163,254 @@ const GrowthSystemPage = () => {
             <div className="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none opacity-40">
                 <div className="absolute -top-[20%] -right-[10%] w-[600px] h-[600px] rounded-full bg-brand-200 blur-[120px]"></div>
                 <div className="absolute top-[40%] -left-[10%] w-[400px] h-[400px] rounded-full bg-blue-200 blur-[100px]"></div>
+            </div>
+        </section>
+    );
+
+    const TeamComparison = () => (
+        <section className="py-24 bg-white relative overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-6">فريقك المخصص <span className="text-brand-600">الجاهز</span></h2>
+                    <p className="text-xl text-slate-500 font-medium">لماذا توظف، تدرب، وتدير... ونحن جاهزون الآن؟</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    {/* Traditional Way */}
+                    <div className="bg-slate-50 p-8 rounded-3xl border border-slate-200 opacity-60 hover:opacity-100 transition-opacity">
+                        <h3 className="text-2xl font-bold text-slate-700 mb-6 flex items-center gap-2">
+                            <XCircle className="text-slate-400" /> الطريقة التقليدية (التوظيف)
+                        </h3>
+                        <ul className="space-y-4">
+                            <li className="flex items-center gap-3 text-slate-600">
+                                <span className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">1</span>
+                                موظف مبيعات (Sales Rep)
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-600">
+                                <span className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">2</span>
+                                موظف أبحاث (Researcher)
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-600">
+                                <span className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">3</span>
+                                كاتب محتوى (Copywriter)
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-600">
+                                <span className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">4</span>
+                                خبير أتمتة (Automation Tech)
+                            </li>
+                        </ul>
+                        <div className="mt-8 pt-8 border-t border-slate-200 text-center">
+                            <p className="text-lg font-bold text-slate-500">التكلفة الشهرية المتوقعة:</p>
+                            <p className="text-3xl font-black text-slate-400 line-through decoration-red-500 decoration-4">25,000+ ريال</p>
+                        </div>
+                    </div>
+
+                    {/* Biznes Clinics Way */}
+                    <div className="bg-gradient-to-br from-brand-900 to-slate-900 p-10 rounded-3xl text-white shadow-2xl relative transform md:scale-105 border border-brand-500/30">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500 rounded-full blur-[80px] opacity-30"></div>
+
+                        <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
+                            <CheckCircle className="text-brand-400" />
+                            Biznes Clinics Growth Team
+                        </h3>
+
+                        <div className="grid grid-cols-2 gap-4 mb-8">
+                            {[
+                                "مدير حساب (Account Manager)",
+                                "استراتيجي نمو (Strategist)",
+                                "مطور أتمتة (Tech Lead)",
+                                "خبير محتوى سعودي (Copywriter)",
+                                "باحث بيانات (Data Researcher)",
+                                "أخصائي إغلاق (Closer Support)"
+                            ].map((role, i) => (
+                                <div key={i} className="flex items-center gap-2 text-sm bg-white/10 p-2 rounded-lg border border-white/5">
+                                    <Users size={14} className="text-brand-400" /> {role}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="pt-8 border-t border-white/10 text-center">
+                            <p className="text-lg font-bold text-brand-200">استثمارك الشهري:</p>
+                            <p className="text-4xl font-black text-white">5,000 ريال فقط</p>
+                            <p className="text-sm text-slate-400 mt-2">شامل الفريق والأدوات والإدارة</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+
+    const TechStack = () => (
+        <section className="py-24 bg-slate-50">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-black text-slate-900 mb-4">نظام سعودي... <span className="text-brand-600">بقلب عالمي</span></h2>
+                    <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto">
+                        ما نمزح في التقنية. دمجنا أقوى أدوات الذكاء الاصطناعي العالمية مع فهمنا العميق للسوق السعودي.
+                    </p>
+                </div>
+
+                <div className="bg-white rounded-[2.5rem] p-12 shadow-xl border border-slate-100 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-blue-500 via-brand-500 to-purple-500"></div>
+
+                    <div className="flex flex-wrap justify-center gap-12 md:gap-20 opacity-80 mb-12 grayscale hover:grayscale-0 transition-all duration-500">
+                        {/* Text Placeholders for Logos per user request context implied */}
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-purple-600 transition-colors">Clay</div>
+                            <span className="text-xs font-bold text-slate-400">Data Enrichment</span>
+                        </div>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-pink-600 transition-colors">Lemlist</div>
+                            <span className="text-xs font-bold text-slate-400">Email Outreach</span>
+                        </div>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-blue-600 transition-colors">Smartlead</div>
+                            <span className="text-xs font-bold text-slate-400">Inbox Warmup</span>
+                        </div>
+                        <div className="text-center group">
+                            <div className="text-3xl font-black text-slate-800 mb-2 group-hover:text-green-600 transition-colors">OpenAI</div>
+                            <span className="text-xs font-bold text-slate-400">Generative AI</span>
+                        </div>
+                    </div>
+
+                    <div className="text-center bg-slate-900 text-white p-6 rounded-2xl max-w-3xl mx-auto border border-slate-800">
+                        <p className="text-lg font-bold">
+                            <span className="text-brand-400">السر مش في الأداة... السر في "الخلطة"!</span>
+                            <br />
+                            كيف نستخدم Clay عشان نطلع رقم جوال المدير المباشر في شركة مقاولات في الرياض ونكلمه واتساب بلهجة سعودية؟ هنا لعبتنا.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+
+    const AIAgentDemo = () => (
+        <section className="py-24 bg-white overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col lg:flex-row items-center gap-16">
+                    <div className="lg:w-1/2">
+                        <span className="text-brand-600 font-bold bg-brand-50 px-3 py-1 rounded-full text-sm">AI Agent السعودي</span>
+                        <h2 className="text-3xl md:text-5xl font-black text-slate-900 mt-4 mb-6 leading-tight">
+                            يتكلم لغتك... <br />
+                            <span className="text-brand-600">ويقنع عميلك.</span>
+                        </h2>
+                        <p className="text-xl text-slate-500 mb-8 leading-relaxed">
+                            نستخدم AI مدرب بكفاءة على منتجاتك وخدماتك، والاهم... مدرب على <strong className="text-slate-900">اللهجة السعودية (White-label)</strong>.
+                            <br />
+                            ما يبين إنه بوت، يبين إنه "عبدالعزيز" أو "سارة" من فريقك.
+                        </p>
+                        <ul className="space-y-4">
+                            <li className="flex items-center gap-3 font-bold text-slate-700">
+                                <CheckCircle className="text-brand-500" size={20} />
+                                تخصيص الرسائل حسب قطاع العميل (Construction vs Tech)
+                            </li>
+                            <li className="flex items-center gap-3 font-bold text-slate-700">
+                                <CheckCircle className="text-brand-500" size={20} />
+                                ردود فورية ذكية على الاستفسارات
+                            </li>
+                            <li className="flex items-center gap-3 font-bold text-slate-700">
+                                <CheckCircle className="text-brand-500" size={20} />
+                                حجز اجتماعات في الكالندر تلقائياً
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="lg:w-1/2 relative">
+                        <div className="absolute inset-0 bg-brand-500/20 blur-[100px] rounded-full"></div>
+                        {/* Chat UI Mockup */}
+                        <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 p-6 relative z-10 max-w-md mx-auto">
+                            <div className="flex items-center gap-4 border-b border-slate-100 pb-4 mb-4">
+                                <div className="w-12 h-12 rounded-full bg-slate-200 overflow-hidden">
+                                    <img src="https://ui-avatars.com/api/?name=Saud+Manager&background=0D8ABC&color=fff" alt="Avatar" />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-slate-900">أبو عبدالله (المدير العام)</h4>
+                                    <span className="text-xs text-green-500 font-bold flex items-center gap-1"><span className="w-2 h-2 bg-green-500 rounded-full"></span> متصل الآن</span>
+                                </div>
+                            </div>
+
+                            <div className="space-y-4 text-sm font-bold">
+                                {/* Agent Msg */}
+                                <div className="flex items-start gap-3">
+                                    <div className="bg-brand-50 text-slate-800 p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-brand-100">
+                                        <p>مساك الله بالخير أبو عبدالله، معك فيصل من بزنس كلينيك. 👋</p>
+                                        <p className="mt-2">كنت أقرأ عن توسعاتكم الأخيرة في مشروع القدية، ما شاء الله شغل جبار.</p>
+                                        <p className="mt-2">حبيت أتواصل معك بخصوص...</p>
+                                    </div>
+                                </div>
+
+                                {/* User Msg */}
+                                <div className="flex items-start gap-3 flex-row-reverse">
+                                    <div className="bg-slate-100 text-slate-800 p-3 rounded-2xl rounded-tl-none max-w-[85%]">
+                                        <p>ياهلا فيصل، الله يحييك. تفضل اسمعك</p>
+                                    </div>
+                                </div>
+
+                                {/* Agent Msg */}
+                                <div className="flex items-start gap-3">
+                                    <div className="bg-brand-50 text-slate-800 p-4 rounded-2xl rounded-tr-none max-w-[85%] border border-brand-100">
+                                        <p>الله يسلمك. طال عمرك لاحظت انكم تستخدمون X حالياً، واحنا طورنا نظام يساعدكم توفرون 30% من التكاليف..</p>
+                                        <p className="mt-2">متى يناسبك ناخذ اتصال سريع 5 دقايق اشرح لك الفكرة؟</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+
+    const ManafethInbound = () => (
+        <section className="py-24 bg-slate-900 text-white relative">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col md:flex-row items-center gap-12 rounded-[2.5rem] bg-gradient-to-r from-slate-800 to-slate-900 border border-slate-700 p-10 md:p-16 relative overflow-hidden">
+                    {/* Decorative */}
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/20 rounded-full blur-[80px]"></div>
+
+                    <div className="md:w-2/3 relative z-10">
+                        <span className="text-emerald-400 font-bold tracking-wider uppercase text-sm border border-emerald-500/30 px-3 py-1 rounded-full mb-6 inline-block">خدمة إضافية (Inbound)</span>
+                        <h2 className="text-3xl md:text-4xl font-black mb-6">
+                            مش بس Outbound...<br />
+                            كمان <span className="text-emerald-400">منافسات حكومية 🇸🇦</span>
+                        </h2>
+                        <p className="text-lg text-slate-300 leading-relaxed mb-8">
+                            عندنا فريق موازي "قناص" بيتابع منصة اعتماد ومنافسات.
+                            <br />
+                            ما نكتفي بإرسال المنافسة لك، بل نساعدك في:
+                        </p>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <li className="flex items-center gap-3 text-slate-200">
+                                <CheckCircle size={18} className="text-emerald-500" />
+                                فلترة الفرص المناسبة لتصنيفك
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-200">
+                                <CheckCircle size={18} className="text-emerald-500" />
+                                تحليل كراسة الشروط (RFP)
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-200">
+                                <CheckCircle size={18} className="text-emerald-500" />
+                                الوصول لصاحب المنافسة (Inbound Lead)
+                            </li>
+                            <li className="flex items-center gap-3 text-slate-200">
+                                <CheckCircle size={18} className="text-emerald-500" />
+                                تجهيز العرض الفني والمالي
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="md:w-1/3 text-center relative z-10">
+                        <div className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-3xl">
+                            <div className="text-4xl mb-4">🏛️</div>
+                            <h3 className="text-xl font-bold text-white mb-2">باب المنافسات</h3>
+                            <p className="text-slate-400 text-sm mb-6">قناة نمو هامة للشركات السعودية</p>
+                            <button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 rounded-xl transition-colors">
+                                اطلب تفاصيل الخدمة
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     );
@@ -342,7 +586,7 @@ const GrowthSystemPage = () => {
                             <div className="absolute -right-10 -top-10 w-40 h-40 bg-brand-500 rounded-full opacity-20 blur-3xl"></div>
 
                             <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                <StarBadge /> الأهم في Ninja OS
+                                <Sparkles className="text-yellow-400 fill-yellow-400" size={32} /> الأهم في Ninja OS
                             </h3>
                             <ul className="space-y-6 text-lg">
                                 <li className="flex items-start gap-4 p-4 bg-white/5 rounded-2xl border border-white/5">
@@ -638,6 +882,10 @@ const GrowthSystemPage = () => {
         <div className="min-h-screen bg-slate-50 font-cairo" dir="rtl">
             <Navbar />
             <Hero />
+            <TeamComparison />
+            <TechStack />
+            <AIAgentDemo />
+            <ManafethInbound />
             <ProblemSection />
             <MakeSolution />
             <NinjaOS />
