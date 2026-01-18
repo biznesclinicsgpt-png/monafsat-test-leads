@@ -22,6 +22,7 @@ import ProviderIntegrationsPage from './pages/ProviderIntegrationsPage';
 // import { PlaceholderPage } from './components/PlaceholderPage'; // Unused
 
 import LoginPage from './pages/LoginPage';
+import AdminLoginPage from './pages/AdminLoginPage';
 import GrowthSystemPage from './pages/GrowthSystemPage';
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/landing-legacy" element={<LandingPage />} />
           <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/admin/login" element={<AdminLoginPage />} />
 
           {/* App Routes (Protected/Layout Wrapped) */}
           <Route path="/app" element={<MainLayout />}>

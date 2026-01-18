@@ -1,9 +1,42 @@
-
-import React from 'react';
-import { Outlet, NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { Shield, LayoutDashboard as DashboardIcon, Crown as NinjaIcon, Users as UsersIcon, LogOut } from 'lucide-react';
 
 const AdminLayout = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const [authorized, setAuthorized] = useState(false);
+
+    useEffect(() => {
+        const checkAuth = () => {
+            const userStr = localStorage.getItem('user');
+            if (!userStr) {
+                navigate('/admin/login', { state: { from: location } });
+                return;
+            }
+
+            try {
+                const user = JSON.parse(userStr);
+                if (user.role !== 'admin') {
+                    // Not authorized
+                    navigate('/'); // Or show unauthorized page
+                    return;
+                }
+                setAuthorized(true);
+            } catch (e) {
+                console.error("Auth Error", e);
+                localStorage.removeItem('user');
+                navigate('/admin/login');
+            }
+        };
+
+        checkAuth();
+    }, [navigate, location]);
+
+    if (!authorized) {
+        return null; // Don't render anything while checking
+    }
+
     return (
         <div className="flex h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white font-cairo">
             {/* Sidebar */}
@@ -46,7 +79,13 @@ const AdminLayout = () => {
                 </nav>
 
                 <div className="p-4 border-t border-slate-800">
-                    <button onClick={() => window.location.href = '/'} className="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-400 hover:bg-rose-900/20 w-full transition-colors">
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('user');
+                            navigate('/admin/login');
+                        }}
+                        className="flex items-center gap-3 px-4 py-3 rounded-xl text-rose-400 hover:bg-rose-900/20 w-full transition-colors"
+                    >
                         <LogOut size={20} />
                         <span>Exit Portal</span>
                     </button>
