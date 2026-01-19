@@ -1247,32 +1247,31 @@ const GrowthSystemPage = () => {
                     {/* 4. Agent */}
                     <AIAgentDemo />
                 </div>
-            </div>
 
-            {/* Demo Trigger (Secret/Dev) */}
-            <div className="py-10 bg-slate-100 dark:bg-slate-950 flex justify-center border-t border-slate-200 dark:border-slate-800">
-                <button
-                    onClick={async () => {
-                        const { injectDemoData } = await import('../services/simulationService');
-                        injectDemoData();
-                        alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
-                        navigate('/app/dashboard');
-                    }}
-                    className="text-xs text-slate-400 hover:text-brand-500 transition-colors font-mono"
-                >
-                    [ RUN_DEMO_SIMULATION_V1 ]
-                </button>
-                <button
-                    onClick={() => {
-                        localStorage.removeItem('demo_mode');
-                        alert('تم إيقاف وضع التجربة.');
-                        window.location.reload();
-                    }}
-                    className="text-xs text-slate-400 hover:text-rose-500 transition-colors font-mono ml-4"
-                >
-                    [ RESET ]
-                </button>
-            </div>
+                {/* Demo Trigger (Secret/Dev) */}
+                <div className="py-10 bg-slate-100 dark:bg-slate-950 flex justify-center border-t border-slate-200 dark:border-slate-800">
+                    <button
+                        onClick={async () => {
+                            const { injectDemoData } = await import('../services/simulationService');
+                            injectDemoData();
+                            alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
+                            navigate('/app/dashboard');
+                        }}
+                        className="text-xs text-slate-400 hover:text-brand-500 transition-colors font-mono"
+                    >
+                        [ RUN_DEMO_SIMULATION_V1 ]
+                    </button>
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('demo_mode');
+                            alert('تم إيقاف وضع التجربة.');
+                            window.location.reload();
+                        }}
+                        className="text-xs text-slate-400 hover:text-rose-500 transition-colors font-mono ml-4"
+                    >
+                        [ RESET ]
+                    </button>
+                </div>
         </section>
     );
 };
