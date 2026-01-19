@@ -90,7 +90,7 @@ const GrowthSystemPage = () => {
                                     const { injectDemoData } = await import('../services/simulationService');
                                     if (confirm('هل تود تفعيل وضع المحاكاة (Demo Mode)؟\nسيتم إضافة بيانات تجريبية.')) {
                                         injectDemoData();
-                                        navigate('/app/dashboard');
+                                        navigate('/app');
                                     }
                                 }}
                                 className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${scrolled ? 'text-slate-600 hover:text-brand-600 hover:bg-slate-50' : 'text-slate-600 hover:text-brand-600 hover:bg-white/50'}`}
@@ -133,7 +133,7 @@ const GrowthSystemPage = () => {
                                     const { injectDemoData } = await import('../services/simulationService');
                                     injectDemoData();
                                     setIsMenuOpen(false);
-                                    navigate('/app/dashboard');
+                                    navigate('/app');
                                 }} className="block text-lg font-bold text-slate-700 w-full text-right flex items-center justify-end gap-2 mb-2">
                                     تجربة المحاكاة <Sparkles size={18} />
                                 </button>
@@ -207,7 +207,7 @@ const GrowthSystemPage = () => {
                                 onClick={async () => {
                                     const { injectDemoData } = await import('../services/simulationService');
                                     injectDemoData();
-                                    navigate('/app/dashboard');
+                                    navigate('/app');
                                 }}
                                 className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-2"
                             >
@@ -1295,7 +1295,7 @@ const GrowthSystemPage = () => {
                                     const { injectDemoData } = await import('../services/simulationService');
                                     injectDemoData();
                                     alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
-                                    navigate('/app/dashboard');
+                                    navigate('/app');
                                 }}
                                 className="bg-white text-slate-900 hover:bg-brand-50 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg hover:scale-105"
                             >
@@ -1320,19 +1320,19 @@ const GrowthSystemPage = () => {
         </section>
     );
 
-return (
-    <div className="min-h-screen bg-slate-50 font-cairo" dir="rtl">
-        <Navbar />
-        <Hero />
-        <ProblemSection />
-        <MakeSolution />
-        <StrategicAdvantage />
-        <ManafethInbound />
-        <NinjaOS />
-        <Process />
-        <AudienceAndFooter />
-    </div>
-);
+    return (
+        <div className="min-h-screen bg-slate-50 font-cairo" dir="rtl">
+            <Navbar />
+            <Hero />
+            <ProblemSection />
+            <MakeSolution />
+            <StrategicAdvantage />
+            <ManafethInbound />
+            <NinjaOS />
+            <Process />
+            <AudienceAndFooter />
+        </div>
+    );
 };
 
 export default GrowthSystemPage;
