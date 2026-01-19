@@ -38,7 +38,7 @@ const LOGS = {
     ],
     enrichment: [
         "Verifying emails via Hunter.io...",
-        "Enriching phone numbers via Lusha...",
+        "Enriching contact details via Lemlist...",
         "Checking LinkedIn profiles for recent activity...",
         "Removing bounce-risk emails...",
         "Enriching company revenue data..."
