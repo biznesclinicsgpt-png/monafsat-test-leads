@@ -133,7 +133,7 @@ export const FuelGauge = () => {
                                             <div className={`p-2 rounded-lg bg-slate-900 group-hover:scale-110 transition-transform duration-300 ${channel.shadow}`}>
                                                 <channel.icon size={18} className="text-white" />
                                             </div>
-                                            <div className="text-[10px] font-mono text-slate-500 group-hover:text-emerald-400 transition-colors">ACTIVE</div>
+                                            <div className="text-[10px] font-bold text-slate-500 group-hover:text-emerald-400 transition-colors">نشط</div>
                                         </div>
 
                                         <div className="text-2xl font-bold text-white mb-1">{channel.capacity.toLocaleString()}</div>
