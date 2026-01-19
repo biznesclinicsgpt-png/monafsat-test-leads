@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useData } from '../context/DataContext';
 import { ProviderProfile, ServiceLine, ClientReference } from '../types';
 import ProviderWizard from '../components/Wizard/ProviderWizard';
+import { NinjaReportView } from '../components/NinjaScanner/components/NinjaReportView';
+import { FileText } from 'lucide-react';
 
 const ProfilePage = () => {
     const { user, providerProfile, updateProviderProfile } = useData();
-    const [activeTab, setActiveTab] = useState<'company' | 'strategy' | 'services' | 'clients'>('company');
+    const [activeTab, setActiveTab] = useState<'company' | 'strategy' | 'services' | 'clients' | 'report'>('company');
     const [saving, setSaving] = useState(false);
     const [showWizard, setShowWizard] = useState(false);
 
@@ -148,6 +150,11 @@ const ProfilePage = () => {
                 <button onClick={() => setActiveTab('clients')} className={`pb-4 px-2 font-bold whitespace-nowrap transition-all relative ${activeTab === 'clients' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}>
                     دراسات الحالة (Case Studies)
                     {activeTab === 'clients' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 rounded-t-full"></span>}
+                </button>
+                <button onClick={() => setActiveTab('report')} className={`pb-4 px-2 font-bold whitespace-nowrap transition-all relative flex items-center gap-2 ${activeTab === 'report' ? 'text-emerald-600' : 'text-slate-500 hover:text-slate-700'}`}>
+                    <FileText size={16} />
+                    تقرير النينجا (Ninja Report)
+                    {activeTab === 'report' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-emerald-600 rounded-t-full"></span>}
                 </button>
             </div>
 
@@ -497,8 +504,25 @@ const ProfilePage = () => {
                         </div>
                     </div>
                 )}
+
+                {activeTab === 'report' && (
+                    <div className="animate-fadeIn">
+                        {formData.ninja_diagnosis ? (
+                            <NinjaReportView data={formData.ninja_diagnosis} />
+                        ) : (
+                            <div className="text-center py-20 bg-slate-50 rounded-2xl border border-dashed border-slate-300">
+                                <div className="text-6xl mb-4">🥷</div>
+                                <h3 className="text-xl font-bold text-slate-800 mb-2">لم يتم إجراء التشخيص بعد</h3>
+                                <p className="text-slate-500 mb-6 max-w-md mx-auto">قم بإجراء اختبار "Ninja Growth" للحصول على تقرير استراتيجي شامل يوضح فجوات النمو والحلول المقترحة.</p>
+                                <a href="/diagnosis" className="inline-flex items-center gap-2 px-6 py-3 bg-emerald-600 text-white font-bold rounded-xl hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-200">
+                                    ابدأ التشخيص الآن
+                                </a>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
-        </div>
+        </div >
     );
 };
 
