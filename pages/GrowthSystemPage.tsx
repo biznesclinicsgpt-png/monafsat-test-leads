@@ -9,6 +9,7 @@ import {
     Bot, MessageSquare, Eye, Headphones, Calendar, FileText
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { SimulationWizard } from '../components/Simulation/SimulationWizard';
 
 // --- MOTION VARIANTS ---
 const fadeInUp = {
@@ -53,6 +54,7 @@ const textVariant = {
 const GrowthSystemPage = () => {
     const navigate = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [showWizard, setShowWizard] = useState(false);
 
     // --- COMPONENTS ---
 
@@ -86,13 +88,7 @@ const GrowthSystemPage = () => {
                             </button>
 
                             <button
-                                onClick={async () => {
-                                    const { injectDemoData } = await import('../services/simulationService');
-                                    if (confirm('هل تود تفعيل وضع المحاكاة (Demo Mode)؟\nسيتم إضافة بيانات تجريبية.')) {
-                                        injectDemoData();
-                                        navigate('/app');
-                                    }
-                                }}
+                                onClick={() => setShowWizard(true)}
                                 className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${scrolled ? 'text-slate-600 hover:text-brand-600 hover:bg-slate-50' : 'text-slate-600 hover:text-brand-600 hover:bg-white/50'}`}
                             >
                                 <Sparkles size={18} />
@@ -129,11 +125,9 @@ const GrowthSystemPage = () => {
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/investment'); }} className="block text-lg font-bold text-slate-700 w-full text-right flex items-center justify-end gap-2">محرك الاستثمار <Rocket size={18} /></button>
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
 
-                                <button onClick={async () => {
-                                    const { injectDemoData } = await import('../services/simulationService');
-                                    injectDemoData();
+                                <button onClick={() => {
+                                    setShowWizard(true);
                                     setIsMenuOpen(false);
-                                    navigate('/app');
                                 }} className="block text-lg font-bold text-slate-700 w-full text-right flex items-center justify-end gap-2 mb-2">
                                     تجربة المحاكاة <Sparkles size={18} />
                                 </button>
@@ -204,12 +198,7 @@ const GrowthSystemPage = () => {
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.02, backgroundColor: "#f8fafc" }} whileTap={{ scale: 0.98 }}
-                                onClick={async () => {
-                                    const { injectDemoData } = await import('../services/simulationService');
-                                    injectDemoData();
-                                    // Force reload to ensure DataContext picks up the new localStorage flags
-                                    window.location.assign('/app');
-                                }}
+                                onClick={() => setShowWizard(true)}
                                 className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-2"
                             >
                                 <Layout size={20} />
@@ -1292,13 +1281,7 @@ const GrowthSystemPage = () => {
 
                         <div className="flex justify-center gap-4">
                             <button
-                                onClick={async () => {
-                                    const { injectDemoData } = await import('../services/simulationService');
-                                    injectDemoData();
-                                    alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
-                                    // Force reload to ensure DataContext picks up the new localStorage flags
-                                    window.location.assign('/app');
-                                }}
+                                onClick={() => setShowWizard(true)}
                                 className="bg-white text-slate-900 hover:bg-brand-50 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg hover:scale-105"
                             >
                                 <Layout size={20} />
@@ -1333,6 +1316,7 @@ const GrowthSystemPage = () => {
             <NinjaOS />
             <Process />
             <AudienceAndFooter />
+            {showWizard && <SimulationWizard onClose={() => setShowWizard(false)} />}
         </div>
     );
 };
