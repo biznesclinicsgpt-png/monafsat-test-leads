@@ -99,7 +99,9 @@ export const WalletModel = () => {
                         className="text-4xl md:text-5xl font-black text-white mb-6"
                     >
                         نموذج المحفظة والفرص المؤهلة <br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600 font-mono text-3xl block mt-2">(The Wallet Model)</span>
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600 font-mono text-3xl block mt-2">
+                            (The Wallet Model) <span className="text-xs bg-slate-800 text-slate-500 px-2 py-1 rounded-md ml-2 border border-slate-700">v2.0 Check</span>
+                        </span>
                     </motion.h2>
 
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
