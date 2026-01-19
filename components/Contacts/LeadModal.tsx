@@ -500,6 +500,68 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                 </div>
                             </div>
                         )}
+
+                        {/* TAB 5: SYSTEM DATA */}
+                        {activeTab === 'system' && (
+                            <div className="space-y-6 animate-fadeIn">
+                                <div className="bg-slate-900 text-slate-300 p-6 rounded-2xl font-mono text-sm shadow-inner">
+                                    <h3 className="text-white font-bold mb-6 flex items-center gap-2 border-b border-slate-700 pb-2">
+                                        <Server size={18} />
+                                        SYSTEM METADATA
+                                    </h3>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+                                        <div>
+                                            <label className="block text-xs text-slate-500 mb-1">INTERNAL ID (UUID)</label>
+                                            <div className="text-white">{formData.id}</div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-slate-500 mb-1">CREATED AT</label>
+                                            <div className="text-white">{formData.created_at || 'N/A'}</div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-emerald-500 mb-1">RECORD ID (GHL)</label>
+                                            <div className="text-white font-bold">{formData.record_id || 'N/A'}</div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-blue-500 mb-1">PROFILE UNIQUE ID</label>
+                                            <div className="text-white font-bold">{formData.profile_unique_id || 'N/A'}</div>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-8 border-t border-slate-700 pt-6">
+                                        <div className="mb-4">
+                                            <label className="block text-xs text-slate-500 mb-2">LINKEDIN MESSAGES LOG</label>
+                                            <div className="bg-black/50 p-4 rounded-lg border border-slate-700 h-24 overflow-y-auto">
+                                                {formData.li_messages || "// No message logs available"}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs text-slate-500 mb-2">CALL RECORDINGS</label>
+                                            <div className="bg-black/50 p-4 rounded-lg border border-slate-700 flex items-center gap-2 text-slate-400">
+                                                <Phone size={14} />
+                                                {formData.call_recordings ? (
+                                                    <a href={formData.call_recordings} target="_blank" rel="noreferrer" className="text-blue-400 hover:underline">
+                                                        {formData.call_recordings}
+                                                    </a>
+                                                ) : "No recordings found"}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="p-4 bg-yellow-50 border border-yellow-100 rounded-xl flex items-start gap-3">
+                                    <Database className="text-yellow-600 mt-1" size={20} />
+                                    <div>
+                                        <h4 className="font-bold text-yellow-900 text-sm">Raw Data Access</h4>
+                                        <p className="text-xs text-yellow-700 mt-1">
+                                            This view displays raw system fields used for synchronization and debugging.
+                                            Modifying these values manually may break integrations.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </form>
                 </div>
 
