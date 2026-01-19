@@ -25,7 +25,7 @@ export const JourneyTimeline = () => {
     return (
         <section className="py-32 bg-[#0a0a0f] relative overflow-hidden" ref={containerRef}>
             {/* Connecting Circuit Line Background */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 button-0 w-[2px] h-full bg-slate-800">
+            <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-[2px] h-full bg-slate-800">
                 <motion.div
                     style={{ scaleY: scrollYProgress }}
                     className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-emerald-500 via-cyan-500 to-purple-500 origin-top"
@@ -56,7 +56,7 @@ export const JourneyTimeline = () => {
                     </p>
                 </div>
 
-                <div className="relative flex flex-col gap-2">
+                <div className="relative flex flex-col gap-8 md:gap-0">
                     {STEPS.map((step, idx) => (
                         <motion.div
                             key={idx}
@@ -64,21 +64,21 @@ export const JourneyTimeline = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            className={`flex items-center gap-2 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col relative group`}
+                            className={`flex items-center gap-6 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col relative group md:h-32`}
                         >
                             {/* Circuit Node Point */}
-                            <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0a0a0f] border-2 border-slate-700 z-20 group-hover:border-emerald-500 transition-colors">
+                            <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0a0a0f] border-2 border-slate-700 z-20 group-hover:border-emerald-500 transition-colors hidden md:block">
                                 <div className="absolute inset-0 bg-emerald-500/50 rounded-full animate-ping opacity-0 group-hover:opacity-100" />
                             </div>
 
                             {/* Text Content */}
-                            <div className={`flex-1 ${idx % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-center`}>
-                                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">{step.title}</h3>
-                                <p className={`font-bold text-xs ${step.color} opacity-80 uppercase tracking-wider`}>{step.desc}</p>
+                            <div className={`flex-1 ${idx % 2 === 0 ? 'md:text-left' : 'md:text-right'} text-center px-6`}>
+                                <h3 className="text-xl md:text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">{step.title}</h3>
+                                <p className={`font-bold text-sm ${step.color} opacity-80 uppercase tracking-wider`}>{step.desc}</p>
                             </div>
 
                             {/* Icon Card */}
-                            <div className="w-20 h-20 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300 shadow-2xl">
+                            <div className="w-20 h-20 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300 shadow-2xl shrink-0">
                                 <div className={`absolute inset-0 rounded-2xl ${step.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                                 <div className={`absolute -inset-[1px] rounded-2xl ${step.border} opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm`} />
                                 <step.icon className={`w-8 h-8 ${step.color}`} />
