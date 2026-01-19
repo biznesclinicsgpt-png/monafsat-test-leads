@@ -86,6 +86,20 @@ const GrowthSystemPage = () => {
                             </button>
 
                             <button
+                                onClick={async () => {
+                                    const { injectDemoData } = await import('../services/simulationService');
+                                    if (confirm('هل تود تفعيل وضع المحاكاة (Demo Mode)؟\nسيتم إضافة بيانات تجريبية.')) {
+                                        injectDemoData();
+                                        navigate('/app/dashboard');
+                                    }
+                                }}
+                                className={`px-4 py-2.5 rounded-xl font-bold transition-all flex items-center gap-2 ${scrolled ? 'text-slate-600 hover:text-brand-600 hover:bg-slate-50' : 'text-slate-600 hover:text-brand-600 hover:bg-white/50'}`}
+                            >
+                                <Sparkles size={18} />
+                                محاكاة
+                            </button>
+
+                            <button
                                 onClick={() => navigate('/diagnosis')}
                                 className={`px-6 py-2.5 rounded-xl font-bold transition-all shadow-lg flex items-center gap-2 ${scrolled ? 'bg-brand-600 text-white hover:bg-brand-700 shadow-brand-500/20' : 'bg-white text-brand-600 hover:bg-brand-50 shadow-white/20'}`}
                             >
@@ -114,6 +128,15 @@ const GrowthSystemPage = () => {
                                 <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">نظام Ninja OS</a>
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/investment'); }} className="block text-lg font-bold text-slate-700 w-full text-right flex items-center justify-end gap-2">محرك الاستثمار <Rocket size={18} /></button>
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
+
+                                <button onClick={async () => {
+                                    const { injectDemoData } = await import('../services/simulationService');
+                                    injectDemoData();
+                                    setIsMenuOpen(false);
+                                    navigate('/app/dashboard');
+                                }} className="block text-lg font-bold text-slate-700 w-full text-right flex items-center justify-end gap-2 mb-2">
+                                    تجربة المحاكاة <Sparkles size={18} />
+                                </button>
 
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
                                     <Zap size={18} className="fill-white" />
@@ -181,10 +204,15 @@ const GrowthSystemPage = () => {
                             </motion.button>
                             <motion.button
                                 whileHover={{ scale: 1.02, backgroundColor: "#f8fafc" }} whileTap={{ scale: 0.98 }}
-                                onClick={() => navigate('/scanner')}
-                                className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center"
+                                onClick={async () => {
+                                    const { injectDemoData } = await import('../services/simulationService');
+                                    injectDemoData();
+                                    navigate('/app/dashboard');
+                                }}
+                                className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-2"
                             >
-                                كيف يعمل التشخيص؟
+                                <Layout size={20} />
+                                تجربة المحاكاة (Demo)
                             </motion.button>
                         </motion.div>
 
@@ -1249,32 +1277,48 @@ const GrowthSystemPage = () => {
                 </div>
 
                 {/* Demo Trigger (Secret/Dev) */}
-                <div className="py-10 bg-slate-100 dark:bg-slate-950 flex justify-center border-t border-slate-200 dark:border-slate-800">
-                    <button
-                        onClick={async () => {
-                            const { injectDemoData } = await import('../services/simulationService');
-                            injectDemoData();
-                            alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
-                            navigate('/app/dashboard');
-                        }}
-                        className="text-xs text-slate-400 hover:text-brand-500 transition-colors font-mono"
-                    >
-                        [ RUN_DEMO_SIMULATION_V1 ]
-                    </button>
-                    <button
-                        onClick={() => {
-                            localStorage.removeItem('demo_mode');
-                            alert('تم إيقاف وضع التجربة.');
-                            window.location.reload();
-                        }}
-                        className="text-xs text-slate-400 hover:text-rose-500 transition-colors font-mono ml-4"
-                    >
-                        [ RESET ]
-                    </button>
+                {/* Demo Trigger (Visible) */}
+                <div className="py-20 bg-slate-900 border-t border-slate-800 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none mix-blend-overlay"></div>
+                    <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+                        <div className="inline-block p-3 rounded-full bg-slate-800 border border-slate-700 mb-6">
+                            <Sparkles className="text-yellow-400 animate-pulse" size={24} />
+                        </div>
+                        <h3 className="text-3xl font-black text-white mb-4">جرب النظام بنفسك (Simulation)</h3>
+                        <p className="text-slate-400 mb-8 max-w-lg mx-auto">
+                            للمطورين والشركاء: يمكنك تفعيل وضع المحاكاة لرؤية النظام يعمل ببيانات افتراضية.
+                        </p>
+
+                        <div className="flex justify-center gap-4">
+                            <button
+                                onClick={async () => {
+                                    const { injectDemoData } = await import('../services/simulationService');
+                                    injectDemoData();
+                                    alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
+                                    navigate('/app/dashboard');
+                                }}
+                                className="bg-white text-slate-900 hover:bg-brand-50 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg hover:scale-105"
+                            >
+                                <Layout size={20} />
+                                تفعيل المحاكاة (Demo)
+                            </button>
+                            <button
+                                onClick={() => {
+                                    localStorage.removeItem('demo_mode');
+                                    alert('تم إيقاف وضع التجربة.');
+                                    window.location.reload();
+                                }}
+                                className="bg-transparent border border-slate-700 text-slate-400 hover:text-rose-400 hover:border-rose-400 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2"
+                            >
+                                <XCircle size={20} />
+                                إيقاف / Reset
+                            </button>
+                        </div>
+                    </div>
                 </div>
+            </div>
         </section>
     );
-};
 
 return (
     <div className="min-h-screen bg-slate-50 font-cairo" dir="rtl">
