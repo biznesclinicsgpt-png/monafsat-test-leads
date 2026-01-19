@@ -25,6 +25,7 @@ import LoginPage from './pages/LoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import GrowthSystemPage from './pages/GrowthSystemPage';
 import InvestmentPage from './pages/InvestmentPage';
+import TestDeployment from './pages/TestDeployment';
 
 const App = () => {
   return (
@@ -41,6 +42,8 @@ const App = () => {
           <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/admin/login" element={<AdminLoginPage />} />
+
+          <Route path="/test-deploy" element={<TestDeployment />} />
 
           {/* App Routes (Protected/Layout Wrapped) */}
           <Route path="/app" element={<MainLayout />}>
