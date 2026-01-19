@@ -36,14 +36,14 @@ export const GuaranteeSection = () => {
                                 whileHover={{ scale: 1.05 }}
                                 className="flex flex-col items-center p-4 rounded-2xl bg-slate-950/50 border border-slate-800"
                             >
-                                <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 to-emerald-600 mb-2">10</div>
+                                <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-emerald-300 to-emerald-600 mb-2">10-15</div>
                                 <div className="text-slate-300 font-bold">فرص مؤهلة <br />(Opportunities) شهرياً</div>
                             </motion.div>
                             <motion.div
                                 whileHover={{ scale: 1.05 }}
                                 className="flex flex-col items-center p-4 rounded-2xl bg-slate-950/50 border border-slate-800"
                             >
-                                <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 to-cyan-600 mb-2">30</div>
+                                <div className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 to-cyan-600 mb-2">30-45</div>
                                 <div className="text-slate-300 font-bold">فرصة مؤهلة <br />خلال الربع سنوي</div>
                             </motion.div>
                         </div>
