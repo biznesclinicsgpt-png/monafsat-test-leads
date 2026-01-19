@@ -110,8 +110,14 @@ export const WalletModel = () => {
                     </p>
 
                     {/* Toggle Switch */}
-                    <div className="flex justify-center items-center gap-4 mb-12 flex-row-reverse">
-                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-500'}`}>دفع شهري</span>
+                    <div className="flex justify-center items-center gap-4 mb-12">
+                        {/* Right Side (First in RTL) */}
+                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'quarterly' ? 'text-white' : 'text-slate-500'}`}>
+                            دفع ربع سنوي
+                            <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full mr-2 border border-emerald-500/30 animate-pulse">
+                                + رصيد مجاني 🔥
+                            </span>
+                        </span>
 
                         <button
                             onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'quarterly' : 'monthly')}
@@ -120,16 +126,12 @@ export const WalletModel = () => {
                             <motion.div
                                 layout
                                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                className={`w-6 h-6 rounded-full shadow-md ${billingCycle === 'quarterly' ? 'bg-emerald-500 mr-auto ml-0' : 'bg-slate-400 ml-auto mr-0'}`}
+                                className={`w-6 h-6 rounded-full shadow-md ${billingCycle === 'quarterly' ? 'bg-emerald-500 ml-auto mr-0' : 'bg-slate-400 mr-auto ml-0'}`}
                             />
                         </button>
 
-                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'quarterly' ? 'text-white' : 'text-slate-500'}`}>
-                            دفع ربع سنوي
-                            <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full mr-2 border border-emerald-500/30 animate-pulse">
-                                + رصيد مجاني 🔥
-                            </span>
-                        </span>
+                        {/* Left Side (Last in RTL) */}
+                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-500'}`}>دفع شهري</span>
                     </div>
                 </div>
 

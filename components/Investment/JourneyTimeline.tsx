@@ -64,7 +64,7 @@ export const JourneyTimeline = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            className={`flex items-center gap-3 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col relative group`}
+                            className={`flex items-center gap-2 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col relative group`}
                         >
                             {/* Circuit Node Point */}
                             <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0a0a0f] border-2 border-slate-700 z-20 group-hover:border-emerald-500 transition-colors">
