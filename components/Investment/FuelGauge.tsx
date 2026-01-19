@@ -1,101 +1,158 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Phone, MessageCircle, Mail, Linkedin, Database } from 'lucide-react';
+import { Phone, MessageCircle, Mail, Linkedin, Database, TrendingUp, Zap } from 'lucide-react';
+import CountUp from 'react-countup';
 
 const CHANNELS = [
-    { id: 'calls', icon: Phone, label: 'مكالمات', capacity: '2400 دقيقة', color: 'bg-rose-500', text: 'text-rose-400' },
-    { id: 'whatsapp', icon: MessageCircle, label: 'واتساب', capacity: '6000 رسالة', color: 'bg-emerald-500', text: 'text-emerald-400' },
-    { id: 'email', icon: Mail, label: 'بريد إلكتروني', capacity: '5000 إيميل', color: 'bg-blue-500', text: 'text-blue-400' },
-    { id: 'linkedin', icon: Linkedin, label: 'لينكدإن', capacity: 'Outreach & Auto', color: 'bg-sky-600', text: 'text-sky-400' },
+    { id: 'calls', icon: Phone, label: 'Cold Calling', capacity: 2400, unit: 'Min', color: 'from-rose-500 to-orange-500', shadow: 'shadow-rose-500/20' },
+    { id: 'whatsapp', icon: MessageCircle, label: 'WhatsApp API', capacity: 6000, unit: 'Msg', color: 'from-emerald-500 to-teal-500', shadow: 'shadow-emerald-500/20' },
+    { id: 'email', icon: Mail, label: 'Email Seq', capacity: 5000, unit: 'Sent', color: 'from-blue-500 to-indigo-500', shadow: 'shadow-blue-500/20' },
+    { id: 'linkedin', icon: Linkedin, label: 'LinkedIn', capacity: 100, unit: '%', color: 'from-sky-500 to-cyan-500', shadow: 'shadow-sky-500/20' },
 ];
 
 export const FuelGauge = () => {
-    const [activeChannel, setActiveChannel] = useState<string | null>(null);
+    const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
     return (
-        <section className="py-20 bg-slate-900 relative overflow-hidden">
+        <section className="py-32 bg-[#0a0a0f] relative overflow-hidden">
+            {/* Background Glow */}
+            <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-emerald-900/10 rounded-full blur-[128px] -translate-y-1/2 pointer-events-none" />
+
             <div className="container mx-auto px-4 relative z-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
-                {/* Section Header */}
-                <div className="text-center mb-16 max-w-3xl mx-auto">
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
-                        أولاً: <span className="text-emerald-500">رصيد تشغيل الإدارة</span> (The Fuel)
-                    </h2>
-                    <p className="text-slate-400 text-lg leading-relaxed">
-                        نحن لا نبيع "عدد" قنوات، نحن نبيع "طاقة تشغيلية".
-                        <br />
-                        يتم شحن رصيد 15,000 نقطة واستهلاكها بمرونة في القناة الأعلى إنتاجية لقطاعك.
-                    </p>
-                </div>
+                    {/* Content Side */}
+                    <div className="space-y-8 text-right lg:order-2">
+                        <motion.div
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-800/50 border border-slate-700 text-emerald-400 text-xs font-mono mb-4"
+                        >
+                            <TrendingUp size={14} />
+                            PHASE 01 : FUEL INJECTION
+                        </motion.div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                        <motion.h2
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="text-4xl md:text-6xl font-black text-white leading-tight"
+                        >
+                            وقود التشغيل <br />
+                            <span className="text-transparent bg-clip-text bg-gradient-to-l from-emerald-400 to-cyan-400">الذكي والمرن</span>
+                        </motion.h2>
 
-                    {/* Visual Gauge */}
-                    <div className="bg-slate-800/50 rounded-3xl p-8 border border-slate-700 backdrop-blur-xl relative">
-                        <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent"></div>
+                        <motion.p
+                            initial={{ opacity: 0, x: 50 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.3 }}
+                            className="text-lg text-slate-400 leading-relaxed max-w-xl ml-auto"
+                        >
+                            نحن لا نلزمك بقناة واحدة. نشحن محركك بـ <span className="text-white font-bold">15,000 نقطة تشغيلية</span> شهرياً، ونوجهها تلقائياً للقناة التي تحقق أعلى عائد استثمار لقطاعك.
+                        </motion.p>
 
-                        <div className="text-center mb-8">
-                            <div className="font-mono text-emerald-400 text-sm mb-2">OPERATIONAL CREDIT BALANCE</div>
-                            <div className="text-6xl font-black text-white tracking-tighter">15,000 <span className="text-2xl text-slate-500">PTS</span></div>
-                        </div>
-
-                        {/* Interactive Channels */}
-                        <div className="grid grid-cols-2 gap-4">
-                            {CHANNELS.map((channel) => (
-                                <motion.div
-                                    key={channel.id}
-                                    onHoverStart={() => setActiveChannel(channel.id)}
-                                    onHoverEnd={() => setActiveChannel(null)}
-                                    className={`
-                                        p-4 rounded-xl border border-slate-700 cursor-pointer transition-all duration-300
-                                        ${activeChannel === channel.id ? 'bg-slate-700/80 border-emerald-500/50 scale-105' : 'bg-slate-800/50 hover:bg-slate-700'}
-                                    `}
-                                >
-                                    <channel.icon className={`w-8 h-8 ${channel.text} mb-3`} />
-                                    <div className="text-slate-200 font-bold text-lg">{channel.label}</div>
-                                    <div className="text-slate-400 text-sm font-mono">{channel.capacity}</div>
-                                </motion.div>
-                            ))}
-                        </div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.4 }}
+                            className="flex flex-col gap-4 pl-12 border-r-2 border-slate-800"
+                        >
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-slate-800 rounded-lg text-emerald-400 mt-1">
+                                    <Database size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-bold text-lg">تكلفة حقيقية وليست عمالة</h4>
+                                    <p className="text-sm text-slate-500 mt-1">نقاطك تذهب لشراء البيانات، رسائل الواتساب، وأدوات الذكاء الاصطناعي، وليس رواتب موظفين.</p>
+                                </div>
+                            </div>
+                            <div className="flex items-start gap-4">
+                                <div className="p-2 bg-slate-800 rounded-lg text-cyan-400 mt-1">
+                                    <Zap size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="text-white font-bold text-lg">إعادة توجيه فوري</h4>
+                                    <p className="text-sm text-slate-500 mt-1">لو مكالماتك لا تجيب نتيجة؟ نحول الرصيد فوراً لحملات الواتساب أو اللينكدإن.</p>
+                                </div>
+                            </div>
+                        </motion.div>
                     </div>
 
-                    {/* Explanation */}
-                    <div className="space-y-8" dir="rtl">
-                        <div className="flex gap-4">
-                            <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
-                                <Database size={24} />
+                    {/* Dashboard Visual Mockup */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9, rotateY: -10 }}
+                        whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="relative lg:order-1"
+                    >
+                        {/* Glass Panel */}
+                        <div className="relative bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-[40px] p-8 shadow-2xl shadow-black/50 overflow-hidden">
+                            {/* Reflection */}
+                            <div className="absolute top-0 right-0 w-full h-[500px] bg-gradient-to-bl from-white/5 to-transparent pointer-events-none" />
+
+                            {/* Dashboard Header */}
+                            <div className="flex items-center justify-between mb-10 border-b border-white/5 pb-6">
+                                <div className="flex items-center gap-2">
+                                    <div className="w-3 h-3 rounded-full bg-red-500" />
+                                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                                    <div className="w-3 h-3 rounded-full bg-green-500" />
+                                </div>
+                                <div className="font-mono text-xs text-slate-500 tracking-widest uppercase">
+                                    System Status: <span className="text-emerald-400">Online</span>
+                                </div>
                             </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-2">ما هو هذا الرصيد؟</h3>
-                                <p className="text-slate-400 leading-relaxed">هو التكلفة الفعلية لتشغيل الحملات: شراء البيانات، أدوات الأتمتة، دقائق الاتصال، ورسائل الواتساب الرسمية.</p>
+
+                            {/* Main Metric */}
+                            <div className="text-center mb-12 relative">
+                                <div className="text-slate-400 text-sm font-bold uppercase tracking-widest mb-2">Total Credit Balance</div>
+                                <div className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter">
+                                    <CountUp end={15000} duration={3} separator="," />
+                                </div>
+                                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-emerald-500 font-mono text-xs bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
+                                    + Monthly Refill Active
+                                </div>
+                            </div>
+
+                            {/* Channel Grid */}
+                            <div className="grid grid-cols-2 gap-4">
+                                {CHANNELS.map((channel, idx) => (
+                                    <motion.div
+                                        key={idx}
+                                        onHoverStart={() => setHoveredIdx(idx)}
+                                        onHoverEnd={() => setHoveredIdx(null)}
+                                        className={`group relative p-5 rounded-2xl border transition-all duration-300 cursor-default ${hoveredIdx === idx ? 'bg-slate-800 border-slate-600' : 'bg-slate-800/40 border-slate-800'}`}
+                                    >
+                                        <div className={`absolute inset-0 bg-gradient-to-br ${channel.color} opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity`} />
+
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className={`p-2 rounded-lg bg-slate-900 group-hover:scale-110 transition-transform duration-300 ${channel.shadow}`}>
+                                                <channel.icon size={18} className="text-white" />
+                                            </div>
+                                            <div className="text-[10px] font-mono text-slate-500 group-hover:text-emerald-400 transition-colors">ACTIVE</div>
+                                        </div>
+
+                                        <div className="text-2xl font-bold text-white mb-1">{channel.capacity.toLocaleString()}</div>
+                                        <div className="text-xs text-slate-400">{channel.label} / {channel.unit}</div>
+
+                                        {/* Progress Bar */}
+                                        <div className="mt-4 h-1 w-full bg-slate-700 rounded-full overflow-hidden">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                whileInView={{ width: '70%' }}
+                                                transition={{ duration: 1.5, delay: 0.5 + (idx * 0.1) }}
+                                                className={`h-full bg-gradient-to-r ${channel.color}`}
+                                            />
+                                        </div>
+                                    </motion.div>
+                                ))}
                             </div>
                         </div>
-
-                        <div className="flex gap-4">
-                            <div className="w-12 h-12 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-400 shrink-0">
-                                <MessageCircle size={24} />
-                            </div>
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-2">المرونة الذكية</h3>
-                                <p className="text-slate-400 leading-relaxed">
-                                    وارد جداً نكتشف ان "الواتساب" هو الأسرع في قطاعك، فنقوم بتحويل الرصيد بالكامل له.
-                                    <br />
-                                    <strong>الهدف:</strong> استهلاك الرصيد في المكان الذي يجلب "فرص" وليس مجرد "نشاط".
-                                </p>
-                            </div>
-                        </div>
-
-                        <div className="bg-emerald-900/20 border border-emerald-500/20 p-6 rounded-2xl">
-                            <div className="flex justify-between items-center mb-4">
-                                <span className="text-white font-bold">باقة الشحن الشهرية</span>
-                                <span className="text-emerald-400 font-black text-2xl">5,000 ريال</span>
-                            </div>
-                            <div className="text-sm text-slate-400">
-                                تغطي كافة تكاليف التشغيل التقني والبيانات.
-                            </div>
-                        </div>
-                    </div>
-
+                    </motion.div>
                 </div>
             </div>
         </section>
