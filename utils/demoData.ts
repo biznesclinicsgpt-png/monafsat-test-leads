@@ -46,7 +46,24 @@ export const DEMO_CONTACTS: Contact[] = [
         fitScore: 95,
         icpStatus: 'verified',
         source: 'Apollo + Enrichment',
-        tags: ['Giga Project', 'High Value', 'Meeting Jan 25']
+        tags: ['Giga Project', 'High Value', 'Meeting Jan 25'],
+
+        // Deep Intelligence
+        annual_revenue: "$1B+",
+        employee_count: "1001-5000",
+        industry_ar: "التطوير العقاري / المشاريع الكبرى",
+        industry_2: "Real Estate Development",
+        subcategory: "Giga Projects",
+        company_description: "Red Sea Global is a closed joint-stock company wholly owned by the Public Investment Fund (PIF) of Saudi Arabia. It is a vertical developer, spearheading the development of The Red Sea and Amaala, two world-leading regenerative tourism destinations.",
+        company_linkedin_url: "https://linkedin.com/company/red-sea-global",
+        company_location: "Riyadh, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "عبدالرحمن هو مدير مشاريع مخضرم في البحر الأحمر الدولية، يقود تطوير البنية التحتية للمرحلة 2. يركز حالياً على حلول الاستدامة وتقنيات البناء الحديثة. نشط جداً على لينكد إن ويتفاعل مع محتوى الطاقة المتجددة.",
+        initial_icebreaker: "استاذ عبدالرحمن، تابعت باهتمام تحديثاتكم الأخيرة حول مشروع 'أمالا' والتقدم في البنية التحتية المستدامة. جهد جبار فعلاً!",
+        prospect_about: "Experienced Project Director with a demonstrated history of working in the real estate industry. Strong program and project management professional skilled in Negotiation, Construction, and Engineering.",
+        linkedin_sales_navigator: "Active (Posted 2 days ago)",
+        premium: "yes"
     },
     {
         id: "demo_2",
@@ -64,7 +81,24 @@ export const DEMO_CONTACTS: Contact[] = [
         fitScore: 92,
         icpStatus: 'verified',
         source: 'Manual Scouting',
-        tags: ['Residential', 'Riyadh North']
+        tags: ['Residential', 'Riyadh North'],
+
+        // Deep Intelligence
+        annual_revenue: "$500M - $1B",
+        employee_count: "501-1000",
+        industry_ar: "التطوير العقاري / الإسكان",
+        industry_2: "Real Estate",
+        subcategory: "Residential Communities",
+        company_description: "ROSHN is a national real estate developer, powered by the Public Investment Fund (PIF). We are committed to delivering high-quality communities to the Saudi people.",
+        company_linkedin_url: "https://linkedin.com/company/roshn",
+        company_location: "Riyadh, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "المهندس فيصل يشغل منصب نائب الرئيس للإنشاءات، وهو المسؤول عن استراتيجية التوسع في شمال الرياض. يبحث عن مقاولين ذوي كفاءة عالية في التشطيبات السريعة وتقنيات البناء مسبق الصنع.",
+        initial_icebreaker: "م. فيصل، مبروك الاعلان عن حي 'سدرة' الجديد! التصاميم المعمارية السلمانية تعكس هوية رائعة.",
+        prospect_about: "VP of Construction at ROSHN. Leading the technical delivery of integrated communities across the Kingdom.",
+        linkedin_sales_navigator: "Active (Posted 5 days ago)",
+        premium: "yes"
     },
     {
         id: "demo_3",
@@ -82,7 +116,24 @@ export const DEMO_CONTACTS: Contact[] = [
         fitScore: 88,
         icpStatus: 'verified',
         source: 'Apollo Export',
-        tags: ['The Line', 'Procurement']
+        tags: ['The Line', 'Procurement'],
+
+        // Deep Intelligence
+        annual_revenue: "$10B+",
+        employee_count: "10,000+",
+        industry_ar: "التطوير الحضري / المدن الذكية",
+        industry_2: "Urban Development",
+        subcategory: "Smart Cities",
+        company_description: "NEOM is a vision of what a new future might look like. It is an attempt to do something that has never been done before and it is coming at a time when the world needs fresh thinking and new solutions.",
+        company_linkedin_url: "https://linkedin.com/company/neom",
+        company_location: "Tabuk, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "سارة تقود فريق المشتريات لمشروع 'ذا لاين'. تركيزها الحالي على سلاسل الإمداد اللوجستية وتأهيل الموردين المحليين. تفضل التواصل الرسمي عبر الإيميل.",
+        initial_icebreaker: "أستاذة سارة، قرأت تقريركم الأخير عن 'توطين الصناعات في نيوم'. رؤية ملهمة لقطاع المشتريات.",
+        prospect_about: "Strategic Procurement Leader with focus on mega-projects supply chain optimization.",
+        linkedin_sales_navigator: "Ideally Active",
+        premium: "no"
     },
     {
         id: "demo_4",
@@ -97,7 +148,23 @@ export const DEMO_CONTACTS: Contact[] = [
         stage: PipelineStage.ICP_VERIFIED,
         fitScore: 85,
         icpStatus: 'verified',
-        source: 'Website Inbound'
+        source: 'Website Inbound',
+
+        // Deep Intelligence
+        annual_revenue: "$1B - $10B",
+        employee_count: "10,000+",
+        industry_ar: "المقولات العامة / الهندسة",
+        industry_2: "Construction",
+        subcategory: "Engineering Services",
+        company_description: "El Seif Engineering Contracting is one of the leading construction companies in Saudi Arabia and the Middle East.",
+        company_location: "Riyadh, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "محمد القحطاني، مدير العمليات في السيف. يركز على الكفاءة التشغيلية وتقليل الهدر في المواقع. شخص عملي جداً ويهتم بالأرقام والنتائج.",
+        initial_icebreaker: "أخ محمد، سمعت عن فوزكم بعقد البرج الجديد. تجربة السيف في الأبراج الشاهقة مرجع للسوق.",
+        prospect_about: "Operations Manager ensuring project delivery excellence and safety compliance.",
+        linkedin_sales_navigator: "Inactive",
+        premium: "no"
     },
     {
         id: "demo_5",
@@ -111,7 +178,23 @@ export const DEMO_CONTACTS: Contact[] = [
         stage: PipelineStage.HIGH_FIT,
         fitScore: 89,
         icpStatus: 'verified',
-        source: 'PhantomBuster LinkedIn'
+        source: 'PhantomBuster LinkedIn',
+
+        // Deep Intelligence
+        annual_revenue: "$100B+",
+        employee_count: "50,000+",
+        industry_ar: "الطاقة / النفط والغاز",
+        industry_2: "Oil & Gas",
+        subcategory: "Industrial Construction",
+        company_description: "Saudi Aramco is a world leader in integrated energy and chemicals.",
+        company_location: "Dhahran, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "خالد مدير مشاريع أول في أرامكو، قسم المشاريع السكنية. يبحث عن مقاولين معتمدين (IKTVA) لتنفيذ مجمعات سكنية في المنطقة الشرقية.",
+        initial_icebreaker: "م. خالد، برنامج 'اكتفاء' أصبح معياراً للجودة. هل هناك مشاريع جديدة للمقاولين المؤهلين قريباً؟",
+        prospect_about: "PMP Certified Senior Project Manager with 15 years experience in Aramco.",
+        linkedin_sales_navigator: "Active",
+        premium: "yes"
     },
     {
         id: "demo_6",
@@ -124,7 +207,23 @@ export const DEMO_CONTACTS: Contact[] = [
         stage: PipelineStage.NEW,
         fitScore: 75,
         icpStatus: 'pending',
-        source: 'Apollo'
+        source: 'Apollo',
+
+        // Deep Intelligence
+        annual_revenue: "$1B+",
+        employee_count: "5000+",
+        industry_ar: "المقاولات",
+        industry_2: "Construction",
+        subcategory: "Civil Works",
+        company_description: "Al Bawani is a diversified group of Saudi companies. The group has established itself as a prime contractor.",
+        company_location: "Riyadh, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "ياسر مهندس مدني ميداني. ليس صانع قرار نهائي ولكنه مؤثر في التوصية الفنية. يمكن التواصل معه لفهم الاحتياجات الفنية للمشروع.",
+        initial_icebreaker: "بشمهندس ياسر، الله يعطيك العافية. كيف تشوف تحديات الصبة الخرسانية في مشاريع جدة الحالية؟",
+        prospect_about: "Civil Engineer at Al Bawani. King Saud University Graduate.",
+        linkedin_sales_navigator: "Active",
+        premium: "no"
     },
     {
         id: "demo_7",
@@ -137,7 +236,23 @@ export const DEMO_CONTACTS: Contact[] = [
         stage: PipelineStage.MEETING_BOOKED,
         fitScore: 94,
         icpStatus: 'verified',
-        source: 'Referral'
+        source: 'Referral',
+
+        // Deep Intelligence
+        annual_revenue: "$5B+",
+        employee_count: "1000+",
+        industry_ar: "التطوير التراثي / السياحة",
+        industry_2: "Government",
+        subcategory: "Heritage Development",
+        company_description: "DGDA is responsible for the preservation of the historic At-Turaif UNESCO World Heritage Site and the development of Diriyah.",
+        company_location: "Diriyah, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "عمر مسؤول مشتريات في بوابة الدرعية. يركز جداً على 'الطابع النجدي' في المواد والموردين. الدقة في المواصفات التراثية هو مفتاح التعامل معه.",
+        initial_icebreaker: "أخ عمر، هوية الدرعية المعمارية فخر لنا جميعاً. اختياركم للمواد يعكس ذوق رفيع.",
+        prospect_about: "Procurement Specialist passionate about Saudi Heritage and Culture.",
+        linkedin_sales_navigator: "Active",
+        premium: "no"
     },
     {
         id: "demo_8",
@@ -150,7 +265,23 @@ export const DEMO_CONTACTS: Contact[] = [
         stage: PipelineStage.IN_CONVERSATION,
         fitScore: 91,
         icpStatus: 'verified',
-        source: 'LinkedIn'
+        source: 'LinkedIn',
+
+        // Deep Intelligence
+        annual_revenue: "$N/A",
+        employee_count: "500+",
+        industry_ar: "التطوير الحضري / الحدائق",
+        industry_2: "Government",
+        subcategory: "Public Spaces",
+        company_description: "King Salman Park is being developed as the largest urban park in the world.",
+        company_location: "Riyadh, Saudi Arabia",
+
+        // AI Strategy
+        arabic_summary: "نورة مديرة مرافق في حديقة الملك سلمان. تبحث عن حلول الصيانة الذكية والتشغيل المستدام للمرافق العامة الضخمة.",
+        initial_icebreaker: "أستاذة نورة، مشروع الحديقة هو رئة الرياض القادمة! مهتم جداً بمعرفة خططكم للصيانة الذكية.",
+        prospect_about: "Facilities Management expert specialized in large-scale public venues.",
+        linkedin_sales_navigator: "Active",
+        premium: "yes"
     }
 ];
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useData } from '../../context/DataContext';
-import { Contact, LeadSource, PipelineStage, PipelineStageLabels } from '../../types';
+import { Contact, PipelineStageLabels } from '../../types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Activity, CheckCircle, AlertCircle, Building2, Globe, MapPin, BarChart3, Sparkles, Copy, X } from 'lucide-react';
 
 interface LeadModalProps {
     mode: 'add' | 'edit' | 'view';
@@ -20,7 +22,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
         email: '',
         phone: '',
         title: '',
-        stage: PipelineStage.NEW,
+        stage: undefined,
         source: 'Outbound',
         fitScore: 0,
         icpStatus: 'pending',
@@ -47,7 +49,7 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
     });
 
     // UI State for Tabs
-    const [activeTab, setActiveTab] = useState<'details' | 'scripts'>('details');
+    const [activeTab, setActiveTab] = useState<'details' | 'intelligence' | 'strategy' | 'scripts'>('details');
     const [generatingScripts, setGeneratingScripts] = useState(false);
 
     useEffect(() => {
@@ -145,124 +147,227 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                 </div>
 
                 {/* Body */}
-                <div className="p-8 overflow-y-auto">
+                <div className="p-8 overflow-y-auto min-h-[500px]">
                     <form id="leadForm" onSubmit={handleSubmit} className="space-y-8 text-right">
 
                         {/* Tab Navigation */}
-                        <div className="flex items-center gap-4 border-b border-slate-200 mb-6">
-                            <button
-                                type="button"
-                                onClick={() => setActiveTab('details')}
-                                className={`pb-2 px-4 font-bold text-sm transition-colors relative ${activeTab === 'details' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                تفاصيل العميل
-                                {activeTab === 'details' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></span>}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setActiveTab('scripts')}
-                                className={`pb-2 px-4 font-bold text-sm transition-colors relative ${activeTab === 'scripts' ? 'text-blue-600' : 'text-slate-500 hover:text-slate-700'}`}
-                            >
-                                حملات التواصل
-                                {activeTab === 'scripts' && <span className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600"></span>}
-                            </button>
+                        <div className="flex items-center gap-6 border-b border-slate-200 mb-6">
+                            {[
+                                { id: 'details', label: 'نظرة عامة', icon: '👤' },
+                                { id: 'intelligence', label: 'تحليل معمق (Deep Intelligence)', icon: '🏢' },
+                                { id: 'strategy', label: 'استراتيجية AI', icon: '🧠' },
+                                { id: 'scripts', label: 'الحملات', icon: '✉️' }
+                            ].map(tab => (
+                                <button
+                                    key={tab.id}
+                                    type="button"
+                                    onClick={() => setActiveTab(tab.id as any)}
+                                    className={`pb-4 px-2 font-bold text-sm transition-all relative flex items-center gap-2 ${activeTab === tab.id ? 'text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
+                                >
+                                    <span>{tab.icon}</span>
+                                    {tab.label}
+                                    {activeTab === tab.id && <motion.span layoutId="activeTab" className="absolute bottom-0 left-0 w-full h-0.5 bg-blue-600 rounded-full" />}
+                                </button>
+                            ))}
                         </div>
 
-                        {activeTab === 'details' ? (
-                            <>
-                                {/* Section 1: Core Contact */}
-                                <section className="space-y-4">
-                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات التواصل الأساسية</h3>
+                        {/* TAB 1: OVERVIEW */}
+                        {activeTab === 'details' && (
+                            <div className="space-y-8 animate-fadeIn">
+                                {/* Core Identity */}
+                                <div className="flex items-start gap-6">
+                                    <div className="w-24 h-24 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-4xl shadow-inner">
+                                        {formData.name?.charAt(0)}
+                                    </div>
+                                    <div className="flex-1 space-y-4">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-400 mb-1 uppercase">الاسم الكامل</label>
+                                                <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all font-bold text-slate-700" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-400 mb-1 uppercase">المسمى الوظيفي</label>
+                                                <input type="text" name="title" value={formData.title} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all font-bold text-slate-700" />
+                                            </div>
+                                        </div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-400 mb-1 uppercase">البريد الإلكتروني</label>
+                                                <div className="relative">
+                                                    <input type="email" name="email" value={formData.email} onChange={handleChange} disabled={isViewMode} className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all font-mono text-sm text-slate-600" dir="ltr" />
+                                                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">@</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-400 mb-1 uppercase">الهاتف</label>
+                                                <input type="text" name="phone" value={formData.phone} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 transition-all font-mono text-sm text-slate-600" dir="ltr" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Pipeline Status */}
+                                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                                    <h3 className="text-sm font-bold text-slate-800 mb-4 flex items-center gap-2">
+                                        <Activity size={16} className="text-blue-500" />
+                                        حالة العميل (Pipeline Status)
+                                    </h3>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                         <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">الاسم الكامل</label>
-                                            <input type="text" name="name" value={formData.name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">البريد الإلكتروني</label>
-                                            <input type="email" name="email" value={formData.email} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required dir="ltr" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">الهاتف</label>
-                                            <input type="text" name="phone" value={formData.phone} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* Section 2: Professional Info */}
-                                <section className="space-y-4">
-                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">المعلومات المهنية</h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">الشركة (اسم العمل)</label>
-                                            <input type="text" name="company_name" value={formData.company_name} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" required />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">المنصب</label>
-                                            <input type="text" name="title" value={formData.title} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn</label>
-                                            <input type="text" name="linkedin_url" value={formData.linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* Section 4: Company Details & Enrichment */}
-                                <section className="space-y-4">
-                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">تفاصيل الشركة (Enrichment)</h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div className="md:col-span-2">
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">وصف الشركة</label>
-                                            <textarea name="company_description" value={formData.company_description} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" placeholder="وصف نشاط الشركة..." />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">رابط LinkedIn للشركة</label>
-                                            <input type="text" name="company_linkedin_url" value={formData.company_linkedin_url} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" dir="ltr" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">عدد الموظفين</label>
-                                            <input type="text" name="employee_count" value={formData.employee_count} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">الإيرادات السنوية</label>
-                                            <input type="text" name="annual_revenue" value={formData.annual_revenue} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">المصدر</label>
-                                            <input type="text" name="source" value={formData.source} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* Section 5: GHL Custom Fields (Arabic & Strategy) */}
-                                <section className="space-y-4">
-                                    <h3 className="text-lg font-bold text-blue-600 border-b pb-2">بيانات إضافية</h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">ملخص باللغة العربية</label>
-                                            <textarea name="arabic_summary" value={formData.arabic_summary} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">رسالة افتتاحية (Icebreaker)</label>
-                                            <textarea name="initial_icebreaker" value={formData.initial_icebreaker} onChange={handleChange} disabled={isViewMode} rows={3} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">المجال (بالعربي)</label>
-                                            <input type="text" name="industry_ar" value={formData.industry_ar} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500" />
-                                        </div>
-                                        <div>
-                                            <label className="block text-sm font-bold text-slate-700 mb-1">المرحلة في المسار</label>
-                                            <select name="stage" value={formData.stage} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500">
+                                            <label className="block text-xs font-bold text-slate-400 mb-1">المرحلة الحالية</label>
+                                            <select name="stage" value={formData.stage} onChange={handleChange} disabled={isViewMode} className="w-full px-4 py-2.5 rounded-xl border border-slate-200 bg-white font-bold text-indigo-600 shadow-sm">
                                                 {Object.entries(PipelineStageLabels).map(([key, label]) => (
                                                     <option key={key} value={key}>{label}</option>
                                                 ))}
                                             </select>
                                         </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-400 mb-1">مؤشر التوافق (Fit Score)</label>
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex-1 h-10 bg-white rounded-xl border border-slate-200 px-4 flex items-center gap-2">
+                                                    <div className={`w-2 h-2 rounded-full ${Number(formData.fitScore) > 80 ? 'bg-emerald-500' : 'bg-yellow-500'}`} />
+                                                    <span className="font-black text-slate-700">{formData.fitScore}%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-xs font-bold text-slate-400 mb-1">حالة التحقق (ICP)</label>
+                                            <div className={`px-4 py-2.5 rounded-xl border font-bold flex items-center gap-2 ${formData.icpStatus === 'verified' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-slate-100 text-slate-500 border-slate-200'}`}>
+                                                {formData.icpStatus === 'verified' ? <CheckCircle size={16} /> : <AlertCircle size={16} />}
+                                                {formData.icpStatus === 'verified' ? 'Matched Verified' : 'Pending Verification'}
+                                            </div>
+                                        </div>
                                     </div>
-                                </section>
-                            </>
-                        ) : (
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB 2: DEEP INTELLIGENCE */}
+                        {activeTab === 'intelligence' && (
+                            <div className="space-y-6 animate-fadeIn">
+                                {/* Company Snapshot */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                                        <h3 className="text-sm font-black text-slate-800 mb-4 flex items-center gap-2">
+                                            <Building2 size={16} className="text-indigo-500" />
+                                            معلومات الشركة
+                                        </h3>
+                                        <div className="space-y-4">
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">اسم الشركة</label>
+                                                <input type="text" name="company_name" value={formData.company_name} readOnly className="w-full bg-white border-0 rounded-lg px-3 py-2 font-bold text-slate-700 shadow-sm" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">الموقع الرسمي</label>
+                                                <div className="flex items-center gap-2">
+                                                    <Globe size={14} className="text-slate-400" />
+                                                    <input type="text" value={formData.website || 'N/A'} readOnly className="flex-1 bg-transparent border-0 p-0 text-sm text-blue-600 font-medium" />
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">المقر الرئيسي</label>
+                                                <div className="flex items-center gap-2">
+                                                    <MapPin size={14} className="text-slate-400" />
+                                                    <span className="text-sm font-medium text-slate-600">{formData.company_location || formData.city || 'الرياض، المملكة العربية السعودية'}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-slate-50 p-5 rounded-2xl border border-slate-200">
+                                        <h3 className="text-sm font-black text-slate-800 mb-4 flex items-center gap-2">
+                                            <BarChart3 size={16} className="text-emerald-500" />
+                                            المؤشرات المالية والحجم
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                                                <div className="text-[10px] text-slate-400 font-bold uppercase mb-1">الإيرادات السنوية</div>
+                                                <div className="text-lg font-black text-emerald-600 font-mono">{formData.annual_revenue || 'N/A'}</div>
+                                            </div>
+                                            <div className="bg-white p-3 rounded-xl border border-slate-100 shadow-sm">
+                                                <div className="text-[10px] text-slate-400 font-bold uppercase mb-1">عدد الموظفين</div>
+                                                <div className="text-lg font-black text-indigo-600 font-mono">{formData.employee_count || 'N/A'}</div>
+                                            </div>
+                                        </div>
+                                        <div className="mt-4 pt-4 border-t border-slate-200">
+                                            <div className="text-[10px] text-slate-400 font-bold uppercase mb-2">تصنيف الصناعة</div>
+                                            <div className="flex flex-wrap gap-2">
+                                                <span className="px-2 py-1 rounded bg-slate-200 text-slate-600 text-xs font-bold">{formData.industry_2 || 'Construction'}</span>
+                                                <span className="text-slate-300">›</span>
+                                                <span className="px-2 py-1 rounded bg-slate-200 text-slate-600 text-xs font-bold">{formData.subcategory || 'General'}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Description */}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 mb-2">وصف النشاط التجاري</label>
+                                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm leading-relaxed text-slate-600">
+                                        {formData.company_description || "No description available."}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB 3: AI STRATEGY */}
+                        {activeTab === 'strategy' && (
+                            <div className="space-y-6 animate-fadeIn">
+                                {/* Alert Banner */}
+                                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 flex items-start gap-4">
+                                    <div className="bg-white p-2 rounded-lg shadow-sm">
+                                        <Sparkles className="text-purple-600" size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-purple-900 text-sm">تحليل الذكاء الاصطناعي</h4>
+                                        <p className="text-xs text-purple-700 mt-1">تم توليد هذه الرؤى بناءً على تحليل نشاط العميل على LinkedIn وأخبار الشركة الأخيرة.</p>
+                                    </div>
+                                </div>
+
+                                {/* Who is he? */}
+                                <div>
+                                    <h3 className="text-sm font-black text-slate-800 mb-3">من هو العميل المحتمل؟</h3>
+                                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <p className="text-sm text-slate-700 leading-relaxed mb-3">
+                                            {formData.arabic_summary || formData.prospect_about || "لا يتوفر ملخص عربي حالياً."}
+                                        </p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${formData.linkedin_sales_navigator?.includes('Active') ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
+                                                LinkedIn Activity: {formData.linkedin_sales_navigator || 'Unknown'}
+                                            </span>
+                                            {formData.premium === 'yes' && (
+                                                <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-700">
+                                                    Premium User
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Icebreakers */}
+                                <div>
+                                    <h3 className="text-sm font-black text-slate-800 mb-3">مفتتح المحادثة المقترح (Icebreaker)</h3>
+                                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 relative overflow-hidden group">
+                                        <div className="absolute top-0 right-0 w-1 h-full bg-blue-500" />
+                                        <blockquote className="text-sm font-medium text-blue-900 italic relative z-10">
+                                            "{formData.initial_icebreaker || "Hello, I noticed we are both in the construction industry..."}"
+                                        </blockquote>
+                                        <div className="mt-3 flex justify-end">
+                                            <button
+                                                onClick={() => { navigator.clipboard.writeText(formData.initial_icebreaker || "") }}
+                                                className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            >
+                                                <Copy size={12} />
+                                                نسخ النص
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* TAB 4: CAMPAIGNS (Old Scripts) */}
+                        {activeTab === 'scripts' && (
                             <div className="space-y-6 animate-fadeIn">
                                 <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
                                     <div>
@@ -275,7 +380,13 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                         disabled={generatingScripts}
                                         className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-blue-200 flex items-center gap-2 disabled:opacity-50 transition-all"
                                     >
-                                        {generatingScripts ? 'جاري الكتابة...' : '✨ كتابة الحملة'}
+                                        {generatingScripts ? <>
+                                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white" />
+                                            جاري الكتابة...
+                                        </> : <>
+                                            <Sparkles size={16} />
+                                            كتابة الحملة
+                                        </>}
                                     </button>
                                 </div>
 
