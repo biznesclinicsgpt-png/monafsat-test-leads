@@ -499,26 +499,23 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                     </div>
                                 </div>
                             </div>
-                            </div>
                         )}
-            </form>
-        </div >
+                    </form>
+                </div>
 
-    {/* Footer */ }
-    < div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3" >
-        <button type="button" onClick={onClose} className="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 font-bold hover:bg-white transition-colors">
-            إغلاق
-        </button>
-        {
-            !isViewMode && (
-                <button type="submit" form="leadForm" className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
-                    حفظ البيانات
-                </button>
-            )
-        }
-    </div >
-            </div >
-        </div >
+                {/* Footer */}
+                <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3">
+                    <button type="button" onClick={onClose} className="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 font-bold hover:bg-white transition-colors">
+                        إغلاق
+                    </button>
+                    {!isViewMode && (
+                        <button type="submit" form="leadForm" className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
+                            حفظ البيانات
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
     );
 };
 
