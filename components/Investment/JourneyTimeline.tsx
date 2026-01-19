@@ -56,7 +56,7 @@ export const JourneyTimeline = () => {
                     </p>
                 </div>
 
-                <div className="relative space-y-24">
+                <div className="relative space-y-12">
                     {STEPS.map((step, idx) => (
                         <motion.div
                             key={idx}
