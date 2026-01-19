@@ -6,7 +6,8 @@ const PACKAGES = [
     {
         name: "باقة الرصيد القياسي",
         nameEn: "(Standard Pack)",
-        price: "7,000",
+        price: "6,000",
+        rawPrice: 6000,
         description: "مناسبة لـ: \"اختبار السوق\" أو الشركات الناشئة جداً",
         target: "الشركات الناشئة والصغيرة (Startups)",
         dealType: "صفقات صغيرة وسريعة",
@@ -28,6 +29,7 @@ const PACKAGES = [
         nameEn: "(Premium Pack)",
         tag: "الخيار الموصى به",
         price: "9,000",
+        rawPrice: 9000,
         description: "مناسبة لـ: الشركات التي تبحث عن \"نمو حقيقي\" وصفقات مربحة.",
         target: "الشركات المتوسطة والمستقرة (Established SMEs & Mid-Market)",
         dealType: "فرص تسعير أفضل (High Ticket) وعقود طويلة الأمد.",
@@ -49,6 +51,7 @@ const PACKAGES = [
         name: "باقة الرصيد المؤسسي",
         nameEn: "(Enterprise Pack)",
         price: "20,000",
+        rawPrice: 20000,
         description: "مناسبة لـ: العقود الحكومية والمنافسات الكبرى فقط.",
         target: "المؤسسات الكبرى، الجهات الحكومية، وشبه الحكومية.",
         dealType: "عقود ضخمة جداً ولكن بدورة بيع طويلة.",
@@ -68,6 +71,11 @@ const PACKAGES = [
 ];
 
 export const WalletModel = () => {
+    const handleWhatsAppClick = () => {
+        const message = encodeURIComponent("السلام عليكم، اريد معرفه تفاصيل الباقات الاستثمار للوصول الي عملاء محتملين.");
+        window.open(`https://wa.me/966545670325?text=${message}`, '_blank');
+    };
+
     return (
         <section className="py-24 bg-[#0a0a0f] relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
@@ -136,6 +144,14 @@ export const WalletModel = () => {
                                 <div className="text-slate-500 text-xs mt-1">دفعة واحدة / رصيد ممتد</div>
                             </div>
 
+                            {/* Quarterly Offer Highlight */}
+                            <div className="relative z-10 mb-8 p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-emerald-500/5 border border-emerald-500/20 text-center">
+                                <div className="text-[10px] sm:text-xs font-bold text-emerald-400 mb-1">🔥 عرض الاستثمار الذكي (3 شهور)</div>
+                                <div className="text-slate-300 text-xs">
+                                    ادفع <span className="text-white font-bold">{(pkg.rawPrice * 3).toLocaleString()} ريال</span> مقدم واحصل على <span className="text-emerald-400 font-bold">{pkg.rawPrice.toLocaleString()} ريال</span> رصيد إضافي مجاناً!
+                                </div>
+                            </div>
+
                             {/* Divider */}
                             <div className="h-px w-full bg-slate-800 mb-8 relative z-10"></div>
 
@@ -165,9 +181,12 @@ export const WalletModel = () => {
 
                             {/* Action Button */}
                             <div className="mt-8 relative z-10">
-                                <button className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${pkg.buttonColor}`}>
+                                <button
+                                    onClick={handleWhatsAppClick}
+                                    className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${pkg.buttonColor}`}
+                                >
                                     {pkg.isPopular ? <Rocket size={18} /> : <CheckCircle2 size={18} />}
-                                    اشحن المحفظة الآن
+                                    احصل على الفرص الآن
                                 </button>
                             </div>
                         </motion.div>

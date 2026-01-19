@@ -4,10 +4,10 @@ import { Phone, MessageCircle, Mail, Linkedin, Database, TrendingUp, Zap } from 
 import CountUp from 'react-countup';
 
 const CHANNELS = [
-    { id: 'calls', icon: Phone, label: 'Cold Calling', capacity: 2400, unit: 'Min', color: 'from-rose-500 to-orange-500', shadow: 'shadow-rose-500/20' },
-    { id: 'whatsapp', icon: MessageCircle, label: 'WhatsApp API', capacity: 6000, unit: 'Msg', color: 'from-emerald-500 to-teal-500', shadow: 'shadow-emerald-500/20' },
-    { id: 'email', icon: Mail, label: 'Email Seq', capacity: 5000, unit: 'Sent', color: 'from-blue-500 to-indigo-500', shadow: 'shadow-blue-500/20' },
-    { id: 'linkedin', icon: Linkedin, label: 'LinkedIn', capacity: 100, unit: '%', color: 'from-sky-500 to-cyan-500', shadow: 'shadow-sky-500/20' },
+    { id: 'calls', icon: Phone, label: 'اتصالات مباشرة', capacity: 7200, unit: 'دقيقة', color: 'from-rose-500 to-orange-500', shadow: 'shadow-rose-500/20' },
+    { id: 'whatsapp', icon: MessageCircle, label: 'واتساب رسمي', capacity: 12000, unit: 'رسالة', color: 'from-emerald-500 to-teal-500', shadow: 'shadow-emerald-500/20' },
+    { id: 'email', icon: Mail, label: 'تسلسل بريدي', capacity: 10000, unit: 'إيميل', color: 'from-blue-500 to-indigo-500', shadow: 'shadow-blue-500/20' },
+    { id: 'linkedin', icon: Linkedin, label: 'لينكد إن', capacity: 3000, unit: 'تفاعل', color: 'from-sky-500 to-cyan-500', shadow: 'shadow-sky-500/20' },
 ];
 
 export const FuelGauge = () => {
@@ -27,10 +27,10 @@ export const FuelGauge = () => {
                             initial={{ opacity: 0, x: 50 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
-                            className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-800/50 border border-slate-700 text-emerald-400 text-xs font-mono mb-4"
+                            className="inline-flex items-center gap-2 px-3 py-1 rounded-lg bg-slate-800/50 border border-slate-700 text-emerald-400 text-xs font-bold mb-4"
                         >
                             <TrendingUp size={14} />
-                            PHASE 01 : FUEL INJECTION
+                            المرحلة الأولى: ضخ الوقود
                         </motion.div>
 
                         <motion.h2
@@ -51,7 +51,7 @@ export const FuelGauge = () => {
                             transition={{ delay: 0.3 }}
                             className="text-lg text-slate-400 leading-relaxed max-w-xl ml-auto"
                         >
-                            نحن لا نلزمك بقناة واحدة. نشحن محركك بـ <span className="text-white font-bold">15,000 نقطة تشغيلية</span> شهرياً، ونوجهها تلقائياً للقناة التي تحقق أعلى عائد استثمار لقطاعك.
+                            نحن لا نلزمك بقناة واحدة. نشحن محركك بـ <span className="text-white font-bold">15,000 نقطة تشغيلية</span> ربع سنوياً، ونوجهها تلقائياً للقناة التي تحقق أعلى عائد استثمار لقطاعك.
                         </motion.p>
 
                         <motion.div
@@ -103,18 +103,18 @@ export const FuelGauge = () => {
                                     <div className="w-3 h-3 rounded-full bg-green-500" />
                                 </div>
                                 <div className="font-mono text-xs text-slate-500 tracking-widest uppercase">
-                                    System Status: <span className="text-emerald-400">Online</span>
+                                    حالة النظام: <span className="text-emerald-400">متصل</span>
                                 </div>
                             </div>
 
                             {/* Main Metric */}
                             <div className="text-center mb-12 relative">
-                                <div className="text-slate-400 text-sm font-bold uppercase tracking-widest mb-2">Total Credit Balance</div>
+                                <div className="text-slate-400 text-sm font-bold uppercase tracking-widest mb-2">إجمالي رصيد العمليات (ربع سنوي)</div>
                                 <div className="text-7xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-500 tracking-tighter">
                                     <CountUp end={15000} duration={3} separator="," />
                                 </div>
-                                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-emerald-500 font-mono text-xs bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20">
-                                    + Monthly Refill Active
+                                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-emerald-500 font-bold text-xs bg-emerald-500/10 px-3 py-1 rounded-full border border-emerald-500/20 whitespace-nowrap">
+                                    + تم تفعيل الشحن الربع سنوي
                                 </div>
                             </div>
 
