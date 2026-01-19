@@ -64,7 +64,7 @@ export const JourneyTimeline = () => {
                             whileInView={{ opacity: 1, scale: 1 }}
                             viewport={{ once: true, margin: "-100px" }}
                             transition={{ duration: 0.5, delay: idx * 0.1 }}
-                            className={`flex items-center gap-6 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col relative group`}
+                            className={`flex items-center gap-3 ${idx % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} flex-col relative group`}
                         >
                             {/* Circuit Node Point */}
                             <div className="absolute left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#0a0a0f] border-2 border-slate-700 z-20 group-hover:border-emerald-500 transition-colors">
@@ -73,15 +73,15 @@ export const JourneyTimeline = () => {
 
                             {/* Text Content */}
                             <div className={`flex-1 ${idx % 2 === 0 ? 'md:text-right' : 'md:text-left'} text-center`}>
-                                <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-emerald-400 transition-colors">{step.title}</h3>
-                                <p className={`font-bold text-sm ${step.color} opacity-80 uppercase tracking-wider`}>{step.desc}</p>
+                                <h3 className="text-xl font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors">{step.title}</h3>
+                                <p className={`font-bold text-xs ${step.color} opacity-80 uppercase tracking-wider`}>{step.desc}</p>
                             </div>
 
                             {/* Icon Card */}
-                            <div className="w-24 h-24 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300 shadow-2xl">
+                            <div className="w-20 h-20 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300 shadow-2xl">
                                 <div className={`absolute inset-0 rounded-2xl ${step.bg} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                                 <div className={`absolute -inset-[1px] rounded-2xl ${step.border} opacity-0 group-hover:opacity-100 transition-opacity duration-300 blur-sm`} />
-                                <step.icon className={`w-10 h-10 ${step.color}`} />
+                                <step.icon className={`w-8 h-8 ${step.color}`} />
                             </div>
 
                             {/* Empty space for grid balance */}
