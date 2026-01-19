@@ -6,7 +6,7 @@ import {
     Download, Printer, Building2, DollarSign, Flame, Zap, Users,
     Database, Target, Search, Mail, Linkedin, Phone, MessageCircle,
     Sun, Moon, Save, ArrowRight, ArrowLeft, CheckCircle, Sparkles,
-    Trophy, AlertTriangle, Play, Loader2, Filter
+    Trophy, AlertTriangle, Play, Loader2, Filter, Lock, UserPlus, Key
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -37,6 +37,7 @@ const STEPS = [
     { title: "الاستراتيجية", icon: Target },
     { title: "التحديات", icon: AlertTriangle },
     { title: "التحليل", icon: Calculator },
+    { title: "التسجيل", icon: UserPlus },
     { title: "النتائج", icon: Trophy }
 ];
 
@@ -144,6 +145,34 @@ const NinjaScanner = () => {
         document.documentElement.classList.add('dark');
     }, [providerProfile]);
 
+    // Registration State
+    const [regData, setRegData] = useState({ name: '', email: '', password: '', phone: '' });
+    const [isRegistering, setIsRegistering] = useState(false);
+
+    const handleRegistration = (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsRegistering(true);
+        setTimeout(() => {
+            // Mock Registration Logic
+            const mockUser = {
+                id: 'new_' + Date.now(),
+                name: regData.name,
+                email: regData.email,
+                role: 'provider',
+                token: 'mock-jwt-token'
+            };
+            localStorage.setItem('user', JSON.stringify(mockUser));
+
+            // Auto Save Profile Data
+            handleSaveToProfile();
+
+            // Move to Results
+            setStep(7);
+            setDirection(1);
+            setIsRegistering(false);
+        }, 1500);
+    };
+
     useEffect(() => {
         if (theme === 'dark') document.documentElement.classList.add('dark');
         else document.documentElement.classList.remove('dark');
@@ -178,11 +207,18 @@ const NinjaScanner = () => {
                     spread: 70,
                     origin: { y: 0.6 }
                 });
-                nextStep();
+
+                // If logged in, skip registration (Step 6) and go to Results (Step 7)
+                if (providerProfile) {
+                    setStep(7);
+                } else {
+                    setStep(6);
+                }
+                setDirection(1);
             }, 3000);
             return () => clearTimeout(timer);
         }
-    }, [step]);
+    }, [step, providerProfile]);
 
     const handleSaveToProfile = () => {
         setIsSaving(true);
@@ -622,6 +658,80 @@ const NinjaScanner = () => {
         </div>
     );
 
+
+
+    const renderRegistration = () => (
+        <div className="flex flex-col items-center justify-center py-12 max-w-md mx-auto relative z-10">
+            <div className="text-center mb-10">
+                <div className="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 relative">
+                    <Lock size={32} className="text-emerald-500" />
+                    <div className="absolute inset-0 bg-emerald-500/20 blur-xl animate-pulse delay-75"></div>
+                </div>
+                <h2 className="text-3xl font-bold dark:text-white mb-2">النتائج جاهزة! 🔒</h2>
+                <p className="text-gray-500">قم بإنشاء حسابك مجاناً لفك قفل التقرير وحفظه في ملفك.</p>
+            </div>
+
+            <form onSubmit={handleRegistration} className="w-full bg-white dark:bg-slate-800 p-8 rounded-[2rem] border border-slate-200 dark:border-slate-700 shadow-2xl space-y-5 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full blur-2xl -z-10"></div>
+
+                <InputGroup
+                    label="الاسم الكامل"
+                    id="reg_name"
+                    value={regData.name}
+                    onChange={v => setRegData({ ...regData, name: v })}
+                    placeholder="محمد عبدالله"
+                />
+                <InputGroup
+                    label="البريد الإلكتروني"
+                    id="reg_email"
+                    value={regData.email}
+                    onChange={v => setRegData({ ...regData, email: v })}
+                    placeholder="name@company.com"
+                />
+                <InputGroup
+                    label="رقم الجوال"
+                    id="reg_phone"
+                    value={regData.phone}
+                    onChange={v => setRegData({ ...regData, phone: v })}
+                    placeholder="05xxxxxxxx"
+                />
+                <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-3 px-2 text-sm">كلمة المرور</label>
+                    <div className="relative">
+                        <input
+                            type="password"
+                            required
+                            className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 outline-none focus:border-brand-500 transition-all font-sans"
+                            placeholder="••••••••"
+                            value={regData.password}
+                            onChange={(e) => setRegData({ ...regData, password: e.target.value })}
+                        />
+                        <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                    </div>
+                </div>
+
+                <div className="pt-4">
+                    <button
+                        disabled={isRegistering}
+                        className="w-full bg-emerald-500 hover:bg-emerald-400 text-white font-black py-4 rounded-xl shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2 transition-all hover:scale-[1.02]"
+                    >
+                        {isRegistering ? <Loader2 className="animate-spin" /> : <UnlockButtonContent />}
+                    </button>
+                    <p className="text-center text-xs text-slate-500 mt-4">
+                        بإنشائك للحساب أنت توافق على الشروط والأحكام. سيتم حفظ التقرير تلقائياً.
+                    </p>
+                </div>
+            </form>
+        </div>
+    );
+
+    const UnlockButtonContent = () => (
+        <>
+            <span>كشف النتائج</span>
+            <ArrowLeft size={18} />
+        </>
+    );
+
     const renderResults = () => {
         const ResultTabBtn = ({ id, label, icon: Icon }: any) => (
             <button
@@ -883,7 +993,8 @@ const NinjaScanner = () => {
                         {step === 3 && renderStrategy()}
                         {step === 4 && renderPain()}
                         {step === 5 && renderAnalysis()}
-                        {step === 6 && renderResults()}
+                        {step === 6 && renderRegistration()}
+                        {step === 7 && renderResults()}
                     </motion.div>
                 </AnimatePresence>
             </main>
@@ -911,7 +1022,7 @@ const NinjaScanner = () => {
             )}
 
             {/* Save Button in Results */}
-            {step === 6 && (
+            {step === 7 && (
                 <div className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
                     <button onClick={handleSaveToProfile} disabled={isSaving} className="flex items-center gap-3 bg-white text-emerald-600 font-bold px-8 py-4 rounded-full shadow-2xl hover:scale-105 transition-transform">
                         {isSaving ? <span className="animate-spin">⏳</span> : <Save />}

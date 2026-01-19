@@ -73,6 +73,15 @@ export const DataProvider = ({ children }: { children: ReactNode }) => {
   const refreshContacts = async () => {
     setLoading(true);
     try {
+      // DEMO MODE CHECK
+      const isDemoMode = localStorage.getItem('demo_mode') === 'true';
+      if (isDemoMode) {
+        const { DEMO_CONTACTS } = await import('../utils/demoData');
+        setContacts(DEMO_CONTACTS);
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch('/api/contacts');
       if (!response.ok) throw new Error('Failed to fetch contacts');
       const data = await response.json();
