@@ -127,13 +127,13 @@ export const VisualSlider = ({ label, value, onChange, min, max, step = 1, suffi
     const c = colors[colorClass] || colors.brand;
 
     return (
-        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
+        <div className="bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm" dir="rtl">
             <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center gap-3">
                     {Icon && <Icon size={20} className="text-slate-400" />}
                     <label className="font-bold text-slate-700 dark:text-slate-200">{label}</label>
                 </div>
-                <div className={`text-2xl font-black font-mono ${c.text}`}>
+                <div className={`text-2xl font-black font-mono ${c.text} text-left`} dir="ltr">
                     {prefix}{value.toLocaleString()}{suffix}
                 </div>
             </div>
@@ -142,7 +142,7 @@ export const VisualSlider = ({ label, value, onChange, min, max, step = 1, suffi
                 {/* Track Background */}
                 <div className="absolute w-full h-3 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
-                        className={`h-full ${c.bg} transition-all duration-100`}
+                        className={`absolute top-0 bottom-0 right-0 h-full ${c.bg} transition-all duration-100`}
                         style={{ width: `${percentage}%` }}
                     />
                 </div>
@@ -150,6 +150,7 @@ export const VisualSlider = ({ label, value, onChange, min, max, step = 1, suffi
                 {/* Custom Input */}
                 <input
                     type="range"
+                    dir="rtl"
                     min={min}
                     max={max}
                     step={step}
@@ -162,9 +163,9 @@ export const VisualSlider = ({ label, value, onChange, min, max, step = 1, suffi
                 <div
                     className={`absolute h-6 w-6 rounded-full bg-white border-4 ${c.border} shadow-lg pointer-events-none transition-all duration-100 flex items-center justify-center`}
                     style={{
-                        left: `${percentage}%`,
-                        transform: 'translateX(-50%)',
-                        borderColor: 'currentColor' // Inherits text color set via Tailwind is hard, using inline style for dynamic left
+                        right: `${percentage}%`,
+                        transform: 'translateX(50%)',
+                        borderColor: 'currentColor'
                     }}
                 >
                     <div className={`w-2 h-2 rounded-full ${c.bg}`}></div>
