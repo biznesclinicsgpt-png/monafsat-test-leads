@@ -66,10 +66,10 @@ export const SimulationWizard: React.FC<SimulationWizardProps> = ({ onClose }) =
 
     // Step Runner
     useEffect(() => {
-        if (currentStep === 1) runSimulation('analysis', 3000);
-        if (currentStep === 2) runSimulation('scouting', 4000);
-        if (currentStep === 3) runSimulation('enrichment', 4000);
-        if (currentStep === 4) runSimulation('scoring', 3000);
+        if (currentStep === 1) runSimulation('analysis', 5000 + Math.random() * 2000); // 5-7s
+        if (currentStep === 2) runSimulation('scouting', 12000 + Math.random() * 5000); // 12-17s
+        if (currentStep === 3) runSimulation('enrichment', 15000 + Math.random() * 5000); // 15-20s
+        if (currentStep === 4) runSimulation('scoring', 8000 + Math.random() * 3000); // 8-11s
     }, [currentStep]);
 
     const runSimulation = (stage: keyof typeof LOGS, duration: number) => {
@@ -259,7 +259,7 @@ export const SimulationWizard: React.FC<SimulationWizardProps> = ({ onClose }) =
 
                             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 w-full max-w-sm mb-8 grid grid-cols-2 gap-4">
                                 <div className="text-center">
-                                    <div className="text-xs text-slate-400">Total Leads</div>
+                                    <div className="text-xs text-slate-400">Total Leads Found</div>
                                     <div className="text-xl font-bold text-slate-800">1,420</div>
                                 </div>
                                 <div className="text-center border-r border-slate-200">

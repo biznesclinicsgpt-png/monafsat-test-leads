@@ -9,9 +9,20 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleLogin = (e: React.FormEvent) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
+
+        // DEMO ACCESS CHECK
+        if (email === 'demo@manafeth.com' && password === 'demo123') {
+            setTimeout(async () => {
+                const { injectDemoData } = await import('../services/simulationService');
+                injectDemoData();
+                // Force reload to ensure DataContext picks up the new localStorage flags
+                window.location.assign('/app');
+            }, 1000);
+            return;
+        }
 
         // Simulate API Call
         setTimeout(() => {
