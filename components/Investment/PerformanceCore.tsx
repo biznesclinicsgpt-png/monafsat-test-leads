@@ -22,7 +22,7 @@ export const PerformanceCore = () => {
                         شراكة في <span className="text-cyan-400">النمو والعوائد</span>
                     </h2>
                     <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                        نحن لا نقدم مجرد أدوات، بل نضع فريقاً كاملاً وتقنيات متقدمة لخدمة أهدافك البيعية.
+                        نعمل معك بنظام <span className="text-white font-bold">الشراكة في العوائد</span> (نسبة يتم الاتفاق عليها) مقابل التنفيذ الكامل، الإشراف، والمتابعة المستمرة لتحقيق أهدافك البيعية.
                     </p>
                 </div>
 

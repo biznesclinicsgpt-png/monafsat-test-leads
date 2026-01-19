@@ -51,7 +51,7 @@ export const FuelGauge = () => {
                             transition={{ delay: 0.3 }}
                             className="text-lg text-slate-400 leading-relaxed max-w-xl ml-auto"
                         >
-                            نحن لا نلزمك بقناة واحدة. نشحن محركك بـ <span className="text-white font-bold">15,000 نقطة تشغيلية</span> ربع سنوياً، ونوجهها تلقائياً للقناة التي تحقق أعلى عائد استثمار لقطاعك.
+                            تكلفة الحملات <span className="text-white font-bold">5,000 ريال شهرياً</span> (أو <span className="text-white font-bold">9,000 ريال</span> للمشتركين ربع سنوياً). مقابل هذا الاستثمار، نشحن محركك بـ <span className="text-white font-bold">15,000 نقطة تشغيلية</span> ربع سنوياً، ونوجهها تلقائياً للقناة التي تحقق أعلى عائد استثمار لقطاعك.
                         </motion.p>
 
                         <motion.div
