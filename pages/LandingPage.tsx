@@ -462,66 +462,11 @@ const CaseStudySection = () => {
                         viewport={{ once: true }}
                         className="w-full lg:w-[500px]"
                     >
-                        <div className="bg-white text-slate-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
-                            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand to-cyan-500" />
-
-                            <h3 className="font-bold text-xl mb-8 flex items-center gap-2">
-                                <BarChart3 className="text-brand" />
-                                النتائج بالأرقام
-                            </h3>
-
-                            <div className="space-y-6">
-                                {/* Metric 1 */}
-                                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                                    <div className="flex justify-between text-sm text-slate-500 mb-2 font-bold">
-                                        <span>عدد العملاء المحتملين (شهرياً)</span>
-                                        <span className="text-green-600 bg-green-100 px-2 py-0.5 rounded text-xs">+1000%</span>
-                                    </div>
-                                    <div className="flex items-end justify-between">
-                                        <div>
-                                            <div className="text-xs text-slate-400 mb-1">Before</div>
-                                            <div className="font-bold text-slate-500 text-lg">128</div>
-                                        </div>
-                                        <ArrowLeft className="text-slate-300 mb-2" />
-                                        <div className="text-left">
-                                            <div className="text-xs text-slate-400 mb-1">After</div>
-                                            <div className="font-black text-brand text-4xl">1,489</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Metric 2 */}
-                                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                                    <div className="flex justify-between text-sm text-slate-500 mb-2 font-bold">
-                                        <span>الاجتماعات المحجوزة</span>
-                                        <span className="text-green-600 bg-green-100 px-2 py-0.5 rounded text-xs">6X Growth</span>
-                                    </div>
-                                    <div className="flex items-end justify-between">
-                                        <div>
-                                            <div className="text-xs text-slate-400 mb-1">Before</div>
-                                            <div className="font-bold text-slate-500 text-lg">4</div>
-                                        </div>
-                                        <ArrowLeft className="text-slate-300 mb-2" />
-                                        <div className="text-left">
-                                            <div className="text-xs text-slate-400 mb-1">After</div>
-                                            <div className="font-black text-brand text-4xl">24</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Metric 3 */}
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
-                                        <div className="text-xs text-slate-500 mb-1 font-bold">معدل التحويل</div>
-                                        <div className="font-black text-slate-800 text-2xl">1.07%</div>
-                                    </div>
-                                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
-                                        <div className="text-xs text-slate-500 mb-1 font-bold">نمو الإيرادات</div>
-                                        <div className="font-black text-slate-800 text-2xl">1.2X</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <img
+                            src="/shaghf_case_study.png"
+                            alt="Shaghf Case Study Growth"
+                            className="w-full h-auto rounded-[2.5rem] shadow-2xl border-4 border-slate-800/50 hover:scale-[1.02] transition-transform duration-500"
+                        />
                     </motion.div>
                 </div>
             </div>
