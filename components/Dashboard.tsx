@@ -73,7 +73,7 @@ const Dashboard: React.FC = () => {
                   <h3 className="font-bold text-slate-800">المحرك جاهز للعمل</h3>
                   <p className="text-xs text-slate-500 mt-1">استراتيجيتك ممتازة. ابدأ بجلب ليدات من قاعدة البيانات الآن.</p>
                 </div>
-                <button onClick={() => navigate('/contacts')} className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-blue-700 transition-all">إضافة جهات اتصال</button>
+                <button onClick={() => navigate('/app/contacts')} className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-blue-700 transition-all">إضافة جهات اتصال</button>
               </>
             )}
             {primaryAction === 'START_CAMPAIGN' && (
@@ -82,7 +82,7 @@ const Dashboard: React.FC = () => {
                   <h3 className="font-bold text-slate-800">بياناتك جاهزة للإرسال</h3>
                   <p className="text-xs text-slate-500 mt-1">لديك {contacts.length} ليد مؤهل. حولهم لفرص بيعية الآن.</p>
                 </div>
-                <button onClick={() => navigate('/contacts')} className="bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-emerald-700 transition-all">تجهيز حملة</button>
+                <button onClick={() => navigate('/app/contacts')} className="bg-emerald-600 text-white px-6 py-2.5 rounded-lg font-bold text-sm hover:bg-emerald-700 transition-all">تجهيز حملة</button>
               </>
             )}
           </div>
@@ -129,7 +129,7 @@ const Dashboard: React.FC = () => {
               <span className="w-2 h-5 bg-blue-500 rounded-full"></span>
               محرك البيانات (Outbound Engine)
             </h3>
-            <button onClick={() => navigate('/contacts')} className="text-xs text-blue-600 font-bold hover:underline">عرض التفاصيل</button>
+            <button onClick={() => navigate('/app/contacts')} className="text-xs text-blue-600 font-bold hover:underline">عرض التفاصيل</button>
           </div>
 
           <div className="space-y-6">
@@ -179,7 +179,7 @@ const Dashboard: React.FC = () => {
         <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm flex flex-col justify-center gap-3">
           <h3 className="font-bold text-slate-800 mb-2">إجراءات سريعة</h3>
 
-          <button onClick={() => navigate('/contacts')} className="w-full flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-blue-50 hover:border-blue-200 transition-all group text-right">
+          <button onClick={() => navigate('/app/contacts')} className="w-full flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-blue-50 hover:border-blue-200 transition-all group text-right">
             <span className="text-sm font-bold text-slate-600 group-hover:text-blue-700">⚡️ إضافة جهات اتصال</span>
             <svg className="w-4 h-4 text-slate-300 group-hover:text-blue-500 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
           </button>
@@ -189,7 +189,7 @@ const Dashboard: React.FC = () => {
             <svg className="w-4 h-4 text-slate-300 group-hover:text-indigo-500 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
           </button>
 
-          <button onClick={() => navigate('/contacts')} className="w-full flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-emerald-50 hover:border-emerald-200 transition-all group text-right">
+          <button onClick={() => navigate('/app/contacts')} className="w-full flex items-center justify-between p-3 rounded-lg border border-slate-100 hover:bg-emerald-50 hover:border-emerald-200 transition-all group text-right">
             <span className="text-sm font-bold text-slate-600 group-hover:text-emerald-700">📤 تجهيز حملة (Export)</span>
             <svg className="w-4 h-4 text-slate-300 group-hover:text-emerald-500 transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" /></svg>
           </button>
