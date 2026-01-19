@@ -23,6 +23,7 @@ import ProviderIntegrationsPage from './pages/ProviderIntegrationsPage';
 
 import LoginPage from './pages/LoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
+import GrowthSystemPage from './pages/GrowthSystemPage';
 import InvestmentPage from './pages/InvestmentPage';
 
 const App = () => {
