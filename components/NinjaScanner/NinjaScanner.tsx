@@ -274,7 +274,9 @@ const NinjaScanner = () => {
                 className="w-auto h-32 md:h-40 flex items-center justify-center mb-10 relative z-10"
             >
                 <div className="absolute inset-0 bg-emerald-500/20 blur-[60px] rounded-full animate-pulse" />
-                <img src="/logo_full.png" alt="BiznesClinics" className="h-full w-auto object-contain drop-shadow-2xl relative z-10" />
+                <div className="bg-white p-4 rounded-3xl shadow-2xl relative z-10 transform hover:scale-105 transition-transform duration-500 border-4 border-emerald-500/20">
+                    <img src="/logo_full.png" alt="BiznesClinics" className="h-20 w-auto object-contain" />
+                </div>
             </motion.div>
 
             <div className="relative z-10 max-w-4xl mx-auto px-4">
@@ -674,7 +676,7 @@ const NinjaScanner = () => {
                                                 {Math.round(stat.score)}%
                                             </div>
                                         </div>
-                                        <div className="absolute bottom-0 left-0 h-1 bg-slate-600 w-full">
+                                        <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-600 w-full" dir="rtl">
                                             <div className={`h-full ${stat.score >= 80 ? 'bg-brand-500' : 'bg-amber-500'}`} style={{ width: `${stat.score}%` }}></div>
                                         </div>
                                     </div>
@@ -693,12 +695,12 @@ const NinjaScanner = () => {
                                             { l: 'LinkedIn', v: formData.dailyLinkedin, t: 100 },
                                             { l: 'Emails', v: formData.dailyEmails, t: 100 }
                                         ].map((b, i) => (
-                                            <div key={i} className="flex items-center gap-4 text-sm">
+                                            <div key={i} className="flex items-center gap-4 text-sm" dir="rtl">
                                                 <div className="w-24 font-bold text-gray-400">{b.l}</div>
-                                                <div className="flex-1 h-3 bg-gray-800 rounded-full overflow-hidden">
-                                                    <div className={`h-full ${b.v >= b.t ? 'bg-brand-500' : 'bg-slate-600'}`} style={{ width: `${Math.min((b.v / b.t) * 100, 100)}%` }}></div>
+                                                <div className="flex-1 h-3 bg-gray-800 rounded-full overflow-hidden relative">
+                                                    <div className={`h-full absolute right-0 top-0 ${b.v >= b.t ? 'bg-brand-500' : 'bg-slate-600'}`} style={{ width: `${Math.min((b.v / b.t) * 100, 100)}%` }}></div>
                                                 </div>
-                                                <div className="w-16 font-mono text-white text-right">{b.v}/{b.t}</div>
+                                                <div className="w-16 font-mono text-white text-left">{b.v}/{b.t}</div>
                                             </div>
                                         ))}
                                     </div>
@@ -773,24 +775,43 @@ const NinjaScanner = () => {
                     )}
 
                     {resultTab === 'recs' && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-h-[600px] overflow-y-auto px-2">
-                            {results.recommendations.map((rec, i) => (
-                                <div key={i} className={`p-6 rounded-2xl border ${rec.type === 'critical' ? 'bg-rose-500/10 border-rose-500/30' : 'bg-white/5 border-white/5'} hover:bg-white/10 transition-colors`}>
-                                    <div className="flex items-start gap-4">
-                                        <div className="text-3xl bg-white/10 p-3 rounded-xl">{rec.icon}</div>
-                                        <div>
-                                            <div className="flex items-center gap-2 mb-2">
-                                                {rec.type === 'critical' && <span className="bg-rose-500 text-white text-[10px] font-bold px-2 py-0.5 rounded">CRITICAL</span>}
-                                                <h4 className="font-bold text-white text-lg">{rec.title}</h4>
+                        <div className="h-full flex flex-col">
+                            <div className="flex justify-between items-center mb-6">
+                                <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+                                    <Lightbulb className="text-yellow-400" />
+                                    التوصيات الاستراتيجية
+                                </h3>
+                            </div>
+                            {results.recommendations.length > 0 ? (
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto px-2 max-h-[600px] scrollbar-thin scrollbar-thumb-slate-600">
+                                    {results.recommendations.map((rec, i) => (
+                                        <div key={i} className={`p-6 rounded-3xl border ${rec.type === 'critical' ? 'bg-rose-500/5 border-rose-500/20' : 'bg-slate-700/30 border-slate-600'} hover:bg-slate-700/50 transition-colors`}>
+                                            <div className="flex items-start gap-4">
+                                                <div className="text-4xl bg-slate-800 p-4 rounded-2xl shadow-lg">{rec.icon}</div>
+                                                <div>
+                                                    <div className="flex items-center gap-2 mb-3">
+                                                        {rec.type === 'critical' && <span className="bg-rose-500 text-white text-[10px] font-black px-2 py-1 rounded-md tracking-wider">CRITICAL</span>}
+                                                        <h4 className="font-bold text-white text-lg">{rec.title}</h4>
+                                                    </div>
+                                                    <p className="text-gray-400 text-sm mb-4 leading-relaxed">{rec.problem}</p>
+                                                    <div className="bg-emerald-900/20 p-4 rounded-xl border border-emerald-500/10">
+                                                        <p className="text-emerald-400 font-bold text-sm flex gap-2">
+                                                            <span className="mt-1">💡</span>
+                                                            {rec.solution}
+                                                        </p>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <p className="text-gray-400 text-sm mb-3">{rec.problem}</p>
-                                            <p className="text-emerald-400 font-bold text-sm bg-emerald-500/10 p-2 rounded-lg border border-emerald-500/20">
-                                                💡 {rec.solution}
-                                            </p>
                                         </div>
-                                    </div>
+                                    ))}
                                 </div>
-                            ))}
+                            ) : (
+                                <div className="flex flex-col items-center justify-center h-[400px] text-center bg-slate-700/20 rounded-3xl border border-slate-700 border-dashed">
+                                    <div className="text-6xl mb-6">🎉</div>
+                                    <h3 className="text-2xl font-bold text-white mb-2">أداء أسطوري!</h3>
+                                    <p className="text-gray-400 max-w-md">لم يجد النظام أي ثغرات حرجة في الوقت الحالي. واصل الأداء المتميز وحافظ على زخم النمو.</p>
+                                </div>
+                            )}
                         </div>
                     )}
 
@@ -818,14 +839,14 @@ const NinjaScanner = () => {
             {/* Header & Nav */}
             <header className="relative z-50 p-6 flex justify-between items-center max-w-7xl mx-auto">
                 <div className="font-black text-2xl flex items-center gap-2">
-                    <span>🥷</span>
+                    <span className="bg-white p-2 rounded-lg shadow-md">🥷</span>
                     <span className="bg-gradient-to-r from-emerald-500 to-cyan-500 bg-clip-text text-transparent">NinjaScanner</span>
                 </div>
                 <button onClick={toggleTheme} className="p-2 rounded-full bg-white/5 hover:bg-white/10">{theme === 'dark' ? <Sun /> : <Moon />}</button>
             </header>
 
             {/* Main Content */}
-            <main className="relative z-10 container mx-auto px-4 min-h-[500px] flex flex-col justify-center">
+            <main className="relative z-10 container mx-auto px-4 min-h-[600px] flex flex-col justify-center pb-40">
                 {/* Progress Bar (Only visible steps 1-5) */}
                 {step > 0 && step < 6 && (
                     <div className="max-w-xl mx-auto w-full mb-12">
@@ -834,9 +855,9 @@ const NinjaScanner = () => {
                             <span>{STEPS[step].title}</span>
                             <span>{Math.round((step / 5) * 100)}%</span>
                         </div>
-                        <div className="h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+                        <div className="h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden relative" dir="rtl">
                             <motion.div
-                                className="h-full bg-emerald-500"
+                                className="h-full bg-emerald-500 absolute right-0 top-0"
                                 initial={{ width: 0 }}
                                 animate={{ width: `${(step / 5) * 100}%` }}
                                 transition={{ duration: 0.5 }}
