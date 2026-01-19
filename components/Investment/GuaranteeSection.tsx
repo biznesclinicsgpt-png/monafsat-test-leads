@@ -54,10 +54,10 @@ export const GuaranteeSection = () => {
                                 ماذا لو لم نصل إلى 30 فرصة؟
                             </h3>
                             <p className="text-slate-300 mb-2 leading-relaxed">
-                                ✅ <span className="text-white font-bold underline decoration-emerald-500 decoration-2">شهر كامل مجانًا</span> يشمل: رصيد تشغيلي على حسابنا + فريق التنفيذ + المحرك كامل.
+                                الضمان هو استمرار الوقود التشغيلي مع المحرك وفريق العمل من <span className="text-white font-bold underline decoration-emerald-500 decoration-2">30-90 يوم مجاناً</span> لحين الوصول إلى النتائج المتفق عليها، وقد يمتد لأكثر من ذلك.
                             </p>
                             <p className="text-slate-500 text-sm">
-                                أنت لا تتحمل أي تكلفة إضافية. هذا ليس وعداً تسويقياً، هذا التزام تعاقدي.
+                                ✅ شهر كامل مجانًا يشمل: رصيد تشغيلي على حسابنا + فريق التنفيذ + المحرك كامل.
                             </p>
                         </div>
                     </motion.div>

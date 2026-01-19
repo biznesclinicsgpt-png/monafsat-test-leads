@@ -3,6 +3,7 @@ import { EngineHero } from '../components/Investment/EngineHero';
 import { FuelGauge } from '../components/Investment/FuelGauge';
 import { PerformanceCore } from '../components/Investment/PerformanceCore';
 import { JourneyTimeline } from '../components/Investment/JourneyTimeline';
+import { WalletModel } from '../components/Investment/WalletModel';
 import { GuaranteeSection } from '../components/Investment/GuaranteeSection';
 
 const InvestmentPage = () => {
@@ -12,6 +13,7 @@ const InvestmentPage = () => {
             <FuelGauge />
             <PerformanceCore />
             <JourneyTimeline />
+            <WalletModel />
             <GuaranteeSection />
         </div>
     );
