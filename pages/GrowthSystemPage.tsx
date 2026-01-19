@@ -207,7 +207,8 @@ const GrowthSystemPage = () => {
                                 onClick={async () => {
                                     const { injectDemoData } = await import('../services/simulationService');
                                     injectDemoData();
-                                    navigate('/app');
+                                    // Force reload to ensure DataContext picks up the new localStorage flags
+                                    window.location.assign('/app');
                                 }}
                                 className="w-full sm:w-auto bg-white text-slate-700 border-2 border-slate-200 text-lg px-8 py-5 rounded-2xl font-bold transition-all flex items-center justify-center gap-2"
                             >
@@ -1295,7 +1296,8 @@ const GrowthSystemPage = () => {
                                     const { injectDemoData } = await import('../services/simulationService');
                                     injectDemoData();
                                     alert('تم تفعيل وضع العرض التجريبي (Demo Mode) ✅\nسيتم نقلك للوحة التحكم...');
-                                    navigate('/app');
+                                    // Force reload to ensure DataContext picks up the new localStorage flags
+                                    window.location.assign('/app');
                                 }}
                                 className="bg-white text-slate-900 hover:bg-brand-50 px-6 py-3 rounded-xl font-bold transition-all flex items-center gap-2 shadow-lg hover:scale-105"
                             >
