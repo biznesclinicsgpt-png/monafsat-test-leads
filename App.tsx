@@ -23,7 +23,7 @@ import ProviderIntegrationsPage from './pages/ProviderIntegrationsPage';
 
 import LoginPage from './pages/LoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
-import GrowthSystemPage from './pages/GrowthSystemPage';
+import InvestmentPage from './pages/InvestmentPage';
 
 const App = () => {
   return (
@@ -33,7 +33,7 @@ const App = () => {
           {/* Public Routes */}
           <Route path="/" element={<GrowthSystemPage />} />
           <Route path="/growth" element={<GrowthSystemPage />} />
-          <Route path="/investment" element={<GrowthSystemPage />} />
+          <Route path="/investment" element={<InvestmentPage />} />
           <Route path="/scanner" element={<LandingPage />} />
           <Route path="/landing-legacy" element={<LandingPage />} />
           <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
