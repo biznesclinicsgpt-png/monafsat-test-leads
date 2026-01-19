@@ -76,6 +76,10 @@ const GrowthSystemPage = () => {
 
                         <div className="hidden md:flex items-center gap-8">
                             <a href="#ninja-os" className="text-slate-600 hover:text-brand-600 font-bold transition-colors">نظام Ninja OS</a>
+                            <button onClick={() => navigate('/investment')} className="text-slate-600 hover:text-brand-600 font-bold transition-colors flex items-center gap-2">
+                                <Rocket size={18} />
+                                محرك الاستثمار
+                            </button>
                             <button key="scanner-link" onClick={() => navigate('/scanner')} className="text-slate-600 hover:text-brand-600 font-bold transition-colors flex items-center gap-2">
                                 <Layout size={18} />
                                 عن تشخيص النينجا
@@ -108,6 +112,7 @@ const GrowthSystemPage = () => {
                         >
                             <div className="px-4 py-6 space-y-4 shadow-xl">
                                 <a href="#ninja-os" onClick={() => setIsMenuOpen(false)} className="block text-lg font-bold text-slate-700">نظام Ninja OS</a>
+                                <button onClick={() => { setIsMenuOpen(false); navigate('/investment'); }} className="block text-lg font-bold text-slate-700 w-full text-right flex items-center justify-end gap-2">محرك الاستثمار <Rocket size={18} /></button>
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/scanner'); }} className="block text-lg font-bold text-slate-700 w-full text-right">عن تشخيص النينجا 🥷</button>
 
                                 <button onClick={() => { setIsMenuOpen(false); navigate('/diagnosis'); }} className="w-full bg-brand-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2">
