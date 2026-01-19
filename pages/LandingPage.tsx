@@ -305,6 +305,55 @@ const Hero = ({ onStartDiagnosis }: { onStartDiagnosis: () => void }) => {
     );
 };
 
+const ClientsSection = () => {
+    return (
+        <section className="py-12 bg-white w-full border-b border-slate-100 overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 md:px-12 text-center">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-8"
+                >
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-800 mb-2">
+                        شركاء النجاح
+                    </h3>
+                    <p className="text-slate-500 font-medium text-lg">
+                        هذا مجرد 10% من عملائنا و شركاء النجاح
+                    </p>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02, rotateX: 2, rotateY: 2 }}
+                    transition={{ type: "spring", stiffness: 100 }}
+                    style={{ perspective: 1000 }}
+                    className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden shadow-lg border border-slate-100 bg-white"
+                >
+                    {/* Scanner Beam Effect */}
+                    <motion.div
+                        animate={{ left: ['-100%', '200%'] }}
+                        transition={{ duration: 4, repeat: Infinity, ease: "linear", repeatDelay: 3 }}
+                        className="absolute top-0 bottom-0 w-32 bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-[-20deg] z-10 pointer-events-none"
+                    />
+
+                    {/* Image */}
+                    <img
+                        src="/clients_grid.png"
+                        alt="Our Clients"
+                        className="w-full h-auto object-cover"
+                    />
+
+                    {/* Overlay Gradient for depth */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none" />
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
 const PainSection = () => {
     return (
         <section className="py-24 bg-white w-full">
@@ -344,6 +393,137 @@ const PainSection = () => {
                         </motion.div>
                     ))}
                 </motion.div>
+            </div>
+        </section>
+    );
+};
+
+
+
+const CaseStudySection = () => {
+    return (
+        <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
+            {/* Background Decoration */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-brand/5 rounded-full blur-[100px] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto px-4 md:px-12 relative z-10">
+                <div className="flex flex-col lg:flex-row gap-16 items-center">
+
+                    {/* Left Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="flex-1"
+                    >
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand/30 bg-brand/10 text-brand text-sm font-bold mb-6">
+                            <Sparkles size={14} />
+                            قصة نجاح
+                        </div>
+
+                        <h2 className="text-3xl md:text-5xl font-black mb-6 leading-tight">
+                            كيف ضاعفت <span className="text-brand">شغف</span> عدد العملاء المحتملين <span className="underline decoration-brand decoration-4 underline-offset-4">11 ضعفاً</span>؟
+                        </h2>
+
+                        <div className="space-y-6 text-slate-300 text-lg leading-relaxed mb-8">
+                            <p>
+                                <strong className="text-white block mb-2">التحدي:</strong>
+                                كانت "شغف" تواجه صعوبة في توسيع نطاق الوصول للعملاء، وتذبذب في جودة الـ Leads، مما أدى إلى فجوات في خط المبيعات (Pipeline).
+                            </p>
+                            <p>
+                                <strong className="text-white block mb-2">الحل:</strong>
+                                قمنا ببناء استراتيجية استحواذ متعددة القنوات (Multi-channel) مدعومة بالذكاء الاصطناعي، مع حملات مخصصة استهدفت صناع القرار بدقة.
+                            </p>
+                        </div>
+
+                        {/* Testimonial */}
+                        <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 backdrop-blur-sm relative">
+                            <Quote size={40} className="text-brand/20 absolute top-4 left-4 rotate-180" />
+                            <p className="text-slate-300 italic mb-4 relative z-10">
+                                "أود أن أعبر عن خالص امتناني لشركة بزنس كلينكس على تجربتي الرائعة معهم. بفضل إبداعهم في استهداف العملاء واحترافهم في تحليل السوق، تمكنت من تحقيق أهدافي في المبيعات بوقت قياسي."
+                            </p>
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 bg-slate-700 rounded-full flex items-center justify-center text-slate-400 font-bold overflow-hidden">
+                                    {/* Placeholder for CEO Image if not available */}
+                                    MA
+                                </div>
+                                <div>
+                                    <div className="font-bold text-white">Eng. Moshari Alqahtani</div>
+                                    <div className="text-xs text-brand">CEO, Shaghf Agency</div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    {/* Right Stats Card */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        className="w-full lg:w-[500px]"
+                    >
+                        <div className="bg-white text-slate-900 rounded-[2.5rem] p-8 shadow-2xl relative overflow-hidden">
+                            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-brand to-cyan-500" />
+
+                            <h3 className="font-bold text-xl mb-8 flex items-center gap-2">
+                                <BarChart3 className="text-brand" />
+                                النتائج بالأرقام
+                            </h3>
+
+                            <div className="space-y-6">
+                                {/* Metric 1 */}
+                                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                    <div className="flex justify-between text-sm text-slate-500 mb-2 font-bold">
+                                        <span>عدد العملاء المحتملين (شهرياً)</span>
+                                        <span className="text-green-600 bg-green-100 px-2 py-0.5 rounded text-xs">+1000%</span>
+                                    </div>
+                                    <div className="flex items-end justify-between">
+                                        <div>
+                                            <div className="text-xs text-slate-400 mb-1">Before</div>
+                                            <div className="font-bold text-slate-500 text-lg">128</div>
+                                        </div>
+                                        <ArrowLeft className="text-slate-300 mb-2" />
+                                        <div className="text-left">
+                                            <div className="text-xs text-slate-400 mb-1">After</div>
+                                            <div className="font-black text-brand text-4xl">1,489</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Metric 2 */}
+                                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                    <div className="flex justify-between text-sm text-slate-500 mb-2 font-bold">
+                                        <span>الاجتماعات المحجوزة</span>
+                                        <span className="text-green-600 bg-green-100 px-2 py-0.5 rounded text-xs">6X Growth</span>
+                                    </div>
+                                    <div className="flex items-end justify-between">
+                                        <div>
+                                            <div className="text-xs text-slate-400 mb-1">Before</div>
+                                            <div className="font-bold text-slate-500 text-lg">4</div>
+                                        </div>
+                                        <ArrowLeft className="text-slate-300 mb-2" />
+                                        <div className="text-left">
+                                            <div className="text-xs text-slate-400 mb-1">After</div>
+                                            <div className="font-black text-brand text-4xl">24</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Metric 3 */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
+                                        <div className="text-xs text-slate-500 mb-1 font-bold">معدل التحويل</div>
+                                        <div className="font-black text-slate-800 text-2xl">1.07%</div>
+                                    </div>
+                                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center">
+                                        <div className="text-xs text-slate-500 mb-1 font-bold">نمو الإيرادات</div>
+                                        <div className="font-black text-slate-800 text-2xl">1.2X</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
             </div>
         </section>
     );
@@ -1192,6 +1372,8 @@ const LandingPage = () => {
             <Navbar onStartDiagnosis={startDiagnosis} />
             <main className="w-full">
                 <Hero onStartDiagnosis={startDiagnosis} />
+                <ClientsSection />
+                <CaseStudySection />
                 <PainSection />
                 <QuantifiedPain />
                 <ValueProposition />
