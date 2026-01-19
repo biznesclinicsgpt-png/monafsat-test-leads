@@ -123,6 +123,8 @@ export interface Contact {
   b2b_status?: string;
   industry_22?: string;
   b2b_summary?: string;
+  grade?: string;
+  created_at?: string;
 
   // App Specific / Pipeline
   icpStatus?: 'pending' | 'verified' | 'failed';

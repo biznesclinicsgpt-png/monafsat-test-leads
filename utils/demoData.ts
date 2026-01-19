@@ -53,17 +53,54 @@ export const DEMO_CONTACTS: Contact[] = [
         employee_count: "1001-5000",
         industry_ar: "التطوير العقاري / المشاريع الكبرى",
         industry_2: "Real Estate Development",
+        industry_22: "Hospitality Projects",
         subcategory: "Giga Projects",
+        sub_subcategory: "Regenerative Tourism",
+        manufacture: "No",
+        company_official_name: "Red Sea Global (RSG)",
         company_description: "Red Sea Global is a closed joint-stock company wholly owned by the Public Investment Fund (PIF) of Saudi Arabia. It is a vertical developer, spearheading the development of The Red Sea and Amaala, two world-leading regenerative tourism destinations.",
         company_linkedin_url: "https://linkedin.com/company/red-sea-global",
         company_location: "Riyadh, Saudi Arabia",
+        industry_tier: "Tier 1 (Strategic)",
+        final_icp_tier: "Tier A+",
+
+        // Extended Personal Info
+        title_tier: "C-Level / Director",
+        function_2: "Project Management",
+        phone_2: "+966112223333",
+        address1: "King Fahd Road, Olaya",
+        date_of_birth: "1980-05-15",
+        timezone: "Asia/Riyadh",
+        website: "www.redseaglobal.com",
 
         // AI Strategy
         arabic_summary: "عبدالرحمن هو مدير مشاريع مخضرم في البحر الأحمر الدولية، يقود تطوير البنية التحتية للمرحلة 2. يركز حالياً على حلول الاستدامة وتقنيات البناء الحديثة. نشط جداً على لينكد إن ويتفاعل مع محتوى الطاقة المتجددة.",
         initial_icebreaker: "استاذ عبدالرحمن، تابعت باهتمام تحديثاتكم الأخيرة حول مشروع 'أمالا' والتقدم في البنية التحتية المستدامة. جهد جبار فعلاً!",
         prospect_about: "Experienced Project Director with a demonstrated history of working in the real estate industry. Strong program and project management professional skilled in Negotiation, Construction, and Engineering.",
+        about: "Passionate about building sustainable futures. Leading teams to deliver world-class destinations.",
+        title_description: "Responsible for overseeing major infrastructure projects and ensuring sustainability compliance.",
         linkedin_sales_navigator: "Active (Posted 2 days ago)",
-        premium: "yes"
+        premium: "yes",
+        open_profile: "yes",
+        b2b_status: "High Potential",
+        b2b_summary: "Strong match for our enterprise construction tech solutions due to their sustainability focus.",
+
+        // Campaigns
+        welcome_message: "Hi Abdulrahman, impressive work at Red Sea Global.",
+        follow_up_1: "checking in on my previous note regarding sustainability tech.",
+        follow_up_2: "Thoughts on this case study?",
+        follow_up_3: "One last ping before I close this file.",
+        subject_f1: "Sustainability at RSG",
+        subject_f2: "RSG x Tech",
+        subject_f3: "Quick question",
+        "3rd_scene": "Sent case study video on Jan 20th",
+
+        // System Data
+        record_id: "REC-882190",
+        profile_unique_id: "PID-992211",
+        li_messages: "Thread started Jan 15. Replied Jan 16.",
+        call_recordings: "https://calls.manafeth.com/rec_123.mp3",
+        created_at: "2024-01-01T10:00:00Z"
     },
     {
         id: "demo_2",
@@ -88,17 +125,45 @@ export const DEMO_CONTACTS: Contact[] = [
         employee_count: "501-1000",
         industry_ar: "التطوير العقاري / الإسكان",
         industry_2: "Real Estate",
+        industry_22: "Residential",
         subcategory: "Residential Communities",
+        sub_subcategory: "Integrated Living",
+        manufacture: "No",
+        company_official_name: "ROSHN Real Estate Company",
         company_description: "ROSHN is a national real estate developer, powered by the Public Investment Fund (PIF). We are committed to delivering high-quality communities to the Saudi people.",
         company_linkedin_url: "https://linkedin.com/company/roshn",
         company_location: "Riyadh, Saudi Arabia",
+        industry_tier: "Tier 1",
+        final_icp_tier: "Tier A",
+
+        // Extended Personal Info
+        title_tier: "VP / Head",
+        function_2: "Construction Management",
+        phone_2: "+966500000000",
+        address1: "Riyadh Front",
+        date_of_birth: "1985-11-20",
+        grade: "A",
 
         // AI Strategy
         arabic_summary: "المهندس فيصل يشغل منصب نائب الرئيس للإنشاءات، وهو المسؤول عن استراتيجية التوسع في شمال الرياض. يبحث عن مقاولين ذوي كفاءة عالية في التشطيبات السريعة وتقنيات البناء مسبق الصنع.",
         initial_icebreaker: "م. فيصل، مبروك الاعلان عن حي 'سدرة' الجديد! التصاميم المعمارية السلمانية تعكس هوية رائعة.",
         prospect_about: "VP of Construction at ROSHN. Leading the technical delivery of integrated communities across the Kingdom.",
+        about: "Dedicated to transforming the urban landscape of Saudi Arabia.",
+        title_description: "Oversees construction methodology and contractor selection for Sedra project.",
         linkedin_sales_navigator: "Active (Posted 5 days ago)",
-        premium: "yes"
+        premium: "yes",
+        open_profile: "yes",
+        b2b_status: "Qualified",
+
+        // Campaigns
+        welcome_message: "Hello Eng. Faisal, regarding Sedra phase 3.",
+        follow_up_1: "Following up on the pre-cast concrete proposal.",
+        subject_f1: "Sedra Construction Tech",
+
+        // System Data
+        record_id: "REC-112233",
+        profile_unique_id: "PID-445566",
+        created_at: "2024-01-05T09:00:00Z"
     },
     {
         id: "demo_3",
