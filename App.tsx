@@ -34,7 +34,8 @@ const App = () => {
           {/* Public Routes */}
           <Route path="/" element={<GrowthSystemPage />} />
           <Route path="/growth" element={<GrowthSystemPage />} />
-          <Route path="/investment" element={<InvestmentPage />} />
+          <Route path="/investment" element={<InvestmentPage key="v3-forced" />} />
+          <Route path="/investment-v3" element={<InvestmentPage key="v3-explicit" />} />
           <Route path="/scanner" element={<LandingPage />} />
           <Route path="/landing-legacy" element={<LandingPage />} />
           <Route path="/diagnosis" element={<NinjaDiagnosisPage />} />
