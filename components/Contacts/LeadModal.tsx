@@ -345,179 +345,178 @@ const LeadModal: React.FC<LeadModalProps> = ({ mode, contact, onClose, onSave })
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
                                 {/* Description */}
-                        <div>
-                            <label className="block text-xs font-bold text-slate-500 mb-2">وصف النشاط التجاري</label>
-                            <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm leading-relaxed text-slate-600">
-                                {formData.company_description || "No description available."}
+                                <div>
+                                    <label className="block text-xs font-bold text-slate-500 mb-2">وصف النشاط التجاري</label>
+                                    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm leading-relaxed text-slate-600">
+                                        {formData.company_description || "No description available."}
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                </div>
                         )}
 
-                {/* TAB 3: AI STRATEGY */}
-                {activeTab === 'strategy' && (
-                    <div className="space-y-6 animate-fadeIn">
-                        {/* Alert Banner */}
-                        <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 flex items-start gap-4">
-                            <div className="bg-white p-2 rounded-lg shadow-sm">
-                                <Sparkles className="text-purple-600" size={20} />
-                            </div>
-                            <div>
-                                <h4 className="font-bold text-purple-900 text-sm">تحليل الذكاء الاصطناعي</h4>
-                                <p className="text-xs text-purple-700 mt-1">تم توليد هذه الرؤى بناءً على تحليل نشاط العميل على LinkedIn وأخبار الشركة الأخيرة.</p>
-                            </div>
-                        </div>
-
-                        {/* Who is he? */}
-                        <div>
-                            <h3 className="text-sm font-black text-slate-800 mb-3">من هو العميل المحتمل؟</h3>
-                            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                                <p className="text-sm text-slate-700 leading-relaxed mb-3">
-                                    {formData.arabic_summary || formData.prospect_about || "لا يتوفر ملخص عربي حالياً."}
-                                </p>
-                                <div className="flex items-center gap-2 mt-2">
-                                    <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${formData.linkedin_sales_navigator?.includes('Active') ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
-                                        LinkedIn Activity: {formData.linkedin_sales_navigator || 'Unknown'}
-                                    </span>
-                                    {formData.premium === 'yes' && (
-                                        <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-700">
-                                            Premium User
-                                        </span>
-                                    )}
-                                    {formData.open_profile === 'yes' && (
-                                        <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700">
-                                            Open Profile
-                                        </span>
-                                    )}
+                        {/* TAB 3: AI STRATEGY */}
+                        {activeTab === 'strategy' && (
+                            <div className="space-y-6 animate-fadeIn">
+                                {/* Alert Banner */}
+                                <div className="bg-gradient-to-r from-purple-50 to-indigo-50 p-4 rounded-xl border border-purple-100 flex items-start gap-4">
+                                    <div className="bg-white p-2 rounded-lg shadow-sm">
+                                        <Sparkles className="text-purple-600" size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="font-bold text-purple-900 text-sm">تحليل الذكاء الاصطناعي</h4>
+                                        <p className="text-xs text-purple-700 mt-1">تم توليد هذه الرؤى بناءً على تحليل نشاط العميل على LinkedIn وأخبار الشركة الأخيرة.</p>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div className="mt-4 grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                {/* Who is he? */}
                                 <div>
-                                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">B2B Status</label>
-                                    <div className="font-bold text-slate-800">{formData.b2b_status || 'N/A'}</div>
+                                    <h3 className="text-sm font-black text-slate-800 mb-3">من هو العميل المحتمل؟</h3>
+                                    <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                        <p className="text-sm text-slate-700 leading-relaxed mb-3">
+                                            {formData.arabic_summary || formData.prospect_about || "لا يتوفر ملخص عربي حالياً."}
+                                        </p>
+                                        <div className="flex items-center gap-2 mt-2">
+                                            <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${formData.linkedin_sales_navigator?.includes('Active') ? 'bg-green-100 text-green-700' : 'bg-slate-100 text-slate-500'}`}>
+                                                LinkedIn Activity: {formData.linkedin_sales_navigator || 'Unknown'}
+                                            </span>
+                                            {formData.premium === 'yes' && (
+                                                <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-700">
+                                                    Premium User
+                                                </span>
+                                            )}
+                                            {formData.open_profile === 'yes' && (
+                                                <span className="px-2 py-1 rounded text-[10px] font-bold uppercase bg-blue-100 text-blue-700">
+                                                    Open Profile
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4 grid grid-cols-2 gap-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">B2B Status</label>
+                                            <div className="font-bold text-slate-800">{formData.b2b_status || 'N/A'}</div>
+                                        </div>
+                                        <div>
+                                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Title Description</label>
+                                            <div className="text-xs text-slate-600">{formData.title_description || '-'}</div>
+                                        </div>
+                                        <div className="col-span-2">
+                                            <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">B2B Summary</label>
+                                            <div className="text-xs text-slate-600 bg-white p-2 rounded border border-slate-100">{formData.b2b_summary || 'No B2B summary available.'}</div>
+                                        </div>
+                                    </div>
                                 </div>
+
+                                {/* Icebreakers */}
                                 <div>
-                                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Title Description</label>
-                                    <div className="text-xs text-slate-600">{formData.title_description || '-'}</div>
-                                </div>
-                                <div className="col-span-2">
-                                    <label className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">B2B Summary</label>
-                                    <div className="text-xs text-slate-600 bg-white p-2 rounded border border-slate-100">{formData.b2b_summary || 'No B2B summary available.'}</div>
+                                    <h3 className="text-sm font-black text-slate-800 mb-3">مفتتح المحادثة المقترح (Icebreaker)</h3>
+                                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 relative overflow-hidden group">
+                                        <div className="absolute top-0 right-0 w-1 h-full bg-blue-500" />
+                                        <blockquote className="text-sm font-medium text-blue-900 italic relative z-10">
+                                            "{formData.initial_icebreaker || "Hello, I noticed we are both in the construction industry..."}"
+                                        </blockquote>
+                                        <div className="mt-3 flex justify-end">
+                                            <button
+                                                onClick={() => { navigator.clipboard.writeText(formData.initial_icebreaker || "") }}
+                                                className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                            >
+                                                <Copy size={12} />
+                                                نسخ النص
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        )}
 
-                        {/* Icebreakers */}
-                        <div>
-                            <h3 className="text-sm font-black text-slate-800 mb-3">مفتتح المحادثة المقترح (Icebreaker)</h3>
-                            <div className="bg-blue-50 p-4 rounded-xl border border-blue-100 relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-1 h-full bg-blue-500" />
-                                <blockquote className="text-sm font-medium text-blue-900 italic relative z-10">
-                                    "{formData.initial_icebreaker || "Hello, I noticed we are both in the construction industry..."}"
-                                </blockquote>
-                                <div className="mt-3 flex justify-end">
+                        {/* TAB 4: CAMPAIGNS (Old Scripts) */}
+                        {activeTab === 'scripts' && (
+                            <div className="space-y-6 animate-fadeIn">
+                                <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
+                                    <div>
+                                        <h3 className="font-bold text-blue-900">منشئ الحملات الذكي (AI)</h3>
+                                        <p className="text-sm text-blue-700 mt-1">قم بإنشاء سلسلة رسائل بريدية مخصصة بناءً على بيانات العميل وتفاصيل الشركة.</p>
+                                    </div>
                                     <button
-                                        onClick={() => { navigator.clipboard.writeText(formData.initial_icebreaker || "") }}
-                                        className="text-xs font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                        type="button"
+                                        onClick={handleGenerateScripts}
+                                        disabled={generatingScripts}
+                                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-blue-200 flex items-center gap-2 disabled:opacity-50 transition-all"
                                     >
-                                        <Copy size={12} />
-                                        نسخ النص
+                                        {generatingScripts ? <>
+                                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white" />
+                                            جاري الكتابة...
+                                        </> : <>
+                                            <Sparkles size={16} />
+                                            كتابة الحملة
+                                        </>}
                                     </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
 
-                {/* TAB 4: CAMPAIGNS (Old Scripts) */}
-                {activeTab === 'scripts' && (
-                    <div className="space-y-6 animate-fadeIn">
-                        <div className="flex items-center justify-between bg-blue-50 p-4 rounded-xl border border-blue-100">
-                            <div>
-                                <h3 className="font-bold text-blue-900">منشئ الحملات الذكي (AI)</h3>
-                                <p className="text-sm text-blue-700 mt-1">قم بإنشاء سلسلة رسائل بريدية مخصصة بناءً على بيانات العميل وتفاصيل الشركة.</p>
-                            </div>
-                            <button
-                                type="button"
-                                onClick={handleGenerateScripts}
-                                disabled={generatingScripts}
-                                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg shadow-blue-200 flex items-center gap-2 disabled:opacity-50 transition-all"
-                            >
-                                {generatingScripts ? <>
-                                    <div className="animate-spin rounded-full h-4 w-4 border-2 border-white/30 border-t-white" />
-                                    جاري الكتابة...
-                                </> : <>
-                                    <Sparkles size={16} />
-                                    كتابة الحملة
-                                </>}
-                            </button>
-                        </div>
-
-                        <div className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-bold text-slate-700 mb-1">رسالة ترحيبية</label>
-                                <textarea name="welcome_message" value={formData.welcome_message} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="سيتم إنشاء الرسالة هنا..." />
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 1 (تذكير)</label>
-                                    <textarea name="follow_up_1" value={formData.follow_up_1} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 2 (قيمة مضافة)</label>
-                                    <textarea name="follow_up_2" value={formData.follow_up_2} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 3 (حجز موعد)</label>
-                                    <textarea name="follow_up_3" value={formData.follow_up_3} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 4 (الأخيرة)</label>
-                                    <textarea name="follow_up_4" value={formData.follow_up_4} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
-                                </div>
-                            </div>
-
-                            <div className="pt-4 border-t border-slate-200">
-                                <h4 className="font-bold text-slate-800 mb-3">تفاصيل التسلسل (Sequence)</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-4">
                                     <div>
-                                        <label className="block text-xs font-bold text-slate-400 mb-1">Subject Line 1</label>
-                                        <input type="text" value={formData.subject_f1} readOnly className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm" />
+                                        <label className="block text-sm font-bold text-slate-700 mb-1">رسالة ترحيبية</label>
+                                        <textarea name="welcome_message" value={formData.welcome_message} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" placeholder="سيتم إنشاء الرسالة هنا..." />
                                     </div>
-                                    <div>
-                                        <label className="block text-xs font-bold text-slate-400 mb-1">Subject Line 2</label>
-                                        <input type="text" value={formData.subject_f2} readOnly className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm" />
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 1 (تذكير)</label>
+                                            <textarea name="follow_up_1" value={formData.follow_up_1} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 2 (قيمة مضافة)</label>
+                                            <textarea name="follow_up_2" value={formData.follow_up_2} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 3 (حجز موعد)</label>
+                                            <textarea name="follow_up_3" value={formData.follow_up_3} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-bold text-slate-700 mb-1">متابعة 4 (الأخيرة)</label>
+                                            <textarea name="follow_up_4" value={formData.follow_up_4} onChange={handleChange} disabled={isViewMode} rows={4} className="w-full px-4 py-2 rounded-lg border border-slate-200 focus:ring-2 focus:ring-blue-500 font-mono text-sm" />
+                                        </div>
                                     </div>
-                                    <div className="col-span-2">
-                                        <label className="block text-xs font-bold text-slate-400 mb-1">3rd Scene (Video/Asset)</label>
-                                        <input type="text" value={formData['3rd_scene']} readOnly className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm font-mono text-indigo-600" />
+
+                                    <div className="pt-4 border-t border-slate-200">
+                                        <h4 className="font-bold text-slate-800 mb-3">تفاصيل التسلسل (Sequence)</h4>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-400 mb-1">Subject Line 1</label>
+                                                <input type="text" value={formData.subject_f1} readOnly className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm" />
+                                            </div>
+                                            <div>
+                                                <label className="block text-xs font-bold text-slate-400 mb-1">Subject Line 2</label>
+                                                <input type="text" value={formData.subject_f2} readOnly className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm" />
+                                            </div>
+                                            <div className="col-span-2">
+                                                <label className="block text-xs font-bold text-slate-400 mb-1">3rd Scene (Video/Asset)</label>
+                                                <input type="text" value={formData['3rd_scene']} readOnly className="w-full px-3 py-2 rounded-lg border border-slate-200 bg-slate-50 text-sm font-mono text-indigo-600" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                             </div>
                         )}
-        </form>
-                </div >
+            </form>
+        </div >
 
     {/* Footer */ }
-    < div className = "p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3" >
+    < div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-end gap-3" >
         <button type="button" onClick={onClose} className="px-6 py-2 border border-slate-300 rounded-lg text-slate-700 font-bold hover:bg-white transition-colors">
             إغلاق
         </button>
-{
-    !isViewMode && (
-        <button type="submit" form="leadForm" className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
-            حفظ البيانات
-        </button>
-    )
-}
-                </div >
+        {
+            !isViewMode && (
+                <button type="submit" form="leadForm" className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors shadow-lg shadow-blue-200">
+                    حفظ البيانات
+                </button>
+            )
+        }
+    </div >
             </div >
         </div >
     );
