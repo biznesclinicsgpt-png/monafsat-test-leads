@@ -1,11 +1,12 @@
-
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
+import { Contact } from '../../types';
 import ContactsTable from './ContactsTable';
 import PipelineKanban from './PipelineKanban';
 import SegmentsList from './SegmentsList';
 import AddContactsWizard from './AddContactsWizard';
 import CampaignExportModal from './CampaignExportModal';
+import LeadModal from './LeadModal';
 
 const ContactsManager: React.FC = () => {
   const { contacts, addContact, updateContact } = useData();
@@ -13,16 +14,35 @@ const ContactsManager: React.FC = () => {
   const [showAddWizard, setShowAddWizard] = useState(false);
   const [showExportModal, setShowExportModal] = useState(false);
 
-  // Adapters for legacy components needing setContacts
-  // Ideally PipelineKanban should be refactored too, but this bridges the gap for now
-  const handleUpdateContacts = (newContacts: any) => {
-    // This is a bit tricky since setContacts expects the full array
-    // We should rely on specific update/add methods, but if child components rewrite the whole array,
-    // we need to be careful. For now, assuming PipelineKanban calls a precise update function is better.
-    // However, PipelineKanban likely does setContacts(prev => ...).
-    // Let's defer deep refactor of PipelineKanban and update it in Phase 2.
-    // For now, this component is just consuming context.
-    console.warn("setContacts was called but should be handled via context actions");
+  // Lead Modal State
+  const [selectedContact, setSelectedContact] = useState<Contact | undefined>(undefined);
+  const [modalMode, setModalMode] = useState<'add' | 'edit' | 'view'>('view');
+  const [showLeadModal, setShowLeadModal] = useState(false);
+
+  const handleViewContact = (contact: Contact) => {
+    setSelectedContact(contact);
+    setModalMode('view');
+    setShowLeadModal(true);
+  };
+
+  const handleEditContact = (contact: Contact) => {
+    setSelectedContact(contact);
+    setModalMode('edit');
+    setShowLeadModal(true);
+  };
+
+  const handleSaveContact = async (contact: Contact) => {
+    try {
+      if (modalMode === 'add') {
+        await addContact(contact);
+      } else {
+        await updateContact(contact.id, contact);
+      }
+      setShowLeadModal(false);
+    } catch (e) {
+      console.error("Failed to save contact", e);
+      alert("حدث خطأ أثناء حفظ البيانات");
+    }
   };
 
   return (
@@ -42,11 +62,22 @@ const ContactsManager: React.FC = () => {
             تصدير حملة
           </button>
           <button
-            onClick={() => setShowAddWizard(true)}
+            onClick={() => {
+              setSelectedContact(undefined);
+              setModalMode('add');
+              setShowLeadModal(true);
+            }}
             className="px-4 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" /></svg>
-            جلب ليدات جديدة
+            إضافة ليد يدوي
+          </button>
+          <button
+            onClick={() => setShowAddWizard(true)}
+            className="px-4 py-2 bg-slate-900 text-white rounded-lg font-bold hover:bg-slate-800 shadow-lg transition-all flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+            جلب آلي (Wizard)
           </button>
         </div>
       </div>
@@ -75,7 +106,13 @@ const ContactsManager: React.FC = () => {
 
       {/* Content */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm min-h-[500px]">
-        {activeTab === 'contacts' && <ContactsTable contacts={contacts} />}
+        {activeTab === 'contacts' && (
+          <ContactsTable
+            contacts={contacts}
+            onView={handleViewContact}
+            onEdit={handleEditContact}
+          />
+        )}
         {activeTab === 'segments' && (
           <SegmentsList
             onViewContacts={() => setActiveTab('contacts')}
@@ -92,6 +129,15 @@ const ContactsManager: React.FC = () => {
       {/* Modals */}
       {showAddWizard && <AddContactsWizard onClose={() => setShowAddWizard(false)} />}
       {showExportModal && <CampaignExportModal contactCount={contacts.length} onClose={() => setShowExportModal(false)} />}
+
+      {showLeadModal && (
+        <LeadModal
+          mode={modalMode}
+          contact={selectedContact}
+          onClose={() => setShowLeadModal(false)}
+          onSave={handleSaveContact}
+        />
+      )}
     </div>
   );
 };
