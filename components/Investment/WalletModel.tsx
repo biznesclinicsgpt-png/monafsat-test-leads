@@ -108,7 +108,7 @@ export const WalletModel = () => {
                     </p>
 
                     {/* Toggle Switch */}
-                    <div className="flex justify-center items-center gap-4 mb-12">
+                    <div className="flex justify-center items-center gap-4 mb-12 flex-row-reverse">
                         <span className={`text-sm font-bold transition-colors ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-500'}`}>دفع شهري</span>
 
                         <button
@@ -118,7 +118,7 @@ export const WalletModel = () => {
                             <motion.div
                                 layout
                                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                className={`w-6 h-6 rounded-full shadow-md ${billingCycle === 'monthly' ? 'bg-slate-400 mr-auto ml-0' : 'bg-emerald-500 ml-auto mr-0'}`}
+                                className={`w-6 h-6 rounded-full shadow-md ${billingCycle === 'quarterly' ? 'bg-emerald-500 mr-auto ml-0' : 'bg-slate-400 ml-auto mr-0'}`}
                             />
                         </button>
 
@@ -134,8 +134,10 @@ export const WalletModel = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     {PACKAGES.map((pkg, idx) => {
                         const isQuarterly = billingCycle === 'quarterly';
-                        const currentPrice = isQuarterly ? pkg.rawPrice * 3 : pkg.rawPrice;
-                        const creditBonus = pkg.rawPrice; // Invest 3 months, get 1 month value free/credit
+                        const originalPrice = pkg.rawPrice * 3;
+                        // Quarterly Price = Monthly * 2 (Pay 2 Get 3 logic)
+                        const currentPrice = isQuarterly ? pkg.rawPrice * 2 : pkg.rawPrice;
+                        const savings = isQuarterly ? pkg.rawPrice : 0;
 
                         return (
                             <motion.div
@@ -168,7 +170,25 @@ export const WalletModel = () => {
                                     <h3 className="text-2xl font-black text-white mb-1">{pkg.name}</h3>
                                     <div className={`text-sm font-mono ${pkg.iconColor} opacity-70 mb-4`}>{pkg.nameEn}</div>
 
-                                    <div className="flex flex-col items-center justify-center gap-1 min-h-[80px]">
+                                    <div className="flex flex-col items-center justify-center gap-1 min-h-[100px]">
+                                        <AnimatePresence mode="wait">
+                                            {isQuarterly && (
+                                                <motion.div
+                                                    initial={{ opacity: 0, height: 0 }}
+                                                    animate={{ opacity: 1, height: 'auto' }}
+                                                    exit={{ opacity: 0, height: 0 }}
+                                                    className="flex items-center gap-2 mb-1"
+                                                >
+                                                    <span className="text-slate-500 line-through text-lg font-bold decoration-red-500 decoration-2">
+                                                        {originalPrice.toLocaleString()}
+                                                    </span>
+                                                    <span className="text-emerald-400 text-xs bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+                                                        خصم 33%
+                                                    </span>
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+
                                         <AnimatePresence mode="wait">
                                             <motion.div
                                                 key={currentPrice}
@@ -182,7 +202,7 @@ export const WalletModel = () => {
                                             </motion.div>
                                         </AnimatePresence>
                                         <div className="text-slate-500 text-xs mt-1">
-                                            {isQuarterly ? 'دفعة ربع سنوية (3 أشهر)' : 'دفعة شهرية'}
+                                            {isQuarterly ? 'دفعة ربع سنوية (توفر قيمة شهر كامل)' : 'دفعة شهرية'}
                                         </div>
                                     </div>
                                 </div>
@@ -202,9 +222,10 @@ export const WalletModel = () => {
                                                     عرض الاستثمار الذكي
                                                 </div>
                                                 <div className="text-slate-300 text-xs leading-relaxed">
-                                                    استثمر معنا 3 شهور مقدماً واحصل على <br />
-                                                    <span className="text-emerald-400 font-bold text-sm block mt-1">
-                                                        {creditBonus.toLocaleString()} ريال رصيد إضافي
+                                                    ادفع <span className="text-white font-bold">{(pkg.rawPrice * 2).toLocaleString()} ريال</span> فقط <br />
+                                                    بدلاً من <span className="line-through text-slate-500">{(pkg.rawPrice * 3).toLocaleString()}</span> <br />
+                                                    <span className="text-emerald-400 font-bold text-sm block mt-2">
+                                                        واحصل على رصيد بقيمة {(pkg.rawPrice * 3).toLocaleString()} ريال!
                                                     </span>
                                                 </div>
                                             </div>
