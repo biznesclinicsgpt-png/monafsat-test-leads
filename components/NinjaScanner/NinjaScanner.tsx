@@ -61,6 +61,57 @@ const slideVariants = {
     })
 };
 
+// --- EFFCTS ---
+const MatrixRain = () => {
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+
+    useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const rainDrops: number[] = [];
+        for (let x = 0; x < columns; x++) {
+            rainDrops[x] = 1;
+        }
+
+        const draw = () => {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i * fontSize, rainDrops[i] * fontSize);
+
+                if (rainDrops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        };
+
+        const interval = setInterval(draw, 30);
+        return () => clearInterval(interval);
+    }, []);
+
+    return <canvas ref={canvasRef} className="absolute inset-0 z-0 opacity-20 pointer-events-none" />;
+};
+
 const NinjaScanner = () => {
     const { providerProfile, updateProviderProfile } = useData();
     const [step, setStep] = useState(0);
@@ -211,55 +262,74 @@ const NinjaScanner = () => {
     // --- RENDER STEPS ---
 
     const renderIntro = () => (
-        <div className="flex flex-col items-center justify-center text-center py-12 md:py-20 relative overflow-hidden">
-            {/* Background Matrix Effect (Simulated) */}
-            <div className="absolute inset-0 z-0 opacity-10 pointer-events-none">
-                <div className="absolute top-10 left-10 text-xs font-mono text-emerald-500">INIT_SYSTEM... OK</div>
-                <div className="absolute top-20 right-20 text-xs font-mono text-emerald-500">LOADING_MODULES... 100%</div>
-                <div className="absolute bottom-10 left-1/3 text-xs font-mono text-emerald-500">SCANNING_PORTS...</div>
-            </div>
+        <div className="flex flex-col items-center justify-center text-center py-12 md:py-20 relative overflow-hidden min-h-[600px]">
+            <MatrixRain />
+
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-900/0 via-slate-900/50 to-slate-900 z-0 pointer-events-none" />
 
             <motion.div
-                initial={{ scale: 0 }} animate={{ scale: 1 }}
-                className="w-auto h-24 md:h-32 flex items-center justify-center mb-8 relative z-10"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                className="w-auto h-32 md:h-40 flex items-center justify-center mb-10 relative z-10"
             >
-                <img src="/logo_full.png" alt="BiznesClinics" className="h-full w-auto object-contain drop-shadow-2xl" />
+                <div className="absolute inset-0 bg-emerald-500/20 blur-[60px] rounded-full animate-pulse" />
+                <img src="/logo_full.png" alt="BiznesClinics" className="h-full w-auto object-contain drop-shadow-2xl relative z-10" />
             </motion.div>
 
-            <div className="relative z-10 max-w-3xl mx-auto">
+            <div className="relative z-10 max-w-4xl mx-auto px-4">
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-                    className="inline-block px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-500 font-mono text-sm mb-6"
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                    className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 font-mono text-xs md:text-sm mb-8 backdrop-blur-md"
                 >
-                    System Status: <span className="animate-pulse font-bold">READY_TO_SCAN</span>
+                    <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    System Status: <span className="font-bold tracking-wider">ONLINE // READY_TO_SCAN</span>
                 </motion.div>
 
-                <h1 className="text-4xl md:text-7xl font-black mb-6 bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-400 bg-clip-text text-transparent leading-tight">
+                <h1 className="text-5xl md:text-8xl font-black mb-8 leading-tight tracking-tighter text-white drop-shadow-xl">
                     هل أنت مستعد <br />
-                    <span className="text-emerald-500">لمضاعفة أرقامك؟</span>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-emerald-500 animate-gradient-x">
+                        لمضاعفة أرقامك؟
+                    </span>
                 </h1>
 
-                <div className="bg-slate-900 text-slate-300 font-mono text-right p-6 rounded-xl border border-slate-700 shadow-2xl max-w-2xl mx-auto mb-12 text-sm md:text-base leading-relaxed overflow-hidden relative group">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-500"></div>
-                    <p className="typing-effect">
-                        {">"} جاري تهيئة نظام الفحص... <br />
-                        {">"} الهدف: كشف ثغرات المبيعات الخفية. <br />
-                        {">"} المدة المتوقعة: 180 ثانية. <br />
-                        <span className="text-emerald-400 font-bold">{">"} هل تسمح لنا بالدخول؟</span> <span className="animate-pulse">_</span>
-                    </p>
+                <div className="bg-slate-900/80 backdrop-blur-xl text-slate-300 font-mono text-right p-8 rounded-2xl border border-slate-700/50 shadow-2xl max-w-2xl mx-auto mb-16 text-sm md:text-base leading-relaxed overflow-hidden relative group hover:border-emerald-500/30 transition-colors">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 shadow-[0_0_10px_#10b981]"></div>
+                    <div className="space-y-2">
+                        <p className="typing-effect delay-100 flex gap-2">
+                            <span className="text-emerald-500">{">"}</span> جاري تهيئة نظام الفحص...
+                        </p>
+                        <p className="typing-effect delay-200 flex gap-2">
+                            <span className="text-emerald-500">{">"}</span> الهدف: كشف ثغرات المبيعات الخفية.
+                        </p>
+                        <p className="typing-effect delay-300 flex gap-2">
+                            <span className="text-emerald-500">{">"}</span> المدة المتوقعة: 180 ثانية.
+                        </p>
+                        <p className="flex gap-2 font-bold text-white mt-4">
+                            <span className="text-emerald-500 animate-pulse">{">"}</span> هل تسمح لنا بالدخول؟ <span className="animate-pulse">_</span>
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            <button onClick={nextStep} className="group relative px-12 py-5 bg-emerald-500 hover:bg-emerald-600 rounded-xl text-white font-black text-xl shadow-2xl shadow-emerald-500/40 transition-all hover:scale-105 flex items-center gap-3 overflow-hidden z-10 hover:skew-x-3">
-                <Zap className="fill-white group-hover:animate-bounce" />
-                <span className="relative z-10">ابدأ التشخيص الآن 🚀</span>
-                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 rounded-xl" />
+            <button
+                onClick={nextStep}
+                className="group relative px-14 py-6 bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-black text-2xl rounded-2xl shadow-[0_0_40px_-10px_rgba(16,185,129,0.5)] hover:shadow-[0_0_60px_-10px_rgba(16,185,129,0.7)] transition-all hover:-translate-y-1 overflow-hidden z-10"
+            >
+                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 skew-y-12" />
+                <span className="relative z-10 flex items-center gap-3">
+                    <Zap className="fill-slate-900 w-6 h-6 group-hover:animate-bounce" />
+                    ابدأ التشخيص الآن 🚀
+                </span>
             </button>
 
-            <div className="mt-8 flex gap-8 text-xs md:text-sm text-gray-500 font-bold opacity-60 z-10">
-                <span className="flex items-center gap-1"><CheckCircle size={14} /> مجاني 100%</span>
-                <span className="flex items-center gap-1"><CheckCircle size={14} /> تقرير سري</span>
-                <span className="flex items-center gap-1"><CheckCircle size={14} /> نتائج فورية</span>
+            <div className="mt-12 flex flex-wrap justify-center gap-6 md:gap-12 text-xs md:text-sm text-slate-400 font-bold uppercase tracking-widest opacity-80 z-10">
+                <span className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> مجاني 100%</span>
+                <span className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> تقرير سري</span>
+                <span className="flex items-center gap-2"><CheckCircle size={16} className="text-emerald-500" /> نتائج فورية</span>
             </div>
         </div>
     );
@@ -518,24 +588,24 @@ const NinjaScanner = () => {
                 </div>
 
                 <h2 className="text-3xl font-bold text-white mb-2">جاري تحليل البيانات...</h2>
-                <p className="text-emerald-500 font-mono text-sm mb-8 animate-pulse">Running System Diagnostics v2.0</p>
+                <p className="text-brand-500 font-mono text-sm mb-8 animate-pulse">Running System Diagnostics v2.0</p>
 
                 <div className="bg-slate-900/50 rounded-xl border border-slate-700 p-6 text-left font-mono text-sm space-y-3 max-w-sm mx-auto shadow-2xl">
                     <motion.div
                         initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}
-                        className="flex items-center gap-3 text-emerald-400"
+                        className="flex items-center gap-3 text-brand-400"
                     >
                         <CheckCircle size={14} /> <span>Checking Asset Readiness...</span>
                     </motion.div>
                     <motion.div
                         initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.2 }}
-                        className="flex items-center gap-3 text-emerald-400"
+                        className="flex items-center gap-3 text-brand-400"
                     >
                         <CheckCircle size={14} /> <span>Benchmarking vs 100 Club...</span>
                     </motion.div>
                     <motion.div
                         initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 1.9 }}
-                        className="flex items-center gap-3 text-emerald-400"
+                        className="flex items-center gap-3 text-brand-400"
                     >
                         <CheckCircle size={14} /> <span>Calculating Gap Analysis...</span>
                     </motion.div>
@@ -554,102 +624,66 @@ const NinjaScanner = () => {
         const ResultTabBtn = ({ id, label, icon: Icon }: any) => (
             <button
                 onClick={() => setResultTab(id)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${resultTab === id ? 'bg-gradient-to-r from-brand-600 to-brand-500 text-white border-brand-500 shadow-xl shadow-brand-900/20 scale-105' : 'bg-slate-800/50 text-slate-400 border-slate-700 hover:bg-slate-800 hover:text-white'}`}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all border ${resultTab === id ? 'bg-brand-500 text-white border-brand-400 shadow-xl shadow-brand-500/20 scale-105' : 'bg-slate-500/20 text-slate-400 border-slate-600 hover:bg-slate-700 hover:text-white'}`}
             >
                 <Icon size={18} /> {label}
             </button>
         );
 
         return (
-            <div className="max-w-7xl mx-auto pb-20">
-                <div className="text-center mb-12 relative">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand-500/5 blur-[120px] pointer-events-none"></div>
-                    <h2 className="text-5xl font-black text-white mb-4 tracking-tight drop-shadow-xl relative z-10">
+            <div className="max-w-7xl mx-auto pb-40">
+                <div className="text-center mb-10 relative">
+                    <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight relative z-10">
                         تقرير النينجا الاستراتيجي <span className="text-brand-500">.</span>
                     </h2>
                     <p className="text-slate-400 text-lg relative z-10">تشخيص عميق يكشف لك الحقيقة الرقمية وخارطة الطريق للسيطرة.</p>
                 </div>
 
-                <div className="flex justify-center flex-wrap gap-4 mb-12 relative z-10">
+                <div className="flex justify-center flex-wrap gap-4 mb-8 relative z-10">
                     <ResultTabBtn id="scores" label="النتيجة والتحليل" icon={Trophy} />
                     <ResultTabBtn id="kpis" label="فجوات النمو" icon={BarChart3} />
                     <ResultTabBtn id="recs" label="خارطة الطريق (التوصيات)" icon={Lightbulb} />
                     <ResultTabBtn id="pdf" label="تحميل التقرير (PDF)" icon={Download} />
                 </div>
 
-                <div className="bg-slate-900/80 backdrop-blur-xl rounded-[2rem] p-8 md:p-12 border border-slate-700/50 min-h-[600px] shadow-2xl relative z-10 overflow-hidden">
-                    {/* Decorative Grid */}
-                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 pointer-events-none"></div>
+                <div className="bg-slate-800 rounded-[2rem] p-6 md:p-10 border border-slate-700 shadow-2xl relative z-10 overflow-hidden min-h-[600px]">
+                    <div className="absolute inset-0 bg-slate-800"></div>
 
                     {resultTab === 'scores' && (
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
-                            {/* Main Score - Enhanced Visuals */}
-                            <div className="lg:col-span-4 text-center bg-gradient-to-b from-slate-800/80 to-slate-900/80 rounded-3xl p-8 border border-slate-700 shadow-inner ring-1 ring-white/5">
-                                <h3 className="text-xl font-bold text-slate-300 mb-8 flex items-center gap-2">
-                                    <Sparkles size={18} className="text-brand-400" />
-                                    مؤشر جاهزية النينجا
-                                </h3>
-
-                                <div className="relative w-56 h-56 mx-auto mb-8 flex items-center justify-center">
-                                    {/* Score Rings */}
-                                    <svg className="w-full h-full -rotate-90">
-                                        <circle cx="112" cy="112" r="90" fill="none" stroke="#1e293b" strokeWidth="12" />
-                                        <circle
-                                            cx="112" cy="112" r="90" fill="none" stroke={results.scores.overallScore >= 80 ? '#5BB5C7' : results.scores.overallScore >= 50 ? '#f59e0b' : '#ef4444'}
-                                            strokeWidth="12"
-                                            strokeDasharray={`${2 * Math.PI * 90}`}
-                                            strokeDashoffset={`${2 * Math.PI * 90 * (1 - results.scores.overallScore / 100)}`}
-                                            strokeLinecap="round"
-                                            className="transition-all duration-1000 ease-out"
-                                        />
-                                    </svg>
-                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                        <span className={`text-6xl font-black tracking-tighter ${results.scores.overallScore >= 80 ? 'text-emerald-400' : 'text-white'}`}>
-                                            {results.scores.overallScore}
-                                        </span>
-                                        <span className="text-slate-500 text-sm font-medium mt-1">من 100</span>
-                                    </div>
-                                </div>
-
-                                <div className={`inline-flex items-center gap-2 px-6 py-2 rounded-full font-bold border ${results.scores.overallScore >= 80 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-800 text-slate-300 border-slate-700'}`}>
-                                    {results.scores.tierLabel}
-                                </div>
-                            </div>
-
-                            {/* Deep Analysis Grid */}
-                            <div className="lg:col-span-8 space-y-8">
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {[
-                                        { label: "الأصول (Assets)", sub: "الجاهزية الرقمية", score: results.scores.teamScore, icon: "📂", color: "text-blue-400" },
-                                        { label: "النشاط (Volume)", sub: "وتيرة الوصول", score: results.scores.outboundScore, icon: "🔥", color: "text-orange-400" },
-                                        { label: "التقنية (Tech)", sub: "أدوات الذكاء", score: results.scores.crmScore, icon: "🤖", color: "text-purple-400" },
-                                        { label: "الاستراتيجية (Fit)", sub: "دقة الاستهداف", score: results.scores.icpScore, icon: "🎯", color: "text-rose-400" }
-                                    ].map((stat, idx) => (
-                                        <div key={idx} className="group bg-slate-800/40 p-6 rounded-2xl border border-slate-700/50 hover:bg-slate-800 transition-colors flex items-center justify-between relative overflow-hidden">
-                                            <div className="flex items-center gap-5 relative z-10">
-                                                <div className={`w-12 h-12 rounded-xl bg-slate-900 flex items-center justify-center text-2xl border border-slate-700 group-hover:scale-110 transition-transform`}>{stat.icon}</div>
-                                                <div>
-                                                    <div className="font-bold text-white text-lg">{stat.label}</div>
-                                                    <div className="text-slate-500 text-xs font-mono">{stat.sub}</div>
-                                                </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+                            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-6 content-start">
+                                {/* Deep Analysis Grid */}
+                                {[
+                                    { label: "الأصول (Assets)", sub: "الجاهزية الرقمية", score: results.scores.teamScore, icon: FileText, color: "text-blue-400" },
+                                    { label: "النشاط (Volume)", sub: "وتيرة الوصول", score: results.scores.outboundScore, icon: Flame, color: "text-orange-400" },
+                                    { label: "التقنية (Tech)", sub: "أدوات الذكاء", score: results.scores.crmScore, icon: Zap, color: "text-purple-400" },
+                                    { label: "الاستراتيجية (Fit)", sub: "دقة الاستهداف", score: results.scores.icpScore, icon: Target, color: "text-rose-400" }
+                                ].map((stat, idx) => (
+                                    <div key={idx} className="group bg-slate-700/50 p-6 rounded-2xl border border-slate-600 hover:border-brand-500/50 transition-colors flex items-center justify-between relative overflow-hidden">
+                                        <div className="flex items-center gap-5 relative z-10">
+                                            <div className="w-12 h-12 rounded-xl bg-slate-800 flex items-center justify-center text-slate-400 group-hover:text-brand-400 transition-colors">
+                                                <stat.icon size={24} />
                                             </div>
-                                            <div className="relative z-10">
-                                                <div className={`text-3xl font-black font-mono ${stat.score >= 80 ? 'text-emerald-400' : stat.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
-                                                    {stat.score}%
-                                                </div>
-                                            </div>
-                                            {/* Progress Bar Bottom */}
-                                            <div className="absolute bottom-0 left-0 h-1 bg-slate-700 w-full">
-                                                <div className={`h-full ${stat.score >= 80 ? 'bg-emerald-500' : 'bg-amber-500'}`} style={{ width: `${stat.score}%` }}></div>
+                                            <div>
+                                                <div className="font-bold text-slate-200 text-lg">{stat.label}</div>
+                                                <div className="text-slate-500 text-xs font-mono">{stat.sub}</div>
                                             </div>
                                         </div>
-                                    ))}
-                                </div>
+                                        <div className="relative z-10">
+                                            <div className={`text-3xl font-black font-mono ${stat.score >= 80 ? 'text-brand-400' : stat.score >= 50 ? 'text-amber-400' : 'text-rose-400'}`}>
+                                                {Math.round(stat.score)}%
+                                            </div>
+                                        </div>
+                                        <div className="absolute bottom-0 left-0 h-1 bg-slate-600 w-full">
+                                            <div className={`h-full ${stat.score >= 80 ? 'bg-brand-500' : 'bg-amber-500'}`} style={{ width: `${stat.score}%` }}></div>
+                                        </div>
+                                    </div>
+                                ))}
 
                                 {/* Benchmark Comparison */}
-                                <div className="bg-white/5 p-6 rounded-2xl border border-white/5">
-                                    <h4 className="font-bold text-white mb-4 flex items-center gap-2">
-                                        <Target size={18} className="text-rose-500" />
+                                <div className="md:col-span-2 bg-slate-700/30 p-6 rounded-2xl border border-slate-600 mt-4">
+                                    <h4 className="flex items-center gap-2 text-white font-bold mb-6">
+                                        <Target className="text-rose-500" size={18} />
                                         مقارنة مع المعيار العالمي (The 100 Club)
                                     </h4>
                                     <div className="space-y-4">
@@ -662,15 +696,77 @@ const NinjaScanner = () => {
                                             <div key={i} className="flex items-center gap-4 text-sm">
                                                 <div className="w-24 font-bold text-gray-400">{b.l}</div>
                                                 <div className="flex-1 h-3 bg-gray-800 rounded-full overflow-hidden">
-                                                    <div className={`h-full ${b.v >= b.t ? 'bg-emerald-500' : 'bg-rose-500'}`} style={{ width: `${Math.min((b.v / b.t) * 100, 100)}%` }}></div>
+                                                    <div className={`h-full ${b.v >= b.t ? 'bg-brand-500' : 'bg-slate-600'}`} style={{ width: `${Math.min((b.v / b.t) * 100, 100)}%` }}></div>
                                                 </div>
                                                 <div className="w-16 font-mono text-white text-right">{b.v}/{b.t}</div>
-                                                <div className="w-6">
-                                                    {b.v >= b.t ? <CheckCircle size={14} className="text-emerald-500" /> : <AlertTriangle size={14} className="text-rose-500" />}
-                                                </div>
                                             </div>
                                         ))}
                                     </div>
+                                </div>
+                            </div>
+
+                            {/* Right: Main Score */}
+                            <div className="lg:col-span-4 bg-slate-900 rounded-3xl p-8 border border-slate-800 flex flex-col items-center justify-center text-center relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-500/10 rounded-full blur-3xl"></div>
+                                <h3 className="text-lg font-bold text-white mb-10 flex items-center gap-2">
+                                    <Sparkles size={16} className="text-slate-400" /> مؤشر جاهزية النينجا
+                                </h3>
+
+                                <div className="relative w-48 h-48 flex items-center justify-center mb-10">
+                                    <svg className="w-full h-full -rotate-90">
+                                        <circle cx="96" cy="96" r="88" fill="none" stroke="#1e293b" strokeWidth="16" />
+                                        <motion.circle
+                                            cx="96" cy="96" r="88" fill="none"
+                                            stroke={results.scores.overallScore >= 80 ? '#5BB5C7' : results.scores.overallScore >= 50 ? '#f59e0b' : '#ef4444'}
+                                            strokeDasharray={`${2 * Math.PI * 88}`}
+                                            strokeDashoffset={`${2 * Math.PI * 88 * (1 - results.scores.overallScore / 100)}`}
+                                            transition={{ duration: 2, ease: "easeOut", delay: 0.5 }}
+                                            strokeLinecap="round"
+                                            className="transition-all duration-1000 ease-out"
+                                        />
+                                    </svg>
+                                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                        <span className={`text-6xl font-black tracking-tighter ${results.scores.overallScore >= 80 ? 'text-emerald-400' : 'text-white'}`}>
+                                            {Math.round(results.scores.overallScore)}
+                                        </span>
+                                        <span className="text-slate-500 text-sm font-medium mt-1">من 100</span>
+                                    </div>
+                                </div>
+
+                                <div className={`inline-flex items-center gap-2 px-6 py-2 rounded-full font-bold border ${results.scores.overallScore >= 80 ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-800 text-slate-300 border-slate-700'}`}>
+                                    {results.scores.tierLabel}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {resultTab === 'kpis' && (
+                        <div className="h-full relative z-10">
+                            <div className="flex justify-between items-center mb-8">
+                                <h3 className="text-2xl font-bold text-white">Funnel Analysis</h3>
+                            </div>
+
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
+                                {/* Metrics Cards */}
+                                <div className="lg:col-span-4 space-y-4">
+                                    <div className="bg-slate-700/50 p-6 rounded-2xl border border-slate-600 text-center">
+                                        <div className="text-slate-400 text-xs font-bold mb-2">Win Rate</div>
+                                        <div className="text-3xl font-black text-white">{results.kpis.winRate.toFixed(1)}%</div>
+                                    </div>
+                                    <div className="bg-slate-700/50 p-6 rounded-2xl border border-slate-600 text-center">
+                                        <div className="text-slate-400 text-xs font-bold mb-2">Sales Velocity</div>
+                                        <div className="text-3xl font-black text-emerald-400">{fmtCurrency(results.kpis.salesVelocity)}/mo</div>
+                                    </div>
+                                    <div className="bg-slate-700/50 p-6 rounded-2xl border border-slate-600 text-center py-10">
+                                        <div className="text-slate-400 text-xs font-bold mb-2">Revenue Gap</div>
+                                        <div className="text-4xl font-black text-rose-500">{fmtCurrency(results.kpis.revenueGap)}</div>
+                                        <div className="text-slate-500 text-xs mt-2">الفرق بين الهدف والمتوقع</div>
+                                    </div>
+                                </div>
+
+                                {/* Visual Funnel */}
+                                <div className="lg:col-span-8 flex items-center justify-center relative min-h-[400px] border border-slate-700/30 rounded-3xl bg-slate-900/50">
+                                    <FunnelChart kpis={results.kpis} leads={formData.leadsPerMonth || 100} won={formData.closedWonPerMonth || 1} />
                                 </div>
                             </div>
                         </div>
@@ -695,30 +791,6 @@ const NinjaScanner = () => {
                                     </div>
                                 </div>
                             ))}
-                        </div>
-                    )}
-
-                    {resultTab === 'kpis' && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div>
-                                <h3 className="text-xl font-bold text-white mb-6">Funnel Analysis</h3>
-                                <FunnelChart kpis={results.kpis} leads={formData.leadsPerMonth || 100} won={formData.closedWonPerMonth || 1} />
-                            </div>
-                            <div className="grid grid-cols-2 gap-4 content-start">
-                                <div className="p-6 bg-white/5 rounded-2xl border border-white/5 text-center">
-                                    <div className="text-gray-400 text-sm mb-2 font-bold">Sales Velocity</div>
-                                    <div className="text-2xl font-black text-emerald-400">{fmtCurrency(results.kpis.salesVelocity)}/mo</div>
-                                </div>
-                                <div className="p-6 bg-white/5 rounded-2xl border border-white/5 text-center">
-                                    <div className="text-gray-400 text-sm mb-2 font-bold">Win Rate</div>
-                                    <div className="text-2xl font-black text-white">{results.kpis.winRate.toFixed(1)}%</div>
-                                </div>
-                                <div className="col-span-2 p-6 bg-white/5 rounded-2xl border border-white/5 text-center">
-                                    <div className="text-gray-400 text-sm mb-2 font-bold">Revenue Gap</div>
-                                    <div className="text-3xl font-black text-rose-500">{fmtCurrency(results.kpis.revenueGap)}</div>
-                                    <p className="text-xs text-gray-500 mt-2">الفرق بين الهدف والمتوقع</p>
-                                </div>
-                            </div>
                         </div>
                     )}
 

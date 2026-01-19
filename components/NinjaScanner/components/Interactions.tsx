@@ -73,23 +73,23 @@ export const ToggleCard = ({ icon: Icon, label, value, onChange }: ToggleCardPro
         className={`
             flex items-center justify-between p-4 rounded-xl border-2 cursor-pointer transition-all
             ${value
-                ? 'bg-emerald-50 dark:bg-emerald-900/20 border-emerald-500 shadow-lg shadow-emerald-500/10'
-                : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-emerald-200 dark:hover:border-emerald-500/30'
+                ? 'bg-brand-50 dark:bg-brand-900/20 border-brand-500 shadow-lg shadow-brand-500/10'
+                : 'bg-white dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:border-brand-200 dark:hover:border-brand-500/30'
             }
         `}
     >
         <div className="flex items-center gap-3">
             {Icon && (
-                <div className={`${value ? 'text-emerald-600' : 'text-slate-400'}`}>
+                <div className={`${value ? 'text-brand-600' : 'text-slate-400'}`}>
                     <Icon size={20} />
                 </div>
             )}
-            <span className={`font-bold ${value ? 'text-emerald-800 dark:text-emerald-300' : 'text-slate-600 dark:text-slate-300'}`}>
+            <span className={`font-bold ${value ? 'text-brand-800 dark:text-brand-300' : 'text-slate-600 dark:text-slate-300'}`}>
                 {label}
             </span>
         </div>
 
-        <div className={`w-12 h-6 rounded-full p-1 transition-colors ${value ? 'bg-emerald-500' : 'bg-slate-200 dark:bg-slate-700'}`}>
+        <div className={`w-12 h-6 rounded-full p-1 transition-colors ${value ? 'bg-brand-500' : 'bg-slate-200 dark:bg-slate-700'}`}>
             <motion.div
                 className="w-4 h-4 rounded-full bg-white shadow-sm"
                 animate={{ x: value ? 24 : 0 }}
@@ -120,7 +120,7 @@ export const VisualSlider = ({ label, value, onChange, min, max, step = 1, suffi
     // Tailwind color mapping
     const colors: any = {
         brand: { text: 'text-brand-600', bg: 'bg-brand-500', light: 'bg-brand-100', border: 'border-brand-200' },
-        emerald: { text: 'text-emerald-600', bg: 'bg-emerald-500', light: 'bg-emerald-100', border: 'border-emerald-200' },
+        emerald: { text: 'text-brand-600', bg: 'bg-brand-500', light: 'bg-brand-100', border: 'border-brand-200' }, // Map emerald to brand
         rose: { text: 'text-rose-600', bg: 'bg-rose-500', light: 'bg-rose-100', border: 'border-rose-200' },
         blue: { text: 'text-blue-600', bg: 'bg-blue-500', light: 'bg-blue-100', border: 'border-blue-200' },
     };

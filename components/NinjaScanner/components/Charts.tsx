@@ -31,19 +31,33 @@ export const RadarChart = ({ scores }: { scores: Scores }) => {
     ];
 
     return (
-        <div className="w-full h-[300px]">
+        <div className="w-full h-[350px]">
             <ResponsiveContainer width="100%" height="100%">
-                <RechartsRadar outerRadius="80%" data={data}>
-                    <PolarGrid stroke="#e2e8f0" />
-                    <PolarAngleAxis dataKey="subject" tick={{ fill: '#64748b', fontSize: 12, fontWeight: 'bold' }} />
+                <RechartsRadar outerRadius="75%" data={data}>
+                    <PolarGrid stroke="#334155" />
+                    <PolarAngleAxis
+                        dataKey="subject"
+                        tick={{ fill: '#e2e8f0', fontSize: 13, fontWeight: 'bold' }}
+                    />
                     <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
                     <Radar
                         name="Ninja Score"
                         dataKey="A"
                         stroke="#10b981"
-                        strokeWidth={3}
+                        strokeWidth={4}
                         fill="#10b981"
                         fillOpacity={0.4}
+                        isAnimationActive={true}
+                    />
+                    <Tooltip
+                        contentStyle={{
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            borderColor: '#334155',
+                            borderRadius: '12px',
+                            color: '#fff',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                        itemStyle={{ color: '#10b981' }}
                     />
                 </RechartsRadar>
             </ResponsiveContainer>
@@ -58,23 +72,45 @@ export const FunnelChart = ({ kpis, leads, won }: { kpis: any, leads: number, wo
 
     // Fallback if KPIs are 0
     const data = [
-        { value: leads, name: 'عملاء محتملين', fill: '#94a3b8' },
-        { value: meetings, name: 'اجتماعات', fill: '#38bdf8' },
-        { value: proposals, name: 'عروض أسعار', fill: '#f59e0b' },
-        { value: won, name: 'إغلاق (Won)', fill: '#10b981' }
+        { value: leads || 100, name: 'عملاء محتملين', fill: '#94a3b8' },
+        { value: meetings || 50, name: 'اجتماعات', fill: '#38bdf8' },
+        { value: proposals || 20, name: 'عروض أسعار', fill: '#f59e0b' },
+        { value: won || 5, name: 'إغلاق (Won)', fill: '#10b981' }
     ];
 
     return (
-        <div className="w-full h-[250px]">
+        <div className="w-full h-[300px]">
             <ResponsiveContainer width="100%" height="100%">
                 <RechartsFunnel>
-                    <Tooltip />
+                    <Tooltip
+                        cursor={{ fill: 'transparent' }}
+                        contentStyle={{
+                            backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                            borderColor: '#334155',
+                            borderRadius: '12px',
+                            color: '#fff',
+                            backdropFilter: 'blur(10px)'
+                        }}
+                    />
                     <Funnel
                         dataKey="value"
                         data={data}
                         isAnimationActive
                     >
-                        <LabelList position="right" fill="#64748b" stroke="none" dataKey="name" />
+                        <LabelList
+                            position="right"
+                            fill="#cbd5e1"
+                            stroke="none"
+                            dataKey="name"
+                            style={{ fontSize: 14, fontWeight: 'bold' }}
+                        />
+                        <LabelList
+                            position="left"
+                            fill="#ffffff"
+                            stroke="none"
+                            dataKey="value"
+                            style={{ fontSize: 14, fontWeight: 'bold' }}
+                        />
                     </Funnel>
                 </RechartsFunnel>
             </ResponsiveContainer>
