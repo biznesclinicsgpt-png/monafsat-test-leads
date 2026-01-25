@@ -4,7 +4,7 @@ import { Users, Bot, Layers, CheckCircle } from 'lucide-react';
 
 export const PerformanceCore = () => {
     return (
-        <section className="py-32 bg-[#0a0a0f] relative overflow-hidden">
+        <section id="strategic-partnership" className="py-32 bg-[#0a0a0f] relative overflow-hidden">
             {/* Holographic Grid Background */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)] pointer-events-none"></div>
 

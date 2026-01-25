@@ -78,7 +78,7 @@ export const WalletModel = () => {
     };
 
     return (
-        <section className="py-24 bg-[#0a0a0f] relative overflow-hidden">
+        <section id="qualified-opportunities" className="py-24 bg-[#0a0a0f] relative overflow-hidden">
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-12">
                     <motion.div

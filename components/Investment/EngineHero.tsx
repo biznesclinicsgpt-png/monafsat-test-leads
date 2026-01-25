@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Zap, Play, Rocket, MousePointer2 } from 'lucide-react';
+import { Zap, Rocket, MousePointer2 } from 'lucide-react';
 
 export const EngineHero = () => {
     const { scrollY } = useScroll();
@@ -110,21 +110,23 @@ export const EngineHero = () => {
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => document.getElementById('qualified-opportunities')?.scrollIntoView({ behavior: 'smooth' })}
                         className="group relative px-12 py-5 bg-white text-black text-lg font-black rounded-2xl shadow-[0_0_50px_-10px_rgba(255,255,255,0.3)] hover:shadow-[0_0_80px_-20px_rgba(255,255,255,0.5)] transition-all overflow-hidden"
                     >
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-slate-200/50 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                         <span className="relative flex items-center gap-2">
-                            ابدأ تشغيل المحرك <Zap size={20} className="fill-black" />
+                            الفرص المؤهلة <Zap size={20} className="fill-black" />
                         </span>
                     </motion.button>
 
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => document.getElementById('strategic-partnership')?.scrollIntoView({ behavior: 'smooth' })}
                         className="group px-8 py-5 rounded-2xl border border-slate-700 hover:border-slate-500 hover:bg-slate-800/30 text-white font-bold transition-all flex items-center gap-3 backdrop-blur-sm"
                     >
-                        <Play size={20} className="fill-white" />
-                        شاهد كيف يعمل
+                        <Rocket size={20} />
+                        الشراكة الاستراتيجية
                     </motion.button>
                 </motion.div>
 
