@@ -1,12 +1,19 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Users, Bot, Layers, CheckCircle } from 'lucide-react';
+import { useInvestmentTheme } from '../../context/InvestmentThemeContext';
 
 export const PerformanceCore = () => {
+    const { isDark } = useInvestmentTheme();
+
     return (
-        <section id="strategic-partnership" className="py-32 bg-[#0a0a0f] relative overflow-hidden">
+        <section id="strategic-partnership" className={`py-32 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#0a0a0f]' : 'bg-gray-50'
+            }`}>
             {/* Holographic Grid Background */}
-            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)] pointer-events-none"></div>
+            <div className={`absolute inset-0 bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_at_center,black_50%,transparent_100%)] pointer-events-none ${isDark
+                    ? 'bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]'
+                    : 'bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)]'
+                }`}></div>
 
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-20">
@@ -14,15 +21,20 @@ export const PerformanceCore = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-block px-4 py-1 rounded-full border border-cyan-500/20 bg-cyan-500/5 text-cyan-400 text-xs font-bold mb-4"
+                        className={`inline-block px-4 py-1 rounded-full border text-xs font-bold mb-4 ${isDark
+                                ? 'border-cyan-500/20 bg-cyan-500/5 text-cyan-400'
+                                : 'border-cyan-600/20 bg-cyan-50 text-cyan-700'
+                            }`}
                     >
                         المرحلة الثانية: محرك الأداء
                     </motion.div>
-                    <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
+                    <h2 className={`text-3xl md:text-5xl font-black mb-6 ${isDark ? 'text-white' : 'text-slate-900'
+                        }`}>
                         شراكة في <span className="text-cyan-400">النمو والعوائد</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-                        نعمل معك بنظام <span className="text-white font-bold">الشراكة في العوائد</span> (نسبة يتم الاتفاق عليها) مقابل التنفيذ الكامل، الإشراف، والمتابعة المستمرة لتحقيق أهدافك البيعية.
+                    <p className={`text-lg max-w-2xl mx-auto ${isDark ? 'text-slate-400' : 'text-slate-600'
+                        }`}>
+                        نعمل معك بنظام <span className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>الشراكة في العوائد</span> (نسبة يتم الاتفاق عليها) مقابل التنفيذ الكامل، الإشراف، والمتابعة المستمرة لتحقيق أهدافك البيعية.
                     </p>
                 </div>
 
@@ -34,14 +46,18 @@ export const PerformanceCore = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="bg-slate-900/50 p-8 rounded-[32px] border border-slate-800 backdrop-blur-sm relative group"
+                        className={`p-8 rounded-[32px] border backdrop-blur-sm relative group ${isDark
+                                ? 'bg-slate-900/50 border-slate-800'
+                                : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'
+                            }`}
                     >
                         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px]"></div>
-                        <div className="w-16 h-16 bg-cyan-900/20 rounded-2xl flex items-center justify-center text-cyan-400 mb-6 group-hover:scale-110 transition-transform">
+                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${isDark ? 'bg-cyan-900/20 text-cyan-400' : 'bg-cyan-100 text-cyan-600'
+                            }`}>
                             <Users size={32} />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-4">فريق تنفيذ كامل</h3>
-                        <ul className="space-y-4 text-slate-400">
+                        <h3 className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>فريق تنفيذ كامل</h3>
+                        <ul className={`space-y-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                             <li className="flex items-center gap-3">
                                 <CheckCircle size={18} className="text-cyan-500 shrink-0" />
                                 <span>6-8 متخصصين في النمو</span>
@@ -64,15 +80,19 @@ export const PerformanceCore = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="bg-slate-800/80 p-10 rounded-[32px] border border-emerald-500/30 shadow-[0_0_40px_-10px_rgba(16,185,129,0.2)] backdrop-blur-md relative group z-10"
+                        className={`p-10 rounded-[32px] border shadow-[0_0_40px_-10px_rgba(16,185,129,0.2)] backdrop-blur-md relative group z-10 ${isDark
+                                ? 'bg-slate-800/80 border-emerald-500/30'
+                                : 'bg-white border-emerald-500/20 shadow-emerald-500/10'
+                            }`}
                     >
                         <div className="absolute top-0 right-0 px-4 py-1 bg-emerald-500 text-black text-xs font-bold rounded-bl-2xl rounded-tr-[30px]">موصى به</div>
-                        <div className="w-20 h-20 bg-emerald-900/30 rounded-2xl flex items-center justify-center text-emerald-400 mb-8 relative">
+                        <div className={`w-20 h-20 rounded-2xl flex items-center justify-center mb-8 relative ${isDark ? 'bg-emerald-900/30 text-emerald-400' : 'bg-emerald-100/50 text-emerald-600'
+                            }`}>
                             <Bot size={40} />
                             <div className="absolute inset-0 bg-emerald-500/30 blur-xl animate-pulse rounded-full"></div>
                         </div>
-                        <h3 className="text-2xl font-black text-white mb-6">الذكاء الاصطناعي (AI)</h3>
-                        <ul className="space-y-5 text-slate-300">
+                        <h3 className={`text-2xl font-black mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>الذكاء الاصطناعي (AI)</h3>
+                        <ul className={`space-y-5 ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
                             <li className="flex items-center gap-3">
                                 <CheckCircle size={20} className="text-emerald-500 shrink-0" />
                                 <span className="font-bold">وكلاء AI بلهجة سعودية 🇸🇦</span>
@@ -95,14 +115,18 @@ export const PerformanceCore = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="bg-slate-900/50 p-8 rounded-[32px] border border-slate-800 backdrop-blur-sm relative group"
+                        className={`p-8 rounded-[32px] border backdrop-blur-sm relative group ${isDark
+                                ? 'bg-slate-900/50 border-slate-800'
+                                : 'bg-white border-slate-200 shadow-xl shadow-slate-200/50'
+                            }`}
                     >
                         <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px]"></div>
-                        <div className="w-16 h-16 bg-purple-900/20 rounded-2xl flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 transition-transform">
+                        <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${isDark ? 'bg-purple-900/20 text-purple-400' : 'bg-purple-100 text-purple-600'
+                            }`}>
                             <Layers size={32} />
                         </div>
-                        <h3 className="text-xl font-bold text-white mb-4">منهجيات التشغيل</h3>
-                        <ul className="space-y-4 text-slate-400">
+                        <h3 className={`text-xl font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>منهجيات التشغيل</h3>
+                        <ul className={`space-y-4 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                             <li className="flex items-center gap-3">
                                 <CheckCircle size={18} className="text-purple-500 shrink-0" />
                                 <span>كتب تشغيل (Playbooks) جاهزة</span>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Wallet, CheckCircle2, ShieldCheck, Zap, Building2, Rocket, Calendar, ArrowRight } from 'lucide-react';
+import { useInvestmentTheme } from '../../context/InvestmentThemeContext';
 
 const PACKAGES = [
     {
@@ -16,7 +17,9 @@ const PACKAGES = [
         bgGradient: "from-blue-500/10 to-transparent",
         borderColor: "border-blue-500/20",
         iconColor: "text-blue-400",
+        lightIconColor: "text-blue-600",
         buttonColor: "bg-blue-500/10 hover:bg-blue-500 text-blue-400 hover:text-white",
+        lightButtonColor: "bg-blue-100 hover:bg-blue-500 text-blue-700 hover:text-white",
         features: [
             "تغطية قنوات أساسية",
             "استهداف دقيق للشركات الناشئة",
@@ -37,7 +40,9 @@ const PACKAGES = [
         bgGradient: "from-cyan-500/20 to-transparent",
         borderColor: "border-cyan-500/50",
         iconColor: "text-cyan-400",
+        lightIconColor: "text-cyan-600",
         buttonColor: "bg-cyan-500 hover:bg-cyan-400 text-black",
+        lightButtonColor: "bg-cyan-500 hover:bg-cyan-400 text-white font-black",
         isPopular: true,
         features: [
             "متابعة ما بعد الاجتماع ورفع تقرير بالأسباب",
@@ -58,7 +63,9 @@ const PACKAGES = [
         bgGradient: "from-purple-500/10 to-transparent",
         borderColor: "border-purple-500/20",
         iconColor: "text-purple-400",
+        lightIconColor: "text-purple-600",
         buttonColor: "bg-purple-500/10 hover:bg-purple-500 text-purple-400 hover:text-white",
+        lightButtonColor: "bg-purple-100 hover:bg-purple-500 text-purple-700 hover:text-white",
         features: [
             "استراتيجية دخول المناقصات",
             "وصول لصناع القرار في الجهات الكبرى",
@@ -69,6 +76,7 @@ const PACKAGES = [
 
 export const WalletModel = () => {
     const [billingCycle, setBillingCycle] = useState<'monthly' | 'quarterly'>('monthly');
+    const { isDark } = useInvestmentTheme();
 
     const handleWhatsAppClick = (pkgParams: any) => {
         const cycleText = billingCycle === 'monthly' ? 'شهري' : 'ربع سنوي (مع العرض المجاني)';
@@ -78,14 +86,18 @@ export const WalletModel = () => {
     };
 
     return (
-        <section id="qualified-opportunities" className="py-24 bg-[#0a0a0f] relative overflow-hidden">
+        <section id="qualified-opportunities" className={`py-24 relative overflow-hidden transition-colors duration-500 ${isDark ? 'bg-[#0a0a0f]' : 'bg-white'
+            }`}>
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-12">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-yellow-500/30 bg-yellow-500/10 text-yellow-500 text-xs font-bold mb-4"
+                        className={`inline-flex items-center gap-2 px-3 py-1 rounded-full border text-xs font-bold mb-4 ${isDark
+                                ? 'border-yellow-500/30 bg-yellow-500/10 text-yellow-500'
+                                : 'border-yellow-600/30 bg-yellow-100 text-yellow-700'
+                            }`}
                     >
                         <Wallet size={16} />
                         الخيار الثاني: نموذج المحفظة
@@ -96,7 +108,7 @@ export const WalletModel = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-black text-white mb-6"
+                        className={`text-4xl md:text-5xl font-black mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}
                     >
                         نموذج المحفظة والفرص المؤهلة <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600 font-mono text-3xl block mt-2">
@@ -104,7 +116,7 @@ export const WalletModel = () => {
                         </span>
                     </motion.h2>
 
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto mb-8">
+                    <p className={`text-lg max-w-2xl mx-auto mb-8 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         نظام رصيد مرن: ادفع فقط مقابل الاجتماع المؤكد.
                         الرصيد صالح لمدة سنة كاملة.
                     </p>
@@ -112,7 +124,10 @@ export const WalletModel = () => {
                     {/* Toggle Switch */}
                     <div className="flex justify-center items-center gap-4 mb-12">
                         {/* Right Side (First in RTL) */}
-                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'quarterly' ? 'text-white' : 'text-slate-500'}`}>
+                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'quarterly'
+                                ? isDark ? 'text-white' : 'text-slate-900'
+                                : 'text-slate-500'
+                            }`}>
                             دفع ربع سنوي
                             <span className="bg-emerald-500/20 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full mr-2 border border-emerald-500/30 animate-pulse">
                                 + رصيد مجاني 🔥
@@ -121,17 +136,26 @@ export const WalletModel = () => {
 
                         <button
                             onClick={() => setBillingCycle(billingCycle === 'monthly' ? 'quarterly' : 'monthly')}
-                            className="w-16 h-8 bg-slate-800 rounded-full relative p-1 transition-colors hover:bg-slate-700 border border-slate-600"
+                            className={`w-16 h-8 rounded-full relative p-1 transition-colors border ${isDark
+                                    ? 'bg-slate-800 hover:bg-slate-700 border-slate-600'
+                                    : 'bg-slate-200 hover:bg-slate-300 border-slate-300'
+                                }`}
                         >
                             <motion.div
                                 layout
                                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                                className={`w-6 h-6 rounded-full shadow-md ${billingCycle === 'quarterly' ? 'bg-emerald-500 ml-auto mr-0' : 'bg-slate-400 mr-auto ml-0'}`}
+                                className={`w-6 h-6 rounded-full shadow-md ${billingCycle === 'quarterly'
+                                        ? 'bg-emerald-500 ml-auto mr-0'
+                                        : 'bg-slate-400 mr-auto ml-0'
+                                    }`}
                             />
                         </button>
 
                         {/* Left Side (Last in RTL) */}
-                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'monthly' ? 'text-white' : 'text-slate-500'}`}>دفع شهري</span>
+                        <span className={`text-sm font-bold transition-colors ${billingCycle === 'monthly'
+                                ? isDark ? 'text-white' : 'text-slate-900'
+                                : 'text-slate-500'
+                            }`}>دفع شهري</span>
                     </div>
                 </div>
 
@@ -139,9 +163,7 @@ export const WalletModel = () => {
                     {PACKAGES.map((pkg, idx) => {
                         const isQuarterly = billingCycle === 'quarterly';
                         const originalPrice = pkg.rawPrice * 3;
-                        // Quarterly Price = Monthly * 2 (Pay 2 Get 3 logic)
                         const currentPrice = isQuarterly ? pkg.rawPrice * 2 : pkg.rawPrice;
-                        const savings = isQuarterly ? pkg.rawPrice : 0;
 
                         return (
                             <motion.div
@@ -151,10 +173,15 @@ export const WalletModel = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: idx * 0.1 }}
-                                className={`relative rounded-[32px] border ${pkg.borderColor} bg-slate-900/50 backdrop-blur-sm p-8 flex flex-col group hover:shadow-2xl hover:shadow-${pkg.color}-500/10 transition-all duration-300`}
+                                className={`relative rounded-[32px] border p-8 flex flex-col group transition-all duration-300 ${isDark
+                                        ? `bg-slate-900/50 backdrop-blur-sm ${pkg.borderColor} hover:shadow-2xl hover:shadow-${pkg.color}-500/10`
+                                        : `bg-white border-gray-200 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:shadow-${pkg.color}-500/20 hover:border-${pkg.color}-300`
+                                    }`}
                             >
                                 {/* Background Gradient */}
-                                <div className={`absolute inset-0 bg-gradient-to-b ${pkg.bgGradient} rounded-[32px] opacity-50`}></div>
+                                {isDark && (
+                                    <div className={`absolute inset-0 bg-gradient-to-b ${pkg.bgGradient} rounded-[32px] opacity-50`}></div>
+                                )}
 
                                 {/* Popular Badge */}
                                 {pkg.isPopular && (
@@ -168,11 +195,15 @@ export const WalletModel = () => {
 
                                 {/* Header */}
                                 <div className="text-center mb-8 relative z-10">
-                                    <div className={`w-12 h-12 mx-auto rounded-2xl bg-${pkg.color}-500/10 flex items-center justify-center ${pkg.iconColor} mb-4`}>
+                                    <div className={`w-12 h-12 mx-auto rounded-2xl flex items-center justify-center mb-4 ${isDark
+                                            ? `bg-${pkg.color}-500/10 ${pkg.iconColor}`
+                                            : `bg-${pkg.color}-100 ${pkg.lightIconColor}`
+                                        }`}>
                                         <span className="font-mono font-bold text-xl">{idx + 1}</span>
                                     </div>
-                                    <h3 className="text-2xl font-black text-white mb-1">{pkg.name}</h3>
-                                    <div className={`text-sm font-mono ${pkg.iconColor} opacity-70 mb-4`}>{pkg.nameEn}</div>
+                                    <h3 className={`text-2xl font-black mb-1 ${isDark ? 'text-white' : 'text-slate-900'}`}>{pkg.name}</h3>
+                                    <div className={`text-sm font-mono opacity-70 mb-4 ${isDark ? pkg.iconColor : pkg.lightIconColor
+                                        }`}>{pkg.nameEn}</div>
 
                                     <div className="flex flex-col items-center justify-center gap-1 min-h-[100px]">
                                         <AnimatePresence mode="wait">
@@ -201,7 +232,7 @@ export const WalletModel = () => {
                                                 exit={{ opacity: 0, scale: 0.8 }}
                                                 className="flex items-baseline gap-1"
                                             >
-                                                <span className="text-4xl font-black text-white">{currentPrice.toLocaleString()}</span>
+                                                <span className={`text-4xl font-black ${isDark ? 'text-white' : 'text-slate-900'}`}>{currentPrice.toLocaleString()}</span>
                                                 <span className="text-slate-500 font-bold">ريال</span>
                                             </motion.div>
                                         </AnimatePresence>
@@ -238,25 +269,28 @@ export const WalletModel = () => {
                                 </AnimatePresence>
 
                                 {/* Divider */}
-                                <div className="h-px w-full bg-slate-800 mb-8 relative z-10"></div>
+                                <div className={`h-px w-full mb-8 relative z-10 ${isDark ? 'bg-slate-800' : 'bg-slate-200'}`}></div>
 
                                 {/* Details */}
                                 <div className="space-y-6 flex-1 relative z-10 text-right">
                                     <div>
                                         <div className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">الفئة المستهدفة</div>
-                                        <p className="text-slate-300 text-sm leading-relaxed">{pkg.target}</p>
+                                        <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{pkg.target}</p>
                                     </div>
                                     <div>
                                         <div className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">طبيعة الصفقات</div>
-                                        <p className="text-slate-300 text-sm leading-relaxed">{pkg.dealType}</p>
+                                        <p className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{pkg.dealType}</p>
                                     </div>
 
-                                    <div className="bg-slate-950/50 rounded-xl p-4 border border-slate-800">
+                                    <div className={`rounded-xl p-4 border ${isDark
+                                            ? 'bg-slate-950/50 border-slate-800'
+                                            : 'bg-white border-slate-200 shadow-inner'
+                                        }`}>
                                         <div className="flex items-center justify-between mb-2">
                                             <span className="text-slate-400 text-xs">الرصيد المشحون</span>
-                                            <Zap size={14} className={pkg.iconColor} />
+                                            <Zap size={14} className={isDark ? pkg.iconColor : pkg.lightIconColor} />
                                         </div>
-                                        <div className="text-white font-bold">{pkg.credit}</div>
+                                        <div className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{pkg.credit}</div>
                                     </div>
                                 </div>
 
@@ -264,7 +298,8 @@ export const WalletModel = () => {
                                 <div className="mt-8 relative z-10">
                                     <button
                                         onClick={() => handleWhatsAppClick(pkg)}
-                                        className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${pkg.buttonColor} group-hover:scale-[1.02] active:scale-[0.98]`}
+                                        className={`w-full py-4 rounded-xl font-bold transition-all flex items-center justify-center gap-2 ${isDark ? pkg.buttonColor : pkg.lightButtonColor
+                                            } group-hover:scale-[1.02] active:scale-[0.98]`}
                                     >
                                         {pkg.isPopular ? <Rocket size={18} /> : <CheckCircle2 size={18} />}
                                         احصل على الفرص الآن
