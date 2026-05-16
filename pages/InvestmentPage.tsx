@@ -2,13 +2,15 @@ import React from 'react';
 import { HeroSection } from '../components/InvestmentV3/HeroSection';
 import { ProblemSection } from '../components/InvestmentV3/ProblemSection';
 import { MoatSection } from '../components/InvestmentV3/MoatSection';
+import { NinjaAgentsSection } from '../components/InvestmentV3/NinjaAgentsSection';
+import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
 import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection';
 import { WorkStagesSection } from '../components/InvestmentV3/WorkStagesSection';
 import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
 import { PricingSection } from '../components/InvestmentV3/PricingSection';
-import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { RevenueShareSection } from '../components/InvestmentV3/RevenueShareSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
+import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { FinalCtaSection } from '../components/InvestmentV3/FinalCtaSection';
 
 const InvestmentPage = () => {
@@ -26,13 +28,15 @@ const InvestmentPage = () => {
             <HeroSection />
             <ProblemSection />
             <MoatSection />
+            <NinjaAgentsSection />
+            <MonafsatNetworkSection />
             <ComparisonSection />
             <WorkStagesSection />
             <AssetsSection />
             <PricingSection />
+            <SmartPortfolioSection />
             <RevenueShareSection />
             <FutureSection />
-            <SmartPortfolioSection />
             <FinalCtaSection />
         </div>
     );
