@@ -25,20 +25,20 @@ export const NinjaAgentsSection = () => {
     ];
 
     const aiStages = [
-        "Company Profile",
-        "AI Analysis",
-        "Best Industries",
-        "Best Decision Makers",
-        "WhatsApp / LinkedIn / Email",
-        "Interest Detected"
+        "ملف الشركة",
+        "التحليل الذكي",
+        "القطاعات المستهدفة",
+        "صناع القرار",
+        "قنوات التواصل المتعددة",
+        "رصد الاهتمام"
     ];
 
     const humanStages = [
-        "Human Takeover",
-        "Meeting Confirmed",
-        "Proposal Follow-up",
-        "Negotiation",
-        "Deal Progression"
+        "تدخل الفريق البشري",
+        "تأكيد الاجتماعات",
+        "متابعة العروض",
+        "دعم التفاوض",
+        "تحريك الصفقة للإغلاق"
     ];
 
     return (
@@ -59,7 +59,7 @@ export const NinjaAgentsSection = () => {
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-white mb-6 backdrop-blur-sm">
                             <Activity className="w-5 h-5 text-blue-400" />
-                            <span className="font-semibold text-sm">محرك الإيرادات الهجين (Hybrid Revenue Engine)</span>
+                            <span className="font-semibold text-sm">محرك الإيرادات الهجين</span>
                         </div>
                         <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                             منظومتان تعملان بالتوازي لصالح نموكم
@@ -87,7 +87,7 @@ export const NinjaAgentsSection = () => {
                             </div>
                             
                             <h3 className="text-3xl font-bold text-white mb-2">نظام النينجا الذكي</h3>
-                            <p className="text-blue-400 font-semibold mb-8">AI Agents - محرك الوصول وتحريك الفرص</p>
+                            <p className="text-blue-400 font-semibold mb-8">وكلاء الذكاء الاصطناعي - محرك الوصول وتحريك الفرص</p>
 
                             <div className="space-y-4 mb-12">
                                 {aiFeatures.map((feature, i) => (
@@ -117,7 +117,7 @@ export const NinjaAgentsSection = () => {
                                         <div className={cn(
                                             "text-sm font-bold tracking-wide",
                                             i === aiStages.length - 1 ? "text-emerald-400" : "text-blue-200"
-                                        )} dir="ltr">
+                                        )} dir="rtl">
                                             {stage}
                                         </div>
                                     </motion.div>
@@ -143,7 +143,7 @@ export const NinjaAgentsSection = () => {
                             transition={{ delay: 1 }}
                             className="bg-emerald-500 text-black font-black text-xs px-4 py-2 rounded-full whitespace-nowrap shadow-[0_0_20px_rgba(16,185,129,0.4)]"
                         >
-                            HANDOFF
+                            انتقال سلس
                         </motion.div>
                         <div className="h-16 w-px bg-gradient-to-b from-transparent via-emerald-500 to-transparent my-2" />
                         <motion.div 
@@ -171,7 +171,7 @@ export const NinjaAgentsSection = () => {
                             </div>
                             
                             <h3 className="text-3xl font-bold text-white mb-2">فريق النينجا البشري</h3>
-                            <p className="text-emerald-400 font-semibold mb-8">Human Agents - الذكاء لا يغلق الصفقات وحده</p>
+                            <p className="text-emerald-400 font-semibold mb-8">الوكلاء البشريون - الذكاء لا يغلق الصفقات وحده</p>
 
                             <div className="space-y-4 mb-12 flex-1">
                                 {humanFeatures.map((feature, i) => (
@@ -201,7 +201,7 @@ export const NinjaAgentsSection = () => {
                                         <div className={cn(
                                             "text-sm font-bold tracking-wide",
                                             i === humanStages.length - 1 ? "text-yellow-400" : "text-emerald-200"
-                                        )} dir="ltr">
+                                        )} dir="rtl">
                                             {stage}
                                         </div>
                                     </motion.div>

@@ -81,7 +81,7 @@ export const FutureSection = () => {
                 <div className="w-3 h-3 rounded-full bg-yellow-500" />
                 <div className="w-3 h-3 rounded-full bg-emerald-500" />
               </div>
-              <div className="text-slate-400 font-medium text-sm">Revenue Dashboard Simulation</div>
+              <div className="text-slate-400 font-medium text-sm">محاكاة لوحة تحكم الإيرادات</div>
             </div>
 
             {/* Counters */}

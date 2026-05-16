@@ -78,7 +78,7 @@ export const AssetsSection = () => {
               <div className="w-24 h-24 rounded-full bg-yellow-500/10 border-2 border-yellow-500/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
                 <Lock className="w-10 h-10 text-yellow-400" />
               </div>
-              <h3 className="text-3xl font-black text-white tracking-widest uppercase mb-2">Company Vault</h3>
+              <h3 className="text-3xl font-black text-white tracking-widest mb-2">مخزن بيانات الشركة</h3>
               <p className="text-yellow-500/80 font-medium">أصولك الرقمية ومعرفتك المؤسسية في أمان تام</p>
             </div>
             

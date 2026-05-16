@@ -5,16 +5,16 @@ import { cn } from '../../lib/utils';
 
 export const MonafsatNetworkSection = () => {
     const radarStages = [
-        "Market Monitoring",
-        "Need Detected",
-        "Project Signal",
-        "Relevant Provider Match",
-        "Fast Introduction",
-        "Competitive Advantage"
+        "مراقبة السوق",
+        "رصد الاحتياج",
+        "إشارة مشروع جديد",
+        "تحديد المزود الأنسب",
+        "الوصول والتقديم السريع",
+        "ميزة تنافسية"
     ];
 
     const methods = [
-        { text: "وكلاء الذكاء الاصطناعي (AI Agents)", icon: Bot },
+        { text: "وكلاء الذكاء الاصطناعي", icon: Bot },
         { text: "فرق بشرية متخصصة", icon: Users },
         { text: "العلاقات المباشرة", icon: Handshake },
         { text: "التواجد المستمر داخل السوق", icon: MapPin }
@@ -105,7 +105,7 @@ export const MonafsatNetworkSection = () => {
                                         viewport={{ once: true }}
                                         transition={{ delay: idx * 0.4, duration: 0.5 }}
                                         className="relative pl-8 mb-6 last:mb-0"
-                                        dir="ltr"
+                                        dir="rtl"
                                     >
                                         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#050505] border-2 border-purple-500 z-10 flex items-center justify-center">
                                             <motion.div 

@@ -146,7 +146,7 @@ export const RevenueShareSection = () => {
                     >
                         <ChevronDown className="w-8 h-8 text-yellow-500 mx-auto animate-bounce mb-4" />
                         <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-600">
-                            REVENUE SHARE
+                            مشاركة الإيرادات
                         </div>
                         <div className="text-sm text-slate-400 mt-2">كجزء صغير من نجاح أكبر</div>
                     </motion.div>

@@ -12,13 +12,13 @@ export const WorkStagesSection = () => {
   });
 
   const stages = [
-    { title: "فهم السوق وتحليل الفرص", icon: Search, type: "Data / AI", color: "from-slate-600 to-slate-500", desc: "نبني خريطة واضحة للسوق والقطاعات المستهدفة." },
-    { title: "تشغيل وكلاء النينجا الذكيين", icon: Bot, type: "AI Agents", color: "from-blue-600 to-blue-500", desc: "يقوم الوكلاء بمسح السوق وتحليل أفضل قنوات التواصل." },
-    { title: "الوصول الذكي لصناع القرار", icon: MapPin, type: "Outreach", color: "from-indigo-600 to-indigo-500", desc: "التواصل عبر القنوات المناسبة لكل صانع قرار." },
-    { title: "رصد الاهتمام وتحليل الفرصة", icon: Activity, type: "Signals", color: "from-violet-600 to-violet-500", desc: "نظام ذكي يلتقط أي إشارة اهتمام من العميل." },
-    { title: "تدخل فريق النينجا البشري", icon: Users, type: "Human Takeover", color: "from-emerald-600 to-emerald-500", desc: "انتقال سلس للفريق البشري لتأكيد الاهتمام والترتيب." },
-    { title: "الاجتماعات والعروض والتفاوض", icon: Presentation, type: "Meetings", color: "from-yellow-600 to-yellow-500", desc: "دعم كامل في إدارة التفاوض والمناقشات." },
-    { title: "تحريك المشروع نحو الإغلاق", icon: Trophy, type: "Deal Won", color: "from-amber-600 to-amber-500", desc: "رفع احتمالية الإغلاق والفوز بالفرصة." },
+    { title: "فهم السوق وتحليل الفرص", icon: Search, type: "البيانات والذكاء", color: "from-slate-600 to-slate-500", desc: "نبني خريطة واضحة للسوق والقطاعات المستهدفة." },
+    { title: "تشغيل وكلاء النينجا الذكيين", icon: Bot, type: "وكلاء ذكيون", color: "from-blue-600 to-blue-500", desc: "يقوم الوكلاء بمسح السوق وتحليل أفضل قنوات التواصل." },
+    { title: "الوصول الذكي لصناع القرار", icon: MapPin, type: "الوصول", color: "from-indigo-600 to-indigo-500", desc: "التواصل عبر القنوات المناسبة لكل صانع قرار." },
+    { title: "رصد الاهتمام وتحليل الفرصة", icon: Activity, type: "إشارات الاهتمام", color: "from-violet-600 to-violet-500", desc: "نظام ذكي يلتقط أي إشارة اهتمام من العميل." },
+    { title: "تدخل فريق النينجا البشري", icon: Users, type: "تدخل بشري", color: "from-emerald-600 to-emerald-500", desc: "انتقال سلس للفريق البشري لتأكيد الاهتمام والترتيب." },
+    { title: "الاجتماعات والعروض والتفاوض", icon: Presentation, type: "الاجتماعات", color: "from-yellow-600 to-yellow-500", desc: "دعم كامل في إدارة التفاوض والمناقشات." },
+    { title: "تحريك المشروع نحو الإغلاق", icon: Trophy, type: "إغلاق الصفقة", color: "from-amber-600 to-amber-500", desc: "رفع احتمالية الإغلاق والفوز بالفرصة." },
   ];
 
   // Map scroll progress to active index (0 to 6)
@@ -36,7 +36,7 @@ export const WorkStagesSection = () => {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 mb-6">
               <Activity className="w-5 h-5" />
-              <span className="font-semibold text-sm">Intelligent Revenue Journey</span>
+              <span className="font-semibold text-sm">رحلة الإيرادات الذكية</span>
             </div>
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
               رحلة الإيرادات الذكية
@@ -98,8 +98,8 @@ export const WorkStagesSection = () => {
                     <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${stage.color} opacity-10 blur-2xl rounded-full`} />
                     
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-5xl font-black text-white/5 font-sans" dir="ltr">0{i + 1}</span>
-                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-slate-300 border border-white/5" dir="ltr">
+                      <span className="text-5xl font-black text-white/5 font-sans" dir="rtl">0{i + 1}</span>
+                      <span className="text-xs font-bold px-3 py-1 rounded-full bg-white/10 text-slate-300 border border-white/5" dir="rtl">
                         {stage.type}
                       </span>
                     </div>
