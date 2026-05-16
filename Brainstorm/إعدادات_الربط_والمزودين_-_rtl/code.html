@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="dark" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إعدادات الربط والمزودين - B2B Data Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', 'Noto Sans Arabic', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111418] flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">database</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-base font-bold leading-tight">بيانات الذكاء</h1>
+<p class="text-slate-500 text-xs">لوحة المسؤول</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-sm font-medium">البحث</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg" href="#">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">api</span>
+<span class="text-sm font-medium">الربط والمزودين</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">سجل العمليات</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">الإعدادات</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 px-2">
+<div class="size-8 rounded-full bg-slate-300 dark:bg-slate-700 overflow-hidden">
+<img alt="Admin user avatar" class="w-full h-full object-cover" data-alt="Admin user avatar thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2yJmiq8qVfqWrv_Bxegob2VqISJf49OoX8biUjeL9mxIvMaqnfVO0DD5llxkA-bIq_LfJ0jaq5kA6FodmpDDHy-nB95TFzFi4e_Eqx1_ZJBjBQRfCrE8QT2NI96Bsf_YmrRpzjpUPgVN1yv0yfzzKzR36GpHjBMIBvg1IA3Kp7XQiwOpxyHJGO6g6rclXIfHwyhT9f60GkO2WTr8OOMKSLvUEIywfN3-lxAsM4USgm4hZpc0K41xBzGdDzQ83_EkTIiPZoVPfXOqR"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium truncate">أحمد المسؤول</p>
+<p class="text-xs text-slate-500 truncate">admin@dataintel.ai</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Top Navbar -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111418] px-8 flex items-center justify-between shrink-0">
+<div class="flex items-center gap-4 flex-1">
+<h2 class="text-lg font-bold">إعدادات الربط والمزودين</h2>
+<div class="relative max-w-xs w-full">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pr-10 pl-4 py-2 text-sm focus:ring-2 focus:ring-primary transition-all" placeholder="البحث في المزودين..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+<div class="h-8 w-px bg-slate-200 dark:border-slate-800 mx-2"></div>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-colors">
+                        حفظ التغييرات
+                    </button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Page Heading -->
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl font-black tracking-tight">إدارة مزودي البيانات</h1>
+<p class="text-slate-500 dark:text-[#9dabb9] max-w-2xl">
+                        قم بإعداد مفاتيح API ومنطق التبديل التلقائي للمزودين المتصلين لضمان استمرارية تدفق البيانات وجودتها.
+                    </p>
+</div>
+<!-- Provider List Table Section -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hub</span>
+                            المزودون المتصلون
+                        </h3>
+</div>
+<div class="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111418]">
+<table class="w-full text-right">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs font-semibold uppercase tracking-wider">
+<th class="px-6 py-4">المزود</th>
+<th class="px-6 py-4">الحالة</th>
+<th class="px-6 py-4">مفتاح API</th>
+<th class="px-6 py-4">حد الاستخدام الشهري</th>
+<th class="px-6 py-4 text-left">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Apollo Row -->
+<tr>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 p-1">
+<img alt="Apollo Logo" class="w-full h-full object-contain" data-alt="Apollo data provider logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_ufvZyJb20Dw1cUpeEieDSyKRHXXCO1zF3O9SkLYIra0tnNm58_w6DB9Y05CEmBResGKJwb6Jadcw78afuQvFrsDh5zfyqN4aUtWULHaF9leNTu1790xW2WrXyA3GrJdVNgU0_s7K9XnkNduON5xjas1f96UHEDtXMmhxidK8jTxJe3EdfnGiyw9vKEHmEiSAUJ3x6fnpWzjkNmoPInd157y-Zi3SzfU6eMDB7g4Jj5uz9Zi1jIB-pD-sHoF3vBWNTJKv8UG46St_"/>
+</div>
+<span class="font-semibold text-sm">Apollo</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                            متصل
+                                        </span>
+</td>
+<td class="px-6 py-5 font-mono text-xs text-slate-400">••••••••••••••••3A2F</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 80%"></div>
+</div>
+<span class="text-xs font-medium">8,000 / 10,000</span>
+</div>
+</td>
+<td class="px-6 py-5 text-left">
+<button class="text-primary text-xs font-bold hover:underline">اختبار الاتصال</button>
+</td>
+</tr>
+<!-- Hunter Row -->
+<tr>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 p-1">
+<img alt="Hunter Logo" class="w-full h-full object-contain" data-alt="Hunter.io email provider logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2NZKsinkj3BYPKftUOd1gx5UJFhEOxoV1HWnqICvoNLEil4RE68AkqLn9KlGla5j9tSSFPon8vLSZ8bwAeIxX1GojUf7w-Wtx0kHcCk4To9gRuZK74_yEBkVuTR2ZGZ_y246Glxj4CtUxyFMrBJDxBHM6Guh6-6iDcJwhVKhhyXg2mL2alZqkF_MCDIpg_AiJilXMt4dSbGNTXmNAcRH6triU0QOBT3fB0D9kZtR_Fk8AzzpIohQA_LIQ1MD71rUlPPBlE6BqOMiq"/>
+</div>
+<span class="font-semibold text-sm">Hunter</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+<span class="size-1.5 rounded-full bg-emerald-500"></span>
+                                            متصل
+                                        </span>
+</td>
+<td class="px-6 py-5 font-mono text-xs text-slate-400">••••••••••••••••9D1E</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 45%"></div>
+</div>
+<span class="text-xs font-medium">2,250 / 5,000</span>
+</div>
+</td>
+<td class="px-6 py-5 text-left">
+<button class="text-primary text-xs font-bold hover:underline">اختبار الاتصال</button>
+</td>
+</tr>
+<!-- Lusha Row -->
+<tr>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-slate-100 dark:bg-slate-800 p-1">
+<img alt="Lusha Logo" class="w-full h-full object-contain" data-alt="Lusha enrichment provider logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAyDmMKZW_bim7UwJHYCDY3JYXc15mQCvwHqHAtTL64YButx8-JWlN8ca7QSYnTe-sBZLlsjJnLT1zwAmDrT0K-gi0kUZIyY6j6RY_avgO3x1JuD2XZxCk4TgzqJoq4NZdAGkoSoqOYfSAqJivDGXzk8JrLUPxRFbQdBMUWTdU2M_FSgd1mERupBz9-Wn2SU6aBBeoscLEMSaQvrgacAbcjYKAQVSly-U6g3e9AZkk1rh4i5Mr9lh_8IkkEhcyfD5Ln-gvkhOwNrtwv"/>
+</div>
+<span class="font-semibold text-sm">Lusha</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400">
+<span class="size-1.5 rounded-full bg-rose-500"></span>
+                                            خطأ في المفتاح
+                                        </span>
+</td>
+<td class="px-6 py-5 font-mono text-xs text-rose-400">••••••••••••••••ERR0</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="flex-1 h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+<div class="bg-slate-300 dark:bg-slate-700 h-full" style="width: 0%"></div>
+</div>
+<span class="text-xs font-medium">0 / 2,500</span>
+</div>
+</td>
+<td class="px-6 py-5 text-left">
+<button class="text-primary text-xs font-bold hover:underline">تحديث المفتاح</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Fallback Logic Builder -->
+<section class="space-y-4">
+<h3 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">alt_route</span>
+                        منطق التبديل التلقائي (Fallback Logic)
+                    </h3>
+<div class="bg-white dark:bg-[#111418] border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+<div class="space-y-6">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4 text-sm">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">1</div>
+<p class="font-medium">المزود الأساسي للبحث عن البريد الإلكتروني:</p>
+<select class="bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm pr-10 pl-4 py-2 focus:ring-primary focus:border-primary">
+<option>Apollo</option>
+<option>Hunter</option>
+<option>Lusha</option>
+</select>
+</div>
+<div class="mr-4 border-r-2 border-dashed border-slate-200 dark:border-slate-800 pr-8 py-2">
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm italic">
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+                                        إذا لم يتم العثور على البريد الإلكتروني، قم بالتبديل إلى...
+                                    </div>
+</div>
+<div class="flex items-center gap-4 text-sm">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">2</div>
+<p class="font-medium">المزود الاحتياطي الأول:</p>
+<select class="bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm pr-10 pl-4 py-2 focus:ring-primary focus:border-primary">
+<option>Hunter</option>
+<option selected="">Hunter</option>
+<option>Lusha</option>
+<option>Apollo</option>
+</select>
+</div>
+<div class="mr-4 border-r-2 border-dashed border-slate-200 dark:border-slate-800 pr-8 py-2">
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-sm italic">
+<span class="material-symbols-outlined text-sm">arrow_downward</span>
+                                        إذا فشل المزود الاحتياطي الأول، جرب...
+                                    </div>
+</div>
+<div class="flex items-center gap-4 text-sm">
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">3</div>
+<p class="font-medium">المزود الاحتياطي الثاني:</p>
+<select class="bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm pr-10 pl-4 py-2 focus:ring-primary focus:border-primary">
+<option>Lusha</option>
+<option>Hunter</option>
+<option selected="">Lusha</option>
+<option>Apollo</option>
+</select>
+</div>
+</div>
+<div class="pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-6">
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="mr-3 text-sm font-medium">التبديل التلقائي عند تجاوز الحد</span>
+</label>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+<span class="mr-3 text-sm font-medium">التحقق من صحة البريد قبل الخصم</span>
+</label>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800 rounded-lg text-sm font-semibold hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                                    إضافة قاعدة جديدة
+                                </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Global API Health -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-[#111418] p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-slate-500">متوسط زمن الاستجابة</span>
+<span class="material-symbols-outlined text-primary">speed</span>
+</div>
+<div class="text-2xl font-black">1.2s</div>
+<div class="mt-2 flex items-center gap-1 text-emerald-500 text-xs">
+<span class="material-symbols-outlined text-xs">trending_down</span>
+                            تحسن بنسبة 12%
+                        </div>
+</div>
+<div class="bg-white dark:bg-[#111418] p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-slate-500">إجمالي الطلبات (اليوم)</span>
+<span class="material-symbols-outlined text-primary">database</span>
+</div>
+<div class="text-2xl font-black">124,582</div>
+<div class="mt-2 flex items-center gap-1 text-slate-400 text-xs">
+                            ضمن الحدود المسموح بها
+                        </div>
+</div>
+<div class="bg-white dark:bg-[#111418] p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-2">
+<span class="text-sm text-slate-500">معدل النجاح الإجمالي</span>
+<span class="material-symbols-outlined text-primary">check_circle</span>
+</div>
+<div class="text-2xl font-black">98.4%</div>
+<div class="mt-2 flex items-center gap-1 text-emerald-500 text-xs">
+                            مستقر حالياً
+                        </div>
+</div>
+</section>
+</div>
+</main>
+</div>
+</body></html>

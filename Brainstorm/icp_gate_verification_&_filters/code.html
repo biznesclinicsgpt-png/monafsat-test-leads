@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>بوابة التحقق من العميل المثالي - RTL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b7cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Kufi Arabic", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply font-display;
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex flex-col bg-white dark:bg-[#1a2432] border-l border-[#dbe0e6] dark:border-slate-700">
+<div class="p-6 flex flex-col gap-6">
+<div class="flex items-center gap-3">
+<div class="bg-primary size-10 rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">filter_alt</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-bold leading-normal">LeadGen Pro</h1>
+<p class="text-[#617289] dark:text-slate-400 text-xs font-normal">مساحة عمل المسؤول</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<div class="flex items-center gap-3 px-3 py-2 text-[#617289] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">لوحة القيادة</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#617289] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">reorder</span>
+<p class="text-sm font-medium">مسار العملاء</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">verified_user</span>
+<p class="text-sm font-bold">بوابة ICP</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#617289] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">send</span>
+<p class="text-sm font-medium">الحملات</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 text-[#617289] dark:text-slate-400 hover:bg-background-light dark:hover:bg-slate-800 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">الإعدادات</p>
+</div>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-[#dbe0e6] dark:border-slate-700">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAs2HoVnjSQ4_DBNoZ6Q4BubqcU6cpQfDTuTP6G-teXBXr2k2XzqvjXFrJygfZL-DcfEBoRxxOOTnksmYlu9c1tKsJmwpfd8f2eVFQg7HY2YWViEqDSjEs8B4MlBnz-PKsHogQ3fc0k9FhHhIwp86kzbFUpSHJJ1l4fb1WM5bYCeNx_uiQojvNNASZs9Y-N4IkebLI5N1mYz40feQMSr4XgzupJFwPan28cMbF_Xfxe2dr63zYUEtHnEh9tjzxLm67x50GQNY2zgHHH");'></div>
+<div class="flex flex-col overflow-hidden">
+<p class="text-xs font-bold truncate">أليكس مورجان</p>
+<p class="text-[10px] text-[#617289]">الخطة المجانية</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<header class="bg-white dark:bg-[#1a2432] border-b border-[#dbe0e6] dark:border-slate-700 px-8 py-6">
+<div class="flex flex-wrap gap-2 mb-2 items-center">
+<a class="text-[#617289] dark:text-slate-400 text-sm font-medium hover:underline" href="#">المسار</a>
+<span class="text-[#617289] text-sm font-medium">/</span>
+<span class="text-[#111418] dark:text-white text-sm font-medium">الخطوة 3: بوابة التحقق</span>
+</div>
+<div class="flex justify-between items-center">
+<div class="flex flex-col gap-1">
+<h2 class="text-[#111418] dark:text-white text-2xl font-black tracking-tight">بوابة التحقق من العميل المثالي</h2>
+<p class="text-[#617289] dark:text-slate-400 text-sm">راجع وتحقق من العملاء المحتملين وفقًا لقواعد ملف العميل المثالي الخاص بك.</p>
+</div>
+<div class="flex gap-3">
+<button class="bg-primary text-white px-5 py-2.5 rounded-lg font-bold text-sm shadow-sm hover:bg-blue-600 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">auto_fix_high</span>
+                    محاولة الإثراء للحل
+                </button>
+</div>
+</div>
+</header>
+<div class="bg-white dark:bg-[#1a2432] px-8">
+<div class="flex border-b border-[#dbe0e6] dark:border-slate-700 gap-8">
+<button class="flex items-center gap-2 border-b-2 border-primary text-primary pb-4 pt-4 px-1">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span class="text-sm font-bold">مطابق ICP</span>
+<span class="bg-primary/10 px-2 py-0.5 rounded text-[10px] mr-1">1,240</span>
+</button>
+<button class="flex items-center gap-2 border-b-2 border-transparent text-[#617289] hover:text-[#111418] dark:hover:text-white pb-4 pt-4 px-1">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+<span class="text-sm font-bold">غير مطابق</span>
+<span class="bg-[#f0f2f4] dark:bg-slate-800 px-2 py-0.5 rounded text-[10px] mr-1">842</span>
+</button>
+<button class="flex items-center gap-2 border-b-2 border-transparent text-[#617289] hover:text-[#111418] dark:hover:text-white pb-4 pt-4 px-1">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="text-sm font-bold">غير معروف</span>
+<span class="bg-[#f0f2f4] dark:bg-slate-800 px-2 py-0.5 rounded text-[10px] mr-1">215</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 p-8 gap-8 overflow-hidden">
+<aside class="w-80 flex flex-col gap-6 overflow-y-auto pl-2">
+<div class="bg-white dark:bg-[#1a2432] p-6 rounded-xl border border-[#dbe0e6] dark:border-slate-700">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-[#111418] dark:text-white text-lg font-bold">قواعد التحقق</h3>
+<button class="text-primary text-xs font-bold hover:underline">إعادة ضبط</button>
+</div>
+<div class="mb-6">
+<label class="block text-xs font-bold text-[#617289] dark:text-slate-400 uppercase tracking-wider mb-3">الصناعة</label>
+<div class="flex flex-wrap gap-2 mb-3">
+<span class="inline-flex items-center bg-primary/10 text-primary px-2.5 py-1 rounded-full text-xs font-bold gap-1">
+                            البرمجيات <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</span>
+<span class="inline-flex items-center bg-primary/10 text-primary px-2.5 py-1 rounded-full text-xs font-bold gap-1">
+                            التقنية المالية <span class="material-symbols-outlined text-xs cursor-pointer">close</span>
+</span>
+</div>
+<div class="relative">
+<input class="w-full bg-background-light dark:bg-slate-800 border-none rounded-lg text-sm pr-10 pl-4 py-2 focus:ring-1 focus:ring-primary outline-none" placeholder="إضافة صناعة..." type="text"/>
+<span class="material-symbols-outlined absolute right-3 top-2 text-[#617289] text-sm">search</span>
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-xs font-bold text-[#617289] dark:text-slate-400 uppercase tracking-wider mb-3">حجم الشركة</label>
+<div class="px-2">
+<div class="h-1.5 w-full bg-[#dbe0e6] dark:bg-slate-700 rounded-full relative mb-4">
+<div class="absolute h-1.5 bg-primary rounded-full right-1/4 left-0"></div>
+<div class="absolute size-4 bg-white border-2 border-primary rounded-full -top-1.5 right-1/4 cursor-pointer shadow-sm"></div>
+<div class="absolute size-4 bg-white border-2 border-primary rounded-full -top-1.5 left-0 cursor-pointer shadow-sm"></div>
+</div>
+<div class="flex justify-between text-xs font-medium text-[#617289]">
+<span>50</span>
+<span>10,000+</span>
+</div>
+</div>
+</div>
+<div class="mb-6">
+<label class="block text-xs font-bold text-[#617289] dark:text-slate-400 uppercase tracking-wider mb-3">المنطقة</label>
+<div class="rounded-lg overflow-hidden border border-[#dbe0e6] dark:border-slate-700 mb-3 h-32 bg-slate-100 dark:bg-slate-800 flex items-center justify-center relative">
+<div class="absolute inset-0 opacity-40 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA-92L3oEoM0ng0tGZf2N1fumir-3u_swpyyiuhuDv_Td1ZmoUpACMdi58DlhjSinofQJOVFsNaSzQfFaaMKbpJuqLYZusUXySJ40rItXyj0O-LUERtD63SLVJLw4W3zduaoaQZ9i_9vUA8y-kznVFnqptNp0JoY2OBAk_6LXW4C7Yk1ruemnydm4ymxgv8JcKP0cHWn0qqQZoSgxAgx1phU41eCISvjBU-4pXQh2YhEDdmfaiOTqmgkJyZjLcmIpn-3duNGxr-vPDL');"></div>
+<button class="relative z-10 bg-white dark:bg-slate-700 px-3 py-1.5 rounded-lg text-xs font-bold shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">public</span>
+                            اختر المناطق
+                        </button>
+</div>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-sm text-[#111418] dark:text-white">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                            أمريكا الشمالية
+                        </li>
+<li class="flex items-center gap-2 text-sm text-[#111418] dark:text-white">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+                            أوروبا الغربية
+                        </li>
+</ul>
+</div>
+<div class="mb-6">
+<label class="block text-xs font-bold text-[#617289] dark:text-slate-400 uppercase tracking-wider mb-3">المسميات الوظيفية</label>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2 bg-background-light dark:bg-slate-800 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-sm">person_outline</span>
+<span class="text-xs font-medium">مدير تسويق، رئيس قسم...</span>
+</div>
+</div>
+</div>
+<button class="w-full bg-[#111418] dark:bg-primary text-white py-2.5 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity">
+                    تطبيق التغييرات
+                </button>
+</div>
+</aside>
+<section class="flex-1 overflow-hidden bg-white dark:bg-[#1a2432] rounded-xl border border-[#dbe0e6] dark:border-slate-700 flex flex-col">
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="border-b border-[#dbe0e6] dark:border-slate-700 bg-background-light/50 dark:bg-slate-800/50">
+<th class="p-4 w-10 text-center"><input class="rounded border-slate-300" type="checkbox"/></th>
+<th class="p-4 text-xs font-bold text-[#617289] uppercase tracking-wider">العميل</th>
+<th class="p-4 text-xs font-bold text-[#617289] uppercase tracking-wider">الشركة</th>
+<th class="p-4 text-xs font-bold text-[#617289] uppercase tracking-wider">نسبة الثقة</th>
+<th class="p-4 text-xs font-bold text-[#617289] uppercase tracking-wider">الصناعة</th>
+<th class="p-4 text-xs font-bold text-[#617289] uppercase tracking-wider">الحالة</th>
+<th class="p-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dbe0e6] dark:divide-slate-700">
+<tr class="hover:bg-background-light dark:hover:bg-slate-800/40 transition-colors">
+<td class="p-4 text-center"><input class="rounded border-slate-300" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs">ج.س</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111418] dark:text-white">جيني سميث</p>
+<p class="text-[11px] text-[#617289]">نائب رئيس النمو</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<p class="text-sm font-medium">شركة أكمي</p>
+<p class="text-[11px] text-[#617289]">5,000+ موظف</p>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-green-500 text-[18px]" style="font-variation-settings: 'FILL' 1">signal_cellular_alt</span>
+<span class="text-sm font-bold text-green-600">98%</span>
+</div>
+</td>
+<td class="p-4">
+<span class="text-sm text-[#617289]">برمجيات المؤسسات</span>
+</td>
+<td class="p-4">
+<span class="px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">مطابق</span>
+</td>
+<td class="p-4 text-left">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded">
+<span class="material-symbols-outlined text-[#617289]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-background-light dark:hover:bg-slate-800/40 transition-colors">
+<td class="p-4 text-center"><input class="rounded border-slate-300" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-xs">ر.ب</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111418] dark:text-white">روبرت براون</p>
+<p class="text-[11px] text-[#617289]">رئيس قسم المنتجات</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<p class="text-sm font-medium">فينتك فلو</p>
+<p class="text-[11px] text-[#617289]">250-500 موظف</p>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1">signal_cellular_3_bar</span>
+<span class="text-sm font-bold text-primary">82%</span>
+</div>
+</td>
+<td class="p-4">
+<span class="text-sm text-[#617289]">التقنية المالية</span>
+</td>
+<td class="p-4">
+<span class="px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">مطابق</span>
+</td>
+<td class="p-4 text-left">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded">
+<span class="material-symbols-outlined text-[#617289]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-background-light dark:hover:bg-slate-800/40 transition-colors">
+<td class="p-4 text-center"><input class="rounded border-slate-300" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">ك.د</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111418] dark:text-white">كيلي ديفيس</p>
+<p class="text-[11px] text-[#617289]">مدير التسويق</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<p class="text-sm font-medium">ستيلر للذكاء الاصطناعي</p>
+<p class="text-[11px] text-[#617289]">1,000-2,000 موظف</p>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[18px]" style="font-variation-settings: 'FILL' 1">signal_cellular_alt</span>
+<span class="text-sm font-bold text-primary">91%</span>
+</div>
+</td>
+<td class="p-4">
+<span class="text-sm text-[#617289]">برمجيات</span>
+</td>
+<td class="p-4">
+<span class="px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase tracking-wide">مطابق</span>
+</td>
+<td class="p-4 text-left">
+<button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded">
+<span class="material-symbols-outlined text-[#617289]">more_vert</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-background-light dark:hover:bg-slate-800/40 transition-colors opacity-80">
+<td class="p-4 text-center"><input class="rounded border-slate-300" type="checkbox"/></td>
+<td class="p-4">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600 font-bold text-xs">؟؟</div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111418] dark:text-white">عميل خارجي</p>
+<p class="text-[11px] text-[#617289]">دور غير معروف</p>
+</div>
+</div>
+</td>
+<td class="p-4">
+<div class="flex flex-col">
+<p class="text-sm font-medium">هايبر سكيل</p>
+<p class="text-[11px] text-[#617289]">حجم غير معروف</p>
+</div>
+</td>
+<td class="p-4">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-slate-400 text-[18px]">signal_cellular_0_bar</span>
+<span class="text-sm font-bold text-slate-400">-%</span>
+</div>
+</td>
+<td class="p-4">
+<span class="text-sm text-[#617289]">قيد الانتظار...</span>
+</td>
+<td class="p-4">
+<span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold uppercase tracking-wide">غير معروف</span>
+</td>
+<td class="p-4 text-left">
+<button class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-lg hover:bg-primary/20">إثراء</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto border-t border-[#dbe0e6] dark:border-slate-700 p-4 flex items-center justify-between">
+<p class="text-xs text-[#617289]">عرض <span class="font-bold text-[#111418] dark:text-white">1-50</span> من أصل <span class="font-bold text-[#111418] dark:text-white">1,240</span> عميل</p>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center border border-[#dbe0e6] dark:border-slate-700 rounded-lg text-[#617289] hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<button class="size-8 flex items-center justify-center bg-primary text-white rounded-lg text-xs font-bold">1</button>
+<button class="size-8 flex items-center justify-center border border-[#dbe0e6] dark:border-slate-700 rounded-lg text-xs font-bold text-[#111418] dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800">2</button>
+<button class="size-8 flex items-center justify-center border border-[#dbe0e6] dark:border-slate-700 rounded-lg text-xs font-bold text-[#111418] dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800">3</button>
+<button class="size-8 flex items-center justify-center border border-[#dbe0e6] dark:border-slate-700 rounded-lg text-[#617289] hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div>
+
+</body></html>

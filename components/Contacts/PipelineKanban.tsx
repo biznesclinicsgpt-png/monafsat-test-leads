@@ -67,12 +67,12 @@ const PipelineKanban: React.FC<PipelineKanbanProps> = ({ onAddCard }) => {
                   </div>
 
                   <div className="text-sm font-bold text-slate-800 mb-0.5 text-right">{contact.name}</div>
-                  <div className="text-[10px] text-slate-400 mb-2 text-right">{contact.company}</div>
+                  <div className="text-[10px] text-slate-400 mb-2 text-right">{contact.company_name || '-'}</div>
 
                   {/* Contact Readiness Icons in Card */}
                   <div className="flex items-center gap-2 mb-3">
-                    {contact.email.status === 'valid' && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" title="بريد إلكتروني متاح"></span>}
-                    {contact.phone.status === 'valid' && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" title="رقم هاتف متاح"></span>}
+                    {contact.email && <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" title="بريد إلكتروني متاح"></span>}
+                    {contact.phone && <span className="w-1.5 h-1.5 rounded-full bg-blue-500" title="رقم هاتف متاح"></span>}
                   </div>
 
                   {/* Contextual Actions based on Stage */}

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إدارة الرصيد والفوترة - منصة ذكاء البيانات</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b7cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111418] dark:text-white transition-colors duration-200">
+<div class="flex min-h-screen">
+<!-- Sidebar Navigation -->
+<aside class="w-64 border-l border-[#f0f2f4] dark:border-gray-800 bg-white dark:bg-background-dark hidden lg:flex flex-col sticky top-0 h-screen">
+<div class="flex flex-col gap-4 p-6">
+<div class="flex gap-3 items-center mb-6">
+<div class="bg-primary rounded-lg p-2 text-white">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-bold leading-none">ذكاء البيانات</h1>
+<p class="text-[#617289] dark:text-gray-400 text-xs font-normal">حساب المؤسسة</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">لوحة القيادة</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">database</span>
+<p class="text-sm font-medium">البحث عن البيانات</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_balance_wallet</span>
+<p class="text-sm font-medium">إدارة الرصيد</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">bar_chart</span>
+<p class="text-sm font-medium">التقارير</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-gray-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">الإعدادات</p>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-6 border-t border-[#f0f2f4] dark:border-gray-800">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User profile picture placeholder" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLxdC3hQIuPPLybsRkW4n-vyS4_ff1wdLBEpr2_LE80NPWtlC9hZXfjegTnDsg4-nrJT3Ysy2bqiEfswhsSrO43OIfc27kxh1ggnYt9XqsUPn03r1_3XRYo2IuJDixs3nPNI8iGaWYBQ8QhYtF67lHjMMAfC9lRWSQdQeWXVqfKA04JGas8c3Rln0llkfakgBGgVYleG7YrL8JwMw-GzbBJcuk2gj3h_W0VHvMVVH_MTaVrUUNK_7W4UFBdRFL9ww128y5DUfaaV0J');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-bold text-[#111418] dark:text-white">أحمد التميمي</p>
+<p class="text-xs text-[#617289] dark:text-gray-400">مدير الحساب</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-[#f0f2f4] dark:border-gray-800 bg-white dark:bg-background-dark px-10 py-3 sticky top-0 z-10">
+<div class="flex items-center gap-4 text-[#111418] dark:text-white">
+<div class="text-primary">
+<span class="material-symbols-outlined text-3xl">payments</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">إدارة الرصيد والفوترة</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="flex flex-col min-w-40 h-10 max-w-64 relative">
+<div class="absolute inset-y-0 right-3 flex items-center text-[#617289]">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="form-input w-full h-full rounded-lg border-none bg-[#f0f2f4] dark:bg-gray-800 pr-10 pl-4 text-sm focus:ring-1 focus:ring-primary dark:text-white" placeholder="بحث في الفواتير..."/>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#f0f2f4] dark:bg-gray-800 text-[#111418] dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Content -->
+<div class="p-8 max-w-6xl mx-auto w-full">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 mb-6">
+<a class="text-[#617289] dark:text-gray-400 text-sm font-medium hover:text-primary transition-colors" href="#">لوحة القيادة</a>
+<span class="text-[#617289] dark:text-gray-600">/</span>
+<span class="text-[#111418] dark:text-white text-sm font-bold">إدارة الرصيد والفوترة</span>
+</nav>
+<!-- Hero Balance Card -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="md:col-span-2 bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-[#f0f2f4] dark:border-gray-800 overflow-hidden flex flex-col md:flex-row">
+<div class="md:w-1/3 bg-gradient-to-br from-primary to-blue-700 p-8 flex flex-col justify-center items-center text-white text-center">
+<span class="material-symbols-outlined text-5xl mb-2">account_balance_wallet</span>
+<p class="text-sm opacity-80 mb-1">الرصيد المتاح</p>
+<h3 class="text-3xl font-bold">25,000 ر.س</h3>
+</div>
+<div class="md:w-2/3 p-8 flex flex-col justify-between">
+<div>
+<h4 class="text-[#111418] dark:text-white text-lg font-bold mb-2">رصيد نقاط البيانات</h4>
+<div class="flex items-center gap-2 mb-4">
+<span class="text-2xl font-bold text-primary">50,000</span>
+<span class="text-[#617289] dark:text-gray-400">نقطة ائتمان متوفرة</span>
+</div>
+<p class="text-sm text-[#617289] dark:text-gray-400 leading-relaxed">
+                                    يمكنك استخدام هذه النقاط للوصول إلى معلومات الاتصال، البحث المتقدم، وتحليل الشركات عبر جميع المزودين المعتمدين.
+                                </p>
+</div>
+<div class="mt-6 flex gap-3">
+<button class="flex-1 bg-primary hover:bg-blue-600 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                                    شحن الرصيد الآن
+                                </button>
+<button class="px-4 py-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all font-medium">
+                                    سجل الفواتير
+                                </button>
+</div>
+</div>
+</div>
+<!-- Quick Stats -->
+<div class="space-y-4">
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-[#f0f2f4] dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm text-[#617289] dark:text-gray-400">الاستهلاك الشهري</span>
+<span class="text-xs px-2 py-1 bg-green-100 text-green-700 rounded-full font-bold">+12%</span>
+</div>
+<h4 class="text-xl font-bold">12,450 ر.س</h4>
+<div class="w-full bg-gray-100 dark:bg-gray-800 h-2 rounded-full mt-4 overflow-hidden">
+<div class="bg-primary h-full" style="width: 45%;"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-gray-900 p-6 rounded-xl border border-[#f0f2f4] dark:border-gray-800 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<span class="text-sm text-[#617289] dark:text-gray-400">المزودين النشطين</span>
+<span class="material-symbols-outlined text-primary">hub</span>
+</div>
+<h4 class="text-xl font-bold">3 منصات متصلة</h4>
+<p class="text-xs text-[#617289] dark:text-gray-400 mt-2">Apollo, Hunter, Phone Finder</p>
+</div>
+</div>
+</div>
+<!-- Usage Chart Placeholder -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-[#f0f2f4] dark:border-gray-800 p-6 mb-8 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-[#111418] dark:text-white">تحليل استهلاك الرصيد (آخر 30 يوم)</h3>
+<select class="form-select text-sm border-none bg-[#f0f2f4] dark:bg-gray-800 rounded-lg pr-10">
+<option>آخر 30 يوم</option>
+<option>آخر 90 يوم</option>
+<option>السنة الحالية</option>
+</select>
+</div>
+<div class="relative w-full h-64 bg-gray-50 dark:bg-gray-800/50 rounded-lg flex items-end justify-between p-4 overflow-hidden">
+<!-- Simple visual bar representation for the consumption -->
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[20%]" title="Day 1"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[35%]" title="Day 2"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[15%]" title="Day 3"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[45%]" title="Day 4"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[60%]" title="Day 5"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[30%]" title="Day 6"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[80%]" title="Day 7"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[55%]" title="Day 8"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[40%]" title="Day 9"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[70%]" title="Day 10"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[25%]" title="Day 11"></div>
+<div class="w-8 bg-primary/20 hover:bg-primary rounded-t transition-all h-[90%]" title="Day 12"></div>
+<!-- Decorative overlay for a chart look -->
+<div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-9xl">show_chart</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- Provider Spending Table -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-[#f0f2f4] dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-[#f0f2f4] dark:border-gray-800 flex justify-between items-center">
+<h3 class="text-lg font-bold text-[#111418] dark:text-white">توزيع الإنفاق على المزودين</h3>
+<button class="text-primary text-sm font-bold">تفاصيل أكثر</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right">
+<thead class="bg-gray-50 dark:bg-gray-800/50 text-[#617289] dark:text-gray-400 text-xs font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">المزود</th>
+<th class="px-6 py-4">الاستهلاك</th>
+<th class="px-6 py-4">التكلفة</th>
+<th class="px-6 py-4">الحالة</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f0f2f4] dark:divide-gray-800">
+<tr>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="size-8 rounded bg-orange-100 flex items-center justify-center text-orange-600 font-bold text-xs">A</div>
+<span class="text-sm font-bold">Apollo.io</span>
+</td>
+<td class="px-6 py-4 text-sm">12,500 نقطة</td>
+<td class="px-6 py-4 text-sm font-bold">6,250 ر.س</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-bold">نشط</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="size-8 rounded bg-red-100 flex items-center justify-center text-red-600 font-bold text-xs">H</div>
+<span class="text-sm font-bold">Hunter.io</span>
+</td>
+<td class="px-6 py-4 text-sm">8,200 نقطة</td>
+<td class="px-6 py-4 text-sm font-bold">4,100 ر.س</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-green-100 text-green-700 rounded text-[10px] font-bold">نشط</span>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4 flex items-center gap-3">
+<div class="size-8 rounded bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">P</div>
+<span class="text-sm font-bold">Phone Finder</span>
+</td>
+<td class="px-6 py-4 text-sm">4,200 نقطة</td>
+<td class="px-6 py-4 text-sm font-bold">2,100 ر.س</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-[10px] font-bold">صيانة</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Recent Transactions -->
+<div class="bg-white dark:bg-gray-900 rounded-xl border border-[#f0f2f4] dark:border-gray-800 overflow-hidden shadow-sm">
+<div class="p-6 border-b border-[#f0f2f4] dark:border-gray-800 flex justify-between items-center">
+<h3 class="text-lg font-bold text-[#111418] dark:text-white">آخر العمليات</h3>
+<button class="text-primary text-sm font-bold">عرض الكل</button>
+</div>
+<div class="p-4 space-y-4">
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 flex items-center justify-center">
+<span class="material-symbols-outlined">add</span>
+</div>
+<div>
+<p class="text-sm font-bold">شحن رصيد - مدى</p>
+<p class="text-xs text-[#617289] dark:text-gray-400">12 أكتوبر 2023 - 2:30 م</p>
+</div>
+</div>
+<p class="text-sm font-bold text-green-600">+10,000 ر.س</p>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center">
+<span class="material-symbols-outlined">search_check</span>
+</div>
+<div>
+<p class="text-sm font-bold">استهلاك بحث متقدم</p>
+<p class="text-xs text-[#617289] dark:text-gray-400">11 أكتوبر 2023 - 10:15 ص</p>
+</div>
+</div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">-450 ر.س</p>
+</div>
+<div class="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
+<div class="flex items-center gap-4">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 flex items-center justify-center">
+<span class="material-symbols-outlined">download</span>
+</div>
+<div>
+<p class="text-sm font-bold">تصدير بيانات عملاء</p>
+<p class="text-xs text-[#617289] dark:text-gray-400">10 أكتوبر 2023 - 4:45 م</p>
+</div>
+</div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">-1,200 ر.س</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

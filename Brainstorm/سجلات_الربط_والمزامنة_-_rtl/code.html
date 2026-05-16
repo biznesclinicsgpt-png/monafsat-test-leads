@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111813] dark:text-white transition-colors duration-300">
+<div class="flex min-h-screen">
+<!-- Side Navigation -->
+<aside class="w-64 border-l border-[#dbe6df] dark:border-[#2a3a2e] bg-white dark:bg-background-dark flex flex-col shrink-0 sticky top-0 h-screen">
+<div class="p-6 border-b border-[#f0f4f2] dark:border-[#2a3a2e]">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h1 class="text-[#111813] dark:text-white text-lg font-bold leading-tight">B2B Intelligence</h1>
+</div>
+<p class="text-[#61896f] text-xs font-normal mt-1">إدارة بيانات الأعمال الذكية</p>
+</div>
+<nav class="flex-1 p-4 flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#61896f] hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e1f] transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">لوحة القيادة</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#61896f] hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e1f] transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">العملاء المحتملون</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-[#61896f] hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e1f] transition-colors" href="#">
+<span class="material-symbols-outlined">hub</span>
+<span class="text-sm font-medium">التكاملات</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary/10 text-[#111813] dark:text-primary font-bold transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">السجلات</span>
+</a>
+</nav>
+<div class="p-4 border-t border-[#f0f4f2] dark:border-[#2a3a2e]">
+<div class="flex items-center gap-3 p-2">
+<div class="size-10 rounded-full bg-cover bg-center" data-alt="User profile picture of administrator" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCuMlB965KZoE2Zym1ie2cV6qB76eF9enKPANTLMBslBNZRCoKyU4C9G5O_yYwujnJbj9l9COptdjTbgYtwtuSVH33rnnFAHDYI8TUGr0oKODyIgjKSXF-vP3QrWqFUUIvXbkR9oeH3UiaNjP_HyA6AW2iyPkAv0THi_uga_V9--SrFRgOH3vWWG78FAMbs2BtNFj2V9U1KYCLRWeDvDcpUC2z3JTFT31MVAzmQWqdPxghX-Gf5zjzzwuXX4S97ot5H5thb5RG3-EQM");'></div>
+<div class="flex flex-col">
+<span class="text-sm font-bold truncate">عمر المختار</span>
+<span class="text-xs text-[#61896f]">مدير النظام</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-x-hidden">
+<!-- Top Nav Bar -->
+<header class="flex items-center justify-between px-8 py-4 bg-white dark:bg-background-dark border-b border-[#f0f4f2] dark:border-[#2a3a2e]">
+<div class="flex items-center gap-4 w-96">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#61896f] text-sm">search</span>
+<input class="w-full pr-10 pl-4 py-2 bg-[#f0f4f2] dark:bg-[#1a2e1f] border-none rounded-lg text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="بحث في السجلات..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-[#61896f] hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e1f] rounded-lg relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-background-dark"></span>
+</button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-[#111813] rounded-lg text-sm font-bold shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-lg">refresh</span>
+<span>إعادة محاولة الكل</span>
+</button>
+</div>
+</header>
+<div class="p-8 max-w-[1200px] mx-auto w-full">
+<!-- Page Heading -->
+<div class="mb-8">
+<h2 class="text-[#111813] dark:text-white text-3xl font-black tracking-tight mb-2">سجلات الربط والمزامنة</h2>
+<p class="text-[#61896f] text-base">مراقبة تدفق البيانات المباشر مع أدوات HubSpot و Smartlead و CRM الخارجية</p>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+<div class="bg-white dark:bg-[#1a2e1f] p-6 rounded-xl border border-[#dbe6df] dark:border-[#2a3a2e] flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<span class="text-[#61896f] text-sm font-medium">مزامنة ناجحة</span>
+<span class="text-[#078829] text-xs font-bold bg-[#078829]/10 px-2 py-1 rounded-full">+12%</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-bold text-[#111813] dark:text-white">1,284</span>
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2e1f] p-6 rounded-xl border border-[#dbe6df] dark:border-[#2a3a2e] flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<span class="text-[#61896f] text-sm font-medium">عمليات فاشلة</span>
+<span class="text-[#e72a08] text-xs font-bold bg-[#e72a08]/10 px-2 py-1 rounded-full">-5%</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-bold text-[#111813] dark:text-white">23</span>
+<span class="material-symbols-outlined text-red-500 text-xl">error</span>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2e1f] p-6 rounded-xl border border-[#dbe6df] dark:border-[#2a3a2e] flex flex-col gap-1">
+<div class="flex justify-between items-start">
+<span class="text-[#61896f] text-sm font-medium">قيد الانتظار</span>
+<span class="text-[#61896f] text-xs font-bold bg-[#f0f4f2] dark:bg-background-dark px-2 py-1 rounded-full">ثابت</span>
+</div>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-bold text-[#111813] dark:text-white">12</span>
+<span class="material-symbols-outlined text-amber-500 text-xl">pending</span>
+</div>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-[#dbe6df] dark:border-[#2a3a2e] overflow-hidden">
+<div class="flex border-b border-[#dbe6df] dark:border-[#2a3a2e] bg-[#fcfdfc] dark:bg-[#14261a]">
+<button class="px-6 py-4 text-sm font-bold border-b-2 border-primary text-[#111813] dark:text-white">الكل</button>
+<button class="px-6 py-4 text-sm font-medium text-[#61896f] hover:text-[#111813] dark:hover:text-white">الناجحة</button>
+<button class="px-6 py-4 text-sm font-medium text-[#61896f] hover:text-[#111813] dark:hover:text-white">الفاشلة</button>
+<button class="px-6 py-4 text-sm font-medium text-[#61896f] hover:text-[#111813] dark:hover:text-white">المعلقة</button>
+</div>
+<!-- Data Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-[#f9fafb] dark:bg-[#1a2e1f]/50 border-b border-[#dbe6df] dark:border-[#2a3a2e]">
+<th class="px-6 py-4 text-xs font-bold text-[#61896f] uppercase tracking-wider">اسم العميل المحتمل</th>
+<th class="px-6 py-4 text-xs font-bold text-[#61896f] uppercase tracking-wider">النظام المستهدف</th>
+<th class="px-6 py-4 text-xs font-bold text-[#61896f] uppercase tracking-wider">وقت المزامنة</th>
+<th class="px-6 py-4 text-xs font-bold text-[#61896f] uppercase tracking-wider">الحالة</th>
+<th class="px-6 py-4 text-xs font-bold text-[#61896f] uppercase tracking-wider">رسالة الخطأ</th>
+<th class="px-6 py-4 text-xs font-bold text-[#61896f] uppercase tracking-wider">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f0f4f2] dark:divide-[#2a3a2e]">
+<!-- Row 1: Error -->
+<tr class="hover:bg-[#fcfdfc] dark:hover:bg-[#1a2e1f] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary/20 flex items-center justify-center text-[#111813] dark:text-white font-bold text-xs">أ م</div>
+<span class="text-sm font-bold">أحمد محمد علي</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500 text-lg">hub</span>
+<span class="text-sm">HubSpot</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">اليوم، 02:45 م</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400">فشل المزامنة</span>
+</td>
+<td class="px-6 py-4 text-sm text-red-500 font-medium">401: خطأ في ترخيص المفتاح</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<button class="p-1.5 hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] rounded transition-colors text-[#61896f]"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:bg-primary/20 rounded transition-colors text-primary"><span class="material-symbols-outlined text-lg">replay</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 2: Success -->
+<tr class="hover:bg-[#fcfdfc] dark:hover:bg-[#1a2e1f] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary/20 flex items-center justify-center text-[#111813] dark:text-white font-bold text-xs">س ل</div>
+<span class="text-sm font-bold">سارة لبيب</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-500 text-lg">rocket_launch</span>
+<span class="text-sm">Smartlead</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">اليوم، 01:20 م</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">تمت بنجاح</span>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">-</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<button class="p-1.5 hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] rounded transition-colors text-[#61896f]"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] rounded transition-colors text-[#61896f] opacity-30 cursor-not-allowed"><span class="material-symbols-outlined text-lg">replay</span></button>
+</div>
+</td>
+</tr>
+<!-- Row 3: Pending -->
+<tr class="hover:bg-[#fcfdfc] dark:hover:bg-[#1a2e1f] transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-primary/20 flex items-center justify-center text-[#111813] dark:text-white font-bold text-xs">ك ج</div>
+<span class="text-sm font-bold">كريم جمال</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-500 text-lg">hub</span>
+<span class="text-sm">HubSpot</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">منذ 5 دقائق</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">قيد المعالجة</span>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">جاري التحديث...</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<button class="p-1.5 hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] rounded transition-colors text-[#61896f]"><span class="material-symbols-outlined text-lg">visibility</span></button>
+<button class="p-1.5 hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] rounded transition-colors text-[#61896f]"><span class="material-symbols-outlined text-lg">replay</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between px-6 py-4 border-t border-[#f0f4f2] dark:border-[#2a3a2e]">
+<span class="text-xs text-[#61896f]">عرض 1-10 من أصل 1,319 سجل</span>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#2a3a2e] hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] transition-colors"><span class="material-symbols-outlined text-lg">chevron_right</span></button>
+<button class="size-8 flex items-center justify-center rounded bg-primary text-[#111813] font-bold text-xs transition-colors">1</button>
+<button class="size-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#2a3a2e] hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] transition-colors font-bold text-xs">2</button>
+<button class="size-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#2a3a2e] hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] transition-colors font-bold text-xs">3</button>
+<button class="size-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#2a3a2e] hover:bg-[#f0f4f2] dark:hover:bg-[#2a3a2e] transition-colors"><span class="material-symbols-outlined text-lg">chevron_left</span></button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Detailed Sidebar View (Overlay state represented here) -->
+<div class="fixed left-0 top-0 h-full w-[400px] bg-white dark:bg-[#1a2e1f] shadow-2xl border-r border-[#dbe6df] dark:border-[#2a3a2e] z-50 transform translate-x-full transition-transform duration-300 pointer-events-none">
+<!-- In a real app, this would slide in when clicking 'visibility' -->
+<div class="p-6 h-full flex flex-col">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-lg font-bold">تفاصيل العملية</h3>
+<button class="p-2 hover:bg-[#f0f4f2] dark:hover:bg-background-dark rounded-full"><span class="material-symbols-outlined">close</span></button>
+</div>
+<div class="space-y-6 flex-1 overflow-y-auto">
+<section>
+<label class="text-xs font-bold text-[#61896f] block mb-2 uppercase tracking-wide">الطلب (Request JSON)</label>
+<pre class="bg-[#111813] text-primary p-4 rounded-lg text-xs leading-relaxed overflow-x-auto">{
+  "lead_id": "99212",
+  "target": "hubspot",
+  "data": {
+    "first_name": "أحمد",
+    "last_name": "محمد علي",
+    "email": "ahmed.m@example.com",
+    "company": "شركة الحلول الذكية"
+  }
+}
+                    </pre>
+</section>
+<section>
+<label class="text-xs font-bold text-[#61896f] block mb-2 uppercase tracking-wide">الاستجابة (Response Body)</label>
+<pre class="bg-[#111813] text-red-400 p-4 rounded-lg text-xs leading-relaxed overflow-x-auto">{
+  "status": "error",
+  "code": 401,
+  "message": "Unauthorized: API key has been revoked",
+  "trace_id": "req_881920zha"
+}
+                    </pre>
+</section>
+</div>
+<div class="pt-6 border-t border-[#f0f4f2] dark:border-[#2a3a2e] flex gap-3">
+<button class="flex-1 py-3 bg-primary text-[#111813] font-bold rounded-lg text-sm">إعادة المحاولة الآن</button>
+<button class="flex-1 py-3 bg-[#f0f4f2] dark:bg-background-dark font-bold rounded-lg text-sm">تجاهل الخطأ</button>
+</div>
+</div>
+</div>
+</div>
+</body></html>

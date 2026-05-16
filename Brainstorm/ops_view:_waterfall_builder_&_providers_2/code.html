@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>واجهة العمليات والربط - RTL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b7cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Cairo", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body { font-family: 'Cairo', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }[dir="rtl"] .mirror-rtl { transform: scaleX(-1); }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white font-display min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 border-l border-[#dbe0e6] dark:border-[#2d3748] bg-white dark:bg-background-dark flex flex-col">
+<div class="p-6">
+<div class="flex gap-3 mb-8">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="Admin user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDcMLHqMcIPClKoAKTsULB8wlx_pIUTLFWG6LEWiSArbE2V-4Dlr-k1e0oa4tFodbiywq_Osk-fPijI1da7GLpi22CbwRuQA-whfTvlczKbn1RA3mwFA7hr7WvukeEhyKprFOVZFAvMF8VpTgdJcnZNsItqu_YpUwQiXkAJtwHCEYCQVlKCrZ7K0YwAunzvfRrlrKSA4gqdbCfn-zVlRJxkRekq8dqxLHFuvvhE851d2gpYoo4kutILKOufJiXnNn0womDv_4cTM55");'></div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-bold leading-tight">عمليات الإثراء</h1>
+<p class="text-[#617289] dark:text-gray-400 text-xs font-normal">صلاحية المدير</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<p class="text-sm font-medium">نظرة عامة</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">account_tree</span>
+<p class="text-sm font-bold">منشئ التدفق</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">api</span>
+<p class="text-sm font-medium">المزودون</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<p class="text-sm font-medium">سجلات التنفيذ</p>
+</a>
+<div class="h-px bg-[#dbe0e6] dark:bg-[#2d3748] my-4"></div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-white/5 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<p class="text-sm font-medium">الإعدادات</p>
+</a>
+</nav>
+</div>
+<div class="mt-auto p-4">
+<div class="bg-primary/5 rounded-lg p-3 text-right">
+<p class="text-xs font-bold text-primary mb-1 uppercase tracking-wider">حالة النظام</p>
+<div class="flex items-center gap-2">
+<div class="size-2 bg-green-500 rounded-full animate-pulse"></div>
+<p class="text-xs text-[#617289] dark:text-gray-400">جميع الواجهات البرمجية تعمل</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col overflow-y-auto">
+<header class="flex items-center justify-between border-b border-[#f0f2f4] dark:border-[#2d3748] bg-white dark:bg-background-dark px-8 py-3 sticky top-0 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-2xl">shield_person</span>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold tracking-tight">واجهة العمليات</h2>
+</div>
+<div class="relative w-64">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#617289] text-xl">search</span>
+<input class="w-full bg-[#f0f2f4] dark:bg-white/5 border-none rounded-lg pr-10 pl-4 py-2 text-sm focus:ring-2 focus:ring-primary" placeholder="البحث في التدفقات أو السجلات..."/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">save</span>
+                    حفظ التدفق
+                </button>
+<button class="p-2 bg-[#f0f2f4] dark:bg-white/5 rounded-lg text-[#111418] dark:text-white">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+<button class="p-2 bg-[#f0f2f4] dark:bg-white/5 rounded-lg text-[#111418] dark:text-white">
+<span class="material-symbols-outlined text-xl">help_outline</span>
+</button>
+</div>
+</header>
+<div class="p-8 space-y-6">
+<div>
+<h1 class="text-[#111418] dark:text-white text-3xl font-black tracking-tight">منشئ التدفق (Waterfall)</h1>
+<p class="text-[#617289] dark:text-gray-400 mt-1">أنشئ قواعد إثراء مشروطة لتسلسلات العملاء المحتملين القادمين.</p>
+</div>
+<div class="border-b border-[#dbe0e6] dark:border-[#2d3748]">
+<div class="flex gap-8">
+<a class="border-b-2 border-primary text-primary pb-3 text-sm font-bold" href="#">منشئ الوصفات</a>
+<a class="border-b-2 border-transparent text-[#617289] pb-3 text-sm font-medium hover:text-[#111418] dark:hover:text-white transition-colors" href="#">إدارة المزودين</a>
+<a class="border-b-2 border-transparent text-[#617289] pb-3 text-sm font-medium hover:text-[#111418] dark:hover:text-white transition-colors" href="#">إعدادات متقدمة</a>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<div class="col-span-12 lg:col-span-8 space-y-6">
+<div class="bg-white dark:bg-background-dark border border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-6">
+<h2 class="text-sm font-bold text-[#111418] dark:text-white uppercase tracking-wider mb-4">منطق سير العمل</h2>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-xs font-bold text-[#617289] dark:text-gray-400">نوع البيانات</label>
+<select class="w-full bg-[#f0f2f4] dark:bg-white/5 border-none rounded-lg py-2.5 px-4 text-sm font-medium appearance-none">
+<option>بريد العمل (B2B)</option>
+<option>البريد الشخصي (B2C)</option>
+<option>رقم الهاتف</option>
+<option>رابط لينكد إن</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-[#617289] dark:text-gray-400">يعمل على</label>
+<select class="w-full bg-[#f0f2f4] dark:bg-white/5 border-none rounded-lg py-2.5 px-4 text-sm font-medium">
+<option>شريحة: عملاء ذوو اهتمام عالٍ</option>
+<option>قاعدة: النتيجة &gt; 80</option>
+<option>كافة السجلات الجديدة</option>
+<option>تشغيل يدوي فقط</option>
+</select>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h2 class="text-[22px] font-bold tracking-tight text-[#111418] dark:text-white">تسلسل التدفق (Waterfall)</h2>
+<div class="relative group">
+<div class="absolute right-1/2 -bottom-4 w-px h-4 bg-primary/30 translate-x-1/2 z-0"></div>
+<div class="bg-white dark:bg-background-dark border-2 border-primary/20 rounded-xl p-5 relative z-10 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="bg-primary/10 p-3 rounded-lg text-primary flex items-center justify-center">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<h3 class="font-bold text-[#111418] dark:text-white">التحقق من البيانات الحالية</h3>
+<p class="text-xs text-[#617289] dark:text-gray-400">الفحص الأولي: عبر خدمة التحقق</p>
+</div>
+</div>
+<div class="flex gap-6 items-center">
+<div class="text-left">
+<p class="text-[10px] font-bold text-[#617289] dark:text-gray-400 uppercase">التكلفة / 1000</p>
+<p class="text-sm font-bold text-[#111418] dark:text-white">0.80 دولار</p>
+</div>
+<div class="text-left">
+<p class="text-[10px] font-bold text-[#617289] dark:text-gray-400 uppercase">معدل النجاح</p>
+<p class="text-sm font-bold text-green-500">99%</p>
+</div>
+<span class="material-symbols-outlined text-[#617289] cursor-grab">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute right-1/2 -bottom-4 w-px h-4 bg-primary/30 translate-x-1/2 z-0"></div>
+<div class="bg-white dark:bg-background-dark border border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-5 relative z-10 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="bg-[#f0f2f4] dark:bg-white/5 p-3 rounded-lg text-[#111418] dark:text-white flex items-center justify-center">
+<span class="material-symbols-outlined">business</span>
+</div>
+<div>
+<h3 class="font-bold text-[#111418] dark:text-white">البحث عن بريد العمل</h3>
+<p class="text-xs text-[#617289] dark:text-gray-400">المزود: خدمة البيانات (أولوية 1)</p>
+</div>
+</div>
+<div class="flex gap-6 items-center">
+<div class="text-left">
+<p class="text-[10px] font-bold text-[#617289] dark:text-gray-400 uppercase">التكلفة / 1000</p>
+<p class="text-sm font-bold text-[#111418] dark:text-white">12.00 دولار</p>
+</div>
+<div class="text-left">
+<p class="text-[10px] font-bold text-[#617289] dark:text-gray-400 uppercase">معدل النجاح</p>
+<p class="text-sm font-bold text-[#111418] dark:text-white">64%</p>
+</div>
+<span class="material-symbols-outlined text-[#617289] cursor-grab">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute right-1/2 -bottom-4 w-px h-4 bg-primary/30 translate-x-1/2 z-0"></div>
+<div class="bg-white dark:bg-background-dark border border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-5 relative z-10 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<div class="bg-[#f0f2f4] dark:bg-white/5 p-3 rounded-lg text-[#111418] dark:text-white flex items-center justify-center">
+<span class="material-symbols-outlined">person_search</span>
+</div>
+<div>
+<h3 class="font-bold text-[#111418] dark:text-white">البحث عن بريد شخصي</h3>
+<p class="text-xs text-[#617289] dark:text-gray-400">المزود: خدمة الربط (أولوية 2)</p>
+</div>
+</div>
+<div class="flex gap-6 items-center">
+<div class="text-left">
+<p class="text-[10px] font-bold text-[#617289] dark:text-gray-400 uppercase">التكلفة / 1000</p>
+<p class="text-sm font-bold text-[#111418] dark:text-white">18.00 دولار</p>
+</div>
+<div class="text-left">
+<p class="text-[10px] font-bold text-[#617289] dark:text-gray-400 uppercase">معدل النجاح</p>
+<p class="text-sm font-bold text-[#111418] dark:text-white">42%</p>
+</div>
+<span class="material-symbols-outlined text-[#617289] cursor-grab">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="border-2 border-dashed border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-8 flex flex-col items-center justify-center gap-2 group hover:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-3xl text-[#617289] group-hover:text-primary">add_circle</span>
+<p class="text-sm font-medium text-[#617289] group-hover:text-primary">قم بسحب وإسقاط كتلة لإضافة خطوة تالية</p>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-white dark:bg-background-dark border border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-6">
+<h2 class="text-sm font-bold text-[#111418] dark:text-white uppercase tracking-wider mb-4">الخطوات المتاحة</h2>
+<div class="space-y-3">
+<div class="p-3 bg-background-light dark:bg-white/5 rounded-lg border border-transparent hover:border-primary cursor-grab flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">alternate_email</span>
+<p class="text-sm font-medium">التحقق من البريد</p>
+</div>
+<div class="p-3 bg-background-light dark:bg-white/5 rounded-lg border border-transparent hover:border-primary cursor-grab flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">call</span>
+<p class="text-sm font-medium">البحث عن هاتف محمول</p>
+</div>
+<div class="p-3 bg-background-light dark:bg-white/5 rounded-lg border border-transparent hover:border-primary cursor-grab flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">badge</span>
+<p class="text-sm font-medium">تحديث المسمى الوظيفي</p>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<h2 class="text-sm font-bold text-[#111418] dark:text-white uppercase tracking-wider">أبرز المزودين</h2>
+<button class="text-primary text-xs font-bold hover:underline">إدارة الكل</button>
+</div>
+<div class="bg-white dark:bg-background-dark border border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-4 shadow-sm">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-black rounded flex items-center justify-center text-white font-black text-xs">P1</div>
+<div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">مزود البيانات المتكامل</p>
+<span class="px-2 py-0.5 bg-green-100 text-green-700 dark:bg-green-500/20 dark:text-green-400 text-[10px] font-bold rounded uppercase">نشط</span>
+</div>
+</div>
+<button class="text-[#617289]"><span class="material-symbols-outlined text-lg">settings</span></button>
+</div>
+<div class="space-y-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-[#f0f2f4] dark:bg-white/5 text-[10px] rounded text-[#617289]">B2B</span>
+<span class="px-1.5 py-0.5 bg-[#f0f2f4] dark:bg-white/5 text-[10px] rounded text-[#617289]">اتصال مباشر</span>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[10px] font-bold text-[#617289] uppercase">
+<span>الرصيد المستخدم</span>
+<span>8.4 ألف / 10 آلاف</span>
+</div>
+<div class="w-full h-1.5 bg-[#f0f2f4] dark:bg-white/5 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 84%"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-background-dark border border-[#dbe0e6] dark:border-[#2d3748] rounded-xl p-4 shadow-sm opacity-80">
+<div class="flex justify-between items-start mb-3">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-orange-500 rounded flex items-center justify-center text-white font-black text-xs">P2</div>
+<div>
+<p class="text-sm font-bold text-[#111418] dark:text-white">مزود النطاقات</p>
+<span class="px-2 py-0.5 bg-amber-100 text-amber-700 dark:bg-amber-500/20 dark:text-amber-400 text-[10px] font-bold rounded uppercase">مفتاح الربط مطلوب</span>
+</div>
+</div>
+<button class="text-[#617289]"><span class="material-symbols-outlined text-lg">settings</span></button>
+</div>
+<div class="space-y-3">
+<div class="flex flex-wrap gap-1">
+<span class="px-1.5 py-0.5 bg-[#f0f2f4] dark:bg-white/5 text-[10px] rounded text-[#617289]">بحث النطاقات</span>
+</div>
+<div class="p-2 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-900/30 rounded text-[11px] text-amber-800 dark:text-amber-300">
+                                    قم بتوصيل مفتاح API الخاص بك لمتابعة تتبع الرصيد.
+                                </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

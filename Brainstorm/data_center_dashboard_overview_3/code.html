@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>لوحة تحليل الأداء والنتائج - ذكاء البيانات</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b7cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "sans-serif"],
+                        "sans": ["Tajawal", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        body {
+            font-family: 'Tajawal', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .chart-bar { transition: height 0.3s ease; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
+<div class="relative flex flex-col min-h-screen">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e5e7eb] dark:border-white/10 bg-white dark:bg-background-dark px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-8 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-primary font-bold">analytics</span>
+</div>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold leading-tight tracking-tight">تحليلات الأداء</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#617289] dark:text-white/60 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">مركز البيانات</a>
+<a class="text-[#111418] dark:text-white text-sm font-bold leading-normal border-b-2 border-primary pb-1" href="#">تحليل النتائج</a>
+<a class="text-[#617289] dark:text-white/60 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">جودة البيانات</a>
+<a class="text-[#617289] dark:text-white/60 text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">الميزانية</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex items-center gap-2 bg-gray-100 dark:bg-white/5 px-3 py-1.5 rounded-lg border border-gray-200 dark:border-white/10">
+<span class="text-xs font-bold text-[#617289] dark:text-white/60">العملة:</span>
+<span class="text-xs font-bold text-primary">ريال سعودي (SAR)</span>
+</div>
+<div class="h-10 w-10 rounded-full border border-gray-200 dark:border-white/10 bg-center bg-no-repeat bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBRdGUh1L7B1ppXlRiKVUlKziL8biqomtmUvJlw3ZqUHbdYtakRn1cWbknAX9CTIJkIqnfK9qQj4OWAxaGwfHoy5_aRiN192kM4b4lXbcshiF8UGmf6YScNZwTg2LIMpQVvsVRzMb9d2iN_oly8ZRPQK3_PJsvTX35xo3tUu3y04GQy212PBPS_wAPv90HzO3AsB22HdRq0VVhn6WMwIjx4ukK8mloS8n21-EWjAdz-8wL2VNREYXNyFh5MlZjHb-wxsL02pVATFUoQ");'></div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center py-8">
+<div class="w-full max-w-[1200px] px-6 lg:px-10 flex flex-col gap-8">
+<div class="flex flex-wrap items-end justify-between gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111418] dark:text-white text-3xl font-extrabold leading-tight tracking-tight">لوحة تحليل الأداء والنتائج</h1>
+<p class="text-[#617289] dark:text-white/60 text-base font-normal">تتبع دقة المزودين، جودة العملاء، وتحليل التكاليف لخطوط التدفق.</p>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-3 py-2">
+<span class="material-symbols-outlined text-gray-400 text-sm mr-2">calendar_today</span>
+<select class="bg-transparent border-none text-sm font-bold focus:ring-0 p-0">
+<option>آخر 30 يوم</option>
+<option>الربع الحالي</option>
+<option>السنة الحالية</option>
+</select>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-bold shadow-sm hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-lg">download</span>
+<span>تصدير التقرير</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm">
+<p class="text-[#617289] dark:text-white/60 text-sm font-bold">متوسط تكلفة العميل (CPL)</p>
+<div class="flex items-baseline gap-1">
+<p class="text-[#111418] dark:text-white tracking-tight text-3xl font-extrabold">12.40</p>
+<span class="text-sm font-bold text-[#617289]">ر.س</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-[#e73908] bg-[#e73908]/10 px-1.5 py-0.5 rounded text-xs font-bold" dir="ltr">-4.2%</span>
+<span class="text-[#617289] dark:text-white/40 text-xs">تحسن في التكلفة</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm">
+<p class="text-[#617289] dark:text-white/60 text-sm font-bold">إجمالي المصروفات</p>
+<div class="flex items-baseline gap-1">
+<p class="text-[#111418] dark:text-white tracking-tight text-3xl font-extrabold">45,200</p>
+<span class="text-sm font-bold text-[#617289]">ر.س</span>
+</div>
+<div class="flex items-center gap-1.5 mt-1 text-[#07883b]">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+<span class="text-xs font-bold">ضمن الميزانية</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm">
+<p class="text-[#617289] dark:text-white/60 text-sm font-bold">دقة البيانات المجمعة</p>
+<p class="text-[#111418] dark:text-white tracking-tight text-3xl font-extrabold" dir="ltr">89.7%</p>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-[#07883b] bg-[#07883b]/10 px-1.5 py-0.5 rounded text-xs font-bold" dir="ltr">+2.1%</span>
+<span class="text-[#617289] dark:text-white/40 text-xs">عن الشهر السابق</span>
+</div>
+</div>
+<div class="flex flex-col gap-2 rounded-xl p-6 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-sm">
+<p class="text-[#617289] dark:text-white/60 text-sm font-bold">معدل التحويل المتوقع</p>
+<p class="text-[#111418] dark:text-white tracking-tight text-3xl font-extrabold" dir="ltr">18.4%</p>
+<div class="flex items-center gap-1.5 mt-1">
+<div class="w-full bg-gray-100 dark:bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[18.4%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="flex flex-col bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm p-6">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-[#111418] dark:text-white font-bold">مقارنة دقة المزودين (Accuracy)</h3>
+<span class="material-symbols-outlined text-gray-400">equalizer</span>
+</div>
+<div class="flex items-end justify-between h-48 gap-4 px-2">
+<div class="flex flex-col items-center flex-1 gap-2 group">
+<div class="w-full bg-primary/20 rounded-t-lg relative flex items-end justify-center h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-4/5 bg-primary rounded-t-lg h-[92%]"></div>
+<div class="absolute -top-6 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">92%</div>
+</div>
+<span class="text-[10px] font-bold text-[#617289] truncate w-full text-center">Apollo</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2 group">
+<div class="w-full bg-primary/20 rounded-t-lg relative flex items-end justify-center h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-4/5 bg-primary rounded-t-lg h-[84%]"></div>
+<div class="absolute -top-6 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">84%</div>
+</div>
+<span class="text-[10px] font-bold text-[#617289] truncate w-full text-center">Lusha</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2 group">
+<div class="w-full bg-primary/20 rounded-t-lg relative flex items-end justify-center h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-4/5 bg-primary rounded-t-lg h-[78%]"></div>
+<div class="absolute -top-6 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">78%</div>
+</div>
+<span class="text-[10px] font-bold text-[#617289] truncate w-full text-center">ZoomInfo</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2 group">
+<div class="w-full bg-primary/20 rounded-t-lg relative flex items-end justify-center h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-4/5 bg-primary rounded-t-lg h-[89%]"></div>
+<div class="absolute -top-6 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">89%</div>
+</div>
+<span class="text-[10px] font-bold text-[#617289] truncate w-full text-center">Cognism</span>
+</div>
+<div class="flex flex-col items-center flex-1 gap-2 group">
+<div class="w-full bg-primary/20 rounded-t-lg relative flex items-end justify-center h-full group-hover:bg-primary/30 transition-colors">
+<div class="w-4/5 bg-primary rounded-t-lg h-[65%]"></div>
+<div class="absolute -top-6 text-[10px] font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">65%</div>
+</div>
+<span class="text-[10px] font-bold text-[#617289] truncate w-full text-center">RocketReach</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm p-6">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-[#111418] dark:text-white font-bold">اتجاهات جودة العملاء (Lead Quality)</h3>
+<span class="material-symbols-outlined text-gray-400">show_chart</span>
+</div>
+<div class="relative h-48 flex items-end">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 100">
+<line class="text-gray-100 dark:text-white/5" stroke="currentColor" stroke-width="1" x1="0" x2="400" y1="20" y2="20"></line>
+<line class="text-gray-100 dark:text-white/5" stroke="currentColor" stroke-width="1" x1="0" x2="400" y1="50" y2="50"></line>
+<line class="text-gray-100 dark:text-white/5" stroke="currentColor" stroke-width="1" x1="0" x2="400" y1="80" y2="80"></line>
+<path d="M0,80 Q50,40 100,60 T200,30 T300,50 T400,20 L400,100 L0,100 Z" fill="url(#grad1)" opacity="0.2"></path>
+<path d="M0,80 Q50,40 100,60 T200,30 T300,50 T400,20" fill="none" stroke="#2b7cee" stroke-linecap="round" stroke-width="3"></path>
+<defs>
+<linearGradient id="grad1" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#2b7cee;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#2b7cee;stop-opacity:0"></stop>
+</linearGradient>
+</defs>
+</svg>
+<div class="absolute bottom-[-24px] w-full flex justify-between px-2 text-[10px] font-bold text-[#617289]">
+<span>أسبوع 1</span>
+<span>أسبوع 2</span>
+<span>أسبوع 3</span>
+<span>أسبوع 4</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm overflow-hidden">
+<div class="flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-white/10">
+<div>
+<h2 class="text-[#111418] dark:text-white text-lg font-bold">أداء خوارزميات الشلال (Waterfall Recipes)</h2>
+<p class="text-xs text-[#617289] mt-1">تحليل النتائج بناءً على تسلسل المزودين المستخدم.</p>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors">
+<span class="material-symbols-outlined text-gray-500">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-gray-50/50 dark:bg-white/5">
+<th class="px-6 py-4 text-[#111418] dark:text-white/80 text-xs font-bold uppercase tracking-wider border-b border-gray-200 dark:border-white/10">الخوارزمية / المصدر</th>
+<th class="px-6 py-4 text-[#111418] dark:text-white/80 text-xs font-bold uppercase tracking-wider border-b border-gray-200 dark:border-white/10">التكلفة لكل عميل قابل للتواصل</th>
+<th class="px-6 py-4 text-[#111418] dark:text-white/80 text-xs font-bold uppercase tracking-wider border-b border-gray-200 dark:border-white/10">إجمالي النتائج</th>
+<th class="px-6 py-4 text-[#111418] dark:text-white/80 text-xs font-bold uppercase tracking-wider border-b border-gray-200 dark:border-white/10">معدل النجاح</th>
+<th class="px-6 py-4 text-[#617289] dark:text-white/40 text-xs font-bold uppercase tracking-wider border-b border-gray-200 dark:border-white/10">الحالة</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-100 dark:divide-white/5">
+<tr class="hover:bg-gray-50 dark:hover:bg-white/10 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center font-bold text-primary text-xs">A</div>
+<div>
+<p class="text-[#111418] dark:text-white font-semibold text-sm">Apollo + Lusha</p>
+<p class="text-[10px] text-[#617289]">تحسين الهواتف المباشرة</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">8.50 ر.س</span>
+<span class="text-[10px] text-emerald-600 font-bold">الأفضل قيمة</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white font-medium text-sm">12,450</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-gray-100 dark:bg-white/10 h-1.5 rounded-full">
+<div class="bg-emerald-500 h-full w-[88%]"></div>
+</div>
+<span class="text-xs font-bold">88%</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-600 text-[10px] font-bold">فعال</span>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-white/10 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center font-bold text-purple-600 text-xs">B</div>
+<div>
+<p class="text-[#111418] dark:text-white font-semibold text-sm">ZoomInfo Only</p>
+<p class="text-[10px] text-[#617289]">بيانات مؤسسات كبرى</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">18.20 ر.س</span>
+<span class="text-[10px] text-red-500 font-bold">تكلفة عالية</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white font-medium text-sm">5,200</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-gray-100 dark:bg-white/10 h-1.5 rounded-full">
+<div class="bg-primary h-full w-[94%]"></div>
+</div>
+<span class="text-xs font-bold">94%</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded bg-blue-100 dark:bg-blue-500/20 text-primary text-[10px] font-bold">قيد المراجعة</span>
+</td>
+</tr>
+<tr class="hover:bg-gray-50 dark:hover:bg-white/10 transition-colors">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center font-bold text-amber-600 text-xs">C</div>
+<div>
+<p class="text-[#111418] dark:text-white font-semibold text-sm">Cognism + Hunter</p>
+<p class="text-[10px] text-[#617289]">البريد الإلكتروني الموثق</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-[#111418] dark:text-white font-bold text-sm">11.00 ر.س</span>
+<span class="text-[10px] text-amber-600 font-bold">متوسط</span>
+</div>
+</td>
+<td class="px-6 py-5 text-[#111418] dark:text-white font-medium text-sm">8,900</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-2">
+<div class="w-16 bg-gray-100 dark:bg-white/10 h-1.5 rounded-full">
+<div class="bg-amber-500 h-full w-[72%]"></div>
+</div>
+<span class="text-xs font-bold">72%</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="px-2 py-1 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-600 text-[10px] font-bold">معدل متوسط</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-gray-50/30 dark:bg-white/5 border-t border-gray-200 dark:border-white/10 flex items-center justify-between">
+<span class="text-xs font-medium text-[#617289] dark:text-white/40">يتم تحديث التكاليف بناءً على أسعار صرف ريال سعودي الحالية.</span>
+<button class="text-primary text-xs font-bold hover:underline">تحميل كامل التفاصيل المالية</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pb-12">
+<div class="flex items-start gap-4 p-5 rounded-xl bg-primary/5 border border-primary/10">
+<div class="size-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary">savings</span>
+</div>
+<div>
+<h4 class="text-primary font-bold text-sm">فرصة توفير في التكاليف</h4>
+<p class="text-primary/80 text-sm mt-1 leading-relaxed">باستخدام خوارزمية Waterfall (A)، يمكنك خفض التكلفة لكل عميل قابل للتواصل بنسبة 22% مع الحفاظ على دقة تفوق 85%.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-5 rounded-xl bg-[#07883b]/5 border border-[#07883b]/10">
+<div class="size-10 rounded-lg bg-[#07883b]/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#07883b]">verified</span>
+</div>
+<div>
+<h4 class="text-[#07883b] font-bold text-sm">توصية جودة البيانات</h4>
+<p class="text-[#07883b]/80 text-sm mt-1 leading-relaxed">أظهرت النتائج أن مزود البيانات "Apollo" يتصدر حالياً السوق السعودي في دقة أرقام الجوال المباشرة.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

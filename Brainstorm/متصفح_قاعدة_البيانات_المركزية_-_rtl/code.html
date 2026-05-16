@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>متصفح قاعدة البيانات المركزية - B2B Data Intelligence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;family=Noto+Sans+Arabic:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#197fe6",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111921",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Sans Arabic", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>body {
+    font-family: "Noto Sans Arabic", "Manrope", sans-serif
+    }
+.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.active-nav {
+    background-color: rgba(25, 127, 230, 0.1);
+    color: #197fe6;
+    border-right: 4px solid #197fe6
+    }
+select {
+    appearance: none;
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuA4VsggUCClbKhaw4zgJnYAxTWf00lKoLpRLjwrryuz2mFvUCLL3EG4EvLNsO6gTKuh7tnv2eq1XnaM2X1AYqKfc_71ucES26KKcpgKes80qCPRY7S5jTgyrlvnO-Hv_zvTbWPyCfCxw6ptTmQm4_2ty8tmeN1vphOEKvkv8VhJN91-AviSNAZDTRRXXjll4tJR1TIPcqKmCVjOalQI9-jTKlYrgf2P2SLcn9jTXBB6rFw8iByu0MlQuTwCNXmSHm8ocM0AEEDePixL);
+    background-repeat: no-repeat;
+    background-position: left 0.75rem center;
+    background-size: 1rem
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111418] dark:text-white min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar Navigation (Right side for RTL) -->
+<aside class="w-72 bg-white dark:bg-slate-900 border-l border-[#dce0e5] dark:border-slate-800 flex flex-col h-full shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">database</span>
+</div>
+<div>
+<h1 class="text-lg font-bold leading-tight">مركز البيانات</h1>
+<p class="text-[#637588] text-xs">نظام إدارة العملاء الذكي</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+<p class="px-3 text-xs font-semibold text-[#637588] uppercase tracking-wider mb-2">القائمة الرئيسية</p>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg active-nav" href="#">
+<span class="material-symbols-outlined text-[22px]">history</span>
+<span class="text-sm font-medium">سجل البحث التاريخي</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#637588] hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">hub</span>
+<span class="text-sm font-medium">القطاعات النشطة</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#637588] hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">map</span>
+<span class="text-sm font-medium">تغطية المواقع</span>
+</a>
+<div class="pt-8 pb-2">
+<p class="px-3 text-xs font-semibold text-[#637588] uppercase tracking-wider mb-2">شرائح العملاء المحفوظة</p>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#637588] hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px] text-amber-500">star</span>
+<span class="text-sm font-medium">عملاء عالية النية</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#637588] hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px] text-emerald-500">check_circle</span>
+<span class="text-sm font-medium">تم تصديرهم مسبقاً</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#637588] hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px] text-primary">apartment</span>
+<span class="text-sm font-medium">الشركات الكبرى (KSA)</span>
+</a>
+</nav>
+<div class="p-4 border-t border-[#dce0e5] dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-xl bg-gray-50 dark:bg-slate-800/50">
+<img alt="صورة المستخدم" class="size-10 rounded-full border-2 border-white dark:border-slate-700" data-alt="User profile picture in circular frame" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq0U2lihLetEB2dN8UTjJUbBwzL8ip9V8B0CzLP6iisnHlfTA-LJ8F4xaETFvPici5y1JOcGj49jwyyHvesZyeaNl-JYrIPi2pk9MBqbNXGM5t0gBQcyTHrBvRQHO1bf6teLMIfsqarcJS4KZRlwBieaIQZQHxlE-4rAxt_FlSlBimdW8kyPWvW5-WSa-2nW0VDG4fMAb1KtkPasprHzL83l_JsqxgQuFPCe6vWDOYDWhn-RSF4Smyvq0jx6W0Us6fK5kVF9rpy1zs"/>
+<div class="flex flex-col overflow-hidden">
+<span class="text-sm font-bold truncate">أحمد العتيبي</span>
+<span class="text-xs text-[#637588] truncate">مدير البيانات</span>
+</div>
+<span class="material-symbols-outlined text-[#637588] mr-auto">settings</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Top Navigation Bar -->
+<header class="h-16 bg-white dark:bg-slate-900 border-b border-[#dce0e5] dark:border-slate-800 flex items-center justify-between px-8 shrink-0">
+<div class="flex items-center gap-4 flex-1 max-w-2xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#637588]">search</span>
+<input class="w-full bg-[#f0f2f4] dark:bg-slate-800 border-none rounded-lg pr-10 pl-4 h-10 text-sm focus:ring-2 focus:ring-primary/50 transition-all" placeholder="البحث في الأسماء، الشركات، أو المسميات الوظيفية..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-3 mr-4">
+<button class="flex items-center gap-2 px-4 h-10 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-all shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>إضافة بحث جديد</span>
+</button>
+<div class="h-8 w-px bg-[#dce0e5] dark:bg-slate-800 mx-2"></div>
+<button class="p-2 text-[#637588] hover:bg-gray-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Content Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<!-- Page Heading -->
+<div class="mb-8">
+<h2 class="text-3xl font-black tracking-tight mb-2">متصفح قاعدة البيانات التاريخية</h2>
+<p class="text-[#637588] max-w-2xl">استكشف ملايين السجلات والبيانات المسجلة في المملكة العربية السعودية مع أدوات تصفية متقدمة للوصول للجمهور المستهدف بدقة.</p>
+</div>
+<!-- Advanced Filters Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#dce0e5] dark:border-slate-800 p-6 mb-8 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-bold text-[#637588] pr-1 uppercase tracking-wide">الصناعة</span>
+<select class="w-full border-[#dce0e5] dark:border-slate-700 dark:bg-slate-800 rounded-lg h-11 text-sm focus:ring-primary">
+<option>جميع الصناعات</option>
+<option>التكنولوجيا والبرمجيات</option>
+<option>الخدمات المالية</option>
+<option>التصنيع والطاقة</option>
+<option>العقارات والمقاولات</option>
+</select>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-bold text-[#637588] pr-1 uppercase tracking-wide">المستوى الوظيفي</span>
+<select class="w-full border-[#dce0e5] dark:border-slate-700 dark:bg-slate-800 rounded-lg h-11 text-sm focus:ring-primary">
+<option>أي مستوى</option>
+<option>مدير تنفيذي (C-Level)</option>
+<option>مدير إدارة</option>
+<option>مستشار</option>
+<option>تقني متخصص</option>
+</select>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-bold text-[#637588] pr-1 uppercase tracking-wide">المنطقة (المملكة)</span>
+<select class="w-full border-[#dce0e5] dark:border-slate-700 dark:bg-slate-800 rounded-lg h-11 text-sm focus:ring-primary">
+<option>جميع المناطق</option>
+<option>منطقة الرياض</option>
+<option>منطقة مكة المكرمة</option>
+<option>المنطقة الشرقية</option>
+<option>منطقة المدينة المنورة</option>
+</select>
+</label>
+<label class="flex flex-col gap-1.5">
+<span class="text-xs font-bold text-[#637588] pr-1 uppercase tracking-wide">حجم الشركة</span>
+<select class="w-full border-[#dce0e5] dark:border-slate-700 dark:bg-slate-800 rounded-lg h-11 text-sm focus:ring-primary">
+<option>أي حجم</option>
+<option>1-10 موظف</option>
+<option>11-50 موظف</option>
+<option>51-200 موظف</option>
+<option>201-1000 موظف</option>
+<option>+1000 موظف</option>
+</select>
+</label>
+</div>
+<!-- Active Filter Chips -->
+<div class="flex flex-wrap items-center gap-2 border-t border-gray-100 dark:border-slate-800 pt-5">
+<span class="text-sm font-medium text-[#637588] ml-2">الفلاتر النشطة:</span>
+<div class="flex h-8 items-center gap-2 rounded-lg bg-primary/10 px-3 border border-primary/20">
+<span class="text-primary text-xs font-bold">منطقة الرياض</span>
+<span class="material-symbols-outlined text-[16px] cursor-pointer text-primary">close</span>
+</div>
+<div class="flex h-8 items-center gap-2 rounded-lg bg-primary/10 px-3 border border-primary/20">
+<span class="text-primary text-xs font-bold">الشركات الكبرى</span>
+<span class="material-symbols-outlined text-[16px] cursor-pointer text-primary">close</span>
+</div>
+<button class="text-xs font-bold text-red-500 mr-auto hover:underline">مسح الكل</button>
+</div>
+</div>
+<!-- Leads Table -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#dce0e5] dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="px-6 py-4 border-b border-[#dce0e5] dark:border-slate-800 flex items-center justify-between">
+<h3 class="font-bold">نتائج البحث (2,450 عميل محتمل)</h3>
+<div class="flex gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 border border-[#dce0e5] dark:border-slate-700 rounded-lg text-sm font-medium hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>تصدير النتائج</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right">
+<thead class="bg-gray-50 dark:bg-slate-800/50 border-b border-[#dce0e5] dark:border-slate-800">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-[#637588] uppercase tracking-wider">العميل المحتمل</th>
+<th class="px-6 py-4 text-xs font-bold text-[#637588] uppercase tracking-wider">الشركة والقطاع</th>
+<th class="px-6 py-4 text-xs font-bold text-[#637588] uppercase tracking-wider">الموقع</th>
+<th class="px-6 py-4 text-xs font-bold text-[#637588] uppercase tracking-wider">آخر تفاعل</th>
+<th class="px-6 py-4 text-xs font-bold text-[#637588] uppercase tracking-wider text-left">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dce0e5] dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-blue-100 flex items-center justify-center text-primary font-bold">س</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">سلطان محمد الشمري</span>
+<span class="text-xs text-[#637588]">مدير أول تقنية المعلومات</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-gray-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-gray-500">domain</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium">شركة أرامكو السعودية</span>
+<span class="text-[11px] text-[#637588]">الطاقة والموارد</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-1 text-sm text-[#637588]">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>الظهران، المنطقة الشرقية</span>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold">نشط - 3 أيام</span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-left">
+<button class="px-4 py-2 bg-primary/10 text-primary text-xs font-bold rounded-lg hover:bg-primary hover:text-white transition-all">
+                                            إعادة استخدام العميل
+                                        </button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-700 font-bold">هـ</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">هيا عبدالرحمن الراشد</span>
+<span class="text-xs text-[#637588]">رئيس قطاع التسويق</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-gray-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-gray-500">payments</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium">مصرف الراجحي</span>
+<span class="text-[11px] text-[#637588]">الخدمات المالية</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-1 text-sm text-[#637588]">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>الرياض، العليا</span>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-[11px] font-bold">منذ أسبوعين</span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-left">
+<button class="px-4 py-2 bg-primary/10 text-primary text-xs font-bold rounded-lg hover:bg-primary hover:text-white transition-all">
+                                            إعادة استخدام العميل
+                                        </button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-gray-50 dark:hover:bg-slate-800/30 transition-colors">
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-700 font-bold">ف</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold">فيصل خالد الدوسري</span>
+<span class="text-xs text-[#637588]">محلل تطوير أعمال</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded bg-gray-100 flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px] text-gray-500">bolt</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium">شركة نيوم</span>
+<span class="text-[11px] text-[#637588]">التطوير العقاري والتقنية</span>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<div class="flex items-center gap-1 text-sm text-[#637588]">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span>تبوك، نيوم</span>
+</div>
+</td>
+<td class="px-6 py-5 whitespace-nowrap">
+<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 text-[11px] font-bold">نشط - اليوم</span>
+</td>
+<td class="px-6 py-5 whitespace-nowrap text-left">
+<button class="px-4 py-2 bg-primary/10 text-primary text-xs font-bold rounded-lg hover:bg-primary hover:text-white transition-all">
+                                            إعادة استخدام العميل
+                                        </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-gray-50 dark:bg-slate-800/50 flex items-center justify-between border-t border-[#dce0e5] dark:border-slate-800">
+<div class="flex items-center gap-1">
+<button class="size-8 rounded border border-[#dce0e5] dark:border-slate-700 flex items-center justify-center hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+<button class="size-8 rounded bg-primary text-white flex items-center justify-center text-sm font-bold">1</button>
+<button class="size-8 rounded border border-transparent flex items-center justify-center text-sm font-medium hover:bg-white transition-colors">2</button>
+<button class="size-8 rounded border border-transparent flex items-center justify-center text-sm font-medium hover:bg-white transition-colors">3</button>
+<span class="px-2">...</span>
+<button class="size-8 rounded border border-transparent flex items-center justify-center text-sm font-medium hover:bg-white transition-colors">24</button>
+<button class="size-8 rounded border border-[#dce0e5] dark:border-slate-700 flex items-center justify-center hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+</div>
+<span class="text-xs text-[#637588] font-medium">عرض 1-10 من 2,450 عميل</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { Shield, LayoutDashboard as DashboardIcon, Crown as NinjaIcon, Users as UsersIcon, LogOut } from 'lucide-react';
+import {
+  Shield,
+  LayoutDashboard as DashboardIcon,
+  Crown as NinjaIcon,
+  Users as UsersIcon,
+  LogOut,
+  Link as LinkIcon,
+  Wallet,
+  ScrollText,
+  Building2
+} from 'lucide-react';
 
 const AdminLayout = () => {
     const navigate = useNavigate();
@@ -56,7 +66,42 @@ const AdminLayout = () => {
                         className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-emerald-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
                     >
                         <DashboardIcon size={20} />
-                        <span>Dashboard</span>
+                        <span>لوحة التحكم</span>
+                    </NavLink>
+
+                    <div className="text-xs font-bold text-slate-500 mt-6 mb-2 px-4 uppercase tracking-wider">النظام الأساسي</div>
+
+                    <NavLink
+                        to="/admin/integrations"
+                        className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive || location.pathname.startsWith('/admin/integrations') ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+                    >
+                        <LinkIcon size={20} />
+                        <span>مركز التكاملات</span>
+                        <span className="mr-auto px-2 py-0.5 text-[10px] font-bold bg-blue-500 text-white rounded">Hub</span>
+                    </NavLink>
+
+                    <NavLink
+                        to="/admin/wallet"
+                        className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-amber-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+                    >
+                        <Wallet size={20} />
+                        <span>المحفظة والفوترة</span>
+                    </NavLink>
+
+                    <NavLink
+                        to="/admin/workspaces"
+                        className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-purple-600 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+                    >
+                        <Building2 size={20} />
+                        <span>إدارة العملاء</span>
+                    </NavLink>
+
+                    <NavLink
+                        to="/admin/audit"
+                        className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-slate-700 text-white shadow-lg' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
+                    >
+                        <ScrollText size={20} />
+                        <span>السجل والأمان</span>
                     </NavLink>
 
                     <div className="text-xs font-bold text-slate-500 mt-6 mb-2 px-4 uppercase tracking-wider">Growth Engine</div>
@@ -74,7 +119,7 @@ const AdminLayout = () => {
                         className={({ isActive }) => `flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${isActive ? 'bg-slate-800 text-white' : 'text-slate-400 hover:bg-slate-800 hover:text-white'}`}
                     >
                         <UsersIcon size={20} />
-                        <span>Providers</span>
+                        <span>المزودين</span>
                     </NavLink>
                 </nav>
 

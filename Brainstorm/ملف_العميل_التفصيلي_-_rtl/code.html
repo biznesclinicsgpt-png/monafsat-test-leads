@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ملف العميل التفصيلي - منصة بيانات</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&amp;family=Manrope:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b7cee",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101822",
+                    },
+                    fontFamily: {
+                        "display": ["Tajawal", "Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Tajawal', 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111418]">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-slate-900 px-4 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-[#111418] dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">منصة بيانات</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden">
+<div class="text-[#617289] flex border-none bg-[#f0f2f4] dark:bg-slate-800 items-center justify-center px-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white focus:ring-0 h-full placeholder:text-[#617289] text-sm" placeholder="البحث عن عملاء..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border border-slate-200" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDgB4yXp1-R2VIRQcTwFaETSQMZflXBZOKA__m1zFzwZ6FuOL8F30rhn1fEgz-MOBMbJNN6kiBP0UABCWPUbba4dcK8J7p1BigzkRMM-9ke1wxc8RzXfXjjX8AYbPZsk42xrCUR2tf2-dZ_CEbZnIcKqb07JCA0esx0OfPDe5CJ8-oTN6Wah-YyzV1sz16WlLeOSlQsW-LayTNbAgknRP4EUWQz2LIPuS5l7eDT2W_ceVcFGtTaxypb2Cl8ZaWxIOV4mFJUzS9O7yeg");'></div>
+</div>
+</header>
+<div class="flex flex-1 flex-row">
+<!-- Sidebar Navigation -->
+<aside class="hidden lg:flex w-64 flex-col border-l border-solid border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
+<div class="flex flex-col gap-6">
+<div class="flex gap-3 items-center">
+<div class="bg-primary/10 text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">network_intelligence</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-[#111418] dark:text-white text-base font-bold">ذكاء البيانات</h1>
+<p class="text-[#617289] text-xs font-normal">سوق المملكة العربية السعودية</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">لوحة التحكم</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-sm font-bold">العملاء المحتملين</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">database</span>
+<span class="text-sm font-medium">إثراء البيانات</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#617289] hover:bg-[#f0f2f4] dark:hover:bg-slate-800 rounded-lg" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-sm font-medium">التقارير</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto bg-[#f6f7f8] dark:bg-background-dark p-4 md:p-8">
+<div class="max-w-6xl mx-auto space-y-6">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 text-sm">
+<a class="text-[#617289] hover:text-primary transition-colors" href="#">قائمة العملاء المحتملين</a>
+<span class="material-symbols-outlined text-xs text-[#617289]">arrow_back_ios</span>
+<span class="text-[#111418] dark:text-white font-medium">ملف العميل</span>
+</div>
+<!-- Profile Header Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-6 flex flex-col md:flex-row gap-6 items-start md:items-center justify-between">
+<div class="flex gap-6 items-center">
+<div class="relative">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-24 md:size-32 border-4 border-white dark:border-slate-800 shadow-md" data-alt="Ahmed Al-Otaibi Profile Picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBOcQAGFbx4tRsqIko86DVPAkelV_eN_OJdslgGkyKCiywdvpaB_dzvOvn6fAkNNsYxXuHl5draP9029L-Holg8c2-yJqlyJc-yuLiCJ-LiC9b1Tj-jdKVlRESVD-j4p-yfYpIC76NvczBqn8GFX5QpP_nK0NGNe4jJyZL7hKjTUwF3Wjmt9d8t6k0S9OzMvDVVAYn2RniZE8eb3UpoXHqDCJdj3A1CYbnm_cdYg67OMeRyPhVDSlJDGHQi-lWfpYeWu69EFTKD-aqQ");'></div>
+<div class="absolute -bottom-2 -right-2 bg-white dark:bg-slate-800 p-1 rounded-lg shadow-sm">
+<img alt="KSA Flag" class="w-8 h-auto rounded-sm" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDeNukbilQeYFN9IyBFQsW17MuLypzwjheFOrgeNdpscdHnlmjrvYqKbX6UkNAK7IbPHg5Qt-bgCTu4NEP3bN6Lr6AypuP448Ykr3_tDEWAC6eAmFaOXTu3swfUuQuFnz74sZZqApYRlTrkuH4HGEOzTbWQtPeC7_oNc7mqzBEYOlu4wzCGvuDhRFDImebDqS9L1wU6JMjuHPOUucjmRc1IcC-AP2hBOkKtRxRzO_rTA95pUeq_kajcQKLLl5cxkmvDavU8mBrdZ_cB"/>
+</div>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h1 class="text-[#111418] dark:text-white text-2xl font-extrabold tracking-tight">أحمد العتيبي</h1>
+<span class="material-symbols-outlined text-blue-500 text-lg">verified</span>
+</div>
+<p class="text-primary font-bold text-lg">مدير تكنولوجيا المعلومات | شركة سابك</p>
+<div class="flex items-center gap-1 text-[#617289] mt-1">
+<span class="material-symbols-outlined text-sm">location_on</span>
+<span class="text-sm">الرياض، المملكة العربية السعودية 🇸🇦</span>
+</div>
+</div>
+</div>
+<div class="flex flex-wrap gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-[#f0f2f4] dark:bg-slate-800 text-[#111418] dark:text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all hover:bg-slate-200">
+<span class="material-symbols-outlined text-xl">edit</span>
+<span>تعديل يدوي</span>
+</button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all hover:bg-primary/90 shadow-md">
+<span class="material-symbols-outlined text-xl">refresh</span>
+<span>إعادة إثراء</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Actions Bar & Metrics -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Left Column: Detailed Info -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Contact Info Section -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 p-6 shadow-sm">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2 dark:text-white">
+<span class="material-symbols-outlined text-primary">contact_mail</span>
+                                    بيانات الاتصال الموثقة
+                                </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-[#f8fafc] dark:bg-slate-800/50 border border-[#f1f5f9] dark:border-slate-800">
+<p class="text-xs text-[#617289] mb-1">البريد الإلكتروني المهني</p>
+<div class="flex items-center justify-between">
+<span class="font-medium dark:text-white">a.otaibi@sabic.com</span>
+<span class="flex items-center gap-1 text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded text-[10px] font-bold">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+                                                موثق
+                                            </span>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-[#f8fafc] dark:bg-slate-800/50 border border-[#f1f5f9] dark:border-slate-800">
+<p class="text-xs text-[#617289] mb-1">رقم الجوال</p>
+<div class="flex items-center justify-between">
+<span class="font-medium dark:text-white" dir="ltr">+966 50 123 4567</span>
+<span class="flex items-center gap-1 text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded text-[10px] font-bold">
+<span class="material-symbols-outlined text-xs">check_circle</span>
+                                                موثق
+                                            </span>
+</div>
+</div>
+</div>
+</div>
+<!-- Data Sources -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 p-6 shadow-sm">
+<h3 class="text-lg font-bold mb-4 flex items-center gap-2 dark:text-white">
+<span class="material-symbols-outlined text-primary">hub</span>
+                                    مصادر البيانات الموثوقة
+                                </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="flex flex-col items-center p-4 border border-[#f1f5f9] dark:border-slate-800 rounded-lg text-center gap-3">
+<div class="relative size-16">
+<svg class="size-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-slate-100 dark:stroke-slate-800" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-primary" cx="18" cy="18" fill="none" r="16" stroke-dasharray="100" stroke-dashoffset="5" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-xs font-bold dark:text-white">95%</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-sm dark:text-white">LinkedIn Business</span>
+<span class="text-[10px] text-[#617289]">آخر تحديث: قبل ساعتين</span>
+</div>
+</div>
+<div class="flex flex-col items-center p-4 border border-[#f1f5f9] dark:border-slate-800 rounded-lg text-center gap-3">
+<div class="relative size-16">
+<svg class="size-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-slate-100 dark:stroke-slate-800" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-green-500" cx="18" cy="18" fill="none" r="16" stroke-dasharray="100" stroke-dashoffset="12" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-xs font-bold dark:text-white">88%</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-sm dark:text-white">GOSI Registry</span>
+<span class="text-[10px] text-[#617289]">آخر تحديث: قبل 5 أيام</span>
+</div>
+</div>
+<div class="flex flex-col items-center p-4 border border-[#f1f5f9] dark:border-slate-800 rounded-lg text-center gap-3">
+<div class="relative size-16">
+<svg class="size-full -rotate-90" viewbox="0 0 36 36">
+<circle class="stroke-slate-100 dark:stroke-slate-800" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-yellow-500" cx="18" cy="18" fill="none" r="16" stroke-dasharray="100" stroke-dashoffset="35" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-xs font-bold dark:text-white">65%</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="font-bold text-sm dark:text-white">Company Site</span>
+<span class="text-[10px] text-[#617289]">آخر تحديث: قبل 14 يوم</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar Stats & History -->
+<div class="space-y-6">
+<!-- Quick Actions Bar style -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 p-4 shadow-sm">
+<div class="flex justify-around">
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-12 rounded-full bg-[#f0f2f4] dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">download</span>
+</div>
+<span class="text-xs font-bold dark:text-slate-300">تصدير</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-12 rounded-full bg-[#f0f2f4] dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">share</span>
+</div>
+<span class="text-xs font-bold dark:text-slate-300">مشاركة</span>
+</button>
+<button class="flex flex-col items-center gap-2 group">
+<div class="size-12 rounded-full bg-[#f0f2f4] dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300 group-hover:bg-primary group-hover:text-white transition-all">
+<span class="material-symbols-outlined">history</span>
+</div>
+<span class="text-xs font-bold dark:text-slate-300">السجل</span>
+</button>
+</div>
+</div>
+<!-- Enrichment History -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-[#f0f2f4] dark:border-slate-800 p-6 shadow-sm">
+<h3 class="text-lg font-bold mb-6 dark:text-white">سجل التحديثات</h3>
+<div class="relative space-y-6 border-r-2 border-slate-100 dark:border-slate-800 pr-4">
+<div class="relative">
+<div class="absolute -right-[23px] top-1 size-3 bg-primary rounded-full ring-4 ring-primary/20"></div>
+<p class="text-xs font-bold text-primary">اليوم، 10:45 صباحاً</p>
+<p class="text-sm font-medium dark:text-slate-200">إعادة إثراء بيانات البريد الإلكتروني</p>
+<p class="text-xs text-[#617289]">بواسطة: النظام التلقائي</p>
+</div>
+<div class="relative">
+<div class="absolute -right-[23px] top-1 size-3 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
+<p class="text-xs font-bold text-slate-500">12 أكتوبر 2023</p>
+<p class="text-sm font-medium dark:text-slate-200">تعديل المسمى الوظيفي يدوياً</p>
+<p class="text-xs text-[#617289]">بواسطة: سارة الأحمد</p>
+</div>
+<div class="relative">
+<div class="absolute -right-[23px] top-1 size-3 bg-slate-300 dark:bg-slate-700 rounded-full"></div>
+<p class="text-xs font-bold text-slate-500">01 أكتوبر 2023</p>
+<p class="text-sm font-medium dark:text-slate-200">إنشاء ملف العميل</p>
+<p class="text-xs text-[#617289]">المصدر: LinkedIn Lead Gen</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

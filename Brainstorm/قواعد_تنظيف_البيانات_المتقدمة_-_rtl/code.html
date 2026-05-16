@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>قواعد تنظيف البيانات المتقدمة - RTL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Noto+Sans+Arabic:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Arabic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen text-[#111318] dark:text-white">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 w-full border-b border-[#f0f2f4] dark:border-slate-800 bg-white dark:bg-background-dark px-4 md:px-10 py-3">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between gap-4">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_6_535)">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</g>
+<defs>
+<clippath id="clip0_6_535"><rect fill="white" height="48" width="48"></rect></clippath>
+</defs>
+</svg>
+</div>
+<h2 class="text-[#111318] dark:text-white text-lg font-bold leading-tight tracking-tight">منصة استخبارات البيانات</h2>
+</div>
+<div class="hidden lg:flex items-center gap-6">
+<a class="text-[#616f89] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">لوحة التحكم</a>
+<a class="text-[#616f89] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">مجموعات البيانات</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">القواعد</a>
+<a class="text-[#616f89] dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">الإعدادات</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<label class="hidden md:flex flex-col min-w-64">
+<div class="flex w-full items-stretch rounded-lg h-10">
+<div class="text-[#616f89] flex border-none bg-[#f0f2f4] dark:bg-slate-800 items-center justify-center pr-4 rounded-r-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-l-lg text-[#111318] dark:text-white focus:outline-0 focus:ring-0 border-none bg-[#f0f2f4] dark:bg-slate-800 h-full placeholder:text-[#616f89] px-4 text-sm" placeholder="بحث عن قاعدة..." value=""/>
+</div>
+</label>
+<button class="flex min-w-[100px] cursor-pointer items-center justify-center rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span>حفظ القاعدة</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary/20" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBmCxUezLiO3yses9kjLNh9IZXH4mz1IL9N7Qplr7Utb90pG8zczJXrEIlVK3ZZ7AZRzmvpa1rQf_M7HpH5QeldrlvCw2V6JGAuNpNZvTDORlfdR697vqfp6b-1KSSuz2fCHJnWAJgQUHrha97JGS_c0GkfmoHsF1p8IqA5HE2aHu4QSP9UsQRKHNUCWPRRDm_QEG9zjVDSZuHctYdwC0QTU9dNmsuclKsPFZ65S4sTfQc8oQf19JINi9jp0gI-V_1Mb-jH-LllYHcz");'></div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto p-4 md:p-8">
+<!-- Breadcrumbs -->
+<nav class="flex flex-wrap gap-2 pb-4 items-center">
+<a class="text-[#616f89] dark:text-slate-400 text-sm font-medium hover:text-primary" href="#">إعدادات البيانات</a>
+<span class="material-symbols-outlined text-[#616f89] text-xs rotate-180">chevron_right</span>
+<span class="text-[#111318] dark:text-white text-sm font-medium">قواعد تنظيف البيانات المتقدمة</span>
+</nav>
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111318] dark:text-white text-3xl font-black leading-tight">محرر قواعد المعالجة</h1>
+<p class="text-[#616f89] dark:text-slate-400 text-base">قم بتعريف منطق تحويل البيانات لضمان دقة سجلاتك في الوقت الفعلي.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 rounded-lg h-11 px-6 bg-white dark:bg-slate-800 border border-[#dbdfe6] dark:border-slate-700 text-[#111318] dark:text-white text-sm font-bold hover:bg-gray-50 transition-colors">
+<span class="material-symbols-outlined text-lg">history</span>
+<span>سجل التغييرات</span>
+</button>
+<button class="flex items-center gap-2 rounded-lg h-11 px-6 bg-primary text-white text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-lg">add</span>
+<span>إضافة قاعدة جديدة</span>
+</button>
+</div>
+</div>
+<!-- Main Workspace Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Rule Builder -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Tabs -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-[#dbdfe6] dark:border-slate-800 overflow-hidden shadow-sm">
+<div class="flex border-b border-[#dbdfe6] dark:border-slate-800 px-6">
+<a class="flex items-center gap-2 border-b-2 border-primary text-primary pb-4 pt-5 px-2" href="#">
+<span class="material-symbols-outlined text-lg">schema</span>
+<span class="text-sm font-bold">بناء المنطق</span>
+</a>
+<a class="flex items-center gap-2 border-b-2 border-transparent text-[#616f89] dark:text-slate-400 pb-4 pt-5 px-6 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">settings_suggest</span>
+<span class="text-sm font-bold">الإعدادات المتقدمة</span>
+</a>
+</div>
+<div class="p-6 flex flex-col gap-6">
+<!-- Rule 1: Text Cleaning -->
+<div class="p-5 rounded-xl border border-[#dbdfe6] dark:border-slate-700 bg-[#f9fafb] dark:bg-slate-900/50">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">auto_fix_high</span>
+</div>
+<h3 class="text-lg font-bold">تنظيف النصوص الأساسي</h3>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded">نشط</span>
+<span class="material-symbols-outlined text-[#616f89] cursor-pointer">more_vert</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#616f89]">الحقل المستهدف</label>
+<select class="rounded-lg border-[#dbdfe6] dark:border-slate-700 bg-white dark:bg-slate-800 py-2.5 text-sm focus:ring-primary focus:border-primary">
+<option>اسم الموظف الكامل (Full Name)</option>
+<option>اسم الشركة</option>
+<option>المسمى الوظيفي</option>
+</select>
+</div>
+<div class="flex flex-wrap gap-4">
+<label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-800 px-4 py-2.5 rounded-lg border border-[#dbdfe6] dark:border-slate-700">
+<input checked="" class="rounded text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="text-sm">إزالة الرموز التعبيرية (Emojis)</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer bg-white dark:bg-slate-800 px-4 py-2.5 rounded-lg border border-[#dbdfe6] dark:border-slate-700">
+<input checked="" class="rounded text-primary focus:ring-primary w-4 h-4" type="checkbox"/>
+<span class="text-sm">إزالة المسافات الزائدة</span>
+</label>
+</div>
+</div>
+</div>
+<!-- Rule 2: Normalization -->
+<div class="p-5 rounded-xl border border-[#dbdfe6] dark:border-slate-700 bg-white dark:bg-slate-900/50">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-amber-100 rounded-lg text-amber-600">
+<span class="material-symbols-outlined">sync_alt</span>
+</div>
+<h3 class="text-lg font-bold">توحيد الأشكال القانونية للشركات</h3>
+</div>
+<span class="material-symbols-outlined text-[#616f89] cursor-pointer">more_vert</span>
+</div>
+<div class="space-y-4">
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#616f89]">ابحث عن (القيمة الأصلية)</label>
+<div class="relative">
+<input class="w-full rounded-lg border-[#dbdfe6] dark:border-slate-700 bg-white dark:bg-slate-800 py-2.5 text-sm" type="text" value="LLC"/>
+<span class="absolute left-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-400">Regex</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-bold text-[#616f89]">استبدل بـ (النمط الموحد)</label>
+<input class="w-full rounded-lg border-[#dbdfe6] dark:border-slate-700 bg-white dark:bg-slate-800 py-2.5 text-sm" type="text" value="شركة ذ.م.م"/>
+</div>
+</div>
+<div class="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-100 dark:border-blue-900/30">
+<p class="text-xs text-blue-700 dark:text-blue-300 leading-relaxed">
+<span class="font-bold">ملاحظة:</span> سيتم تحويل كافة الصيغ مثل "L.L.C" و "LLC" و "م.م" تلقائياً إلى "شركة ذ.م.م" بناءً على خوارزمية التطابق التقريبي.
+                                    </p>
+</div>
+</div>
+</div>
+<!-- Rule 3: Extraction -->
+<div class="p-5 rounded-xl border border-dashed border-[#dbdfe6] dark:border-slate-700 bg-white dark:bg-transparent">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-purple-100 rounded-lg text-purple-600">
+<span class="material-symbols-outlined">clinical_notes</span>
+</div>
+<h3 class="text-lg font-bold">استخراج المستوى الوظيفي</h3>
+</div>
+<span class="material-symbols-outlined text-[#616f89] cursor-pointer">more_vert</span>
+</div>
+<div class="space-y-4">
+<p class="text-sm text-[#616f89]">استخرج السينيورتي (Seniority) من المسمى الوظيفي وضعه في حقل منفصل.</p>
+<div class="flex items-center gap-4">
+<div class="flex-1 px-4 py-2 border border-[#dbdfe6] dark:border-slate-700 rounded-lg text-sm bg-gray-50 dark:bg-slate-800">حقل المصدر: المسمى الوظيفي</div>
+<span class="material-symbols-outlined">arrow_back</span>
+<div class="flex-1 px-4 py-2 border border-[#dbdfe6] dark:border-slate-700 rounded-lg text-sm bg-gray-50 dark:bg-slate-800">الوجهة: الأقدمية (Seniority Level)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Live Preview -->
+<div class="lg:col-span-5 flex flex-col gap-6">
+<div class="bg-white dark:bg-background-dark rounded-xl border border-[#dbdfe6] dark:border-slate-800 overflow-hidden shadow-sm flex flex-col h-full">
+<div class="p-6 border-b border-[#dbdfe6] dark:border-slate-800">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">visibility</span>
+                                معاينة البيانات المباشرة
+                            </h2>
+<button class="text-xs font-bold text-primary hover:underline">تحديث المعاينة</button>
+</div>
+</div>
+<div class="flex-1 overflow-auto p-0">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-gray-50 dark:bg-slate-800/50">
+<th class="p-4 text-xs font-bold text-[#616f89] border-b border-[#dbdfe6] dark:border-slate-800">قبل (Data Input)</th>
+<th class="p-4 text-xs font-bold text-[#616f89] border-b border-[#dbdfe6] dark:border-slate-800">بعد (Processed Output)</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#f0f2f4] dark:divide-slate-800">
+<tr>
+<td class="p-4 align-top">
+<div class="text-sm font-medium text-slate-700 dark:text-slate-300">أحمد محمد 🚀</div>
+<div class="text-[10px] text-slate-400 mt-1">تيك سوليوشنز LLC</div>
+<div class="text-[10px] text-slate-400">Senior Marketing Manager</div>
+</td>
+<td class="p-4 align-top bg-primary/5">
+<div class="text-sm font-bold text-primary">أحمد محمد</div>
+<div class="text-[10px] text-primary mt-1 font-medium">تيك سوليوشنز شركة ذ.م.م</div>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full font-bold">Senior</span>
+</div>
+</td>
+</tr>
+<tr>
+<td class="p-4 align-top">
+<div class="text-sm font-medium text-slate-700 dark:text-slate-300">سارة علي ✨</div>
+<div class="text-[10px] text-slate-400 mt-1">جلوبال فينتشرز L.L.C.</div>
+<div class="text-[10px] text-slate-400">Junior Developer</div>
+</td>
+<td class="p-4 align-top bg-primary/5">
+<div class="text-sm font-bold text-primary">سارة علي</div>
+<div class="text-[10px] text-primary mt-1 font-medium">جلوبال فينتشرز شركة ذ.م.م</div>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full font-bold">Junior</span>
+</div>
+</td>
+</tr>
+<tr>
+<td class="p-4 align-top">
+<div class="text-sm font-medium text-slate-700 dark:text-slate-300">خالد محمود 🏢</div>
+<div class="text-[10px] text-slate-400 mt-1">المستقبل المحدودة</div>
+<div class="text-[10px] text-slate-400">CEO &amp; Founder</div>
+</td>
+<td class="p-4 align-top bg-primary/5">
+<div class="text-sm font-bold text-primary">خالد محمود</div>
+<div class="text-[10px] text-primary mt-1 font-medium">المستقبل المحدودة</div>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full font-bold">Executive</span>
+</div>
+</td>
+</tr>
+<tr>
+<td class="p-4 align-top">
+<div class="text-sm font-medium text-slate-700 dark:text-slate-300">ليلى إبراهيم 📱</div>
+<div class="text-[10px] text-slate-400 mt-1">أرامكو LLC</div>
+<div class="text-[10px] text-slate-400">VP of Engineering</div>
+</td>
+<td class="p-4 align-top bg-primary/5">
+<div class="text-sm font-bold text-primary">ليلى إبراهيم</div>
+<div class="text-[10px] text-primary mt-1 font-medium">أرامكو شركة ذ.م.م</div>
+<div class="flex gap-1 mt-1">
+<span class="px-2 py-0.5 bg-primary/20 text-primary text-[10px] rounded-full font-bold">Executive</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footer of preview -->
+<div class="p-4 bg-gray-50 dark:bg-slate-800/30 flex items-center justify-between">
+<div class="text-xs text-[#616f89]">تمت معالجة 4 سجلات في 0.02 ثانية</div>
+<div class="flex gap-2">
+<button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+<span class="text-xs font-bold px-2 py-1 bg-white dark:bg-slate-700 rounded border border-[#dbdfe6] dark:border-slate-600">1</span>
+<button class="p-1 rounded hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Success Notification Toast (Example state) -->
+<div class="fixed bottom-8 left-8 bg-background-dark dark:bg-primary text-white px-6 py-4 rounded-xl shadow-2xl flex items-center gap-4 border border-white/10 z-[100]">
+<div class="size-6 bg-green-500 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-sm">check</span>
+</div>
+<div>
+<p class="text-sm font-bold">تم حفظ القاعدة بنجاح!</p>
+<p class="text-[10px] opacity-80">جاري تطبيق التغييرات على 1.2 مليون سجل.</p>
+</div>
+</div>
+</body></html>

@@ -13,7 +13,7 @@ export const HeroSection = () => {
         {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full bg-emerald-500/50 blur-sm"
+            className="absolute rounded-full bg-cyan-500/50 blur-sm"
             style={{
               width: Math.random() * 8 + 4 + 'px',
               height: Math.random() * 8 + 4 + 'px',
@@ -38,14 +38,18 @@ export const HeroSection = () => {
 
       <div className="container relative z-10 mx-auto px-4 max-w-5xl">
         <div className="text-center space-y-8">
+          <div className="flex justify-center mb-8">
+            <img src="/images/logo.png" alt="Monafasat B2B" className="h-20 object-contain invert grayscale brightness-200 contrast-200" />
+          </div>
+          
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-emerald-400 mb-4"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-400 mb-4"
           >
             <Activity className="w-4 h-4" />
-            <span className="text-sm font-medium">نبض السوق السعودي</span>
+            <span className="text-sm font-medium">ليس مجرد جلب بيانات، بل سيطرة على السوق</span>
           </motion.div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight">
@@ -55,15 +59,15 @@ export const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="block"
             >
-              الوصول
+              نحن نخلق لك
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="block text-emerald-500"
+              className="block text-cyan-500"
             >
-              للفرص
+              الميزة التنافسية
             </motion.span>
             <motion.span
               initial={{ opacity: 0, y: 20 }}
@@ -71,7 +75,7 @@ export const HeroSection = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="block"
             >
-              في السوق السعودي
+              للفوز بكل الصفقات
             </motion.span>
           </h1>
 
@@ -81,7 +85,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1 }}
             className="text-2xl md:text-3xl font-light text-slate-300"
           >
-            يحتاج أكثر من مجرد حملات ورسائل
+            جرّد منافسيك من الفرص قبل أن يسمعوا بها.
           </motion.h2>
 
           <motion.p
@@ -90,7 +94,7 @@ export const HeroSection = () => {
             transition={{ duration: 0.8, delay: 1.2 }}
             className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed"
           >
-            نبني معكم منظومة تشغيل وفرص تساعدكم على الوصول لصناع القرار وتحريك الفرص بشكل أسرع وأكثر استقرارًا داخل السوق السعودي.
+            في "منافسات"، نبني لك منظومة تشغيل هجينة تتفوق على الجميع. نحن لا نزودك بالبيانات وحسب، بل ندير دفة السوق لتكون المنافسة في صالحك دائماً.
           </motion.p>
         </div>
 
@@ -102,7 +106,7 @@ export const HeroSection = () => {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6"
         >
           <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm text-center">
-            <Building className="w-8 h-8 text-emerald-400 mx-auto mb-4" />
+            <Building className="w-8 h-8 text-cyan-400 mx-auto mb-4" />
             <div className="text-3xl font-bold text-white mb-2">
               +<CountUp end={230} duration={3} />
             </div>
@@ -110,7 +114,7 @@ export const HeroSection = () => {
           </div>
           
           <div className="p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm text-center">
-            <Users className="w-8 h-8 text-blue-400 mx-auto mb-4" />
+            <Users className="w-8 h-8 text-violet-400 mx-auto mb-4" />
             <div className="text-3xl font-bold text-white mb-2">
               <CountUp end={1000} duration={3} formattingFn={(val) => "آلاف"} />
             </div>

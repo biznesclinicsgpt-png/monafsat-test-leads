@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>عرض مسار البيانات - RTL</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800&amp;family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#00643c", // Saudi Corporate Green
+                        "background-light": "#f8fafc",
+                        "background-dark": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["IBM Plex Sans Arabic", "sans-serif"],
+                        "body": ["IBM Plex Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        :root {
+            --primary-color: #00643c;
+        }
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 min-h-screen">
+<div class="max-w-7xl mx-auto px-4 py-8 lg:px-8">
+<header class="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+<div>
+<nav class="text-sm text-slate-500 dark:text-slate-400 mb-2 flex items-center gap-2">
+<span>مهام استخراج البيانات</span>
+<span class="material-icons text-xs rotate-180">chevron_right</span>
+<span>رقم المهمة: #LG-9921-X</span>
+</nav>
+<h1 class="text-3xl font-extrabold tracking-tight">مسار تقنيات المؤسسات</h1>
+<p class="text-slate-600 dark:text-slate-400 mt-1">مسار توليد العملاء المحتملين وإثراء البيانات للحسابات المستهدفة.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-700 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors font-medium">
+<span class="material-icons text-lg">settings</span>
+                إعدادات المسار
+            </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-[var(--primary-color)] text-white rounded-lg hover:opacity-90 transition-colors font-semibold shadow-md">
+<span class="material-icons text-lg">play_arrow</span>
+                تشغيل كافة الخطوات
+            </button>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<aside class="lg:col-span-3">
+<div class="space-y-1">
+<div class="relative flex items-start gap-4 p-4 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer group">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-bold">
+<span class="material-icons text-sm">check</span>
+</div>
+<div class="w-0.5 h-full bg-slate-200 dark:bg-slate-700 absolute top-10"></div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-slate-500 dark:text-slate-400">٠. المصادر</h3>
+<p class="text-xs text-slate-400">Apollo, Crunchbase</p>
+</div>
+</div>
+<div class="relative flex items-start gap-4 p-4 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer group">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center text-sm font-bold">
+<span class="material-icons text-sm">check</span>
+</div>
+<div class="w-0.5 h-full bg-slate-200 dark:bg-slate-700 absolute top-10"></div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-slate-500 dark:text-slate-400">١. التنظيف والتوحيد</h3>
+<p class="text-xs text-slate-400">دقة ٩٨.٢٪</p>
+</div>
+</div>
+<div class="relative flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 transition-all cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-[var(--primary-color)] text-white flex items-center justify-center text-sm font-bold ring-4 ring-emerald-100 dark:ring-emerald-900/30">٢</div>
+<div class="w-0.5 h-full bg-slate-200 dark:bg-slate-700 absolute top-10"></div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-[var(--primary-color)]">٢. إثراء البيانات</h3>
+<p class="text-xs text-emerald-700/70 font-medium">نشط حالياً</p>
+</div>
+</div>
+<div class="relative flex items-start gap-4 p-4 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">٣</div>
+<div class="w-0.5 h-full bg-slate-200 dark:bg-slate-700 absolute top-10"></div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-slate-600 dark:text-slate-300">٣. بوابة التحقق ICP</h3>
+<p class="text-xs text-slate-400">بانتظار البدء...</p>
+</div>
+</div>
+<div class="relative flex items-start gap-4 p-4 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">٤</div>
+<div class="w-0.5 h-full bg-slate-200 dark:bg-slate-700 absolute top-10"></div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-slate-600 dark:text-slate-300">٤. درجة المطابقة</h3>
+<p class="text-xs text-slate-400">بانتظار البدء...</p>
+</div>
+</div>
+<div class="relative flex items-start gap-4 p-4 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">٥</div>
+<div class="w-0.5 h-full bg-slate-200 dark:bg-slate-700 absolute top-10"></div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-slate-600 dark:text-slate-300">٥. قنوات التواصل</h3>
+<p class="text-xs text-slate-400">بانتظار البدء...</p>
+</div>
+</div>
+<div class="relative flex items-start gap-4 p-4 rounded-xl hover:bg-white dark:hover:bg-slate-800 transition-all cursor-pointer">
+<div class="flex flex-col items-center">
+<div class="z-10 w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">٦</div>
+</div>
+<div class="pt-0.5">
+<h3 class="font-bold text-slate-600 dark:text-slate-300">٦. تصدير البيانات</h3>
+<p class="text-xs text-slate-400">بانتظار البدء...</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="lg:col-span-9 space-y-6">
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center text-[var(--primary-color)]">
+<span class="material-icons text-3xl">auto_fix_high</span>
+</div>
+<div>
+<h2 class="text-xl font-bold">المرحلة ٢: إثراء البيانات</h2>
+<p class="text-sm text-slate-500 dark:text-slate-400">تحسين السجلات ببيانات الشركات وروابط التواصل الاجتماعي.</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-slate-200 dark:border-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+                            عرض السجلات
+                        </button>
+<button class="px-6 py-2 bg-[var(--primary-color)] text-white rounded-lg text-sm font-bold hover:opacity-90 transition-colors flex items-center gap-2 shadow-lg shadow-emerald-900/10">
+<span class="material-icons text-base">refresh</span>
+                            تشغيل
+                        </button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">معدل النجاح</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-[var(--primary-color)]">٩٤.٨٪</span>
+<span class="text-xs text-emerald-600 font-bold flex items-center">+١.٢٪</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full mt-3 overflow-hidden">
+<div class="bg-[var(--primary-color)] h-full w-[94.8%]"></div>
+</div>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">جاهز</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold">٢,٤٨١</span>
+<span class="text-xs text-slate-400">سجل</span>
+</div>
+<p class="text-xs text-slate-500 mt-3 flex items-center gap-1 font-medium">
+<span class="material-icons text-[14px] text-emerald-600">verified</span>
+                            تم الإثراء والتحقق بالكامل
+                        </p>
+</div>
+<div class="p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-100 dark:border-slate-700">
+<p class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1 text-orange-600">بيانات ناقصة</p>
+<div class="flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-orange-600">١٤٢</span>
+<span class="text-xs text-slate-400">سجل</span>
+</div>
+<p class="text-xs text-slate-500 mt-3 flex items-center gap-1 font-medium">
+<span class="material-icons text-[14px] text-orange-500">report_problem</span>
+                            تطلب تدخل يدوي
+                        </p>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-icons text-slate-400">tune</span>
+                        إعدادات الإثراء
+                    </h3>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[var(--primary-color)]"></div>
+<span class="mr-3 text-sm font-semibold">إثراء الحقول المفقودة فقط</span>
+</label>
+</div>
+<div class="space-y-4">
+<p class="text-sm font-medium text-slate-500">علامات المعلومات المفقودة الحالية:</p>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1.5 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 border border-orange-100 dark:border-orange-900/50 rounded-full text-xs font-bold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                            صناعة مفقودة (٨٤)
+                        </span>
+<span class="px-3 py-1.5 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 border border-orange-100 dark:border-orange-900/50 rounded-full text-xs font-bold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                            عدد الموظفين مفقود (٣٢)
+                        </span>
+<span class="px-3 py-1.5 bg-orange-50 dark:bg-orange-900/20 text-orange-700 dark:text-orange-400 border border-orange-100 dark:border-orange-900/50 rounded-full text-xs font-bold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span>
+                            رابط LinkedIn مفقود (٢٦)
+                        </span>
+<span class="px-3 py-1.5 bg-slate-50 dark:bg-slate-700/50 text-slate-500 dark:text-slate-400 border border-slate-100 dark:border-slate-700 rounded-full text-xs font-bold flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-500"></span>
+                            الإيرادات مفقودة (٠)
+                        </span>
+</div>
+</div>
+</div>
+<div class="bg-white/60 dark:bg-slate-800/60 rounded-xl p-6 border border-slate-200 dark:border-slate-700 border-dashed">
+<div class="flex items-center gap-3 mb-4">
+<span class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center text-sm font-bold">٣</span>
+<h3 class="font-bold text-slate-500">الخطوة القادمة: بوابة التحقق ICP</h3>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-lg p-2 flex items-center gap-1 w-fit mb-6 shadow-sm border border-slate-100 dark:border-slate-800">
+<button class="px-4 py-1.5 rounded-md text-sm font-bold bg-[var(--primary-color)] text-white">مطابق</button>
+<button class="px-4 py-1.5 rounded-md text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">غير مطابق</button>
+<button class="px-4 py-1.5 rounded-md text-sm font-bold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">غير معروف</button>
+</div>
+<div class="grid grid-cols-2 gap-4 opacity-50 pointer-events-none">
+<div class="h-24 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<img alt="" class="max-h-16 opacity-20 grayscale" data-alt="Abstract chart representing ICP data distribution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDxx6UwlqJdm_tsoWaUgNAoxAus8TWlKeaXD_GXZa9RSPCXpBv5lYuloutZe7Hk_Gd5QsCUJg6Efdi7XAFktqlDX4UKskUVjvkphsMl93rnLkNvuoGcHvcQIceTYYLCelJQXIChJU0y0jv9-_mbKRJ0max595nKYwqbSRTdsOJW50sJd4csaNFcQkKNGSvLd4E9EfwIvKwRNgsyEYc39o7qix1cHF6bM2HpRGqHqNqOb2-JgDckylnr6NjRQNPT5Nuv4pT98CWrj6R"/>
+</div>
+<div class="h-24 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center p-4">
+<span class="text-xs font-medium text-slate-400 text-center">سيظهر منطق تقييم المطابقة هنا...</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
+<h3 class="text-sm font-bold">سجل العمليات</h3>
+<button class="text-xs text-[var(--primary-color)] font-bold hover:underline">مسح السجل</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-right text-sm">
+<thead>
+<tr class="text-slate-400 font-medium">
+<th class="px-6 py-3 font-semibold uppercase text-[11px] tracking-wider">الطابع الزمني</th>
+<th class="px-6 py-3 font-semibold uppercase text-[11px] tracking-wider">الحدث</th>
+<th class="px-6 py-3 font-semibold uppercase text-[11px] tracking-wider">الحالة</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<tr>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">١٤:٢٢:١٥</td>
+<td class="px-6 py-3 font-medium">اكتملت المرحلة ١: التنظيف والتوحيد.</td>
+<td class="px-6 py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">ناجح</span></td>
+</tr>
+<tr>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">١٤:١٨:٤٠</td>
+<td class="px-6 py-3 font-medium">المرحلة ٠: المصادر - تم جلب ٢,٦٢٣ سجلاً.</td>
+<td class="px-6 py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">ناجح</span></td>
+</tr>
+<tr>
+<td class="px-6 py-3 text-slate-500 dark:text-slate-400 font-mono text-xs">١٤:٠٥:١٢</td>
+<td class="px-6 py-3 font-medium">بدأ تنفيذ المسار بواسطة المستخدم "admin@corp.io"</td>
+<td class="px-6 py-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">معلومات</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

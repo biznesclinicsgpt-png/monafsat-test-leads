@@ -18,10 +18,10 @@ export default async function handler(
 
             const opportunities = await prisma.opportunity.findMany({
                 where: {
-                    contactId: contactId ? (contactId as string) : undefined,
-                    pipelineId: pipelineId ? (pipelineId as string) : undefined,
+                    contact_id: contactId ? (contactId as string) : undefined,
+                    pipeline_id: pipelineId ? (pipelineId as string) : undefined,
                 },
-                orderBy: { createdAt: 'desc' },
+                orderBy: { created_at: 'desc' },
             });
 
             return response.status(200).json(opportunities);

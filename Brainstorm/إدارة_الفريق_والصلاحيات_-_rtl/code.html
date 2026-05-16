@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="ar"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>إدارة الفريق والصلاحيات - منصة البيانات</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Noto+Sans+Arabic:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ec5b",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#102216",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "Noto Sans Arabic", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', 'Noto Sans Arabic', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111813] dark:text-white min-h-screen flex flex-col font-display">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#dbe6df] dark:border-[#1e3a28] bg-white dark:bg-[#102216] px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-background-dark">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<h2 class="text-[#111813] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">منصة بيانات الذكاء</h2>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-[#111813] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">الرئيسية</a>
+<a class="text-[#111813] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">التحليلات</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary pb-1" href="#">الفريق</a>
+<a class="text-[#111813] dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">الإعدادات</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#61896f]">search</span>
+<input class="form-input w-64 pr-10 rounded-lg border-none bg-[#f0f4f2] dark:bg-[#1a2e21] text-sm focus:ring-2 focus:ring-primary" placeholder="بحث سريع..." type="text"/>
+</div>
+<button class="p-2 rounded-lg bg-[#f0f4f2] dark:bg-[#1a2e21] hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined text-[#111813] dark:text-white">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-cover bg-center border-2 border-primary" data-alt="صورة الملف الشخصي للمدير" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCkVhJp6YHJJonRLBu7Gq62Bw2ysqkEKzd7WXETsUfV0-BNpIk33foBEt48Ja_YYELFKWmYs2EM_zoKsUfULvsfha2iM06FsOqJknIZ6pAQ1txrnkM61mIbQUN1VGqjIhY0sFoWS2exHiRrVdHjefaY-sSDFkKy6SL1WCU3k1Hj04imdslKMNPvFeZeMlDHe8yQGtitZ3g7AUdQZY2qjL0jUqufnEW9xIcg8389xbOo_X2UH33-rtyAIkff-kksvDD0Dm3DjfcBogMv')"></div>
+</div>
+</header>
+<div class="flex flex-1">
+<!-- Side Navigation Bar -->
+<aside class="w-64 border-l border-[#dbe6df] dark:border-[#1e3a28] bg-white dark:bg-[#102216] hidden lg:flex flex-col p-4 gap-6">
+<div class="flex flex-col gap-1 px-2">
+<h1 class="text-[#111813] dark:text-white text-base font-bold">لوحة التحكم الإدارية</h1>
+<p class="text-[#61896f] text-xs">إدارة الصلاحيات والوصول</p>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e21] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#61896f] group-hover:text-primary">dashboard</span>
+<p class="text-sm font-medium">لوحة المعلومات</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined fill-1">group</span>
+<p class="text-sm font-bold">إدارة الفريق</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e21] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#61896f] group-hover:text-primary">api</span>
+<p class="text-sm font-medium">مفاتيح API</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e21] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#61896f] group-hover:text-primary">security</span>
+<p class="text-sm font-medium">سجلات الأمان</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-[#f0f4f2] dark:hover:bg-[#1a2e21] transition-colors group" href="#">
+<span class="material-symbols-outlined text-[#61896f] group-hover:text-primary">settings</span>
+<p class="text-sm font-medium">الإعدادات</p>
+</a>
+</nav>
+<div class="mt-auto p-4 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20">
+<p class="text-xs font-bold text-[#111813] dark:text-white mb-2">خطة المؤسسة</p>
+<div class="w-full bg-black/10 dark:bg-white/10 h-1.5 rounded-full mb-2">
+<div class="bg-primary h-full w-3/4 rounded-full"></div>
+</div>
+<p class="text-[10px] text-[#61896f]">تم استخدام 15 من أصل 20 مقعداً</p>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-6 md:p-10 overflow-y-auto">
+<!-- Page Heading -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+<div class="flex flex-col gap-1">
+<h1 class="text-[#111813] dark:text-white text-3xl font-black tracking-tight">إدارة الفريق والصلاحيات</h1>
+<p class="text-[#61896f] text-sm max-w-lg leading-relaxed">تحكم في وصول أعضاء فريقك، قم بدعوة مستخدمين جدد، وتخصيص أدوارهم الوظيفية في المنصة.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#1a2e21] border border-[#dbe6df] dark:border-[#1e3a28] rounded-lg text-sm font-bold shadow-sm hover:bg-[#f0f4f2] transition-all">
+<span class="material-symbols-outlined text-base">download</span>
+                        تصدير القائمة
+                    </button>
+<button class="flex items-center gap-2 px-6 py-2 bg-primary text-background-dark rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-105 transition-all">
+<span class="material-symbols-outlined text-base">person_add</span>
+                        دعوة عضو جديد
+                    </button>
+</div>
+</div>
+<!-- Stats/Summary (Optional but helpful for context) -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+<div class="bg-white dark:bg-[#102216] p-4 rounded-xl border border-[#dbe6df] dark:border-[#1e3a28]">
+<p class="text-[#61896f] text-xs font-medium mb-1">إجمالي الأعضاء</p>
+<p class="text-2xl font-bold">15</p>
+</div>
+<div class="bg-white dark:bg-[#102216] p-4 rounded-xl border border-[#dbe6df] dark:border-[#1e3a28]">
+<p class="text-[#61896f] text-xs font-medium mb-1">المدراء</p>
+<p class="text-2xl font-bold">3</p>
+</div>
+<div class="bg-white dark:bg-[#102216] p-4 rounded-xl border border-[#dbe6df] dark:border-[#1e3a28]">
+<p class="text-[#61896f] text-xs font-medium mb-1">المقاعد المتاحة</p>
+<p class="text-2xl font-bold text-primary">5</p>
+</div>
+</div>
+<!-- Search and Filter Bar -->
+<div class="bg-white dark:bg-[#102216] border border-[#dbe6df] dark:border-[#1e3a28] rounded-t-xl p-4 flex flex-col md:flex-row gap-4 items-center">
+<div class="relative w-full md:w-96">
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-[#61896f]">search</span>
+<input class="form-input w-full pr-10 rounded-lg border-[#dbe6df] dark:border-[#1e3a28] bg-[#f6f8f6] dark:bg-[#1a2e21] text-sm focus:ring-primary focus:border-primary" placeholder="البحث عن عضو بالاسم أو البريد الإلكتروني..." type="text"/>
+</div>
+<div class="flex gap-2 w-full md:w-auto md:mr-auto">
+<select class="form-select rounded-lg border-[#dbe6df] dark:border-[#1e3a28] bg-[#f6f8f6] dark:bg-[#1a2e21] text-sm focus:ring-primary">
+<option>جميع الأدوار</option>
+<option>مدير</option>
+<option>عضو</option>
+<option>مشاهد</option>
+</select>
+</div>
+</div>
+<!-- Members Table -->
+<div class="bg-white dark:bg-[#102216] border-x border-b border-[#dbe6df] dark:border-[#1e3a28] rounded-b-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-right border-collapse">
+<thead>
+<tr class="bg-[#f6f8f6] dark:bg-[#1a2e21] border-b border-[#dbe6df] dark:border-[#1e3a28]">
+<th class="px-6 py-4 text-sm font-bold text-[#111813] dark:text-white">الاسم</th>
+<th class="px-6 py-4 text-sm font-bold text-[#111813] dark:text-white">البريد الإلكتروني</th>
+<th class="px-6 py-4 text-sm font-bold text-[#111813] dark:text-white">الدور</th>
+<th class="px-6 py-4 text-sm font-bold text-[#111813] dark:text-white">آخر ظهور</th>
+<th class="px-6 py-4 text-sm font-bold text-[#111813] dark:text-white text-center">الإجراءات</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dbe6df] dark:divide-[#1e3a28]">
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">أق</div>
+<span class="text-sm font-medium">أحمد القحطاني</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">ahmed@company.sa</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/20 text-primary border border-primary/30">مدير</span>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary"></div>
+<span>متصل الآن</span>
+</div>
+</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-3">
+<button class="text-[#61896f] hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="text-[#61896f] hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full" data-alt="سارة الشمري - محلل بيانات" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAMOIjxsBP4OHkB5xN58yF7JqZpQbZrTCTkKzdqbuRuv4EDKzY_R5cNRW6pPPu_zSpE4GAT5-BggC-OJXv8Wjt4h7_2SEvDDeV3LdToC2PJ3lROGyvvPs1u10J3gsWERlfEL_7zx4P81FCQWZP_O-NYgJDIu48toVDUPSQzFLBusTuzUHqRypoekQSdATDRjeMK0JIQOGG05_uV-dGOhtmhda_pjRbWFZu6huRL6a78aPMVBAX7njJcr0OK2hLmuP6pfesUJIqWx1t"/>
+<span class="text-sm font-medium">سارة الشمري</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">sara@company.sa</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#f0f4f2] dark:bg-[#1a2e21] text-[#111813] dark:text-white border border-[#dbe6df]">عضو</span>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">منذ 5 دقائق</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-3">
+<button class="text-[#61896f] hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="text-[#61896f] hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center font-bold text-blue-600">مع</div>
+<span class="text-sm font-medium">محمد العتيبي</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">m.otaibi@company.sa</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200">مشاهد</span>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">أمس، 10:30 م</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-3">
+<button class="text-[#61896f] hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="text-[#61896f] hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img class="w-10 h-10 rounded-full" data-alt="نورة فيصل - مديرة مشروع" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvh1iwvqxf5rA5JmX9VwzRdMtY7PWBUKQ52eHFCRSsS1OYlaxTFq5kBQbfeMjsMiMivd76yQe31yKN5qpBivIR4Gc2_TC7z8fVA8N9T7iyVuhRb-OiZfd300rQHPqn38ULy7E7tf40OpaECVdb3zrk3gaj6j_3XSjDRKrc5Lu9Dw7oixJBAoom-QzCorU25CMBw67bapOyGBpiDQEfhsB4f9zel0oMNMdGs1Z1VU1Vasz5BBXZ1UnCJE_Tz4WFd2F_xoxVE4Mzg7Sc"/>
+<span class="text-sm font-medium">نورة فيصل</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">noura.f@company.sa</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#f0f4f2] dark:bg-[#1a2e21] text-[#111813] dark:text-white border border-[#dbe6df]">عضو</span>
+</td>
+<td class="px-6 py-4 text-sm text-[#61896f]">منذ 3 أيام</td>
+<td class="px-6 py-4 text-center">
+<div class="flex items-center justify-center gap-3">
+<button class="text-[#61896f] hover:text-primary"><span class="material-symbols-outlined text-xl">edit</span></button>
+<button class="text-[#61896f] hover:text-red-500"><span class="material-symbols-outlined text-xl">delete</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="p-4 border-t border-[#dbe6df] dark:border-[#1e3a28] flex items-center justify-between">
+<p class="text-xs text-[#61896f]">عرض 1-4 من أصل 15 عضواً</p>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#1e3a28] text-[#61896f] hover:bg-[#f0f4f2]"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-background-dark font-bold text-xs">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#1e3a28] text-[#111813] dark:text-white text-xs hover:bg-[#f0f4f2]">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#1e3a28] text-[#111813] dark:text-white text-xs hover:bg-[#f0f4f2]">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-[#dbe6df] dark:border-[#1e3a28] text-[#61896f] hover:bg-[#f0f4f2]"><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Modal Overlay (Invite Member) -->
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+<div class="bg-white dark:bg-[#102216] w-full max-w-lg rounded-2xl shadow-2xl border border-[#dbe6df] dark:border-[#1e3a28] overflow-hidden">
+<div class="px-6 py-4 border-b border-[#dbe6df] dark:border-[#1e3a28] flex items-center justify-between bg-[#f6f8f6] dark:bg-[#1a2e21]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">person_add</span>
+<h3 class="font-bold text-lg">دعوة عضو جديد للفريق</h3>
+</div>
+<button class="text-[#61896f] hover:text-[#111813] dark:hover:text-white">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<form class="p-6 flex flex-col gap-6">
+<!-- Member Details -->
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-bold">البريد الإلكتروني للعمل</label>
+<input class="form-input rounded-lg border-[#dbe6df] dark:border-[#1e3a28] bg-[#f6f8f6] dark:bg-[#1a2e21] focus:ring-primary focus:border-primary" placeholder="name@company.sa" type="email"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-bold">تحديد الدور الوظيفي</label>
+<div class="grid grid-cols-3 gap-3">
+<label class="cursor-pointer">
+<input checked="" class="peer hidden" name="role" type="radio"/>
+<div class="p-3 border rounded-lg text-center peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<p class="text-sm font-bold">عضو</p>
+<p class="text-[10px] text-[#61896f] mt-1">وصول قياسي</p>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer hidden" name="role" type="radio"/>
+<div class="p-3 border rounded-lg text-center peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<p class="text-sm font-bold">مشاهد</p>
+<p class="text-[10px] text-[#61896f] mt-1">عرض فقط</p>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer hidden" name="role" type="radio"/>
+<div class="p-3 border rounded-lg text-center peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<p class="text-sm font-bold">مدير</p>
+<p class="text-[10px] text-[#61896f] mt-1">تحكم كامل</p>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Special Permissions Toggles -->
+<div class="space-y-4 pt-4 border-t border-[#dbe6df] dark:border-[#1e3a28]">
+<h4 class="text-xs font-bold text-primary uppercase tracking-wider">صلاحيات إضافية</h4>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-bold">الوصول إلى مفاتيح API</p>
+<p class="text-xs text-[#61896f]">السماح للعضو بإنشاء وإدارة مفاتيح الربط البرمجي.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[-1.25rem] rtl:peer-checked:after:translate-x-[-1.25rem] after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-bold">صلاحية تصدير البيانات</p>
+<p class="text-xs text-[#61896f]">السماح بتحميل التقارير والبيانات بصيغة Excel أو CSV.</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-[-1.25rem] rtl:peer-checked:after:translate-x-[-1.25rem] after:content-[''] after:absolute after:top-[2px] after:right-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<!-- Modal Actions -->
+<div class="flex gap-3 pt-4">
+<button class="flex-1 py-2.5 rounded-lg border border-[#dbe6df] dark:border-[#1e3a28] text-sm font-bold hover:bg-[#f6f8f6] dark:hover:bg-[#1a2e21] transition-colors" type="button">إلغاء</button>
+<button class="flex-1 py-2.5 rounded-lg bg-primary text-background-dark text-sm font-bold shadow-lg shadow-primary/20 hover:brightness-105 transition-all" type="submit">إرسال الدعوة</button>
+</div>
+</form>
+</div>
+</div>
+</body></html>

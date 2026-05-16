@@ -41,12 +41,11 @@ const MainLayout = () => {
                         <SidebarItem to="/app/contacts" label="جهات الاتصال" icon={Icons.Contacts} badge="جديد" />
                         <SidebarItem to="/app/leads" label="العملاء المحتملين" icon={Icons.Opportunities} />
                         <SidebarItem to="/app/opportunities" label="الفرص البيعية" icon={Icons.Opportunities} />
+                        <SidebarItem to="/app/data-center" label="مركز البيانات" icon={Icons.Settings} badge="جديد" />
                         <SidebarItem to="/app/projects" label="إدارة المشاريع" icon={Icons.Projects} />
                         <SidebarItem to="/app/messages" label="صندوق المحادثات" icon={Icons.Messages} />
                         <SidebarItem to="/app/financial" label="الحسابات والمالية" icon={Icons.Financial} />
                         <SidebarItem to="/app/reviews" label="تقييمات العملاء" icon={Icons.Reviews} />
-                        <hr className="border-slate-100 my-2" />
-                        <SidebarItem to="/app/integrations" label="التكاملات" icon={Icons.Settings} badge="جديد" />
 
                         <button
                             onClick={() => {

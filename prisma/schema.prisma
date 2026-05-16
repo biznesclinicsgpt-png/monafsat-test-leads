@@ -3,33 +3,33 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id                String    @id @default(uuid())
-  email             String    @unique
-  name              String
-  nameEn            String?
-  phone             String?
-  avatar            String?
-  defaultMode       String    @default("buyer")
-  status            String    @default("active")
-  emailVerified     Boolean   @default(false)
-  createdAt         DateTime  @default(now())
-  lastLogin         DateTime?
-  
-  buyerProfile      BuyerProfile?
-  providerProfile   ProviderProfile?
+  id            String    @id @default(uuid())
+  email         String    @unique
+  name          String
+  nameEn        String?
+  phone         String?
+  avatar        String?
+  defaultMode   String    @default("buyer")
+  status        String    @default("active")
+  emailVerified Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  lastLogin     DateTime?
+
+  buyerProfile    BuyerProfile?
+  providerProfile ProviderProfile?
 }
 
 model BuyerProfile {
-  id              String   @id @default(uuid())
-  userId          String   @unique
-  user            User     @relation(fields: [userId], references: [id])
-  
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
   companyName     String
   companyNameEn   String?
   crNumber        String?
@@ -45,201 +45,206 @@ model BuyerProfile {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
-  projects        Project[]
-  shortlist       ShortlistItem[]
+  projects  Project[]
+  shortlist ShortlistItem[]
 }
 
 model ProviderProfile {
-  id                    String   @id @default(uuid())
-  userId                String   @unique
-  user                  User     @relation(fields: [userId], references: [id])
-  providerId            String?  // Link to Admin entity
+  id         String  @id @default(uuid())
+  userId     String  @unique
+  user       User    @relation(fields: [userId], references: [id])
+  providerId String? // Link to Admin entity
 
-  companyName           String
-  companyNameEn         String?
-  tagline               String?
-  taglineEn             String?
-  description           String?
-  descriptionEn         String?
-  
-  valueProposition      String?
-  uniqueSellingPoints   String[]
-  targetAudience        String?
-  
-  logoUrl               String?
-  coverUrl              String?
-  crNumber              String?
-  isSaudiVerified       Boolean  @default(false)
-  foundedYear           Int?
-  companySize           String
-  contactName           String
-  contactRole           String?
-  contactEmail          String
-  contactPhone          String?
-  website               String?
-  headquartersCity      String
-  headquartersCountry   String
-  serviceLocations      String[]
-  linkedinUrl           String?
-  twitterUrl            String?
-  
-  serviceLines          Json[]   // ServiceLine[]
-  industries            Json[]   // IndustryFocus[]
-  
-  clients               ClientReference[]
-  
-  idealClientDescription String?
-  minProjectSize         Int?
-  maxProjectSize         Int?
+  companyName   String
+  companyNameEn String?
+  tagline       String?
+  taglineEn     String?
+  description   String?
+  descriptionEn String?
+
+  valueProposition    String?
+  uniqueSellingPoints String[]
+  targetAudience      String?
+
+  logoUrl             String?
+  coverUrl            String?
+  crNumber            String?
+  isSaudiVerified     Boolean  @default(false)
+  foundedYear         Int?
+  companySize         String
+  contactName         String
+  contactRole         String?
+  contactEmail        String
+  contactPhone        String?
+  website             String?
+  headquartersCity    String
+  headquartersCountry String
+  serviceLocations    String[]
+  linkedinUrl         String?
+  twitterUrl          String?
+
+  serviceLines Json[] // ServiceLine[]
+  industries   Json[] // IndustryFocus[]
+
+  clients ClientReference[]
+
+  idealClientDescription   String?
+  minProjectSize           Int?
+  maxProjectSize           Int?
   preferredProjectDuration String?
-  certifications        String[]
-  tags                  String[]
-  keywords              String[]
-  capabilities          String[]
-  
-  status                String   @default("draft")
-  profileHealth         Int      @default(0)
-  submittedForReviewAt  DateTime?
-  reviewedAt            DateTime?
-  reviewNotes           String?
-  
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
+  certifications           String[]
+  tags                     String[]
+  keywords                 String[]
+  capabilities             String[]
+  preferredPersonas        Json?
+  disqualifiers            Json?
+  capacityScore            Int?
+  slaLevel                 String?
 
-  projectResponses      ProjectResponse[]
-  shortlistedBy         ShortlistItem[]
+  status                   String    @default("draft")
+  profileHealth        Int       @default(0)
+  submittedForReviewAt DateTime?
+  reviewedAt           DateTime?
+  reviewNotes          String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  projectResponses ProjectResponse[]
+  shortlistedBy    ShortlistItem[]
+  ImportJob        ImportJob[]
 }
 
 model ClientReference {
-  id                  String          @id @default(uuid())
-  providerProfileId   String
-  providerProfile     ProviderProfile @relation(fields: [providerProfileId], references: [id])
-  
-  companyName         String
-  projectDescription  String?
-  projectType         String?
-  year                Int?
-  testimonial         String?
-  
-  challenge           String?
-  solution            String?
-  results             String?
-  
-  isPublic            Boolean         @default(false)
-  
-  serviceCategoryId   Int?
-  subserviceId        Int?
-  industrySectorId    Int?
-  subIndustryId       Int?
+  id                String          @id @default(uuid())
+  providerProfileId String
+  providerProfile   ProviderProfile @relation(fields: [providerProfileId], references: [id])
+
+  companyName        String
+  projectDescription String?
+  projectType        String?
+  year               Int?
+  testimonial        String?
+
+  challenge String?
+  solution  String?
+  results   String?
+
+  isPublic Boolean @default(false)
+
+  serviceCategoryId Int?
+  subserviceId      Int?
+  industrySectorId  Int?
+  subIndustryId     Int?
 }
 
 model Project {
-  id                    String   @id @default(uuid())
-  buyerProfileId        String
-  buyerProfile          BuyerProfile @relation(fields: [buyerProfileId], references: [id])
-  ownerUserId           String
-  
-  title                 String
-  titleEn               String?
-  category              String
-  subcategory           String?
-  description           String
-  descriptionEn         String?
-  deliverables          String[]
-  goals                 String[]
-  attachments           Json[]   // ProjectAttachment[]
-  
-  budgetBand            String
-  budgetMin             Int?
-  budgetMax             Int?
-  timelineStart         DateTime?
-  timelineEnd           DateTime?
-  urgency               String
-  
+  id             String       @id @default(uuid())
+  buyerProfileId String
+  buyerProfile   BuyerProfile @relation(fields: [buyerProfileId], references: [id])
+  ownerUserId    String
+
+  title         String
+  titleEn       String?
+  category      String
+  subcategory   String?
+  description   String
+  descriptionEn String?
+  deliverables  String[]
+  goals         String[]
+  attachments   Json[] // ProjectAttachment[]
+
+  budgetBand    String
+  budgetMin     Int?
+  budgetMax     Int?
+  timelineStart DateTime?
+  timelineEnd   DateTime?
+  urgency       String
+
   preferredLocations    String[]
   remoteOk              Boolean  @default(true)
   saudiPresenceRequired Boolean  @default(false)
-  
-  status                String   @default("draft")
-  invitedProviders      String[]
-  excludedProviders     String[]
-  
-  responsesCount        Int      @default(0)
-  meetingsCount         Int      @default(0)
-  
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-  publishedAt           DateTime?
-  closedAt              DateTime?
 
-  responses             ProjectResponse[]
+  status            String   @default("draft")
+  invitedProviders  String[]
+  excludedProviders String[]
+
+  responsesCount Int @default(0)
+  meetingsCount  Int @default(0)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  publishedAt DateTime?
+  closedAt    DateTime?
+
+  responses ProjectResponse[]
 }
 
 model ProjectResponse {
-  id                  String          @id @default(uuid())
-  projectId           String
-  project             Project         @relation(fields: [projectId], references: [id])
-  providerProfileId   String
-  providerProfile     ProviderProfile @relation(fields: [providerProfileId], references: [id])
-  
-  status              String
-  interestNote        String?
-  declineReason       String?
-  proposedBudget      Int?
-  proposedTimeline    String?
-  
-  invitedAt           DateTime        @default(now())
-  respondedAt         DateTime?
-  updatedAt           DateTime        @updatedAt
+  id                String          @id @default(uuid())
+  projectId         String
+  project           Project         @relation(fields: [projectId], references: [id])
+  providerProfileId String
+  providerProfile   ProviderProfile @relation(fields: [providerProfileId], references: [id])
+
+  status           String
+  interestNote     String?
+  declineReason    String?
+  proposedBudget   Int?
+  proposedTimeline String?
+
+  invitedAt   DateTime  @default(now())
+  respondedAt DateTime?
+  updatedAt   DateTime  @updatedAt
 }
 
 model MessageThread {
-  id              String   @id @default(uuid())
-  projectId       String
-  buyerUserId     String
-  providerUserId  String
-  
-  lastMessage     String?
-  lastMessageAt   DateTime?
-  lastSenderType  String?
-  buyerUnread     Int      @default(0)
-  providerUnread  Int      @default(0)
-  isArchived      Boolean  @default(false)
-  isPriority      Boolean  @default(false)
-  createdAt       DateTime @default(now())
+  id             String @id @default(uuid())
+  projectId      String
+  buyerUserId    String
+  providerUserId String
+
+  lastMessage    String?
+  lastMessageAt  DateTime?
+  lastSenderType String?
+  buyerUnread    Int       @default(0)
+  providerUnread Int       @default(0)
+  isArchived     Boolean   @default(false)
+  isPriority     Boolean   @default(false)
+  createdAt      DateTime  @default(now())
 }
 
 model Message {
-  id              String   @id @default(uuid())
-  threadId        String
-  senderId        String
-  senderType      String
-  content         String
-  attachments     Json[]   // ProjectAttachment[]
-  read            Boolean  @default(false)
-  createdAt       DateTime @default(now())
+  id          String   @id @default(uuid())
+  threadId    String
+  senderId    String
+  senderType  String
+  content     String
+  attachments Json[] // ProjectAttachment[]
+  read        Boolean  @default(false)
+  createdAt   DateTime @default(now())
 }
 
 model Meeting {
-  id              String   @id @default(uuid())
-  projectId       String
-  threadId        String?
-  buyerUserId     String
-  providerUserId  String
-  
+  id             String  @id @default(uuid())
+  projectId      String
+  threadId       String?
+  buyerUserId    String
+  providerUserId String
+
   title           String
   description     String?
   proposedTimes   String[]
   scheduledAt     DateTime?
-  durationMinutes Int      @default(30)
+  durationMinutes Int       @default(30)
   meetingType     String
   meetingLink     String?
   meetingLocation String?
-  status          String   @default("requested")
+  status          String    @default("requested")
   buyerNotes      String?
   providerNotes   String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model ShortlistItem {
@@ -253,102 +258,102 @@ model ShortlistItem {
 }
 
 model Notification {
-  id          String   @id @default(uuid())
-  userId      String
-  type        String
-  title       String
-  body        String
-  link        String?
-  read        Boolean  @default(false)
-  createdAt   DateTime @default(now())
+  id        String   @id @default(uuid())
+  userId    String
+  type      String
+  title     String
+  body      String
+  link      String?
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
 }
 
 model Contact {
-  id                    String   @id @default(uuid())
-  first_name            String?
-  last_name             String?
-  name                 String
-  email                String   @unique
-  phone                String?
-  title                String?
-  company_name          String
-  
-  address1             String?
-  city                 String?
-  state                String?
-  country              String?
-  postal_code           String?
-  timezone             String?
-  website              String?
+  id           String  @id @default(uuid())
+  first_name   String?
+  last_name    String?
+  name         String
+  email        String  @unique
+  phone        String?
+  title        String?
+  company_name String
+
+  address1    String?
+  city        String?
+  state       String?
+  country     String?
+  postal_code String?
+  timezone    String?
+  website     String?
 
   // GHL Custom Fields
-  initial_icebreaker     String?
-  industry_2            String?
-  function_2            String?
-  company_official_name  String?
-  title_description     String?
-  linkedin_url          String?
-  prospect_about        String?
-  company_description   String?
-  phone_2               String?
-  size_2                String?
-  source               String
-  record_id             String?
-  about                String?
-  company_linkedin_url   String?
-  linkedin_company_url   String?
-  open_profile          String?
-  premium              String?
+  initial_icebreaker       String?
+  industry_2               String?
+  function_2               String?
+  company_official_name    String?
+  title_description        String?
+  linkedin_url             String?
+  prospect_about           String?
+  company_description      String?
+  phone_2                  String?
+  size_2                   String?
+  source                   String
+  record_id                String?
+  about                    String?
+  company_linkedin_url     String?
+  linkedin_company_url     String?
+  open_profile             String?
+  premium                  String?
   linkedin_sales_navigator String?
-  date_of_birth          String?
-  employee_count        String?
-  company_country       String?
-  arabic_summary        String?
-  call_recordings       String?
-  lowercase_business_name String?
-  type                 String?
-  welcome_message       String?
-  follow_up_1            String?
-  follow_up_2            String?
-  follow_up_3            String?
-  follow_up_4            String?
-  subcategory          String?
-  sub_subcategory       String?
-  manufacture          String?
-  annual_revenue        String?
-  phone_updated         String?
-  profile_unique_id      String?
-  li_messages           String?
-  company_location      String?
-  third_scene           String?
-  subject_f1            String?
-  subject_f2            String?
-  subject_f3            String?
-  third_scene_subject    String?
-  industry_tier         String?
-  title_tier            String?
-  final_icp_tier         String?
-  industry_ar           String?
-  field_ar              String?
-  profile              String?
-  b2b_status            String?
-  industry_22           String?
-  b2b_summary           String?
+  date_of_birth            String?
+  employee_count           String?
+  company_country          String?
+  arabic_summary           String?
+  call_recordings          String?
+  lowercase_business_name  String?
+  type                     String?
+  welcome_message          String?
+  follow_up_1              String?
+  follow_up_2              String?
+  follow_up_3              String?
+  follow_up_4              String?
+  subcategory              String?
+  sub_subcategory          String?
+  manufacture              String?
+  annual_revenue           String?
+  phone_updated            String?
+  profile_unique_id        String?
+  li_messages              String?
+  company_location         String?
+  third_scene              String?
+  subject_f1               String?
+  subject_f2               String?
+  subject_f3               String?
+  third_scene_subject      String?
+  industry_tier            String?
+  title_tier               String?
+  final_icp_tier           String?
+  industry_ar              String?
+  field_ar                 String?
+  profile                  String?
+  b2b_status               String?
+  industry_22              String?
+  b2b_summary              String?
 
   // App Specific
-  icp_status            String?
-  fit_score             Int?
-  stage                String?
-  tags                 String[]
-  
-  created_at           DateTime @default(now())
-  updated_at           DateTime @updatedAt
+  icp_status String?
+  fit_score  Int?
+  stage      String?
+  tags       String[]
 
-  opportunities        Opportunity[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  opportunities Opportunity[]
 }
 
 model Business {
-  id          String   @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   phone       String?
   email       String?
@@ -357,30 +362,535 @@ model Business {
   state       String?
   city        String?
   description String?
-  postal_code  String?
+  postal_code String?
   country     String?
-  
+
   opportunities Opportunity[]
 }
 
 model Opportunity {
-  id                  String   @id @default(uuid())
-  name                String
-  pipeline_id          String
-  pipeline_stage_id     String
-  status              String
-  monetary_value       Float?
-  assigned_to          String?
-  source              String?
-  lost_reason          String?
-  call_record_url       String?
-  feedback            String?
-  
-  contact_id           String?
-  contact             Contact? @relation(fields: [contact_id], references: [id])
-  business_id          String?
-  business            Business? @relation(fields: [business_id], references: [id])
-  
-  created_at           DateTime @default(now())
-  updated_at           DateTime @updatedAt
+  id                String  @id @default(uuid())
+  name              String
+  pipeline_id       String
+  pipeline_stage_id String
+  status            String
+  monetary_value    Float?
+  assigned_to       String?
+  source            String?
+  lost_reason       String?
+  call_record_url   String?
+  feedback          String?
+
+  contact_id  String?
+  contact     Contact?  @relation(fields: [contact_id], references: [id])
+  business_id String?
+  business    Business? @relation(fields: [business_id], references: [id])
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+// ==========================================
+// DATA CENTER MODULE (Clay-like)
+// ==========================================
+
+// 1. Definitions / Config
+
+model ICPProfile {
+  id   String @id @default(uuid())
+  name String
+
+  targetIndustries Int[] // taxonomy_ids
+  companySizeMin   Int?
+  companySizeMax   Int?
+  geos             String[] // country/city
+  personas         Json? // titles/seniority
+  exclusions       Json? // industries/titles/domains
+  signalWeights    Json?
+  scoringWeights   Json?
+
+  createdBy String
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  imports ImportJob[]
+}
+
+model SourceConnector {
+  id         String  @id @default(uuid())
+  type       String // csv, apollo, salesnav, clay, webhook
+  name       String
+  authRef    String? // encrypted pointer
+  rateLimits Json?
+  status     String  @default("active")
+
+  imports ImportJob[]
+}
+
+model Recipe {
+  id           String @id @default(uuid())
+  name         String
+  type         String // find_people, find_companies, enrich, verify
+  inputSchema  Json?
+  steps        Json // pipeline steps array
+  outputSchema Json?
+  version      Int    @default(1)
+  status       String @default("active")
+
+  imports ImportJob[]
+}
+
+model FieldMapping {
+  id          String @id @default(uuid())
+  sourceType  String // csv_salesnav, apollo_api, etc
+  mappingName String
+
+  // Mapping config: { "Source Column": "canonicalField" }
+  mappings    Json
+  transforms  Json?
+  validations Json?
+}
+
+// 2. Operational Data
+
+model ImportJob {
+  id                String           @id @default(uuid())
+  sourceConnectorId String?
+  sourceConnector   SourceConnector? @relation(fields: [sourceConnectorId], references: [id])
+
+  recipeId String?
+  recipe   Recipe? @relation(fields: [recipeId], references: [id])
+
+  icpProfileId String?
+  icpProfile   ICPProfile? @relation(fields: [icpProfileId], references: [id])
+
+  providerProfileId String?
+  providerProfile   ProviderProfile? @relation(fields: [providerProfileId], references: [id])
+
+  status     String // pending, processing, completed, failed
+  startedAt  DateTime?
+  finishedAt DateTime?
+
+  rowCountInput    Int @default(0)
+  rowCountAccepted Int @default(0)
+  rowCountRejected Int @default(0)
+  rowCountEnriched Int @default(0)
+
+  createdBy String
+  createdAt DateTime @default(now())
+
+  rows StagingRow[]
+}
+
+model StagingRow {
+  id          String    @id @default(uuid())
+  importJobId String
+  importJob   ImportJob @relation(fields: [importJobId], references: [id])
+
+  rawJson        Json
+  normalizedJson Json?
+
+  dedupeKey String? // email/phone/linkedin_id/domain
+  rowStatus String // new, validated, enriched, rejected, synced
+
+  rejectionReason String?
+
+  personId String?
+  person   PersonEntity? @relation(fields: [personId], references: [id])
+
+  companyId String?
+  company   CompanyEntity? @relation(fields: [companyId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PersonEntity {
+  id String @id @default(uuid())
+
+  // Canonical Fields
+  fullName  String?
+  firstName String?
+  lastName  String?
+
+  email  String? // Primary
+  emails String[] // Alternates
+
+  phone  String? // E.164 Primary
+  phones String[] // Alternates
+
+  linkedinUrl String?
+  linkedinId  String?
+
+  title      String?
+  seniority  String?
+  department String?
+
+  locationCity    String?
+  locationCountry String?
+
+  languages String[]
+
+  verificationStatus String? // verified, risky, invalid
+
+  sourceProvider String?
+  sourceRecordId String?
+
+  firstSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
+
+  // Relations
+  stagingRows StagingRow[]
+  companyId   String?
+  company     CompanyEntity? @relation(fields: [companyId], references: [id])
+
+  relationships  EntityRelationship[]
+  signals        SignalEvent[]
+  enrichmentJobs EnrichmentJob[]
+  scores         Score[]
+}
+
+model CompanyEntity {
+  id String @id @default(uuid())
+
+  companyName String
+  domain      String? @unique
+  linkedinUrl String?
+  linkedinId  String?
+
+  industryTaxonomyId Int?
+  employeeCountRange String? // 1-10, 11-50...
+
+  locationCity    String?
+  locationCountry String?
+
+  techStack      Json?
+  signalsSummary Json?
+
+  sourceProvider String?
+
+  firstSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
+
+  // Relations
+  stagingRows    StagingRow[]
+  people         PersonEntity[]
+  relationships  EntityRelationship[]
+  signals        SignalEvent[]
+  enrichmentJobs EnrichmentJob[]
+  scores         Score[]
+}
+
+model EntityRelationship {
+  id       String       @id @default(uuid())
+  personId String
+  person   PersonEntity @relation(fields: [personId], references: [id])
+
+  companyId String
+  company   CompanyEntity @relation(fields: [companyId], references: [id])
+
+  role      String?
+  title     String?
+  startDate DateTime?
+  endDate   DateTime?
+  isCurrent Boolean   @default(true)
+
+  confidenceScore Float?
+
+  createdAt DateTime @default(now())
+}
+
+model EnrichmentJob {
+  id String @id @default(uuid())
+
+  entityType String // person, company
+  personId   String?
+  person     PersonEntity? @relation(fields: [personId], references: [id])
+
+  companyId String?
+  company   CompanyEntity? @relation(fields: [companyId], references: [id])
+
+  provider  String // apollo, clearbit, etc
+  status    String // pending, success, failed
+  retries   Int    @default(0)
+  costUnits Int    @default(0)
+
+  resultJson Json?
+  error      String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SignalEvent {
+  id String @id @default(uuid())
+
+  entityType String // person, company
+  personId   String?
+  person     PersonEntity? @relation(fields: [personId], references: [id])
+
+  companyId String?
+  company   CompanyEntity? @relation(fields: [companyId], references: [id])
+
+  type        String // job_change, funding, news
+  source      String?
+  evidenceUrl String?
+
+  detectedAt  DateTime @default(now())
+  impactScore Int?
+  confidence  Float?
+
+  createdAt DateTime @default(now())
+}
+
+model Score {
+  id String @id @default(uuid())
+
+  entityType String
+  personId   String?
+  person     PersonEntity? @relation(fields: [personId], references: [id])
+
+  companyId String?
+  company   CompanyEntity? @relation(fields: [companyId], references: [id])
+
+  fitScore        Int @default(0)
+  intentScore     Int @default(0)
+  engagementScore Int @default(0)
+  finalScore      Int @default(0)
+
+  scoringVersion String   @default("1.0")
+  computedAt     DateTime @default(now())
+}
+
+model AuditLog {
+  id         String @id @default(uuid())
+  userId     String
+  action     String
+  entityType String
+  entityId   String
+
+  changes Json? // { before: ..., after: ... }
+
+  createdAt DateTime @default(now())
+}
+
+// ==========================================
+// INTEGRATION PLATFORM (Clay-like)
+// Encrypted credential storage + Waterfall enrichment
+// ==========================================
+
+model IntegrationProvider {
+  id                String   @id @default(uuid())
+  slug              String   @unique // "apollo", "prospeo", "lemlist", etc.
+  name              String
+  logoUrl           String?
+  capabilities      Json     // { email: true, phone: true, company: true, linkedin: true }
+  configSchema      Json?    // JSON schema for provider-specific config
+
+  // Encrypted credentials (AES-256-GCM)
+  encryptedApiKey   String?
+  encryptedApiKeyIv String?  // IV for decryption
+
+  // Provider status
+  status            String   @default("inactive") // "active", "inactive", "error"
+  lastTestAt        DateTime?
+  lastTestStatus    String?  // "success", "failed", "rate_limited"
+  lastTestMessage   String?
+
+  // Usage tracking
+  totalCreditsUsed  Int      @default(0)
+  monthlyCreditsUsed Int     @default(0)
+  monthlyResetAt    DateTime?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  waterfallSteps    WaterfallStep[]
+  usageLogs         ProviderUsageLog[]
+}
+
+model EnrichmentWaterfall {
+  id               String   @id @default(uuid())
+  name             String
+  slug             String   @unique // "email_waterfall", "phone_waterfall"
+  enrichmentType   String   // "email" | "phone" | "company" | "linkedin"
+  description      String?
+
+  stopOnFirstMatch Boolean  @default(true)
+  maxProviders     Int      @default(3) // Max providers to try before stopping
+  isActive         Boolean  @default(true)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  steps            WaterfallStep[]
+}
+
+model WaterfallStep {
+  id          String              @id @default(uuid())
+  waterfallId String
+  waterfall   EnrichmentWaterfall @relation(fields: [waterfallId], references: [id], onDelete: Cascade)
+
+  providerId  String
+  provider    IntegrationProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  priority    Int                 // 0 = first, lower = higher priority
+  isEnabled   Boolean             @default(true)
+  config      Json?               // Step-specific config overrides
+
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  @@unique([waterfallId, providerId])
+  @@index([waterfallId, priority])
+}
+
+model ProviderUsageLog {
+  id             String   @id @default(uuid())
+  providerId     String
+  provider       IntegrationProvider @relation(fields: [providerId], references: [id], onDelete: Cascade)
+
+  requestType    String   // "email_enrich", "phone_enrich", "company_enrich", "test_connection"
+  status         String   // "success", "not_found", "error", "rate_limited"
+
+  // Request details
+  inputHash      String?  // Hash of input for deduplication tracking
+  creditsUsed    Int      @default(0)
+  responseTimeMs Int?
+
+  // Result summary
+  resultFound    Boolean  @default(false)
+  errorMessage   String?
+
+  // Context
+  waterfallId    String?
+  entityType     String?  // "person", "company"
+  entityId       String?
+
+  createdAt      DateTime @default(now())
+
+  @@index([providerId, createdAt])
+  @@index([providerId, requestType])
+}
+
+// ==========================================
+// WALLET & BILLING SYSTEM
+// Credit management and usage policies
+// ==========================================
+
+// Workspace Wallet - رصيد كل workspace
+model WorkspaceWallet {
+  id                String   @id @default(uuid())
+  workspaceId       String   @unique
+
+  // Balances
+  creditBalance     Float    @default(0)
+  reservedCredits   Float    @default(0)  // For pending operations
+
+  // Limits
+  monthlyLimit      Float?
+  dailyLimit        Float?
+
+  // Billing
+  billingCycle      String   @default("monthly") // monthly, quarterly, annual
+  currentPeriodStart DateTime @default(now())
+  currentPeriodEnd   DateTime?
+
+  // Status
+  status            String   @default("active") // active, suspended, exhausted
+
+  // Relations
+  transactions      WalletTransaction[]
+  creditPolicies    CreditPolicy[]
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+// Wallet Transactions - سجل المعاملات
+model WalletTransaction {
+  id              String   @id @default(uuid())
+  walletId        String
+  wallet          WorkspaceWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  type            String   // credit_add, credit_use, refund, adjustment, reservation, release
+  amount          Float
+  balanceAfter    Float
+
+  // Context
+  providerId      String?
+  requestType     String?  // email_enrich, phone_enrich, etc.
+  entityId        String?
+
+  // Metadata
+  description     String?
+  performedBy     String?  // admin user id
+  metadata        Json?    // Additional context
+
+  createdAt       DateTime @default(now())
+
+  @@index([walletId, createdAt])
+  @@index([walletId, type])
+}
+
+// Credit Policy - سياسة الرصيد لكل workspace
+model CreditPolicy {
+  id              String   @id @default(uuid())
+  walletId        String
+  wallet          WorkspaceWallet @relation(fields: [walletId], references: [id], onDelete: Cascade)
+
+  // Provider Access
+  providerSlug    String
+
+  // Limits
+  enabled         Boolean  @default(false)
+  dailyLimit      Int?
+  monthlyLimit    Int?
+  usedToday       Int      @default(0)
+  usedThisMonth   Int      @default(0)
+
+  // Cost Override
+  unitCostOverride Float?  // Override default cost
+
+  // Features
+  allowedFeatures String[] // ["email_find", "phone_find", "verify"]
+
+  // Overage Policy
+  overagePolicy   String   @default("stop") // stop, request_approval, auto_topup
+
+  // Reset tracking
+  lastDailyReset  DateTime @default(now())
+  lastMonthlyReset DateTime @default(now())
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([walletId, providerSlug])
+  @@index([walletId])
+}
+
+// Admin Audit Log - سجل إجراءات المسؤولين
+model AdminAuditLog {
+  id              String   @id @default(uuid())
+  adminUserId     String
+  adminEmail      String?
+
+  action          String   // provider_connected, policy_updated, credits_added, etc.
+  targetType      String   // provider, workspace, policy, system
+  targetId        String?
+
+  // Details
+  details         String?
+  changes         Json?    // { before: ..., after: ... }
+  ipAddress       String?
+  userAgent       String?
+
+  status          String   @default("success") // success, failed, warning
+
+  createdAt       DateTime @default(now())
+
+  @@index([adminUserId, createdAt])
+  @@index([targetType, targetId])
+  @@index([action, createdAt])
 }

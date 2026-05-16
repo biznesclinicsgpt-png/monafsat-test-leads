@@ -13,13 +13,49 @@ export const AssetsSection = () => {
     { title: "تاريخ التفاوض", icon: History },
   ];
 
+  const partners = [
+    { name: "LinkedIn", type: "الوصول" },
+    { name: "Apollo", type: "بيانات B2B" },
+    { name: "Clearbit", type: "إثراء البيانات" },
+    { name: "Lemlist", type: "المتابعة الذكية" },
+    { name: "Lusha", type: "أرقام مباشرة" },
+    { name: "Dropcontact", type: "التحقق" }
+  ];
+
   return (
     <div className="py-32 bg-[#050505] relative overflow-hidden">
       
       {/* Background vault glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-yellow-500/5 blur-[150px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-violet-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 max-w-5xl relative z-10">
+
+        {/* Tech Stack / Partners */}
+        <div className="mb-32 text-center">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+            >
+                <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                    بنية تحتية جبارة مدعومة بأقوى شراكات التقنية
+                </h2>
+                <p className="text-lg text-slate-400 max-w-2xl mx-auto mb-12">
+                    لا حاجة لتشتيت ميزانيتك على أدوات منفصلة. نظامنا يدمج قوة أكثر من 15 أداة عالمية لتعمل معاً لصالحك، مجتمعة في محرك واحد.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                    {partners.map((p, i) => (
+                        <div key={i} className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center gap-3 hover:border-cyan-500/50 hover:bg-cyan-500/5 transition-all">
+                            <span className="font-bold text-white text-lg">{p.name}</span>
+                            <span className="text-xs text-cyan-400 font-medium px-2 py-1 rounded bg-cyan-500/10 border border-cyan-500/20">{p.type}</span>
+                        </div>
+                    ))}
+                    <div className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400">
+                        + أدوات أخرى
+                    </div>
+                </div>
+            </motion.div>
+        </div>
         
         <div className="text-center mb-20">
           <motion.h2 
@@ -55,8 +91,8 @@ export const AssetsSection = () => {
                   animationName: 'float'
                 }}
               >
-                <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:scale-110 group-hover:border-yellow-500/50 transition-all">
-                  <asset.icon className="w-8 h-8 text-slate-300 group-hover:text-yellow-400 transition-colors" />
+                <div className="w-16 h-16 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center group-hover:scale-110 group-hover:border-cyan-500/50 transition-all">
+                  <asset.icon className="w-8 h-8 text-slate-300 group-hover:text-cyan-400 transition-colors" />
                 </div>
                 <h3 className="text-lg font-bold text-white text-center">{asset.title}</h3>
               </motion.div>
@@ -69,17 +105,17 @@ export const AssetsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.8, duration: 1 }}
-            className="w-full max-w-2xl bg-gradient-to-b from-slate-900 to-black border-t-2 border-l border-r border-yellow-500/30 rounded-t-[3rem] p-12 relative overflow-hidden"
+            className="w-full max-w-2xl bg-gradient-to-b from-slate-900 to-black border-t-2 border-l border-r border-violet-500/30 rounded-t-[3rem] p-12 relative overflow-hidden"
           >
             {/* Inner glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[100px] bg-yellow-500/20 blur-[50px] rounded-full" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] h-[100px] bg-violet-500/20 blur-[50px] rounded-full" />
             
             <div className="flex flex-col items-center relative z-10">
-              <div className="w-24 h-24 rounded-full bg-yellow-500/10 border-2 border-yellow-500/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(234,179,8,0.2)]">
-                <Lock className="w-10 h-10 text-yellow-400" />
+              <div className="w-24 h-24 rounded-full bg-violet-500/10 border-2 border-violet-500/50 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(139,92,246,0.2)]">
+                <Lock className="w-10 h-10 text-violet-400" />
               </div>
               <h3 className="text-3xl font-black text-white tracking-widest mb-2">مخزن بيانات الشركة</h3>
-              <p className="text-yellow-500/80 font-medium">أصولك الرقمية ومعرفتك المؤسسية في أمان تام</p>
+              <p className="text-violet-400/80 font-medium">أصولك الرقمية ومعرفتك المؤسسية في أمان تام</p>
             </div>
             
             {/* Vault door details */}

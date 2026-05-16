@@ -18,6 +18,16 @@ const LoginPage = () => {
             setTimeout(async () => {
                 const { injectDemoData } = await import('../services/simulationService');
                 injectDemoData();
+
+                // Set Mock User Session
+                localStorage.setItem('user', JSON.stringify({
+                    id: 'demo-1',
+                    name: 'Demo Provider',
+                    email: 'demo@manafeth.com',
+                    role: 'provider',
+                    token: 'demo-token'
+                }));
+
                 // Force reload to ensure DataContext picks up the new localStorage flags
                 window.location.assign('/app');
             }, 1000);
@@ -38,7 +48,7 @@ const LoginPage = () => {
 
             // If they came from Diagnosis Guest Flow, we might want to preserve that?
             // For now, simple redirect.
-            navigate('/app/dashboard');
+            navigate('/app');
 
             setLoading(false);
         }, 1500);
