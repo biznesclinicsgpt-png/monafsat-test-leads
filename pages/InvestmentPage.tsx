@@ -1,25 +1,37 @@
 import React from 'react';
-import { InvestmentHeroV2 } from '../components/Investment/InvestmentHeroV2';
-import { TierSectionV2 } from '../components/Investment/TierSectionV2';
-import { ComparisonTableV2 } from '../components/Investment/ComparisonTableV2';
-import { InvestmentCTAV2 } from '../components/Investment/InvestmentCTAV2';
+import { HeroSection } from '../components/InvestmentV3/HeroSection';
+import { ProblemSection } from '../components/InvestmentV3/ProblemSection';
+import { MoatSection } from '../components/InvestmentV3/MoatSection';
+import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection';
+import { WorkStagesSection } from '../components/InvestmentV3/WorkStagesSection';
+import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
+import { PricingSection } from '../components/InvestmentV3/PricingSection';
+import { RevenueShareSection } from '../components/InvestmentV3/RevenueShareSection';
+import { FutureSection } from '../components/InvestmentV3/FutureSection';
+import { FinalCtaSection } from '../components/InvestmentV3/FinalCtaSection';
 
 const InvestmentPage = () => {
     return (
         <div
-            className="min-h-screen selection:bg-emerald-500/30"
+            className="min-h-screen selection:bg-emerald-500/30 font-sans"
             dir="rtl"
             style={{
                 fontFamily: "'IBM Plex Sans Arabic', 'Tajawal', sans-serif",
-                background: '#f6f8fa',
-                color: '#334155',
+                background: '#050505',
+                color: '#e2e8f0', // slate-200
                 lineHeight: 1.7,
             }}
         >
-            <InvestmentHeroV2 />
-            <TierSectionV2 />
-            <ComparisonTableV2 />
-            <InvestmentCTAV2 />
+            <HeroSection />
+            <ProblemSection />
+            <MoatSection />
+            <ComparisonSection />
+            <WorkStagesSection />
+            <AssetsSection />
+            <PricingSection />
+            <RevenueShareSection />
+            <FutureSection />
+            <FinalCtaSection />
         </div>
     );
 };
