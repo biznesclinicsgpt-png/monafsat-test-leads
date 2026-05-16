@@ -6,6 +6,7 @@ import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection'
 import { WorkStagesSection } from '../components/InvestmentV3/WorkStagesSection';
 import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
 import { PricingSection } from '../components/InvestmentV3/PricingSection';
+import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { RevenueShareSection } from '../components/InvestmentV3/RevenueShareSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { FinalCtaSection } from '../components/InvestmentV3/FinalCtaSection';
@@ -29,6 +30,7 @@ const InvestmentPage = () => {
             <WorkStagesSection />
             <AssetsSection />
             <PricingSection />
+            <SmartPortfolioSection />
             <RevenueShareSection />
             <FutureSection />
             <FinalCtaSection />
