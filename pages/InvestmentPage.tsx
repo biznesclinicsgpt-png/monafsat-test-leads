@@ -34,9 +34,9 @@ const InvestmentPage = () => {
             <WorkStagesSection />
             <AssetsSection />
             <PricingSection />
-            <SmartPortfolioSection />
             <RevenueShareSection />
             <FutureSection />
+            <SmartPortfolioSection />
             <FinalCtaSection />
         </div>
     );
