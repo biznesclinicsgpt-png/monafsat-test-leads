@@ -3,6 +3,7 @@ import { HeroSection } from '../components/InvestmentV3/HeroSection';
 import { ProblemSection } from '../components/InvestmentV3/ProblemSection';
 import { MoatSection } from '../components/InvestmentV3/MoatSection';
 import { NinjaAgentsSection } from '../components/InvestmentV3/NinjaAgentsSection';
+import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
 import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
 import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection';
 import { WorkStagesSection } from '../components/InvestmentV3/WorkStagesSection';
@@ -29,6 +30,7 @@ const InvestmentPage = () => {
             <ProblemSection />
             <MoatSection />
             <NinjaAgentsSection />
+            <SmartDashboardSection />
             <MonafsatNetworkSection />
             <ComparisonSection />
             <WorkStagesSection />
