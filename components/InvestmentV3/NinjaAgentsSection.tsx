@@ -16,6 +16,7 @@ import {
     Check,
     ChevronDown
 } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 export const NinjaAgentsSection = () => {
     const [activeNode, setActiveNode] = useState<string | null>(null);
