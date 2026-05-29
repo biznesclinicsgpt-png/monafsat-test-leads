@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Sparkles, Target, MessageSquare, TrendingUp, BrainCircuit, ShieldCheck } from 'lucide-react';
+import { Cpu } from 'lucide-react';
 import { StatsRow } from './dashboard/StatsRow';
 import { WhyAgentsBlock } from './dashboard/WhyAgentsBlock';
 import { AgentsStoryFlow } from './dashboard/AgentsStoryFlow';
@@ -10,40 +10,6 @@ import { MonafsatBridge } from './dashboard/MonafsatBridge';
 import { DashboardCTA } from './dashboard/DashboardCTA';
 
 export const SmartDashboardSection = () => {
-    // List of features in the Left column of the main section grid
-    const features = [
-        {
-            title: "يعمل قبل أول رسالة",
-            desc: "تحليل ذكي للسوق والشركات لتحديد أعلى الفرص احتمالية للتعاقد.",
-            icon: <Sparkles className="w-5 h-5 text-violet-400" />
-        },
-        {
-            title: "يوصل لأصحاب القرار",
-            desc: "تحديد متخذ القرار الفعلي واختيار أفضل قناة وتوقيت للتواصل المباشر.",
-            icon: <Target className="w-5 h-5 text-cyan-400" />
-        },
-        {
-            title: "يتابع ويحول الفرص",
-            desc: "رصد فوري لاهتمام العملاء وأتمتة المحادثات وجدولتها حتى حجز الاجتماع.",
-            icon: <MessageSquare className="w-5 h-5 text-emerald-400" />
-        },
-        {
-            title: "يتوقع ويحسن النمو",
-            desc: "التنبؤ الذكي بالإيرادات والفرص المستقبلية مع تقديم توصيات الإغلاق اليومية.",
-            icon: <TrendingUp className="w-5 h-5 text-blue-400" />
-        },
-        {
-            title: "قاعدة بيانات ضخمة ومحدثة",
-            desc: "الوصول لأكثر من 8 مليون جهة وصانع قرار ومشاريع جديدة في السوق السعودي.",
-            icon: <BrainCircuit className="w-5 h-5 text-emerald-400 animate-pulse" />
-        },
-        {
-            title: "أمان وخصوصية كاملة",
-            desc: "تشفير وحماية كاملة لبيانات شركتكم وعلاقاتكم مع العملاء.",
-            icon: <ShieldCheck className="w-5 h-5 text-blue-400" />
-        }
-    ];
-
     return (
         <div className="py-28 bg-[#050505] relative overflow-hidden" id="ninja-command-center">
             {/* Background Neural Network Glow */}
@@ -87,40 +53,9 @@ export const SmartDashboardSection = () => {
                 {/* 5. Before / After Interactive Toggle */}
                 <BeforeAfterToggle />
 
-                {/* 6. Main Grid (Left features column + Right interactive orbit layout) */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-20">
-                    {/* Left Column: Side features lists */}
-                    <div className="lg:col-span-3 space-y-5 flex flex-col justify-start">
-                        {features.map((feat, idx) => (
-                            <motion.div
-                                key={idx}
-                                initial={{ opacity: 0, x: 20 }}
-                                whileInView={{ opacity: 1, x: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.4, delay: idx * 0.05 }}
-                                className="bg-slate-950/40 border border-slate-900/60 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-800 transition-colors duration-300"
-                            >
-                                <div className="flex items-start gap-3">
-                                    <div className="w-8 h-8 rounded-lg bg-slate-900 border border-slate-800/80 flex items-center justify-center shrink-0 mt-0.5 group-hover:border-slate-700 transition-colors">
-                                        {feat.icon}
-                                    </div>
-                                    <div>
-                                        <h4 className="text-xs font-bold text-white mb-1.5 group-hover:text-slate-200 transition-colors">
-                                            {feat.title}
-                                        </h4>
-                                        <p className="text-[10px] text-slate-400 leading-relaxed font-medium">
-                                            {feat.desc}
-                                        </p>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-
-                    {/* Right Column: Orbit layout & satellite agents */}
-                    <div className="lg:col-span-9 flex items-center justify-center relative">
-                        <AgentOrbitGrid />
-                    </div>
+                {/* 6. Central Command Orbit Dashboard Grid (Centered, Full Width) */}
+                <div className="flex items-center justify-center relative mb-20 w-full">
+                    <AgentOrbitGrid />
                 </div>
 
                 {/* 7. Monafsat Positioning Bridge */}
