@@ -116,7 +116,7 @@ export const NinjaAgentsSection = () => {
                         {/* هدفنا معك */}
                         <motion.div 
                             initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             className="bg-slate-950/40 border border-slate-900/60 p-5 rounded-2xl relative overflow-hidden group hover:border-slate-800 transition-colors"
                         >
@@ -133,7 +133,7 @@ export const NinjaAgentsSection = () => {
                         {/* كيف نعمل معاً؟ */}
                         <motion.div 
                             initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
+                            whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
                             className="bg-slate-950/40 border border-slate-900/60 p-5 rounded-2xl relative overflow-hidden flex-1"
@@ -175,7 +175,7 @@ export const NinjaAgentsSection = () => {
                     <div className="lg:col-span-6 flex items-center justify-center relative min-h-[480px] lg:min-h-0">
                         
                         {/* DESKTOP INTERACTIVE TRIANGLE VISUAL */}
-                        <div className="relative w-full aspect-[600/520] max-w-[600px] mx-auto hidden lg:block select-none">
+                        <div className="relative w-full aspect-[600/520] max-w-[600px] mx-auto hidden lg:block select-none font-sans">
                             
                             {/* SVG Connecting Glow Lines */}
                             <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -328,17 +328,18 @@ export const NinjaAgentsSection = () => {
 
                             {/* Node 1: Top (الفريق الاستشاري والقيادي) */}
                             <motion.div 
-                                className="absolute top-[14%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 text-center"
+                                className="absolute top-[14%] left-[50%] z-20 text-center"
+                                style={{ x: "-50%", y: "-50%" }}
                                 onMouseEnter={() => setActiveNode('coaching')}
                                 onMouseLeave={() => setActiveNode(null)}
-                                animate={{ y: activeNode === 'coaching' ? -6 : [0, -4, 0] }}
+                                animate={{ y: activeNode === 'coaching' ? "-56%" : ["-50%", "-55%", "-50%"] }}
                                 transition={{ 
                                     y: activeNode === 'coaching' 
                                         ? { duration: 0.2 } 
                                         : { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0 } 
                                 }}
                             >
-                                <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
+                                <div className="absolute -top-10 left-1/2 whitespace-nowrap text-center" style={{ transform: 'translateX(-50%)' }}>
                                     <span className="block text-xs font-bold text-violet-400">الفريق الاستشاري والقيادي</span>
                                 </div>
                                 <div className={cn(
@@ -353,10 +354,11 @@ export const NinjaAgentsSection = () => {
 
                             {/* Node 2: Left (فريق منافسات) */}
                             <motion.div 
-                                className="absolute top-[74%] left-[26%] -translate-x-1/2 -translate-y-1/2 z-20"
+                                className="absolute top-[74%] left-[26%] z-20"
+                                style={{ x: "-50%", y: "-50%" }}
                                 onMouseEnter={() => setActiveNode('access')}
                                 onMouseLeave={() => setActiveNode(null)}
-                                animate={{ y: activeNode === 'access' ? -6 : [0, -4, 0] }}
+                                animate={{ y: activeNode === 'access' ? "-56%" : ["-50%", "-55%", "-50%"] }}
                                 transition={{ 
                                     y: activeNode === 'access' 
                                         ? { duration: 0.2 } 
@@ -378,10 +380,11 @@ export const NinjaAgentsSection = () => {
 
                             {/* Node 3: Right (فريقكم البيعي) */}
                             <motion.div 
-                                className="absolute top-[74%] left-[74%] -translate-x-1/2 -translate-y-1/2 z-20"
+                                className="absolute top-[74%] left-[74%] z-20"
+                                style={{ x: "-50%", y: "-50%" }}
                                 onMouseEnter={() => setActiveNode('sales')}
                                 onMouseLeave={() => setActiveNode(null)}
-                                animate={{ y: activeNode === 'sales' ? -6 : [0, -4, 0] }}
+                                animate={{ y: activeNode === 'sales' ? "-56%" : ["-50%", "-55%", "-50%"] }}
                                 transition={{ 
                                     y: activeNode === 'sales' 
                                         ? { duration: 0.2 } 
@@ -403,11 +406,12 @@ export const NinjaAgentsSection = () => {
 
                             {/* Node 4: Center Core (نظام النينجا الذكي) */}
                             <motion.div 
-                                className="absolute top-[52%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30"
+                                className="absolute top-[52%] left-[50%] z-30"
+                                style={{ x: "-50%", y: "-50%" }}
                                 onMouseEnter={() => setActiveNode('ninja')}
                                 onMouseLeave={() => setActiveNode(null)}
                                 animate={{ 
-                                    y: activeNode === 'ninja' ? -4 : [0, -3, 0],
+                                    y: activeNode === 'ninja' ? "-54%" : ["-50%", "-53%", "-50%"],
                                     scale: activeNode === 'ninja' ? 1.05 : [1, 1.02, 1]
                                 }}
                                 transition={{ 
@@ -429,7 +433,7 @@ export const NinjaAgentsSection = () => {
                                         activeNode === 'ninja' ? "text-emerald-400" : "text-emerald-500"
                                     )} />
                                 </div>
-                                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
+                                <div className="absolute -bottom-10 left-1/2 whitespace-nowrap text-center" style={{ transform: 'translateX(-50%)' }}>
                                     <span className="block text-[11px] font-extrabold text-emerald-400">نظام النينجا الذكي</span>
                                 </div>
                             </motion.div>
@@ -572,7 +576,7 @@ export const NinjaAgentsSection = () => {
                             </AnimatePresence>
 
                             {/* Goal pill at bottom of triangle */}
-                            <div className="absolute bottom-[2%] left-1/2 -translate-x-1/2 text-center w-full">
+                            <div className="absolute bottom-[2%] left-0 w-full text-center">
                                 <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-slate-900/80 border border-slate-800 text-slate-300 text-xs font-semibold shadow-md backdrop-blur-sm">
                                     <Users className="w-4 h-4 text-emerald-400" />
                                     <span>ثلاثة أضلاع... هدف واحد: نموك ونجاحك في السوق السعودي</span>
@@ -581,7 +585,7 @@ export const NinjaAgentsSection = () => {
                         </div>
 
                         {/* MOBILE ONLY LAYOUT (STACKED LIST OF NODE FORCES) */}
-                        <div className="lg:hidden w-full space-y-6 z-10 px-2 select-none">
+                        <div className="lg:hidden w-full space-y-6 z-10 px-2 select-none font-sans">
                             <div className="text-center py-2">
                                 <span className="text-xs font-bold text-slate-500">أضلاع المنظومة الأربعة</span>
                             </div>
@@ -592,7 +596,7 @@ export const NinjaAgentsSection = () => {
                                     <BrainCircuit className="w-4 h-4 text-emerald-400" />
                                 </div>
                                 <h3 className="text-sm font-bold text-emerald-400 mb-1">نظام النينجا الذكي</h3>
-                                <p className="text-[10px] text-slate-400 mb-4 font-sans font-medium">الذكاء الاصطناعي والأتمتة - القلب الذكي للمنظومة</p>
+                                <p className="text-[10px] text-slate-400 mb-4 font-medium">الذكاء الاصطناعي والأتمتة - القلب الذكي للمنظومة</p>
                                 <ul className="grid grid-cols-1 gap-2 text-xs text-slate-300">
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
@@ -620,7 +624,7 @@ export const NinjaAgentsSection = () => {
                                     <Target className="w-4 h-4 text-cyan-400" />
                                 </div>
                                 <h3 className="text-sm font-bold text-cyan-400 mb-1">فريق منافسات</h3>
-                                <p className="text-[10px] text-slate-400 mb-4 font-sans font-medium">الوصول وتحريك السوق والفرص</p>
+                                <p className="text-[10px] text-slate-400 mb-4 font-medium">الوصول وتحريك السوق والفرص</p>
                                 <ul className="grid grid-cols-1 gap-2 text-xs text-slate-300">
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
@@ -648,7 +652,7 @@ export const NinjaAgentsSection = () => {
                                     <Users className="w-4 h-4 text-violet-400" />
                                 </div>
                                 <h3 className="text-sm font-bold text-violet-400 mb-1">الفريق الاستشاري والقيادي</h3>
-                                <p className="text-[10px] text-slate-400 mb-4 font-sans font-medium">تطوير وقيادة المبيعات</p>
+                                <p className="text-[10px] text-slate-400 mb-4 font-medium">تطوير وقيادة المبيعات</p>
                                 <ul className="grid grid-cols-1 gap-2 text-xs text-slate-300">
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-violet-400 shrink-0" />
@@ -676,7 +680,7 @@ export const NinjaAgentsSection = () => {
                                     <Briefcase className="w-4 h-4 text-blue-400" />
                                 </div>
                                 <h3 className="text-sm font-bold text-blue-400 mb-1">فريقكم البيعي</h3>
-                                <p className="text-[10px] text-slate-400 mb-4 font-sans font-medium">التنفيذ والإغلاق وإتمام التعاقد</p>
+                                <p className="text-[10px] text-slate-400 mb-4 font-medium">التنفيذ والإغلاق وإتمام التعاقد</p>
                                 <ul className="grid grid-cols-1 gap-2 text-xs text-slate-300">
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-blue-400 shrink-0" />

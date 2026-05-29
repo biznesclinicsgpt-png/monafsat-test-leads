@@ -42,15 +42,7 @@ export const HeroSection = () => {
             <img src="/images/logo.png" alt="Monafasat B2B" className="h-20 object-contain invert grayscale brightness-200 contrast-200" />
           </div>
           
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-400 mb-4"
-          >
-            <Activity className="w-4 h-4" />
-            <span className="text-sm font-medium">ليس مجرد جلب بيانات، بل سيطرة على السوق</span>
-          </motion.div>
+
 
           <h1 className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight">
             <motion.span
