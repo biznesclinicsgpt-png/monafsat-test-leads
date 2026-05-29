@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
     Users, 
-    CheckCircle2, 
     Bot, 
     Activity, 
     Target, 
@@ -17,35 +16,34 @@ import {
     Check,
     ChevronDown
 } from 'lucide-react';
-import { cn } from '../../lib/utils';
 
 export const NinjaAgentsSection = () => {
     const [activeNode, setActiveNode] = useState<string | null>(null);
 
     const journeySteps = [
         {
-            title: "رصد الفرصة والاحتياج",
-            desc: "يقوم فريق منافسات برصد الفرص والمشاريع المناسبة للمستهدفين.",
+            title: "رصد الاحتياج والفرص",
+            desc: "رصد المشاريع والفرص المناسبة بالسوق السعودي.",
             icon: <Eye className="w-4 h-4 text-cyan-400" />
         },
         {
-            title: "تطوير وتجهيز فريقكم",
-            desc: "يعمل الفريق الاستشاري على تجهيز فريقكم ورفع الكفاءة فوراً.",
+            title: "تجهيز وتدريب فريقكم",
+            desc: "تطوير الأداء ورفع كفاءة مبيعاتكم فوراً.",
             icon: <Users className="w-4 h-4 text-violet-400" />
         },
         {
             title: "الوصول وتحريك الاهتمام",
-            desc: "يقوم فريق منافسات بفتح الأبواب وبدء المحادثات الفعالة.",
+            desc: "فتح المحادثات وبدء التواصل الفعال مع المستهدفين.",
             icon: <Target className="w-4 h-4 text-cyan-400" />
         },
         {
-            title: "التنفيذ العملي والإغلاق",
-            desc: "يتحرك فريقكم الداخلي لإدارة الاجتماعات والتفاوض وحسم الصفقة.",
+            title: "التنفيذ والإغلاق",
+            desc: "تقديم العروض، التفاوض، وحسم التعاقد بنجاح.",
             icon: <Briefcase className="w-4 h-4 text-blue-400" />
         },
         {
             title: "التحسين المستمر والنمو",
-            desc: "نراجع النتائج باستمرار لتطوير الأداء وتكرار النجاحات بيقين.",
+            desc: "مراجعة النتائج لضمان تكرار النجاحات بيقين.",
             icon: <RefreshCw className="w-4 h-4 text-emerald-400" />
         }
     ];
@@ -53,39 +51,30 @@ export const NinjaAgentsSection = () => {
     const outcomes = [
         {
             title: "وصول أسرع للسوق السعودي",
-            desc: "تجاوز عقبات الوصول بتشغيل فوري لحملات استهداف صناع القرار.",
+            desc: "استهداف مباشر وسريع لصناع القرار وتجاوز عقبات الدخول.",
             icon: <Zap className="w-4 h-4" />
         },
         {
             title: "فريق مبيعات أقوى وأكثر مهارة",
-            desc: "تمكين فريقك الداخلي بمهارات تفاوضية وأدلة عمل احترافية.",
+            desc: "تمكين فريقكم بأدلة عمل ومنهجيات تفاوضية احترافية.",
             icon: <Users className="w-4 h-4" />
         },
         {
-            title: "فرص أعلى جودة وأقرب للحسم",
-            desc: "رصد احتياجات حقيقية في السوق وتقديم حلولكم بالتوقيت المناسب.",
+            title: "صفقات أعلى جودة وأقرب للحسم",
+            desc: "رصد دقيق للاحتياجات وتلبية متطلبات السوق الفعلية.",
             icon: <TrendingUp className="w-4 h-4" />
         },
         {
             title: "زيادة نسب التحويل والإيرادات",
-            desc: "تنظيم وإدارة الـ Pipeline بفعالية لمنع ضياع أي صفقة محتملة.",
+            desc: "إدارة ذكية ومتابعة منظمة تمنع ضياع الفرص المتاحة.",
             icon: <Activity className="w-4 h-4" />
         },
         {
             title: "ميزة تنافسية مستدامة وصعبة",
-            desc: "منظومة نمو متكاملة يصعب على منافسيك تقليدها أو تجاوزها.",
+            desc: "منظومة نمو متكاملة يصعب على المنافسين محاكاتها.",
             icon: <ShieldCheck className="w-4 h-4" />
         }
     ];
-
-    const cardStyle = (node: string) => cn(
-        "absolute p-3.5 rounded-xl bg-slate-950/75 border backdrop-blur-md transition-all duration-300 cursor-default",
-        activeNode === node 
-            ? node === 'coaching' ? "border-violet-500/40 shadow-[0_0_15px_rgba(139,92,246,0.15)] scale-[1.02]"
-              : node === 'access' ? "border-cyan-500/40 shadow-[0_0_15px_rgba(6,182,212,0.15)] scale-[1.02]"
-              : "border-blue-500/40 shadow-[0_0_15px_rgba(59,130,246,0.15)] scale-[1.02]"
-            : "border-slate-900/60 text-slate-400 hover:border-slate-800"
-    );
 
     return (
         <div className="py-28 bg-[#050505] relative overflow-hidden" id="ninja-growth-triangle">
@@ -93,7 +82,7 @@ export const NinjaAgentsSection = () => {
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[20%] left-[10%] w-[600px] h-[600px] bg-cyan-500/5 blur-[130px] rounded-full" />
                 <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-violet-500/5 blur-[130px] rounded-full" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-emerald-500/[0.02] blur-[150px] rounded-full" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-emerald-500/[0.015] blur-[150px] rounded-full" />
             </div>
 
             <div className="container mx-auto px-4 max-w-7xl relative z-10">
@@ -136,7 +125,7 @@ export const NinjaAgentsSection = () => {
                                 <h3 className="text-sm font-bold text-white">هدفنا معك</h3>
                             </div>
                             <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                                نقوي فريقك، نطوره، ونرفعه لمستوى أعلى من الاحترافية والنتائج حتى يصل لأكثر من ضعف معدل الفرص والقدرة على التحويل.
+                                تمكين فريقكم وتطويره لزيادة تحويل الفرص ومضاعفة المبيعات الفعلية.
                             </p>
                         </motion.div>
 
@@ -235,15 +224,15 @@ export const NinjaAgentsSection = () => {
                                 </defs>
 
                                 {/* Base static subtle triangle */}
-                                <path d="M 50 18 L 20 78 L 80 78 Z" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="1.5" fill="none" />
-                                <path d="M 50 55 L 50 18" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="1" fill="none" />
-                                <path d="M 50 55 L 20 78" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="1" fill="none" />
-                                <path d="M 50 55 L 80 78" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="1" fill="none" />
+                                <path d="M 50 14 L 26 74 L 74 74 Z" stroke="rgba(255, 255, 255, 0.04)" strokeWidth="1.5" fill="none" />
+                                <path d="M 50 52 L 50 14" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="1" fill="none" />
+                                <path d="M 50 52 L 26 74" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="1" fill="none" />
+                                <path d="M 50 52 L 74 74" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="1" fill="none" />
 
                                 {/* Interactive Glowing Outer Lines */}
                                 {/* Top to Left */}
                                 <motion.path
-                                    d="M 50 18 L 20 78"
+                                    d="M 50 14 L 26 74"
                                     stroke="url(#violet-cyan-grad)"
                                     strokeWidth={activeNode === 'coaching' || activeNode === 'access' ? "3" : "1.5"}
                                     fill="none"
@@ -257,7 +246,7 @@ export const NinjaAgentsSection = () => {
                                 />
                                 {/* Left to Right */}
                                 <motion.path
-                                    d="M 20 78 L 80 78"
+                                    d="M 26 74 L 74 74"
                                     stroke="url(#cyan-blue-grad)"
                                     strokeWidth={activeNode === 'access' || activeNode === 'sales' ? "3" : "1.5"}
                                     fill="none"
@@ -271,7 +260,7 @@ export const NinjaAgentsSection = () => {
                                 />
                                 {/* Right to Top */}
                                 <motion.path
-                                    d="M 80 78 L 50 18"
+                                    d="M 74 74 L 50 14"
                                     stroke="url(#blue-violet-grad)"
                                     strokeWidth={activeNode === 'sales' || activeNode === 'coaching' ? "3" : "1.5"}
                                     fill="none"
@@ -284,9 +273,9 @@ export const NinjaAgentsSection = () => {
                                     }}
                                 />
 
-                                {/* Inner Spokes connecting to center AI */}
+                                {/* Inner Spokes connecting to center */}
                                 <motion.path
-                                    d="M 50 55 L 50 18"
+                                    d="M 50 52 L 50 14"
                                     stroke="url(#emerald-violet-grad)"
                                     strokeWidth={activeNode === 'ninja' || activeNode === 'coaching' ? "2.5" : "1"}
                                     fill="none"
@@ -296,7 +285,7 @@ export const NinjaAgentsSection = () => {
                                     }}
                                 />
                                 <motion.path
-                                    d="M 50 55 L 20 78"
+                                    d="M 50 52 L 26 74"
                                     stroke="url(#emerald-cyan-grad)"
                                     strokeWidth={activeNode === 'ninja' || activeNode === 'access' ? "2.5" : "1"}
                                     fill="none"
@@ -306,7 +295,7 @@ export const NinjaAgentsSection = () => {
                                     }}
                                 />
                                 <motion.path
-                                    d="M 50 55 L 80 78"
+                                    d="M 50 52 L 74 74"
                                     stroke="url(#emerald-blue-grad)"
                                     strokeWidth={activeNode === 'ninja' || activeNode === 'sales' ? "2.5" : "1"}
                                     fill="none"
@@ -320,16 +309,16 @@ export const NinjaAgentsSection = () => {
                                 {activeNode === 'ninja' && (
                                     <>
                                         {/* To Top */}
-                                        <motion.circle cx={50} cy={55} r={1.5} fill="#10b981" animate={{ cy: [55, 18], opacity: [0, 1, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 0 }} />
-                                        <motion.circle cx={50} cy={55} r={1.5} fill="#10b981" animate={{ cy: [55, 18], opacity: [0, 1, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 0.8 }} />
+                                        <motion.circle cx={50} cy={52} r={1.5} fill="#10b981" animate={{ cy: [52, 14], opacity: [0, 1, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0 }} />
+                                        <motion.circle cx={50} cy={52} r={1.5} fill="#10b981" animate={{ cy: [52, 14], opacity: [0, 1, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.7 }} />
                                         
                                         {/* To Left */}
-                                        <motion.circle cx={50} cy={55} r={1.5} fill="#10b981" animate={{ cx: [50, 20], cy: [55, 78], opacity: [0, 1, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 0.25 }} />
-                                        <motion.circle cx={50} cy={55} r={1.5} fill="#10b981" animate={{ cx: [50, 20], cy: [55, 78], opacity: [0, 1, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 1.05 }} />
+                                        <motion.circle cx={50} cy={52} r={1.5} fill="#10b981" animate={{ cx: [50, 26], cy: [52, 74], opacity: [0, 1, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.2 }} />
+                                        <motion.circle cx={50} cy={52} r={1.5} fill="#10b981" animate={{ cx: [50, 26], cy: [52, 74], opacity: [0, 1, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.9 }} />
 
                                         {/* To Right */}
-                                        <motion.circle cx={50} cy={55} r={1.5} fill="#10b981" animate={{ cx: [50, 80], cy: [55, 78], opacity: [0, 1, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 0.5 }} />
-                                        <motion.circle cx={50} cy={55} r={1.5} fill="#10b981" animate={{ cx: [50, 80], cy: [55, 78], opacity: [0, 1, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut", delay: 1.3 }} />
+                                        <motion.circle cx={50} cy={52} r={1.5} fill="#10b981" animate={{ cx: [50, 74], cy: [52, 74], opacity: [0, 1, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 0.4 }} />
+                                        <motion.circle cx={50} cy={52} r={1.5} fill="#10b981" animate={{ cx: [50, 74], cy: [52, 74], opacity: [0, 1, 0] }} transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut", delay: 1.1 }} />
                                     </>
                                 )}
                             </svg>
@@ -337,14 +326,19 @@ export const NinjaAgentsSection = () => {
                             {/* NODES (HTML Absolutely Positioned elements matching SVG percentages) */}
 
                             {/* Node 1: Top (الفريق الاستشاري والقيادي) */}
-                            <div 
-                                className="absolute top-[18%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 text-center"
+                            <motion.div 
+                                className="absolute top-[14%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-20 text-center"
                                 onMouseEnter={() => setActiveNode('coaching')}
                                 onMouseLeave={() => setActiveNode(null)}
+                                animate={{ y: activeNode === 'coaching' ? -6 : [0, -4, 0] }}
+                                transition={{ 
+                                    y: activeNode === 'coaching' 
+                                        ? { duration: 0.2 } 
+                                        : { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0 } 
+                                }}
                             >
-                                <div className="absolute -top-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
+                                <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
                                     <span className="block text-xs font-bold text-violet-400">الفريق الاستشاري والقيادي</span>
-                                    <span className="block text-[9px] text-slate-500 font-medium font-sans">Sales Advisory & Coaching</span>
                                 </div>
                                 <div className={cn(
                                     "w-16 h-16 rounded-full flex items-center justify-center border bg-[#090710]/95 cursor-pointer transition-all duration-300 shadow-[0_0_20px_rgba(139,92,246,0.1)]",
@@ -354,17 +348,22 @@ export const NinjaAgentsSection = () => {
                                 )}>
                                     <Users className="w-6 h-6 text-violet-400" />
                                 </div>
-                            </div>
+                            </motion.div>
 
                             {/* Node 2: Left (فريق منافسات) */}
-                            <div 
-                                className="absolute top-[78%] left-[20%] -translate-x-1/2 -translate-y-1/2 z-20"
+                            <motion.div 
+                                className="absolute top-[74%] left-[26%] -translate-x-1/2 -translate-y-1/2 z-20"
                                 onMouseEnter={() => setActiveNode('access')}
                                 onMouseLeave={() => setActiveNode(null)}
+                                animate={{ y: activeNode === 'access' ? -6 : [0, -4, 0] }}
+                                transition={{ 
+                                    y: activeNode === 'access' 
+                                        ? { duration: 0.2 } 
+                                        : { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1.2 } 
+                                }}
                             >
-                                <div className="absolute -top-12 right-6 whitespace-nowrap text-right">
+                                <div className="absolute -top-10 right-6 whitespace-nowrap text-right">
                                     <span className="block text-xs font-bold text-cyan-400">فريق منافسات</span>
-                                    <span className="block text-[9px] text-slate-500 font-medium font-sans">Market Access Engine</span>
                                 </div>
                                 <div className={cn(
                                     "w-16 h-16 rounded-full flex items-center justify-center border bg-[#060a0c]/95 cursor-pointer transition-all duration-300 shadow-[0_0_20px_rgba(6,182,212,0.1)]",
@@ -374,17 +373,22 @@ export const NinjaAgentsSection = () => {
                                 )}>
                                     <Target className="w-6 h-6 text-cyan-400" />
                                 </div>
-                            </div>
+                            </motion.div>
 
                             {/* Node 3: Right (فريقكم البيعي) */}
-                            <div 
-                                className="absolute top-[78%] left-[80%] -translate-x-1/2 -translate-y-1/2 z-20"
+                            <motion.div 
+                                className="absolute top-[74%] left-[74%] -translate-x-1/2 -translate-y-1/2 z-20"
                                 onMouseEnter={() => setActiveNode('sales')}
                                 onMouseLeave={() => setActiveNode(null)}
+                                animate={{ y: activeNode === 'sales' ? -6 : [0, -4, 0] }}
+                                transition={{ 
+                                    y: activeNode === 'sales' 
+                                        ? { duration: 0.2 } 
+                                        : { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2.4 } 
+                                }}
                             >
-                                <div className="absolute -top-12 left-6 whitespace-nowrap text-left">
+                                <div className="absolute -top-10 left-6 whitespace-nowrap text-left">
                                     <span className="block text-xs font-bold text-blue-400">فريقكم البيعي</span>
-                                    <span className="block text-[9px] text-slate-500 font-medium font-sans">Your Sales Team</span>
                                 </div>
                                 <div className={cn(
                                     "w-16 h-16 rounded-full flex items-center justify-center border bg-[#050810]/95 cursor-pointer transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.1)]",
@@ -394,127 +398,159 @@ export const NinjaAgentsSection = () => {
                                 )}>
                                     <Briefcase className="w-6 h-6 text-blue-400" />
                                 </div>
-                            </div>
+                            </motion.div>
 
                             {/* Node 4: Center Core (نظام النينجا الذكي) */}
-                            <div 
-                                className="absolute top-[55%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30"
+                            <motion.div 
+                                className="absolute top-[52%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-30"
                                 onMouseEnter={() => setActiveNode('ninja')}
                                 onMouseLeave={() => setActiveNode(null)}
+                                animate={{ 
+                                    y: activeNode === 'ninja' ? -4 : [0, -3, 0],
+                                    scale: activeNode === 'ninja' ? 1.05 : [1, 1.02, 1]
+                                }}
+                                transition={{ 
+                                    duration: 5, 
+                                    repeat: Infinity, 
+                                    ease: "easeInOut" 
+                                }}
                             >
                                 <div className={cn(
                                     "w-20 h-20 rounded-full flex items-center justify-center border bg-[#060a08]/95 cursor-pointer transition-all duration-500 shadow-[0_0_30px_rgba(16,185,129,0.15)]",
                                     activeNode === 'ninja' 
-                                        ? "border-emerald-400 shadow-[0_0_35px_rgba(16,185,129,0.45)] scale-105" 
+                                        ? "border-emerald-400 shadow-[0_0_35px_rgba(16,185,129,0.45)]" 
                                         : "border-emerald-500/35 hover:border-emerald-400/70"
                                 )}>
                                     {/* Pulse effect rings */}
-                                    <div className="absolute inset-0 rounded-full border border-emerald-500/30 animate-ping opacity-60 pointer-events-none" />
+                                    <div className="absolute inset-0 rounded-full border border-emerald-500/20 animate-pulse pointer-events-none" />
                                     <BrainCircuit className={cn(
                                         "w-8 h-8 transition-colors duration-300",
                                         activeNode === 'ninja' ? "text-emerald-400" : "text-emerald-500"
                                     )} />
                                 </div>
-                                <div className="absolute -bottom-14 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
+                                <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 whitespace-nowrap text-center">
                                     <span className="block text-[11px] font-extrabold text-emerald-400">نظام النينجا الذكي</span>
-                                    <span className="block text-[9px] text-slate-500 font-sans">الذكاء الاصطناعي والأتمتة</span>
                                 </div>
-                            </div>
+                            </motion.div>
 
-                            {/* FLOATING DETAIL CARDS */}
+                            {/* FLOATING DETAIL CARDS (SHOWN ONLY ON HOVER FOR EXTREME MINIMALISM) */}
 
                             {/* Coaching details checklist */}
-                            <div 
-                                className={cn(cardStyle('coaching'), "top-[4%] left-[64%] w-[33%] max-w-[200px]")}
-                                onMouseEnter={() => setActiveNode('coaching')}
-                                onMouseLeave={() => setActiveNode(null)}
-                            >
-                                <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
-                                    <span className="w-1 h-1 rounded-full bg-violet-400" />
-                                    برنامج التطوير القيادي
-                                </h4>
-                                <ul className="space-y-1.5 text-[9px] leading-tight">
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
-                                        <span>تدريب وتطوير فريقكم البيعي</span>
-                                    </li>
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
-                                        <span>بناء آليات المتابعة وتجاوز العقبات</span>
-                                    </li>
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
-                                        <span>Coaching يومي ومراجعة الأداء</span>
-                                    </li>
-                                </ul>
-                            </div>
+                            <AnimatePresence>
+                                {activeNode === 'coaching' && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-[8%] left-[60%] w-[25%] max-w-[200px] p-3.5 rounded-xl bg-slate-950/95 border border-violet-500/40 shadow-[0_0_20px_rgba(139,92,246,0.25)] backdrop-blur-md z-50 text-right cursor-default"
+                                        onMouseEnter={() => setActiveNode('coaching')}
+                                        onMouseLeave={() => setActiveNode(null)}
+                                    >
+                                        <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
+                                            <span className="w-1 h-1 rounded-full bg-violet-400" />
+                                            تطوير وقيادة المبيعات
+                                        </h4>
+                                        <ul className="space-y-1.5 text-[9px] leading-tight">
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
+                                                <span>تدريب وتطوير فريقكم البيعي</span>
+                                            </li>
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
+                                                <span>بناء آليات المتابعة وتجاوز العقبات</span>
+                                            </li>
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
+                                                <span>متابعة وتقييم مستمر للأداء</span>
+                                            </li>
+                                        </ul>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             {/* Access details checklist */}
-                            <div 
-                                className={cn(cardStyle('access'), "top-[62%] left-[0%] w-[33%] max-w-[200px]")}
-                                onMouseEnter={() => setActiveNode('access')}
-                                onMouseLeave={() => setActiveNode(null)}
-                            >
-                                <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
-                                    <span className="w-1 h-1 rounded-full bg-cyan-400" />
-                                    محرك الوصول للسوق
-                                </h4>
-                                <ul className="space-y-1.5 text-[9px] leading-tight">
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-cyan-400 shrink-0 mt-0.5" />
-                                        <span>الوصول المباشر لصناع القرار</span>
-                                    </li>
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-cyan-400 shrink-0 mt-0.5" />
-                                        <span>رصد الفرص والمشاريع الجديدة</span>
-                                    </li>
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-cyan-400 shrink-0 mt-0.5" />
-                                        <span>تشغيل حملات الوصول الخارجي</span>
-                                    </li>
-                                </ul>
-                            </div>
+                            <AnimatePresence>
+                                {activeNode === 'access' && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-[72%] left-[0%] w-[24%] max-w-[170px] p-3.5 rounded-xl bg-slate-950/95 border border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.25)] backdrop-blur-md z-50 text-right cursor-default"
+                                        onMouseEnter={() => setActiveNode('access')}
+                                        onMouseLeave={() => setActiveNode(null)}
+                                    >
+                                        <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
+                                            <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                                            محرك الوصول للسوق
+                                        </h4>
+                                        <ul className="space-y-1.5 text-[9px] leading-tight">
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-cyan-400 shrink-0 mt-0.5" />
+                                                <span>الوصول المباشر لصناع القرار</span>
+                                            </li>
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-cyan-400 shrink-0 mt-0.5" />
+                                                <span>رصد الفرص والمشاريع الجديدة</span>
+                                            </li>
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-cyan-400 shrink-0 mt-0.5" />
+                                                <span>تشغيل حملات الوصول المستمر</span>
+                                            </li>
+                                        </ul>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
                             {/* Sales details checklist */}
-                            <div 
-                                className={cn(cardStyle('sales'), "top-[62%] left-[68%] w-[33%] max-w-[200px]")}
-                                onMouseEnter={() => setActiveNode('sales')}
-                                onMouseLeave={() => setActiveNode(null)}
-                            >
-                                <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
-                                    <span className="w-1 h-1 rounded-full bg-blue-400" />
-                                    فريق المبيعات الداخلي
-                                </h4>
-                                <ul className="space-y-1.5 text-[9px] leading-tight">
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
-                                        <span>إدارة الاجتماعات وتقديم العروض</span>
-                                    </li>
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
-                                        <span>التفاوض وإتمام صفقات الإغلاق</span>
-                                    </li>
-                                    <li className="flex items-start gap-1">
-                                        <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
-                                        <span>تحويل الفرص المتاحة لإيرادات فعلية</span>
-                                    </li>
-                                </ul>
-                            </div>
+                            <AnimatePresence>
+                                {activeNode === 'sales' && (
+                                    <motion.div 
+                                        initial={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="absolute top-[72%] left-[76%] w-[24%] max-w-[170px] p-3.5 rounded-xl bg-slate-950/95 border border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.25)] backdrop-blur-md z-50 text-right cursor-default"
+                                        onMouseEnter={() => setActiveNode('sales')}
+                                        onMouseLeave={() => setActiveNode(null)}
+                                    >
+                                        <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
+                                            <span className="w-1 h-1 rounded-full bg-blue-400" />
+                                            فريق المبيعات الداخلي
+                                        </h4>
+                                        <ul className="space-y-1.5 text-[9px] leading-tight">
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
+                                                <span>إدارة الاجتماعات وتقديم العروض</span>
+                                            </li>
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
+                                                <span>التفاوض وإتمام صفقات الإغلاق</span>
+                                            </li>
+                                            <li className="flex items-start gap-1">
+                                                <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
+                                                <span>تحويل الفرص المتاحة لإيرادات</span>
+                                            </li>
+                                        </ul>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
 
-                            {/* Central Ninja (AI) interactive detailed hover popover */}
+                            {/* Central Ninja interactive detailed hover popover */}
                             <AnimatePresence>
                                 {activeNode === 'ninja' && (
                                     <motion.div
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        exit={{ opacity: 0, scale: 0.95 }}
+                                        initial={{ opacity: 0, scale: 0.95, y: 5 }}
+                                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                                        exit={{ opacity: 0, scale: 0.95, y: 5 }}
                                         className="absolute top-[34%] left-[18%] w-[35%] max-w-[210px] p-3 rounded-xl bg-slate-950/95 border border-emerald-500/40 shadow-[0_0_20px_rgba(16,185,129,0.25)] backdrop-blur-md z-50 text-right cursor-default"
                                         onMouseEnter={() => setActiveNode('ninja')}
                                         onMouseLeave={() => setActiveNode(null)}
                                     >
                                         <h4 className="text-[10px] font-bold text-emerald-400 mb-2 flex items-center gap-1.5 justify-start">
                                             <Bot className="w-3.5 h-3.5" />
-                                            نظام النينجا الذكي (AI Core)
+                                            نظام النينجا الذكي
                                         </h4>
                                         <ul className="space-y-1.5 text-[8.5px] text-slate-300 leading-tight">
                                             <li className="flex items-start gap-1">
@@ -523,11 +559,11 @@ export const NinjaAgentsSection = () => {
                                             </li>
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-emerald-400 shrink-0 mt-0.5" />
-                                                <span>أتمتة المحادثات الأولية وتصنيف العملاء</span>
+                                                <span>أتمتة المحادثات ورصد الاهتمام</span>
                                             </li>
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-emerald-400 shrink-0 mt-0.5" />
-                                                <span>وضوح كامل للـ CRM والـ Pipeline</span>
+                                                <span>إدارة علاقات العملاء وسير الفرص</span>
                                             </li>
                                         </ul>
                                     </motion.div>
@@ -567,7 +603,7 @@ export const NinjaAgentsSection = () => {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                                        <span>وضوح كامل للـ CRM والـ Pipeline</span>
+                                        <span>إدارة علاقات العملاء وسير الفرص</span>
                                     </li>
                                 </ul>
                             </div>
@@ -595,7 +631,7 @@ export const NinjaAgentsSection = () => {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                                        <span>تشغيل حملات الوصول الخارجي</span>
+                                        <span>تشغيل حملات الوصول المستمر</span>
                                     </li>
                                 </ul>
                             </div>
@@ -611,7 +647,7 @@ export const NinjaAgentsSection = () => {
                                     <Users className="w-4 h-4 text-violet-400" />
                                 </div>
                                 <h3 className="text-sm font-bold text-violet-400 mb-1">الفريق الاستشاري والقيادي</h3>
-                                <p className="text-[10px] text-slate-400 mb-4 font-sans font-medium">تطوير وقيادة فريقك البيعي وتخطي العقبات</p>
+                                <p className="text-[10px] text-slate-400 mb-4 font-sans font-medium">تطوير وقيادة المبيعات</p>
                                 <ul className="grid grid-cols-1 gap-2 text-xs text-slate-300">
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-violet-400 shrink-0" />
@@ -623,7 +659,7 @@ export const NinjaAgentsSection = () => {
                                     </li>
                                     <li className="flex items-center gap-2">
                                         <Check className="w-3.5 h-3.5 text-violet-400 shrink-0" />
-                                        <span>Coaching يومي ومراجعة الأداء</span>
+                                        <span>متابعة وتقييم مستمر للأداء</span>
                                     </li>
                                 </ul>
                             </div>
@@ -711,12 +747,9 @@ export const NinjaAgentsSection = () => {
                     transition={{ delay: 0.2, duration: 0.6 }}
                     className="mt-20 max-w-4xl mx-auto text-center"
                 >
-                    <div className="relative p-6 md:p-8 rounded-3xl bg-slate-950/30 border border-slate-900/80 overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.02] via-transparent to-violet-500/[0.02]" />
-                        <span className="inline-block text-emerald-400 mb-3 text-xs font-bold tracking-wider uppercase font-sans">
-                            Biznes Clinics GTM Execution
-                        </span>
-                        <h3 className="text-lg md:text-2xl font-extrabold text-slate-100 leading-relaxed max-w-3xl mx-auto">
+                    <div className="relative p-6 md:p-8 rounded-3xl bg-slate-950/30 border border-slate-900/80 overflow-hidden animate-pulse-slow">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.015] via-transparent to-violet-500/[0.015]" />
+                        <h3 className="text-lg md:text-xl font-extrabold text-slate-200 leading-relaxed max-w-3xl mx-auto">
                             "لا نوفر لكم فرصًا فقط… بل نساعدكم على بناء فريق مبيعات أقوى قادر على تحويل الفرص إلى نمو حقيقي ومستدام."
                         </h3>
                     </div>
