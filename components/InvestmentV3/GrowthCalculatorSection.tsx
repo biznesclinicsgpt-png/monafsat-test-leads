@@ -3,14 +3,19 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Calculator, Target, TrendingUp, CheckCircle, RefreshCw, BarChart3, HelpCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
+const toArabicNumerals = (num: number | string): string => {
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return String(num).replace(/[0-9]/g, (w) => arabicDigits[+w]);
+};
+
 export const GrowthCalculatorSection = () => {
     const shouldReduceMotion = useReducedMotion();
     
     // Inputs state
     const [sector, setSector] = useState<string>('مقاولات');
     const [targetRevenue, setTargetRevenue] = useState<number>(1000000);
-    const [avgDealValue, setAvgDealValue] = useState<number>(1000000); // 100,000 default - wait, let's fix it.
-    const [region, setRegion] = useState<string>('السعودية');
+    const [avgDealValue, setAvgDealValue] = useState<number>(100000);
+    const [region, setRegion] = useState<string>('السعودية بالكامل');
     
     // UI states
     const [isCalculated, setIsCalculated] = useState<boolean>(true);
@@ -92,10 +97,10 @@ export const GrowthCalculatorSection = () => {
                     targetOutreach
                 },
                 assumptions: {
-                    closeRatePercent: `${config.closeRate * 100}%`,
-                    meetingPercent: "75%",
-                    convPercent: `${config.convToMeetingRate * 100}%`,
-                    openPercent: `${config.openRate * 100}%`
+                    closeRatePercent: `${toArabicNumerals(config.closeRate * 100)}٪`,
+                    meetingPercent: "٧٥٪",
+                    convPercent: `${toArabicNumerals(config.convToMeetingRate * 100)}٪`,
+                    openPercent: `${toArabicNumerals(config.openRate * 100)}٪`
                 }
             };
         });
@@ -299,12 +304,12 @@ export const GrowthCalculatorSection = () => {
                                                             <h4 className="text-sm font-black text-white">{scen.name}</h4>
                                                         </div>
 
-                                                        {/* Metrics List */}
+                                                        {/* Metrics List in Arabic digits */}
                                                         <div className="space-y-4 text-right">
                                                             {/* 1. الصفقات المطلوبة */}
                                                             <div>
                                                                 <span className="block text-[8.5px] text-slate-500 font-bold">الصفقات المطلوبة للإغلاق</span>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{scen.metrics.deals}</span>
+                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.deals)}</span>
                                                             </div>
                                                             {/* 2. عروض الأسعار المطلوبة */}
                                                             <div>
@@ -312,7 +317,7 @@ export const GrowthCalculatorSection = () => {
                                                                     <span className="text-[7.5px] text-slate-500 font-bold">معدل الإغلاق: {scen.assumptions.closeRatePercent}</span>
                                                                     <span className="text-[8.5px] text-slate-500 font-bold">عروض الأسعار المطلوبة</span>
                                                                 </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{scen.metrics.proposals}</span>
+                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.proposals)}</span>
                                                             </div>
                                                             {/* 3. الاجتماعات المطلوبة */}
                                                             <div>
@@ -320,7 +325,7 @@ export const GrowthCalculatorSection = () => {
                                                                     <span className="text-[7.5px] text-slate-500 font-bold">عروض/اجتماع: {scen.assumptions.meetingPercent}</span>
                                                                     <span className="text-[8.5px] text-slate-500 font-bold">الاجتماعات المطلوبة</span>
                                                                 </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{scen.metrics.meetings}</span>
+                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.meetings)}</span>
                                                             </div>
                                                             {/* 4. المحادثات المطلوبة */}
                                                             <div>
@@ -328,7 +333,7 @@ export const GrowthCalculatorSection = () => {
                                                                     <span className="text-[7.5px] text-slate-500 font-bold">اجتماع/محادثة: {scen.assumptions.convPercent}</span>
                                                                     <span className="text-[8.5px] text-slate-500 font-bold">المحادثات المطلوبة</span>
                                                                 </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{scen.metrics.conversations}</span>
+                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.conversations)}</span>
                                                             </div>
                                                             {/* 5. الجهات المستهدفة */}
                                                             <div>
@@ -336,7 +341,7 @@ export const GrowthCalculatorSection = () => {
                                                                     <span className="text-[7.5px] text-slate-500 font-bold">محادثة/جهة: {scen.assumptions.openPercent}</span>
                                                                     <span className="text-[8.5px] text-slate-500 font-bold">إجمالي الجهات المستهدفة (الداتا)</span>
                                                                 </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{scen.metrics.targetOutreach}</span>
+                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.targetOutreach)}</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -351,7 +356,7 @@ export const GrowthCalculatorSection = () => {
                                         })}
                                     </div>
                                     
-                                    {/* Overall Info bar explaining mathematical rates */}
+                                    {/* Overall Info bar explaining mathematical rates in Arabic digits */}
                                     <div className="bg-slate-950/20 border border-slate-900/80 p-4 rounded-2xl text-right text-[9.5px] text-slate-400 leading-relaxed flex items-start gap-3">
                                         <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                                         <div>

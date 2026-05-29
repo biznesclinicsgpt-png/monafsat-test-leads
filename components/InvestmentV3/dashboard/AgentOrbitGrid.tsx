@@ -15,6 +15,11 @@ interface Agent {
     metricId: string; // Linked to dashboard metric
 }
 
+const toArabicNumerals = (num: number | string): string => {
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return String(num).replace(/[0-9]/g, (w) => arabicDigits[+w]);
+};
+
 export const AgentOrbitGrid = () => {
     const [activeNode, setActiveNode] = useState<number | null>(null);
     const shouldReduceMotion = useReducedMotion();
@@ -28,13 +33,13 @@ export const AgentOrbitGrid = () => {
         { id: 4, name: "٠٤ جلب البيانات الذكية", desc: "يبحث ويفلتر البيانات من بين ملايين السجلات والشركات بالمملكة.", kpi: "تحديث فوري لـ ٨ مليون جهة اتصال", benefit: "قاعدة عملاء مستهدفة متكاملة ودقيقة", category: "data", position: { x: 62, y: 7 }, metricId: "decision_makers" },
         { id: 5, name: "٠٥ تنظيف وتدقيق البيانات", desc: "يتحقق من دقة وصلاحية أرقام الهواتف والبريد الإلكتروني للجهات.", kpi: "دقة وصول للعميل الفعلي تتجاوز ٩٥٪", benefit: "منع ارتداد الرسائل وهدر التواصل", category: "data", position: { x: 74, y: 7 }, metricId: "decision_makers" },
 
-        // RIGHT COLUMN (06 to 13) - X: 90%
+        // RIGHT COLUMN (06 to 13) - X: 91%
         { id: 6, name: "٠٦ تحديد صناع القرار", desc: "يحدد هوية ومناصب المدراء والتنفيذيين المسؤولين مباشرة.", kpi: "كشف المسمى التنفيذي المسؤول بدقة", benefit: "تجاوز السكرتارية والوصول المباشر فوراً", category: "access", position: { x: 91, y: 17 }, metricId: "decision_makers" },
         { id: 7, name: "٠٧ اختيار القناة الأنسب", desc: "يحدد قناة التواصل الفعالة لكل صانع قرار (واتساب، بريد، إلخ).", kpi: "رفع معدل استجابة القناة بنسبة ٤٠٪", benefit: "تواصل شخصي دافئ في القناة المفضلة للعميل", category: "access", position: { x: 91, y: 25 }, metricId: "conversations" },
         { id: 8, name: "٠٨ تحديد احتمالية الرد", desc: "يحلل التجاوب التاريخي للمستهدفين لتوقع احتمالية رد العميل.", kpi: "ترتيب أولويات التواصل بذكاء وكفاءة", benefit: "توجيه الجهد البشري للعملاء الأكثر استعداداً للرد", category: "access", position: { x: 91, y: 33 }, metricId: "conversations" },
         { id: 9, name: "٠٩ تخصيص الرسالة الأولى", desc: "يصيغ عروضًا ورسائل مخصصة تلائم طبيعة عمل واحتياج كل جهة.", kpi: "تحقيق نسبة فتح وقراءة تتجاوز ٨٠٪", benefit: "خلق انطباع أولي احترافي يكسر الجليد", category: "access", position: { x: 91, y: 41 }, metricId: "conversations" },
         { id: 10, name: "١٠ بدء المحادثة الذكية", desc: "يطلق حملات الوصول الأولي وبدء المحادثات عبر قنوات الاتصال.", kpi: "أتمتة إرسال وتوليد حملات مخصصة 24/7", benefit: "تدفق يومي مستمر للمهتمين دون تنقيب يدوي", category: "access", position: { x: 91, y: 49 }, metricId: "conversations" },
-        { id: 11, name: "١١ المتابعة الذكية والجدولة", desc: "يتابع بانتظام واحترافية للحفاظ على حيوية المحادثات وحجز موعد.", kpi: "جدولة وتأكيد الاجتماع تلقائياً بالتقويم", benefit: "الحفاظ على العميل ومنع نسيان أي فرصة", category: "access", position: { x: 91, y: 57 }, metricId: "meetings" },
+        { id: 11, name: "١١ المتابعة الذكية والجدولة", desc: "يتابع بانتظام وااحترافية للحفاظ على حيوية المحادثات وحجز موعد.", kpi: "جدولة وتأكيد الاجتماع تلقائياً بالتقويم", benefit: "الحفاظ على العميل ومنع نسيان أي فرصة", category: "access", position: { x: 91, y: 57 }, metricId: "meetings" },
         { id: 12, name: "١٢ تجهيز الاجتماع وتأهيله", desc: "يجمع ملفاً متكاملاً واحتياجات العميل قبل اللقاء البيعي.", kpi: "تجهيز ملخص الاحتياجات والملف التعريفي للعميل", benefit: "دخول الاجتماع بوعي كامل وقدرة إقناع عالية", category: "access", position: { x: 91, y: 65 }, metricId: "meetings" },
         { id: 13, name: "١٣ تحليل مسار الاجتماعات", desc: "يحلل ما تم بالاجتماع لتسجيل النقاط والاعتراضات والخطوات القادمة.", kpi: "استخلاص الاعتراضات وبناء خطة الإغلاق", benefit: "ضمان توجيه الخطوة القادمة لإتمام البيع", category: "access", position: { x: 91, y: 73 }, metricId: "meetings" },
 
@@ -48,7 +53,7 @@ export const AgentOrbitGrid = () => {
         { id: 20, name: "٢٠ تحليل محادثات واتساب", desc: "يقيس تفاعلية وسرعة الردود عبر الواتساب ويقترح الرد الأفضل.", kpi: "تحسين سرعة الاستجابة ورفع الرضا للعميل", benefit: "حسم اهتمام العميل الفوري وتفادي برود المحادثة", category: "closing", position: { x: 80, y: 93 }, metricId: "conversations" },
         { id: 21, name: "٢١ تحليل التفاعل المهني", desc: "يراقب التفاعلات المهنية لصناع القرار عبر لينكدإن لبناء علاقات.", kpi: "رصد اهتمامات ومشاركات صانع القرار لبناء الثقة", benefit: "فتح قنوات بيعية مبنية على العلاقات المهنية الوثيقة", category: "closing", position: { x: 89, y: 93 }, metricId: "decision_makers" },
 
-        // LEFT COLUMN (22 to 25) - X: 10%
+        // LEFT COLUMN (22 to 25) - X: 9%
         { id: 22, name: "٢٢ مراقبة السوق والمنافسين", desc: "يرصد تحركات المنافسين، تغييرات أسعارهم، والخدمات الجديدة.", kpi: "رصد تنافسي مستمر لحظة بلحظة", benefit: "الحفاظ على الصدارة وتعديل عروضكم استباقياً", category: "market", position: { x: 9, y: 17 }, metricId: "leads" },
         { id: 23, name: "٢٣ رصد فرص منافسات", desc: "يمسح ويفلتر المناقصات والمشاريع الحكومية والخاصة لحظة بلحظة.", kpi: "مسح فوري وشامل لفرص مناقصات الخليج", benefit: "عدم تفويت أي مشروع أو منافسة تناسب تخصصكم", category: "market", position: { x: 9, y: 35 }, metricId: "leads" },
         { id: 24, name: "٢٤ رصد واكتشاف الموردين", desc: "يبحث عن أفضل شركاء التنفيذ والموردين لدعم مشاريعكم.", kpi: "تقليص كلفة توريد مشاريعكم بنسبة ٢٠٪", benefit: "تقديم أسعار منافسة تضمن لكم الفوز بالصفقة", category: "market", position: { x: 9, y: 53 }, metricId: "leads" },
@@ -168,7 +173,7 @@ export const AgentOrbitGrid = () => {
                     />
                 </div>
 
-                {/* SATELITE OUTER AGENTS GLASSMORPHIC PILLS */}
+                {/* SATELITE OUTER AGENTS GLASSMORPHIC PILLS - Increased text size & padding */}
                 {agents.map((agent) => {
                     const isHovered = activeNode === agent.id;
                     
@@ -176,7 +181,7 @@ export const AgentOrbitGrid = () => {
                         <motion.div
                             key={agent.id}
                             className={cn(
-                                "absolute cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 rounded-full border text-[8.5px] font-bold z-30 transition-all duration-300 backdrop-blur-sm",
+                                "absolute cursor-pointer flex items-center gap-2 px-3.5 py-2 rounded-full border text-[9.5px] md:text-[10px] font-black z-30 transition-all duration-300 backdrop-blur-sm",
                                 getCategoryStyles(agent.category)
                             )}
                             style={{ 
@@ -208,13 +213,15 @@ export const AgentOrbitGrid = () => {
                             }}
                         >
                             {agent.id === 25 ? (
-                                <Bot className="w-3.5 h-3.5 text-emerald-400" />
+                                <Bot className="w-4 h-4 text-emerald-400" />
                             ) : (
-                                <span className="w-3.5 h-3.5 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-[7.5px] font-sans shrink-0">{agent.id}</span>
+                                <span className="w-4 h-4 rounded-md bg-white/5 border border-white/10 flex items-center justify-center text-[8.5px] font-sans font-bold shrink-0">
+                                    {toArabicNumerals(agent.id.toString().padStart(2, '0'))}
+                                </span>
                             )}
-                            <span className="truncate max-w-[95px]">{agent.name.split(' ').slice(1).join(' ')}</span>
+                            <span className="truncate max-w-[110px]">{agent.name.split(' ').slice(1).join(' ')}</span>
 
-                            {/* HOVER TOOLTIP OVERLAY */}
+                            {/* HOVER TOOLTIP OVERLAY - Increased width & text sizes */}
                             <AnimatePresence>
                                 {isHovered && (
                                     <motion.div
@@ -223,7 +230,7 @@ export const AgentOrbitGrid = () => {
                                         exit={{ opacity: 0, scale: 0.95, y: agent.position.y > 50 ? -10 : 10 }}
                                         transition={{ duration: 0.2 }}
                                         className={cn(
-                                            "absolute w-[240px] p-4 rounded-2xl bg-slate-950/98 border shadow-xl backdrop-blur-xl z-50 text-right cursor-default",
+                                            "absolute w-[280px] p-5 rounded-2xl bg-slate-950/98 border shadow-2xl backdrop-blur-xl z-50 text-right cursor-default",
                                             agent.position.y > 50 ? "bottom-[130%]" : "top-[130%]",
                                             agent.position.x > 50 ? "left-0" : "right-0",
                                             agent.category === 'data' ? "border-violet-500/40 shadow-violet-950/20" :
@@ -233,23 +240,23 @@ export const AgentOrbitGrid = () => {
                                         )}
                                         onClick={(e) => e.stopPropagation()}
                                     >
-                                        <div className="flex items-center gap-2 mb-2 pb-1.5 border-b border-slate-900">
-                                            <Cpu className="w-3.5 h-3.5 text-emerald-400" />
-                                            <h4 className="text-[10.5px] font-extrabold text-white">{agent.name}</h4>
+                                        <div className="flex items-center gap-2.5 mb-3 pb-2 border-b border-slate-900">
+                                            <Cpu className="w-4 h-4 text-emerald-400" />
+                                            <h4 className="text-xs md:text-sm font-black text-white">{agent.name}</h4>
                                         </div>
                                         
-                                        <div className="space-y-2.5 text-[8.5px] leading-relaxed">
+                                        <div className="space-y-3.5 text-[9.5px] md:text-xs leading-relaxed font-bold">
                                             <div>
-                                                <span className="block text-slate-500 text-[7.5px] font-bold">مهمة العمل:</span>
+                                                <span className="block text-slate-500 text-[8px] md:text-[9px] font-bold">مهمة العمل:</span>
                                                 <p className="text-slate-300 font-semibold">{agent.desc}</p>
                                             </div>
                                             <div>
-                                                <span className="block text-slate-500 text-[7.5px] font-bold">الفائدة المستهدفة:</span>
-                                                <p className="text-slate-300 font-medium">✓ {agent.benefit}</p>
+                                                <span className="block text-slate-500 text-[8px] md:text-[9px] font-bold">الفائدة المستهدفة:</span>
+                                                <p className="text-slate-300 font-semibold">✓ {agent.benefit}</p>
                                             </div>
-                                            <div className="bg-emerald-500/5 border border-emerald-500/10 p-1.5 rounded-lg flex items-center justify-between">
-                                                <span className="text-emerald-400 font-bold font-sans">{agent.kpi}</span>
-                                                <span className="text-slate-400 font-bold">الـ KPI المرتبط:</span>
+                                            <div className="bg-emerald-500/5 border border-emerald-500/10 p-2 rounded-xl flex items-center justify-between">
+                                                <span className="text-emerald-400 font-black font-sans">{agent.kpi}</span>
+                                                <span className="text-slate-400 font-black">الـ KPI المرتبط:</span>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -313,7 +320,7 @@ export const AgentOrbitGrid = () => {
                                                     >
                                                         <div className="flex items-center justify-between mb-2">
                                                             <span className={cn(
-                                                                "text-[8px] px-2 py-0.5 rounded-md border bg-slate-950",
+                                                                "text-[8px] px-2 py-0.5 rounded-md border bg-slate-950 font-bold",
                                                                 agent.category === 'data' ? "border-violet-500/20 text-violet-400" :
                                                                 agent.category === 'access' ? "border-cyan-500/20 text-cyan-400" :
                                                                 agent.category === 'closing' ? "border-blue-500/20 text-blue-400" :

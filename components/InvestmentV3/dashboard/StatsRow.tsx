@@ -10,6 +10,11 @@ interface StatItemProps {
     delay?: number;
 }
 
+const toArabicNumerals = (num: number | string): string => {
+    const arabicDigits = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+    return String(num).replace(/[0-9]/g, (w) => arabicDigits[+w]);
+};
+
 const AnimatedNumber: React.FC<StatItemProps> = ({ value, suffix, label, prefix = '', subtext, delay = 0 }) => {
     const [count, setCount] = useState(0);
     const shouldReduceMotion = useReducedMotion();
@@ -65,14 +70,23 @@ const AnimatedNumber: React.FC<StatItemProps> = ({ value, suffix, label, prefix 
         };
     }, [value, shouldReduceMotion, delay, hasAnimated]);
 
+    // Map suffixes to Arabic
+    const formatSuffix = (suf: string) => {
+        if (suf === '+') return '+';
+        if (suf === 'M+') return ' مليون+';
+        if (suf === '%+') return '٪+';
+        if (suf === '%') return '٪';
+        return suf;
+    };
+
     return (
         <div ref={countRef} className="flex flex-col items-center text-center p-6 bg-slate-950/40 border border-slate-900/60 rounded-2xl backdrop-blur-sm hover:border-slate-800 transition-colors duration-300">
-            <div className="text-3xl md:text-4xl font-black text-white tracking-tight flex items-baseline gap-0.5 font-sans">
-                {prefix && <span className="text-emerald-400 text-2xl md:text-3xl font-extrabold">{prefix}</span>}
+            <div className="text-3xl md:text-4xl font-black text-white tracking-tight flex items-baseline gap-0.5">
+                {prefix && <span className="text-emerald-400 text-2xl md:text-3xl font-extrabold">{toArabicNumerals(prefix)}</span>}
                 <span className="bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
-                    {count}
+                    {toArabicNumerals(count)}
                 </span>
-                <span className="text-emerald-400 text-2xl md:text-3xl font-extrabold">{suffix}</span>
+                <span className="text-emerald-400 text-xl md:text-2xl font-bold">{formatSuffix(suffix)}</span>
             </div>
             <div className="text-xs font-bold text-slate-300 mt-2">{label}</div>
             {subtext && <div className="text-[10px] text-slate-500 mt-1 font-medium">{subtext}</div>}
