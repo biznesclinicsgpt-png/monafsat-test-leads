@@ -42,13 +42,13 @@ export const SmartDashboardSection = () => {
                 {/* 2. Why 25 Agents Block (Outreach questions checkmarks) */}
                 <WhyAgentsBlock />
 
-                {/* 3. Before / After Interactive Toggle */}
-                <BeforeAfterToggle />
-
-                {/* 4. Central Command Orbit Dashboard Grid (Centered, Full Width) */}
+                {/* 3. Central Command Orbit Dashboard Grid (Centered, Full Width) */}
                 <div className="flex items-center justify-center relative mb-20 w-full">
                     <AgentOrbitGrid />
                 </div>
+
+                {/* 4. Before / After Interactive Comparison Toggle */}
+                <BeforeAfterToggle />
 
                 {/* 5. Monafsat Positioning Bridge */}
                 <MonafsatBridge />
