@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Cpu } from 'lucide-react';
-import { StatsRow } from './dashboard/StatsRow';
 import { WhyAgentsBlock } from './dashboard/WhyAgentsBlock';
 import { AgentsStoryFlow } from './dashboard/AgentsStoryFlow';
 import { BeforeAfterToggle } from './dashboard/BeforeAfterToggle';
@@ -41,27 +40,24 @@ export const SmartDashboardSection = () => {
                     </motion.div>
                 </div>
 
-                {/* 2. Stats Row (5 big numbers) */}
-                <StatsRow />
-
-                {/* 3. Why 25 Agents Block (Outreach questions checkmarks) */}
+                {/* 2. Why 25 Agents Block (Outreach questions checkmarks) */}
                 <WhyAgentsBlock />
 
-                {/* 4. Agents Story Flow Timeline (13 steps sequence) */}
+                {/* 3. Agents Story Flow Timeline (13 steps sequence) */}
                 <AgentsStoryFlow />
 
-                {/* 5. Before / After Interactive Toggle */}
+                {/* 4. Before / After Interactive Toggle */}
                 <BeforeAfterToggle />
 
-                {/* 6. Central Command Orbit Dashboard Grid (Centered, Full Width) */}
+                {/* 5. Central Command Orbit Dashboard Grid (Centered, Full Width) */}
                 <div className="flex items-center justify-center relative mb-20 w-full">
                     <AgentOrbitGrid />
                 </div>
 
-                {/* 7. Monafsat Positioning Bridge */}
+                {/* 6. Monafsat Positioning Bridge */}
                 <MonafsatBridge />
 
-                {/* 8. Section Footer CTA Banner */}
+                {/* 7. Section Footer CTA Banner */}
                 <DashboardCTA />
 
             </div>
