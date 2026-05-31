@@ -115,8 +115,8 @@ export const PricingSection = () => {
             </motion.circle>
 
             {/* Labels */}
-            <text x="156" y="34" fill="#a855f7" className="text-[6.5px] font-black text-right" dir="rtl">المسار الرئيسي: باقات التشغيل الكامل</text>
-            <text x="44" y="34" fill="#64748b" className="text-[6.5px] font-black text-left" textAnchor="end" dir="rtl">المسار البديل: حزم الاجتماعات</text>
+            <text x="156" y="34" fill="#a855f7" className="text-[6.5px] font-black text-right" style={{ direction: 'rtl' }}>المسار الرئيسي: باقات التشغيل الكامل</text>
+            <text x="44" y="34" fill="#64748b" className="text-[6.5px] font-black text-left" textAnchor="end" style={{ direction: 'rtl' }}>المسار البديل: حزم الاجتماعات</text>
           </svg>
         </div>
 

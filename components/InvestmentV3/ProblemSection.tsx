@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { XCircle, Clock, Users, TrendingDown, Layers, ArrowRight } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 export const ProblemSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
