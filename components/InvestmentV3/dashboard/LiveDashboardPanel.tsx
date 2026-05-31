@@ -52,7 +52,12 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
         return () => window.removeEventListener('manafeth_calculator_update', handleUpdate);
     }, []);
 
-    const { targetRevenue, avgDealValue } = calcValues;
+    const rawTargetRevenue = calcValues.targetRevenue;
+    const rawAvgDealValue = calcValues.avgDealValue;
+
+    // Defensive guards to avoid division by zero or NaN during real-time typing
+    const targetRevenue = rawTargetRevenue >= 0 ? rawTargetRevenue : 1000000;
+    const avgDealValue = rawAvgDealValue > 0 ? rawAvgDealValue : 100000;
 
     // Realistic scenario calculator equations
     const deals = Math.ceil(targetRevenue / avgDealValue);
@@ -63,9 +68,9 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
 
     const chartPoints = [
         { x: 10, y: 34, label: "البداية", value: 0 },
-        { x: 30, y: 30, label: "أسبوع ٣", value: Math.round(targetRevenue * 0.25) },
-        { x: 50, y: 19, label: "أسبوع ٦", value: Math.round(targetRevenue * 0.55) },
-        { x: 70, y: 11, label: "أسبوع ٩", value: Math.round(targetRevenue * 0.82) },
+        { x: 30, y: 31, label: "أسبوع ٣", value: Math.round(targetRevenue * 0.25) },
+        { x: 50, y: 24, label: "أسبوع ٦", value: Math.round(targetRevenue * 0.55) },
+        { x: 70, y: 15, label: "أسبوع ٩", value: Math.round(targetRevenue * 0.82) },
         { x: 90, y: 5, label: "أسبوع ١٢", value: Math.round(targetRevenue * 1.24) }
     ];
 
@@ -222,6 +227,22 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                                             <stop offset="0%" stopColor="#10b981" stopOpacity="0.18" />
                                             <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
                                         </linearGradient>
+                                        <clipPath id="chart-reveal-clip">
+                                            <motion.rect 
+                                                x="0" 
+                                                y="0" 
+                                                width="0" 
+                                                height="44" 
+                                                animate={{ width: [0, 100] }}
+                                                transition={{
+                                                    duration: 7, // Slow reveal to show exponential growth clearly
+                                                    ease: "easeInOut",
+                                                    repeat: Infinity,
+                                                    repeatType: "loop",
+                                                    repeatDelay: 1.5
+                                                }}
+                                            />
+                                        </clipPath>
                                     </defs>
                                     
                                     {/* Horizontal gridlines */}
@@ -238,17 +259,19 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                                     <line x1="90" y1="5" x2="90" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
 
                                     {/* Gradient under the curve */}
-                                    <path d="M 10 34 Q 30 30 50 19 T 90 5 L 90 34 L 10 34 Z" fill="url(#live-glow-gradient)" />
+                                    <path 
+                                        d="M 10 34 Q 30 32 50 24 T 90 5 L 90 34 L 10 34 Z" 
+                                        fill="url(#live-glow-gradient)" 
+                                        clipPath="url(#chart-reveal-clip)"
+                                    />
                                     
                                     {/* Main curve path */}
-                                    <motion.path 
-                                        d="M 10 34 Q 30 30 50 19 T 90 5" 
+                                    <path 
+                                        d="M 10 34 Q 30 32 50 24 T 90 5" 
                                         fill="none" 
                                         stroke="#10b981" 
                                         strokeWidth="1.2"
-                                        initial={{ pathLength: 0 }}
-                                        animate={{ pathLength: 1 }}
-                                        transition={{ duration: 1.5, ease: "easeOut" }}
+                                        clipPath="url(#chart-reveal-clip)"
                                     />
                                     
                                     {/* Axis Labels */}
@@ -258,43 +281,48 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                                     <text x="70" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">أسبوع ٩</text>
                                     <text x="90" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">أسبوع ١٢</text>
 
-                                    {/* Interactive Circle points */}
-                                    {chartPoints.map((point, index) => {
-                                        const isHovered = hoveredPoint === index;
-                                        return (
-                                            <g key={index}>
-                                                {/* Hidden hover trigger circle (larger target) */}
-                                                <circle 
-                                                    cx={point.x} 
-                                                    cy={point.y} 
-                                                    r="4" 
-                                                    fill="transparent" 
-                                                    className="cursor-pointer"
-                                                    onMouseEnter={() => setHoveredPoint(index)}
-                                                    onMouseLeave={() => setHoveredPoint(null)}
-                                                />
-                                                {/* Visual glowing circle */}
-                                                <circle 
-                                                    cx={point.x} 
-                                                    cy={point.y} 
-                                                    r={isHovered ? "1.5" : "0.9"} 
-                                                    fill={isHovered ? "#34d399" : "#10b981"} 
-                                                    className="transition-all duration-200 pointer-events-none" 
-                                                />
-                                                {isHovered && (
+                                    {/* Glowing visual circles (clipped to appear sequentially) */}
+                                    <g clipPath="url(#chart-reveal-clip)">
+                                        {chartPoints.map((point, index) => {
+                                            const isHovered = hoveredPoint === index;
+                                            return (
+                                                <g key={index}>
                                                     <circle 
                                                         cx={point.x} 
                                                         cy={point.y} 
-                                                        r="2.5" 
-                                                        fill="none" 
-                                                        stroke="#10b981" 
-                                                        strokeWidth="0.4" 
-                                                        className="animate-ping pointer-events-none" 
+                                                        r={isHovered ? 1.5 : 0.9} 
+                                                        fill={isHovered ? "#34d399" : "#10b981"} 
+                                                        className="transition-all duration-200 pointer-events-none" 
                                                     />
-                                                )}
-                                            </g>
-                                        );
-                                    })}
+                                                    {isHovered && (
+                                                        <circle 
+                                                            cx={point.x} 
+                                                            cy={point.y} 
+                                                            r="2.5" 
+                                                            fill="none" 
+                                                            stroke="#10b981" 
+                                                            strokeWidth="0.4" 
+                                                            className="animate-ping pointer-events-none" 
+                                                        />
+                                                    )}
+                                                </g>
+                                            );
+                                        })}
+                                    </g>
+
+                                    {/* Invisible Hover Triggers (always active) */}
+                                    {chartPoints.map((point, index) => (
+                                        <circle 
+                                            key={`trigger-${index}`}
+                                            cx={point.x} 
+                                            cy={point.y} 
+                                            r="4" 
+                                            fill="transparent" 
+                                            className="cursor-pointer"
+                                            onMouseEnter={() => setHoveredPoint(index)}
+                                            onMouseLeave={() => setHoveredPoint(null)}
+                                        />
+                                    ))}
                                 </svg>
                                 
                                 {/* Micro-interaction Tooltip Overlay */}
@@ -323,16 +351,19 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                         </div>
 
                         {/* 5 Business Indicators List */}
-                        <div className="md:col-span-5 bg-slate-950/80 border border-slate-900/60 p-3 rounded-xl flex flex-col justify-between text-right">
-                            <span className="block text-[10px] md:text-xs text-slate-500 font-bold mb-2 border-b border-slate-900 pb-1.5">مؤشرات الأداء المالي</span>
-                            <div className="space-y-2">
+                        <div className="md:col-span-5 bg-slate-950/80 border border-slate-900/60 p-4 rounded-xl flex flex-col justify-between text-right">
+                            <span className="block text-xs text-slate-400 font-bold mb-3 border-b border-slate-900 pb-2">مؤشرات الأداء المالي</span>
+                            <div className="space-y-3">
                                 {businessIndicators.map((indicator, idx) => (
-                                    <div key={idx} className="flex justify-between items-center text-[9px] md:text-xs border-b border-slate-900/40 pb-1.5 last:border-0 last:pb-0">
-                                        <div className="text-left font-sans">
-                                            <span className={cn("font-black block text-[10px] md:text-xs", indicator.color)}>{indicator.value}</span>
-                                            <span className="text-[8px] text-slate-500 block font-medium mt-0.5">{indicator.desc}</span>
+                                    <div key={idx} className="flex justify-between items-center border-b border-slate-900/40 pb-2.5 last:border-0 last:pb-0 gap-3">
+                                        {/* Right Side (Arabic text): Label */}
+                                        <span className="text-slate-300 font-bold text-xs text-right leading-snug shrink-0">{indicator.label}</span>
+                                        
+                                        {/* Left Side (Numbers/English): Value & Description */}
+                                        <div className="text-left font-sans flex flex-col items-end shrink">
+                                            <span className={cn("font-extrabold text-xs md:text-sm tracking-tight", indicator.color)}>{indicator.value}</span>
+                                            <span className="text-[9px] text-slate-500 font-medium mt-0.5 block whitespace-nowrap">{indicator.desc}</span>
                                         </div>
-                                        <span className="text-slate-400 font-bold">{indicator.label}</span>
                                     </div>
                                 ))}
                             </div>

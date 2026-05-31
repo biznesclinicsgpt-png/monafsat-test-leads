@@ -22,6 +22,20 @@ export const GrowthCalculatorSection = () => {
     const [activeMobileScenario, setActiveMobileScenario] = useState<'conservative' | 'realistic' | 'accelerated'>('realistic');
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
+    // Real-time synchronization helper
+    const syncToDashboard = (rev: number, deal: number, sec: string, reg: string) => {
+        if (typeof window !== 'undefined') {
+            // Only update dashboard if inputs are valid (> 0) to prevent division by zero or NaN issues
+            if (rev > 0 && deal > 0) {
+                localStorage.setItem('manafeth_target_revenue', rev.toString());
+                localStorage.setItem('manafeth_avg_deal_value', deal.toString());
+                localStorage.setItem('manafeth_sector', sec);
+                localStorage.setItem('manafeth_region', reg);
+                window.dispatchEvent(new Event('manafeth_calculator_update'));
+            }
+        }
+    };
+
     const sectors = ['مقاولات', 'مصانع', 'مستشفيات', 'شركات تقنية', 'خدمات لوجستية', 'أخرى'];
     const regions = ['الرياض', 'جدة', 'المنطقة الشرقية', 'السعودية بالكامل'];
 
@@ -204,7 +218,11 @@ export const GrowthCalculatorSection = () => {
                                 <label className="block text-xs font-bold text-slate-400">القطاع المستهدف</label>
                                 <select 
                                     value={sector}
-                                    onChange={(e) => setSector(e.target.value)}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        setSector(val);
+                                        syncToDashboard(targetRevenue, avgDealValue, val, region);
+                                    }}
                                     className="w-full bg-slate-950 border border-slate-900 rounded-xl px-4 py-3 text-xs text-slate-300 font-bold focus:border-emerald-500 focus:outline-none transition-colors"
                                 >
                                     {sectors.map((sec, idx) => (
@@ -220,8 +238,12 @@ export const GrowthCalculatorSection = () => {
                                     type="number"
                                     min="1000"
                                     step="1000"
-                                    value={targetRevenue}
-                                    onChange={(e) => setTargetRevenue(Number(e.target.value))}
+                                    value={targetRevenue || ''}
+                                    onChange={(e) => {
+                                        const val = Number(e.target.value);
+                                        setTargetRevenue(val);
+                                        syncToDashboard(val, avgDealValue, sector, region);
+                                    }}
                                     className="w-full bg-slate-950 border border-slate-900 rounded-xl px-4 py-3 text-xs text-white font-sans font-bold focus:border-emerald-500 focus:outline-none transition-colors"
                                     required
                                 />
@@ -234,8 +256,12 @@ export const GrowthCalculatorSection = () => {
                                     type="number"
                                     min="100"
                                     step="100"
-                                    value={avgDealValue}
-                                    onChange={(e) => setAvgDealValue(Number(e.target.value))}
+                                    value={avgDealValue || ''}
+                                    onChange={(e) => {
+                                        const val = Number(e.target.value);
+                                        setAvgDealValue(val);
+                                        syncToDashboard(targetRevenue, val, sector, region);
+                                    }}
                                     className="w-full bg-slate-950 border border-slate-900 rounded-xl px-4 py-3 text-xs text-white font-sans font-bold focus:border-emerald-500 focus:outline-none transition-colors"
                                     required
                                 />
@@ -246,7 +272,11 @@ export const GrowthCalculatorSection = () => {
                                 <label className="block text-xs font-bold text-slate-400">المنطقة المستهدفة بالمملكة</label>
                                 <select 
                                     value={region}
-                                    onChange={(e) => setRegion(e.target.value)}
+                                    onChange={(e) => {
+                                        const val = e.target.value;
+                                        setRegion(val);
+                                        syncToDashboard(targetRevenue, avgDealValue, sector, val);
+                                    }}
                                     className="w-full bg-slate-950 border border-slate-900 rounded-xl px-4 py-3 text-xs text-slate-300 font-bold focus:border-emerald-500 focus:outline-none transition-colors"
                                 >
                                     {regions.map((reg, idx) => (
