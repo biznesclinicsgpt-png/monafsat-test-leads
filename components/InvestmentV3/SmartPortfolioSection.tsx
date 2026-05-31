@@ -48,6 +48,36 @@ export const SmartPortfolioSection = () => {
 
     return (
         <div className="py-32 bg-[#050505] relative overflow-hidden">
+            {/* Incoming Alternative Path from Pricing (Desktop only) */}
+            <div className="absolute top-0 left-0 right-0 h-40 pointer-events-none hidden md:block select-none">
+                <svg className="w-full h-full" viewBox="0 0 1000 160" fill="none" preserveAspectRatio="none">
+                    <defs>
+                        <linearGradient id="blue-arrival-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.8" />
+                            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.1" />
+                        </linearGradient>
+                    </defs>
+                    {/* Curve from left side (Pricing alternative end at ~250) to the center (500) */}
+                    <motion.path
+                        d="M 250 0 C 250 80, 500 40, 500 160"
+                        stroke="url(#blue-arrival-grad)"
+                        strokeWidth="2.5"
+                        strokeDasharray="4 4"
+                        initial={{ pathLength: 0, opacity: 0 }}
+                        whileInView={{ pathLength: 1, opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.8, ease: "easeOut" }}
+                    />
+                    {/* Particle flow on path */}
+                    <motion.circle
+                        cx="0" cy="0" r="2" fill="#60a5fa"
+                        style={{ filter: "drop-shadow(0 0 4px #60a5fa)" }}
+                    >
+                        <animateMotion dur="3.5s" repeatCount="indefinite" path="M 250 0 C 250 80, 500 40, 500 160" />
+                    </motion.circle>
+                </svg>
+            </div>
+
             {/* Background Glow */}
             <div className="absolute top-0 left-1/2 w-[800px] h-[800px] bg-blue-500/10 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
 
@@ -57,7 +87,11 @@ export const SmartPortfolioSection = () => {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
+                        className="relative px-6 py-10 md:px-12 md:py-12 rounded-3xl bg-[#090D16]/80 border border-slate-900/80 backdrop-blur-md max-w-4xl mx-auto shadow-2xl z-10"
                     >
+                        {/* Inner glass reflection */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent rounded-3xl pointer-events-none" />
+                        
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-6">
                             <Zap className="w-5 h-5" />
                             <span className="font-semibold text-sm">مسار بديل</span>
@@ -65,12 +99,12 @@ export const SmartPortfolioSection = () => {
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight max-w-4xl mx-auto">
                             تفضل نموذجًا أبسط؟ اختر محفظة الاجتماعات المؤهلة
                         </h2>
-                        <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
+                        <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto mb-8 leading-relaxed">
                             <span className="text-emerald-400 font-bold">الباقات =</span> منظومة تشغيل ونمو متكاملة لشركتك | <span className="text-cyan-400 font-bold">محفظة الاجتماعات =</span> شراء اجتماعات وفرص مؤهلة فقط بدون تشغيل المنظومة.
                         </p>
 
                         {/* Billing Toggle */}
-                        <div className="inline-flex bg-white/5 rounded-full p-1.5 shadow-sm border border-white/10 backdrop-blur-sm">
+                        <div className="inline-flex bg-black/40 rounded-full p-1.5 shadow-inner border border-white/5 backdrop-blur-sm">
                             <button
                                 onClick={() => setIsQuarterly(false)}
                                 className={cn(
@@ -108,9 +142,9 @@ export const SmartPortfolioSection = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.4, delay: idx * 0.1 }}
                                 className={cn(
-                                    "relative bg-white/5 rounded-3xl p-8 border backdrop-blur-sm transition-all duration-300 hover:-translate-y-2 group overflow-hidden",
-                                    pkg.recommended ? 'border-blue-500 shadow-[0_0_30px_rgba(37,99,235,0.2)] z-20' : 'border-white/10 z-10',
-                                    isQuarterly && pkg.recommended && 'shadow-[0_0_40px_rgba(16,185,129,0.2)] border-emerald-500'
+                                    "relative bg-[#090D16]/95 rounded-3xl p-8 border backdrop-blur-md transition-all duration-300 hover:-translate-y-2 group overflow-hidden shadow-xl",
+                                    pkg.recommended ? 'border-blue-500/80 shadow-[0_0_30px_rgba(37,99,235,0.25)] z-20' : 'border-slate-800/60 z-10',
+                                    isQuarterly && pkg.recommended && 'shadow-[0_0_40px_rgba(16,185,129,0.25)] border-emerald-500/80'
                                 )}
                             >
                                 {/* Glow Effect */}

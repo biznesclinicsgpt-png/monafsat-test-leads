@@ -19,7 +19,7 @@ export const GrowthCalculatorSection = () => {
     
     // UI states
     const [isCalculated, setIsCalculated] = useState<boolean>(true);
-    const [activeMobileScenario, setActiveMobileScenario] = useState<'conservative' | 'realistic' | 'accelerated'>('realistic');
+    const [activeScenario, setActiveScenario] = useState<'conservative' | 'realistic' | 'accelerated'>('realistic');
     const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
     // Real-time synchronization helper
@@ -313,113 +313,186 @@ export const GrowthCalculatorSection = () => {
                                     transition={{ duration: 0.4 }}
                                     className="space-y-6 flex-1 flex flex-col"
                                 >
-                                    {/* Mobile Scenario Tabs Switcher */}
-                                    <div className="lg:hidden flex items-center bg-slate-950 border border-slate-900 p-1.5 rounded-2xl">
+                                    {/* Scenario Tabs Switcher (Visible on both Desktop and Mobile) */}
+                                    <div className="flex items-center bg-slate-950 border border-slate-900 p-1.5 rounded-2xl">
                                         <button
-                                            onClick={() => setActiveMobileScenario('accelerated')}
+                                            type="button"
+                                            onClick={() => setActiveScenario('accelerated')}
                                             className={cn(
-                                                "flex-1 py-2 text-center rounded-xl text-xs font-bold transition-all duration-300",
-                                                activeMobileScenario === 'accelerated' ? "bg-emerald-950/40 text-emerald-400 border border-emerald-500/20" : "text-slate-500"
+                                                "flex-1 py-2.5 text-center rounded-xl text-xs font-black transition-all duration-300",
+                                                activeScenario === 'accelerated' ? "bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.1)]" : "text-slate-500 hover:text-slate-300"
                                             )}
                                         >
-                                            متسارع
+                                            سيناريو متسارع ⚡
                                         </button>
                                         <button
-                                            onClick={() => setActiveMobileScenario('realistic')}
+                                            type="button"
+                                            onClick={() => setActiveScenario('realistic')}
                                             className={cn(
-                                                "flex-1 py-2 text-center rounded-xl text-xs font-bold transition-all duration-300",
-                                                activeMobileScenario === 'realistic' ? "bg-cyan-950/40 text-cyan-400 border border-cyan-500/20" : "text-slate-500"
+                                                "flex-1 py-2.5 text-center rounded-xl text-xs font-black transition-all duration-300",
+                                                activeScenario === 'realistic' ? "bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.1)]" : "text-slate-500 hover:text-slate-300"
                                             )}
                                         >
-                                            واقعي
+                                            سيناريو واقعي (المقترح) ✓
                                         </button>
                                         <button
-                                            onClick={() => setActiveMobileScenario('conservative')}
+                                            type="button"
+                                            onClick={() => setActiveScenario('conservative')}
                                             className={cn(
-                                                "flex-1 py-2 text-center rounded-xl text-xs font-bold transition-all duration-300",
-                                                activeMobileScenario === 'conservative' ? "bg-slate-900 text-slate-400 border border-slate-800" : "text-slate-500"
+                                                "flex-1 py-2.5 text-center rounded-xl text-xs font-black transition-all duration-300",
+                                                activeScenario === 'conservative' ? "bg-slate-900 text-slate-400 border border-slate-800" : "text-slate-500 hover:text-slate-300"
                                             )}
                                         >
-                                            محافظ
+                                            سيناريو محافظ 🛡️
                                         </button>
                                     </div>
 
-                                    {/* Desktop columns / Mobile active card layout */}
-                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 flex-1 items-stretch">
-                                        {results.map((scen) => {
-                                            const isMobileHidden = activeMobileScenario !== scen.id;
-                                            
-                                            return (
-                                                <div 
-                                                    key={scen.id}
-                                                    className={cn(
-                                                        "border p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden backdrop-blur-sm transition-all duration-300",
-                                                        scen.color,
-                                                        isMobileHidden ? "hidden lg:flex" : "flex"
-                                                    )}
-                                                >
-                                                    {/* Radial internal glow */}
-                                                    <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(circle at top right, ${scen.glowColor}, transparent 70%)` }} />
+                                    {/* Active Scenario Card + Funnel Split Grid */}
+                                    {results.filter(r => r.id === activeScenario).map((scen) => (
+                                        <div 
+                                            key={scen.id}
+                                            className={cn(
+                                                "border p-6 md:p-8 rounded-3xl flex flex-col md:flex-row gap-6 justify-between items-center relative overflow-hidden backdrop-blur-sm transition-all duration-300",
+                                                scen.color
+                                            )}
+                                        >
+                                            {/* Radial internal glow */}
+                                            <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(circle at top right, ${scen.glowColor}, transparent 70%)` }} />
 
-                                                    <div>
-                                                        {/* Header Scenario Name */}
-                                                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-900/60">
-                                                            <span className={cn("text-[9px] font-bold px-2 py-0.5 rounded-full border", scen.badgeColor)}>
-                                                                السيناريو
-                                                            </span>
-                                                            <h4 className="text-sm font-black text-white">{scen.name}</h4>
-                                                        </div>
-
-                                                        {/* Metrics List in Arabic digits */}
-                                                        <div className="space-y-4 text-right">
-                                                            {/* 1. الصفقات المطلوبة */}
-                                                            <div>
-                                                                <span className="block text-[8.5px] text-slate-500 font-bold">الصفقات المطلوبة للإغلاق</span>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.deals)}</span>
-                                                            </div>
-                                                            {/* 2. عروض الأسعار المطلوبة */}
-                                                            <div>
-                                                                <div className="flex justify-between items-center">
-                                                                    <span className="text-[7.5px] text-slate-500 font-bold">معدل الإغلاق: {scen.assumptions.closeRatePercent}</span>
-                                                                    <span className="text-[8.5px] text-slate-500 font-bold">عروض الأسعار المطلوبة</span>
-                                                                </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.proposals)}</span>
-                                                            </div>
-                                                            {/* 3. الاجتماعات المطلوبة */}
-                                                            <div>
-                                                                <div className="flex justify-between items-center">
-                                                                    <span className="text-[7.5px] text-slate-500 font-bold">عروض/اجتماع: {scen.assumptions.meetingPercent}</span>
-                                                                    <span className="text-[8.5px] text-slate-500 font-bold">الاجتماعات المطلوبة</span>
-                                                                </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.meetings)}</span>
-                                                            </div>
-                                                            {/* 4. المحادثات المطلوبة */}
-                                                            <div>
-                                                                <div className="flex justify-between items-center">
-                                                                    <span className="text-[7.5px] text-slate-500 font-bold">اجتماع/محادثة: {scen.assumptions.convPercent}</span>
-                                                                    <span className="text-[8.5px] text-slate-500 font-bold">المحادثات المطلوبة</span>
-                                                                </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.conversations)}</span>
-                                                            </div>
-                                                            {/* 5. الجهات المستهدفة */}
-                                                            <div>
-                                                                <div className="flex justify-between items-center">
-                                                                    <span className="text-[7.5px] text-slate-500 font-bold">محادثة/جهة: {scen.assumptions.openPercent}</span>
-                                                                    <span className="text-[8.5px] text-slate-500 font-bold">إجمالي الجهات المستهدفة (الداتا)</span>
-                                                                </div>
-                                                                <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.targetOutreach)}</span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Output Note */}
-                                                    <div className="mt-6 pt-4 border-t border-slate-900/60 text-[8.5px] text-slate-500 leading-normal flex items-start gap-1">
-                                                        <HelpCircle className="w-3 h-3 text-slate-600 shrink-0 mt-0.5" />
-                                                        <span>توقعات خلال الـ ٩٠ يوماً الأولى من التشغيل الفعلي.</span>
-                                                    </div>
+                                            {/* Right/Left: Metrics List in Arabic digits */}
+                                            <div className="flex-1 w-full order-2 md:order-1 text-right space-y-4">
+                                                {/* Header Scenario Name */}
+                                                <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-900/60">
+                                                    <span className={cn("text-[9px] font-bold px-2.5 py-0.5 rounded-full border", scen.badgeColor)}>
+                                                        السيناريو النشط
+                                                    </span>
+                                                    <h4 className="text-sm font-black text-white">{scen.name}</h4>
                                                 </div>
-                                            );
-                                        })}
+
+                                                {/* 1. الصفقات المطلوبة */}
+                                                <div>
+                                                    <span className="block text-[8.5px] text-slate-500 font-bold">الصفقات المطلوبة للإغلاق</span>
+                                                    <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.deals)} صفقات</span>
+                                                </div>
+                                                {/* 2. عروض الأسعار المطلوبة */}
+                                                <div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-[7.5px] text-slate-500 font-bold">معدل الإغلاق المتوقع: {scen.assumptions.closeRatePercent}</span>
+                                                        <span className="text-[8.5px] text-slate-500 font-bold">عروض الأسعار المطلوبة</span>
+                                                    </div>
+                                                    <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.proposals)} عروض</span>
+                                                </div>
+                                                {/* 3. الاجتماعات المطلوبة */}
+                                                <div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-[7.5px] text-slate-500 font-bold">عروض لكل اجتماع: {scen.assumptions.meetingPercent}</span>
+                                                        <span className="text-[8.5px] text-slate-500 font-bold">الاجتماعات المطلوبة</span>
+                                                    </div>
+                                                    <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.meetings)} اجتماعات</span>
+                                                </div>
+                                                {/* 4. المحادثات المطلوبة */}
+                                                <div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-[7.5px] text-slate-500 font-bold">اجتماع لكل محادثة: {scen.assumptions.convPercent}</span>
+                                                        <span className="text-[8.5px] text-slate-500 font-bold">المحادثات المطلوبة</span>
+                                                    </div>
+                                                    <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.conversations)} محادثة</span>
+                                                </div>
+                                                {/* 5. الجهات المستهدفة */}
+                                                <div>
+                                                    <div className="flex justify-between items-center">
+                                                        <span className="text-[7.5px] text-slate-500 font-bold">محادثة لكل جهة: {scen.assumptions.openPercent}</span>
+                                                        <span className="text-[8.5px] text-slate-500 font-bold">إجمالي الجهات المستهدفة (قاعدة البيانات)</span>
+                                                    </div>
+                                                    <span className="block text-xl font-black text-white mt-1 font-sans">{toArabicNumerals(scen.metrics.targetOutreach)} جهة</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Left/Right: The Funnel SVG Visual */}
+                                            <div className="w-full md:w-[45%] flex-shrink-0 order-1 md:order-2">
+                                                <div className="relative w-full aspect-[4/3] max-w-[280px] mx-auto bg-slate-950/80 border border-slate-900 rounded-3xl p-4 flex items-center justify-center">
+                                                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                                        <defs>
+                                                            <linearGradient id="funnel-grad-conservative" x1="0" y1="0" x2="0" y2="100%">
+                                                                <stop offset="0%" stopColor="#475569" stopOpacity="0.25" />
+                                                                <stop offset="100%" stopColor="#334155" stopOpacity="0.05" />
+                                                            </linearGradient>
+                                                            <linearGradient id="funnel-grad-realistic" x1="0" y1="0" x2="0" y2="100%">
+                                                                <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
+                                                                <stop offset="100%" stopColor="#0891b2" stopOpacity="0.05" />
+                                                            </linearGradient>
+                                                            <linearGradient id="funnel-grad-accelerated" x1="0" y1="0" x2="0" y2="100%">
+                                                                <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
+                                                                <stop offset="100%" stopColor="#059669" stopOpacity="0.05" />
+                                                            </linearGradient>
+                                                        </defs>
+
+                                                        {/* Draw the funnel blocks */}
+                                                        {/* 1. Outreach */}
+                                                        <polygon points="10,10 90,10 80,24 20,24" fill={activeScenario === 'conservative' ? 'url(#funnel-grad-conservative)' : activeScenario === 'realistic' ? 'url(#funnel-grad-realistic)' : 'url(#funnel-grad-accelerated)'} stroke={activeScenario === 'conservative' ? '#64748b' : activeScenario === 'realistic' ? '#06b6d4' : '#10b981'} strokeWidth="0.8" opacity="0.85" />
+                                                        {/* 2. Conversations */}
+                                                        <polygon points="22,27 78,27 70,41 30,41" fill={activeScenario === 'conservative' ? 'url(#funnel-grad-conservative)' : activeScenario === 'realistic' ? 'url(#funnel-grad-realistic)' : 'url(#funnel-grad-accelerated)'} stroke={activeScenario === 'conservative' ? '#64748b' : activeScenario === 'realistic' ? '#06b6d4' : '#10b981'} strokeWidth="0.8" opacity="0.85" />
+                                                        {/* 3. Meetings */}
+                                                        <polygon points="32,44 68,44 60,58 40,58" fill={activeScenario === 'conservative' ? 'url(#funnel-grad-conservative)' : activeScenario === 'realistic' ? 'url(#funnel-grad-realistic)' : 'url(#funnel-grad-accelerated)'} stroke={activeScenario === 'conservative' ? '#64748b' : activeScenario === 'realistic' ? '#06b6d4' : '#10b981'} strokeWidth="0.8" opacity="0.85" />
+                                                        {/* 4. Proposals */}
+                                                        <polygon points="42,61 58,61 52,75 48,75" fill={activeScenario === 'conservative' ? 'url(#funnel-grad-conservative)' : activeScenario === 'realistic' ? 'url(#funnel-grad-realistic)' : 'url(#funnel-grad-accelerated)'} stroke={activeScenario === 'conservative' ? '#64748b' : activeScenario === 'realistic' ? '#06b6d4' : '#10b981'} strokeWidth="0.8" opacity="0.85" />
+                                                        {/* 5. Deals */}
+                                                        <polygon points="49,78 51,78 52,92 48,92" fill={activeScenario === 'conservative' ? 'url(#funnel-grad-conservative)' : activeScenario === 'realistic' ? 'url(#funnel-grad-realistic)' : 'url(#funnel-grad-accelerated)'} stroke={activeScenario === 'conservative' ? '#64748b' : activeScenario === 'realistic' ? '#06b6d4' : '#10b981'} strokeWidth="0.8" opacity="0.95" />
+
+                                                        {/* Flowing particles down the center of the funnel */}
+                                                        {!shouldReduceMotion && (
+                                                            <>
+                                                                <motion.circle cx="50" r="1.5" fill={activeScenario === 'conservative' ? '#94a3b8' : activeScenario === 'realistic' ? '#22d3ee' : '#34d399'} animate={{ cy: [10, 92], opacity: [0, 1, 1, 0] }} transition={{ duration: activeScenario === 'conservative' ? 5 : activeScenario === 'realistic' ? 3 : 1.5, repeat: Infinity, ease: "linear" }} />
+                                                                <motion.circle cx="50" r="1" fill={activeScenario === 'conservative' ? '#94a3b8' : activeScenario === 'realistic' ? '#22d3ee' : '#34d399'} animate={{ cy: [30, 92], opacity: [0, 1, 1, 0] }} transition={{ duration: activeScenario === 'conservative' ? 5 : activeScenario === 'realistic' ? 3 : 1.5, repeat: Infinity, ease: "linear", delay: activeScenario === 'conservative' ? 2.5 : activeScenario === 'realistic' ? 1.5 : 0.75 }} />
+                                                            </>
+                                                        )}
+                                                    </svg>
+                                                    
+                                                    {/* Funnel Labels overlaid on left/right */}
+                                                    <div className="absolute top-[12%] right-[5%] text-[7px] font-black text-slate-500">الجهات المستهدفة</div>
+                                                    <div className="absolute top-[28%] right-[7%] text-[7px] font-black text-slate-500">محادثات نشطة</div>
+                                                    <div className="absolute top-[45%] right-[9%] text-[7px] font-black text-slate-500">اجتماعات قادمة</div>
+                                                    <div className="absolute top-[62%] right-[11%] text-[7px] font-black text-slate-500">عروض مقدمة</div>
+                                                    <div className="absolute top-[79%] right-[13%] text-[7px] font-black text-slate-500">صفقات مغلقة</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+
+                                    {/* Scenario Comparison Mini Bar */}
+                                    <div className="bg-slate-950/80 border border-slate-900 p-5 rounded-3xl space-y-4">
+                                        <h4 className="text-xs font-black text-white text-right">مقارنة حجم صفقات الإغلاق المتوقعة</h4>
+                                        <div className="space-y-3">
+                                            {results.map((scen) => {
+                                                const maxDeals = Math.max(...results.map(r => r.metrics.deals));
+                                                const percentage = (scen.metrics.deals / maxDeals) * 100;
+                                                const isCurrent = scen.id === activeScenario;
+                                                
+                                                return (
+                                                    <div key={scen.id} className="space-y-1.5 cursor-pointer" onClick={() => setActiveScenario(scen.id as any)}>
+                                                        <div className="flex justify-between text-[10px] font-bold">
+                                                            <span className={scen.id === 'conservative' ? 'text-slate-400' : scen.id === 'realistic' ? 'text-cyan-400' : 'text-emerald-400'}>
+                                                                {toArabicNumerals(scen.metrics.deals)} صفقات (تحتاج {toArabicNumerals(scen.metrics.targetOutreach)} جهة مستهدفة)
+                                                            </span>
+                                                            <span className={cn("transition-colors", isCurrent ? "text-white font-extrabold" : "text-slate-500")}>
+                                                                {scen.name} {isCurrent && "✓"}
+                                                            </span>
+                                                        </div>
+                                                        <div className="w-full h-2 bg-slate-900 border border-slate-900/60 rounded-full overflow-hidden">
+                                                            <motion.div 
+                                                                initial={{ width: 0 }}
+                                                                animate={{ width: `${percentage}%` }}
+                                                                transition={{ duration: 0.6 }}
+                                                                className={cn(
+                                                                    "h-full rounded-full",
+                                                                    scen.id === 'conservative' ? 'bg-slate-500' : scen.id === 'realistic' ? 'bg-cyan-500' : 'bg-emerald-500'
+                                                                )}
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
                                     
                                     {/* Overall Info bar explaining mathematical rates in Arabic digits */}

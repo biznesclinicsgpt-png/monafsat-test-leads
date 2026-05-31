@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { GlowOrb } from './GlowOrb';
 import { 
     Users, 
     Bot, 
@@ -423,8 +424,12 @@ export const GrowthTriangleSection = () => {
                                     ease: "easeInOut" 
                                 }}
                             >
+                                {/* Pulsing Central GlowOrb */}
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-60 z-0">
+                                    <GlowOrb color="emerald" size="sm" />
+                                </div>
                                 <div className={cn(
-                                    "w-20 h-20 rounded-full flex items-center justify-center border bg-[#060a08]/95 cursor-pointer transition-all duration-500 shadow-[0_0_30px_rgba(16,185,129,0.15)]",
+                                    "w-20 h-20 rounded-full flex items-center justify-center border bg-[#060a08]/95 cursor-pointer transition-all duration-500 shadow-[0_0_30px_rgba(16,185,129,0.15)] relative z-10",
                                     activeNode === 'ninja' 
                                         ? "border-emerald-400 shadow-[0_0_35px_rgba(16,185,129,0.45)]" 
                                         : "border-emerald-500/35 hover:border-emerald-400/70"
@@ -436,7 +441,7 @@ export const GrowthTriangleSection = () => {
                                         activeNode === 'ninja' ? "text-emerald-400" : "text-emerald-500"
                                     )} />
                                 </div>
-                                <div className="absolute -bottom-10 left-1/2 whitespace-nowrap text-center" style={{ transform: 'translateX(-50%)' }}>
+                                <div className="absolute -bottom-10 left-1/2 whitespace-nowrap text-center z-10" style={{ transform: 'translateX(-50%)' }}>
                                     <span className="block text-[11px] font-extrabold text-emerald-400">نظام النينجا الذكي</span>
                                 </div>
                             </motion.div>

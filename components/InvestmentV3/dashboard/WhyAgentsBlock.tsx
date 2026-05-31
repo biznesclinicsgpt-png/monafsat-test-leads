@@ -1,8 +1,14 @@
 import React from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Check, HelpCircle } from 'lucide-react';
+import { cn } from '../../../lib/utils';
 
-export const WhyAgentsBlock = () => {
+interface WhyAgentsBlockProps {
+    onHoverQuestion?: (idx: number | null) => void;
+    activeQuestionIdx?: number | null;
+}
+
+export const WhyAgentsBlock: React.FC<WhyAgentsBlockProps> = ({ onHoverQuestion, activeQuestionIdx }) => {
     const shouldReduceMotion = useReducedMotion();
 
     const items = [
@@ -60,25 +66,43 @@ export const WhyAgentsBlock = () => {
                         whileInView="visible"
                         viewport={{ once: true, margin: "-100px" }}
                     >
-                        {items.map((item, idx) => (
-                            <motion.div
-                                key={idx}
-                                className="bg-slate-950/60 border border-slate-900/80 p-4 rounded-2xl group hover:border-slate-800 transition-colors duration-300 flex items-start gap-3"
-                                variants={itemVariants}
-                            >
-                                <div className="w-6 h-6 rounded-lg bg-emerald-500/5 border border-emerald-500/15 flex items-center justify-center shrink-0 text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30 transition-colors duration-300">
-                                    <Check className="w-3.5 h-3.5" />
-                                </div>
-                                <div className="text-right">
-                                    <h4 className="text-xs font-bold text-white mb-1 group-hover:text-emerald-400 transition-colors duration-300">
-                                        {item.q}
-                                    </h4>
-                                    <p className="text-[10px] text-slate-400 leading-relaxed font-medium">
-                                        {item.a}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))}
+                        {items.map((item, idx) => {
+                            const isActive = activeQuestionIdx === idx;
+                            return (
+                                <motion.div
+                                    key={idx}
+                                    className={cn(
+                                        "bg-slate-950/60 border p-4 rounded-2xl group transition-all duration-300 flex items-start gap-3 cursor-pointer",
+                                        isActive 
+                                            ? "border-emerald-500 bg-emerald-500/[0.03] shadow-[0_0_15px_rgba(16,185,129,0.15)] scale-[1.02]" 
+                                            : "border-slate-900/80 hover:border-slate-800"
+                                    )}
+                                    variants={itemVariants}
+                                    onMouseEnter={() => onHoverQuestion?.(idx)}
+                                    onMouseLeave={() => onHoverQuestion?.(null)}
+                                >
+                                    <div className={cn(
+                                        "w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 transition-colors duration-300",
+                                        isActive 
+                                            ? "bg-emerald-500/20 border-emerald-400 text-emerald-400" 
+                                            : "bg-emerald-500/5 border-emerald-500/15 text-emerald-400 group-hover:bg-emerald-500/10 group-hover:border-emerald-500/30"
+                                    )}>
+                                        <Check className="w-3.5 h-3.5" />
+                                    </div>
+                                    <div className="text-right">
+                                        <h4 className={cn(
+                                            "text-xs font-bold transition-colors duration-300 mb-1",
+                                            isActive ? "text-emerald-400" : "text-white group-hover:text-emerald-400"
+                                        )}>
+                                            {item.q}
+                                        </h4>
+                                        <p className="text-[10px] text-slate-400 leading-relaxed font-medium">
+                                            {item.a}
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
                     </motion.div>
                 </div>
             </div>

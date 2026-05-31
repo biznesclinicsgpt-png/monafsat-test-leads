@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Cpu } from 'lucide-react';
 import { WhyAgentsBlock } from './dashboard/WhyAgentsBlock';
@@ -8,6 +8,8 @@ import { MonafsatBridge } from './dashboard/MonafsatBridge';
 import { DashboardCTA } from './dashboard/DashboardCTA';
 
 export const SmartDashboardSection = () => {
+    const [hoveredQuestionIdx, setHoveredQuestionIdx] = useState<number | null>(null);
+
     return (
         <div className="py-28 bg-[#050505] relative overflow-hidden" id="ninja-command-center">
             {/* Background Neural Network Glow */}
@@ -40,11 +42,11 @@ export const SmartDashboardSection = () => {
                 </div>
 
                 {/* 2. Why 25 Agents Block (Outreach questions checkmarks) */}
-                <WhyAgentsBlock />
+                <WhyAgentsBlock onHoverQuestion={setHoveredQuestionIdx} activeQuestionIdx={hoveredQuestionIdx} />
 
                 {/* 3. Central Command Orbit Dashboard Grid (Centered, Full Width) */}
                 <div className="flex items-center justify-center relative mb-20 w-full">
-                    <AgentOrbitGrid />
+                    <AgentOrbitGrid activeQuestionIdx={hoveredQuestionIdx} />
                 </div>
 
                 {/* 4. Before / After Interactive Comparison Toggle */}

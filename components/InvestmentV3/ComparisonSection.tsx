@@ -54,14 +54,27 @@ export const ComparisonSection = () => {
             </ul>
 
             {/* Chaos visual element */}
-            <div className="mt-8 p-4 rounded-xl border border-red-500/20 bg-black/50 opacity-60">
-              <div className="flex flex-wrap gap-2">
-                {[...Array(8)].map((_, i) => (
-                  <div key={i} className="w-8 h-2 bg-slate-700 rounded-full" />
+            <div className="mt-8 p-6 rounded-xl border border-red-500/20 bg-black/50 relative overflow-hidden h-28 flex items-center justify-center">
+              <div className="relative w-full h-full flex items-center justify-center opacity-70">
+                {[...Array(12)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className={cn(
+                      "absolute h-2 rounded-full",
+                      i % 3 === 0 ? "bg-red-500/60 w-8" : "bg-slate-700/60 w-12"
+                    )}
+                    animate={{
+                      rotate: [i * 30, i * 30 + 360],
+                      x: [Math.sin(i) * 40, Math.cos(i) * 40, Math.sin(i) * 40],
+                      y: [Math.cos(i) * 20, Math.sin(i) * 20, Math.cos(i) * 20],
+                    }}
+                    transition={{
+                      duration: 8 + (i % 3) * 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
                 ))}
-                <div className="w-4 h-2 bg-red-500 rounded-full animate-pulse" />
-                <div className="w-12 h-2 bg-slate-700 rounded-full" />
-                <div className="w-2 h-2 bg-red-500 rounded-full" />
               </div>
             </div>
           </motion.div>
@@ -100,33 +113,26 @@ export const ComparisonSection = () => {
             </ul>
 
             {/* Organized visual element */}
-            <div className="mt-8 p-4 rounded-xl border border-emerald-500/30 bg-black/40">
-              <div className="flex flex-col gap-3">
-                <div className="h-2 w-full bg-emerald-900/50 rounded-full overflow-hidden">
+            <div className="mt-8 p-6 rounded-xl border border-emerald-500/30 bg-black/40 h-28 flex flex-col justify-center gap-3">
+              {[...Array(3)].map((_, idx) => (
+                <div key={idx} className="h-2 w-full bg-emerald-950/50 rounded-full overflow-hidden relative">
                   <motion.div 
                     initial={{ width: "0%" }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ duration: 1.5, delay: 1 }}
-                    className="h-full bg-emerald-500 rounded-full"
+                    whileInView={{ width: idx === 0 ? "100%" : idx === 1 ? "85%" : "65%" }}
+                    transition={{ duration: 1.5, delay: 0.6 + idx * 0.2 }}
+                    className={cn(
+                      "h-full rounded-full bg-gradient-to-r",
+                      idx === 0 ? "from-emerald-500 to-cyan-400" : idx === 1 ? "from-emerald-400 to-teal-400" : "from-emerald-300 to-emerald-400"
+                    )}
                   />
-                </div>
-                <div className="h-2 w-3/4 bg-emerald-900/50 rounded-full overflow-hidden">
+                  {/* Glowing data pulse flowing along the organized tracks */}
                   <motion.div 
-                    initial={{ width: "0%" }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ duration: 1.5, delay: 1.2 }}
-                    className="h-full bg-emerald-400 rounded-full"
+                    animate={{ left: ["-20%", "120%"] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear", delay: idx * 0.5 }}
+                    className="absolute top-0 w-12 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent"
                   />
                 </div>
-                <div className="h-2 w-1/2 bg-emerald-900/50 rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: "0%" }}
-                    whileInView={{ width: "100%" }}
-                    transition={{ duration: 1.5, delay: 1.4 }}
-                    className="h-full bg-emerald-300 rounded-full"
-                  />
-                </div>
-              </div>
+              ))}
             </div>
           </motion.div>
 

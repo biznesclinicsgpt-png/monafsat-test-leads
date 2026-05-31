@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { UserCheck, Calendar, FileText, Handshake, TrendingUp, ShieldAlert, Users } from 'lucide-react';
+import { UserCheck, Calendar, FileText, Handshake, TrendingUp, ShieldAlert, Users, Cpu } from 'lucide-react';
+import { cn } from '../../lib/utils';
 
 export const HumanTeamSection = () => {
+  const [handoffStep, setHandoffStep] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHandoffStep((prev) => (prev + 1) % 3);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, []);
+
   const points = [
     {
       title: "تأكيد الاهتمام",
@@ -53,7 +63,7 @@ export const HumanTeamSection = () => {
       <div className="container mx-auto px-4 max-w-6xl relative z-10 text-right">
         
         {/* Header */}
-        <div className="text-center mb-20">
+        <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -73,6 +83,71 @@ export const HumanTeamSection = () => {
           </motion.div>
         </div>
 
+        {/* Interactive Handoff Bridge Visual */}
+        <div className="bg-slate-950/60 border border-slate-900/80 p-6 md:p-8 rounded-3xl mb-16 relative overflow-hidden flex flex-col items-center justify-center max-w-3xl mx-auto">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/[0.01] via-transparent to-cyan-500/[0.01] pointer-events-none" />
+          
+          <h3 className="text-xs font-bold text-slate-300 mb-6" dir="rtl">
+            محاكاة حيّة لجسر انتقال الفرص (Handoff Bridge)
+          </h3>
+
+          <div className="flex items-center justify-between w-full max-w-md gap-4 relative mb-6">
+            
+            {/* AI Side Node */}
+            <div className="flex flex-col items-center gap-2 z-10">
+              <div className={cn(
+                "w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-500",
+                handoffStep === 0 
+                  ? 'border-cyan-400 bg-cyan-950/30 shadow-[0_0_20px_rgba(6,182,212,0.4)] text-cyan-400' 
+                  : 'border-slate-800 bg-slate-950 text-slate-500'
+              )}>
+                <motion.div animate={handoffStep === 0 ? { scale: [1, 1.1, 1] } : {}} transition={{ repeat: Infinity, duration: 1.5 }}>
+                  <Cpu className="w-5 h-5" />
+                </motion.div>
+              </div>
+              <span className="text-[10px] font-extrabold text-slate-400">منظومة الذكاء</span>
+            </div>
+
+            {/* Connecting Bridge Line */}
+            <div className="flex-1 h-[2px] bg-slate-900 relative overflow-hidden">
+              {/* Pulsing signal travelling */}
+              {handoffStep === 1 && (
+                <motion.div 
+                  initial={{ right: "0%" }}
+                  animate={{ right: "100%" }}
+                  transition={{ duration: 1.8, ease: "linear", repeat: Infinity }}
+                  className="absolute top-[-3px] w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_#10b981]"
+                />
+              )}
+              {handoffStep === 2 && (
+                <div className="absolute inset-0 bg-emerald-500/50" />
+              )}
+            </div>
+
+            {/* Human Team Node */}
+            <div className="flex flex-col items-center gap-2 z-10">
+              <div className={cn(
+                "w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-500",
+                handoffStep === 2 
+                  ? 'border-emerald-400 bg-emerald-950/30 shadow-[0_0_20px_rgba(16,185,129,0.4)] text-emerald-400' 
+                  : 'border-slate-800 bg-slate-950 text-slate-500'
+              )}>
+                <motion.div animate={handoffStep === 2 ? { scale: [1, 1.1, 1] } : {}} transition={{ repeat: Infinity, duration: 1.5 }}>
+                  <UserCheck className="w-5 h-5" />
+                </motion.div>
+              </div>
+              <span className="text-[10px] font-extrabold text-slate-400">فريق المبيعات البشري</span>
+            </div>
+
+          </div>
+
+          <div className="text-[10px] md:text-xs font-bold text-slate-300 h-6 text-center">
+            {handoffStep === 0 && "١. يقوم وكلاء الذكاء الاصطناعي برصد الاهتمام وتصنيف العميل..."}
+            {handoffStep === 1 && "٢. جاري نقل الفرصة المؤهلة مع سجل المحادثات الكامل فوراً..."}
+            {handoffStep === 2 && "٣. تم التوصيل! يتدخل فريق النينجا لحجز الموعد وإتمام الصفقة بيقين ✓"}
+          </div>
+        </div>
+
         {/* Grid of Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {points.map((point, index) => (
@@ -82,7 +157,12 @@ export const HumanTeamSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="bg-slate-950/40 border border-slate-900/60 p-6 rounded-2xl relative overflow-hidden group hover:border-slate-800 transition-all duration-300"
+              className={cn(
+                "bg-slate-950/40 border p-6 rounded-2xl relative overflow-hidden group transition-all duration-300",
+                handoffStep === 2 
+                  ? "border-emerald-500/25 bg-emerald-500/[0.01] shadow-[0_0_15px_rgba(16,185,129,0.03)]" 
+                  : "border-slate-900/60 hover:border-slate-800"
+              )}
             >
               {/* Radial gradient background on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -90,7 +170,10 @@ export const HumanTeamSection = () => {
               <div className="flex gap-4 items-start relative z-10">
                 {/* Content text */}
                 <div className="flex-1 text-right order-2">
-                  <h3 className="text-lg font-bold text-white mb-2 group-hover:text-violet-400 transition-colors">
+                  <h3 className={cn(
+                    "text-lg font-bold transition-colors mb-2",
+                    handoffStep === 2 ? "text-emerald-400" : "text-white group-hover:text-violet-400"
+                  )}>
                     {point.title}
                   </h3>
                   <p className="text-xs text-slate-400 leading-relaxed">
@@ -99,7 +182,12 @@ export const HumanTeamSection = () => {
                 </div>
 
                 {/* Icon wrapper */}
-                <div className={`w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 ${point.color} order-1`}>
+                <div className={cn(
+                  "w-12 h-12 rounded-xl flex items-center justify-center border shrink-0 transition-all duration-300 order-1",
+                  handoffStep === 2 
+                    ? "text-emerald-400 bg-emerald-500/10 border-emerald-500/25 shadow-[0_0_10px_rgba(16,185,129,0.15)]" 
+                    : point.color
+                )}>
                   <point.icon className="w-5 h-5" />
                 </div>
               </div>

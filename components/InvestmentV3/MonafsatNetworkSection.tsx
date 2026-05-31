@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Radar, Activity, Network, LineChart, Globe, Target, Zap, ShieldCheck, Bot, Users, Handshake, MapPin } from 'lucide-react';
+import { Radar, Bot, Users, Handshake, MapPin, ShieldCheck, Zap } from 'lucide-react';
 
 export const MonafsatNetworkSection = () => {
     const radarStages = [
@@ -12,19 +12,33 @@ export const MonafsatNetworkSection = () => {
         "ترتيب الاجتماع المؤهل وإتمام الإغلاق"
     ];
 
+    // Project points on the radar map
+    const projectSignals = [
+        { id: 1, x: '35%', y: '40%', size: 6, delay: 0.5, name: "مناقصة تقنية - الرياض" },
+        { id: 2, x: '65%', y: '25%', size: 8, delay: 1.2, name: "تعميد لوجستي - المنطقة الشرقية" },
+        { id: 3, x: '50%', y: '70%', size: 5, delay: 2.1, name: "عقد مقاولات - جدة" }
+    ];
+
     return (
         <div className="py-32 bg-[#050505] relative overflow-hidden border-t border-slate-900/60" id="radar-system">
-            {/* Radar Background Animation */}
-            <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-20 pointer-events-none">
-                <div className="absolute inset-0 rounded-full border border-cyan-500/30" />
-                <div className="absolute inset-10 rounded-full border border-cyan-500/20" />
-                <div className="absolute inset-20 rounded-full border border-cyan-500/10" />
+            {/* Radar Background Animation Area (Right Side / Behind Graphic) */}
+            <div className="absolute top-1/2 right-0 translate-x-1/3 -translate-y-1/2 w-[700px] h-[700px] opacity-25 pointer-events-none z-0">
+                <div className="absolute inset-0 rounded-full border border-cyan-500/10" />
+                <div className="absolute inset-16 rounded-full border border-cyan-500/20" />
+                <div className="absolute inset-32 rounded-full border border-cyan-500/30" />
+                <div className="absolute inset-48 rounded-full border border-cyan-500/40" />
+                
+                {/* Conic Sweeper Layer */}
                 <motion.div 
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
                     className="absolute inset-0 rounded-full"
-                    style={{ background: 'conic-gradient(from 0deg, transparent 70%, rgba(6, 182, 212, 0.4) 100%)' }}
+                    style={{ background: 'conic-gradient(from 0deg, transparent 60%, rgba(6, 182, 212, 0.35) 100%)' }}
                 />
+
+                {/* Radar target overlay crosshair lines */}
+                <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-cyan-500/20" />
+                <div className="absolute left-1/2 top-0 bottom-0 w-[1px] bg-cyan-500/20" />
             </div>
 
             <div className="container mx-auto px-4 max-w-6xl relative z-10 text-right">
@@ -37,7 +51,7 @@ export const MonafsatNetworkSection = () => {
                         viewport={{ once: true }}
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-6">
-                            <Radar className="w-5 h-5" />
+                            <Radar className="w-5 h-5 animate-pulse" />
                             <span className="font-semibold text-sm">كيف ندير دفة الفرص</span>
                         </div>
                         
@@ -78,16 +92,49 @@ export const MonafsatNetworkSection = () => {
                         </div>
                     </motion.div>
 
-                    {/* Animation Side */}
+                    {/* Animation Side (Radar Interface Graph) */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                         className="relative"
                     >
                         <div className="bg-slate-950/40 border border-slate-900/60 backdrop-blur-md rounded-3xl p-8 relative overflow-hidden">
-                            {/* Animated Map visualization */}
+                            
+                            {/* Scanning Screen Visual Overlay */}
+                            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.03),transparent_70%)] pointer-events-none" />
+
+                            {/* Dynamic project dots inside scanning panel */}
+                            <div className="absolute inset-0 pointer-events-none z-10">
+                                {projectSignals.map((sig) => (
+                                    <motion.div
+                                        key={sig.id}
+                                        style={{ left: sig.x, top: sig.y }}
+                                        animate={{
+                                            scale: [0.8, 1.3, 0.8],
+                                            opacity: [0.3, 1, 0.3],
+                                            boxShadow: [
+                                                "0 0 5px rgba(6,182,212,0.2)",
+                                                "0 0 15px rgba(6,182,212,0.8)",
+                                                "0 0 5px rgba(6,182,212,0.2)"
+                                            ]
+                                        }}
+                                        transition={{ duration: 3, repeat: Infinity, delay: sig.delay }}
+                                        className="absolute w-3.5 h-3.5 rounded-full bg-cyan-400 flex items-center justify-center border border-white/20"
+                                    >
+                                        {/* Pulse ping ring */}
+                                        <div className="w-6 h-6 rounded-full border border-cyan-400/40 animate-ping absolute" />
+                                        
+                                        {/* Minimal label overlay */}
+                                        <span className="absolute bottom-[110%] left-1/2 -translate-x-1/2 whitespace-nowrap text-[8px] bg-slate-950/80 text-cyan-400 font-extrabold px-1.5 py-0.5 rounded border border-cyan-500/20">
+                                            {sig.name}
+                                        </span>
+                                    </motion.div>
+                                ))}
+                            </div>
+
+                            {/* Animated Map/Radar Pipeline list */}
                             <div className="h-[400px] relative flex flex-col justify-center">
                                 {radarStages.map((stage, idx) => (
                                     <motion.div
@@ -101,8 +148,8 @@ export const MonafsatNetworkSection = () => {
                                     >
                                         <div className="absolute right-0 top-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#050505] border-2 border-cyan-500 z-10 flex items-center justify-center">
                                             <motion.div 
-                                                animate={{ scale: [1, 1.5, 1], opacity: [1, 0, 1] }}
-                                                transition={{ duration: 2, repeat: Infinity, delay: idx * 0.2 }}
+                                                animate={{ scale: [1, 1.6, 1], opacity: [1, 0, 1] }}
+                                                transition={{ duration: 2.5, repeat: Infinity, delay: idx * 0.3 }}
                                                 className="w-full h-full bg-cyan-400 rounded-full"
                                             />
                                         </div>
@@ -117,7 +164,7 @@ export const MonafsatNetworkSection = () => {
                                         
                                         <div className="flex items-center gap-4">
                                             <div className={`text-base font-extrabold tracking-wide ${
-                                                idx === radarStages.length - 1 ? "text-emerald-400" : "text-white"
+                                                idx === radarStages.length - 1 ? "text-emerald-400 drop-shadow-[0_0_8px_rgba(16,185,129,0.3)]" : "text-white"
                                             }`}>
                                                 {stage}
                                             </div>
@@ -127,7 +174,7 @@ export const MonafsatNetworkSection = () => {
                                                     whileInView={{ opacity: 1, scale: 1 }}
                                                     transition={{ delay: (idx * 0.2) + 0.2 }}
                                                 >
-                                                    <Zap className="w-4 h-4 text-yellow-400 animate-pulse" />
+                                                    <Zap className="w-4 h-4 text-yellow-400 animate-bounce" />
                                                 </motion.div>
                                             )}
                                         </div>
@@ -135,12 +182,12 @@ export const MonafsatNetworkSection = () => {
                                 ))}
                             </div>
                             
-                            {/* Overlay Scanning Line */}
+                            {/* Overlay Scanning Line Sweep */}
                             <motion.div
                                 animate={{ top: ['0%', '100%', '0%'] }}
-                                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                                className="absolute left-0 right-0 h-[2px] bg-cyan-500/50 z-20 pointer-events-none"
-                                style={{ boxShadow: '0 0 20px 5px rgba(6, 182, 212, 0.2)' }}
+                                transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+                                className="absolute left-0 right-0 h-[2px] bg-cyan-500/40 z-20 pointer-events-none"
+                                style={{ boxShadow: '0 0 20px 4px rgba(6, 182, 212, 0.25)' }}
                             />
                         </div>
                     </motion.div>

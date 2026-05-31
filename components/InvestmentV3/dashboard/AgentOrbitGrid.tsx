@@ -20,10 +20,25 @@ const toArabicNumerals = (num: number | string): string => {
     return String(num).replace(/[0-9]/g, (w) => arabicDigits[+w]);
 };
 
-export const AgentOrbitGrid = () => {
+interface AgentOrbitGridProps {
+    activeQuestionIdx?: number | null;
+}
+
+export const AgentOrbitGrid: React.FC<AgentOrbitGridProps> = ({ activeQuestionIdx }) => {
     const [activeNode, setActiveNode] = useState<number | null>(null);
     const shouldReduceMotion = useReducedMotion();
     const [expandedCategory, setExpandedCategory] = useState<string | null>('data');
+
+    // Map question index to category
+    const getHighlightedCategory = (qIdx: number | null): string | null => {
+        if (qIdx === null) return null;
+        if (qIdx === 0) return 'data'; // من نستهدف؟ -> data
+        if (qIdx === 1 || qIdx === 2 || qIdx === 3 || qIdx === 4) return 'access'; // من نراسل؟ متى؟ القناة؟ المتابعة؟ -> access
+        if (qIdx === 5 || qIdx === 6) return 'closing'; // التحويل؟ الإغلاق؟ -> closing
+        return null;
+    };
+
+    const highlightedCategory = getHighlightedCategory(activeQuestionIdx);
 
     const agents: Agent[] = [
         // TOP ROW (01 to 05) - Y: Staggered 6% and 10% (Sorted RTL: 1 starts on the right, 5 ends on the left)
@@ -178,6 +193,7 @@ export const AgentOrbitGrid = () => {
                     {agents.map((agent) => {
                         const { destX, destY } = getConnectPoints(agent.position.x, agent.position.y);
                         const isHovered = activeNode === agent.id;
+                        const isHighlighted = isHovered || (highlightedCategory && agent.category === highlightedCategory);
                         
                         return (
                             <g key={agent.id} className="transition-all duration-300">
@@ -187,20 +203,20 @@ export const AgentOrbitGrid = () => {
                                     y1={`${agent.position.y}%`} 
                                     x2={`${destX}%`} 
                                     y2={`${destY}%`} 
-                                    stroke={isHovered ? "rgba(16,185,129,0.3)" : "rgba(255,255,255,0.025)"}
-                                    strokeWidth={isHovered ? 1.8 : 0.8}
+                                    stroke={isHighlighted ? "rgba(16,185,129,0.3)" : "rgba(255,255,255,0.025)"}
+                                    strokeWidth={isHighlighted ? 1.8 : 0.8}
                                     className="transition-all duration-300"
                                 />
                                 
                                 {/* Animated glowing connector line */}
-                                {isHovered && (
+                                {isHighlighted && (
                                     <>
                                         <line 
                                             x1={`${agent.position.x}%`} 
                                             y1={`${agent.position.y}%`} 
                                             x2={`${destX}%`} 
                                             y2={`${destY}%`} 
-                                            stroke="#10b981"
+                                            stroke={agent.category === 'data' ? '#8b5cf6' : agent.category === 'access' ? '#06b6d4' : agent.category === 'closing' ? '#3b82f6' : '#10b981'}
                                             strokeWidth={1.5}
                                             strokeDasharray="4 6"
                                             style={{ filter: "url(#glow-line)" }}
@@ -210,7 +226,7 @@ export const AgentOrbitGrid = () => {
                                                 cx={`${agent.position.x}%`}
                                                 cy={`${agent.position.y}%`}
                                                 r={1.2}
-                                                fill="#10b981"
+                                                fill={agent.category === 'data' ? '#8b5cf6' : agent.category === 'access' ? '#06b6d4' : agent.category === 'closing' ? '#3b82f6' : '#10b981'}
                                                 animate={{ 
                                                     cx: [`${agent.position.x}%`, `${destX}%`],
                                                     cy: [`${agent.position.y}%`, `${destY}%`],
@@ -237,14 +253,20 @@ export const AgentOrbitGrid = () => {
                 {/* SATELITE OUTER AGENTS GLASSMORPHIC PILLS */}
                 {agents.map((agent) => {
                     const isHovered = activeNode === agent.id;
+                    const isHighlighted = isHovered || (highlightedCategory && agent.category === highlightedCategory);
                     
                     return (
                         <motion.div
                             key={agent.id}
                             className={cn(
                                 "absolute cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-full border text-[8.5px] xl:text-[9.5px] font-black transition-all duration-300 backdrop-blur-sm whitespace-nowrap select-none",
-                                isHovered ? "z-50 shadow-2xl scale-105" : "z-30",
-                                getCategoryStyles(agent.category)
+                                isHighlighted ? "z-50 shadow-2xl scale-105" : "z-30",
+                                isHighlighted
+                                    ? agent.category === 'data' ? 'border-violet-500 text-violet-400 bg-violet-950/30 shadow-[0_0_15px_rgba(139,92,246,0.25)]' :
+                                      agent.category === 'access' ? 'border-cyan-500 text-cyan-400 bg-cyan-950/30 shadow-[0_0_15px_rgba(6,182,212,0.25)]' :
+                                      agent.category === 'closing' ? 'border-blue-500 text-blue-400 bg-blue-950/30 shadow-[0_0_15px_rgba(59,130,246,0.25)]' :
+                                      'border-emerald-500 text-emerald-400 bg-emerald-950/30 shadow-[0_0_15px_rgba(16,185,129,0.25)]'
+                                    : getCategoryStyles(agent.category)
                             )}
                             style={{ 
                                 left: `${agent.position.x}%`, 

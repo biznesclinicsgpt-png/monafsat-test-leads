@@ -1,11 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import CountUp from 'react-countup';
 import { LineChart, Line, ResponsiveContainer, XAxis, Tooltip } from 'recharts';
 import { Activity, Users, Target, CheckCircle2 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export const FutureSection = () => {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const isChartInView = useInView(chartContainerRef, { once: true, margin: "-50px" });
+
   const chartData = [
     { month: 'الشهر ١', value: 10 },
     { month: 'الشهر ٢', value: 25 },
@@ -24,7 +27,7 @@ export const FutureSection = () => {
   ];
 
   return (
-    <div className="py-32 bg-[#050505] relative overflow-hidden">
+    <div className="py-32 bg-[#050505] relative overflow-hidden" id="future-growth">
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         
         <div className="text-center mb-20">
@@ -52,11 +55,11 @@ export const FutureSection = () => {
             <div className="space-y-6">
               {benefits.map((benefit, i) => (
                 <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.15 }}
-                  className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5"
+                   key={i}
+                   initial={{ opacity: 0, y: 10 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   transition={{ delay: i * 0.15 }}
+                   className="flex items-center gap-4 bg-white/5 p-4 rounded-2xl border border-white/5"
                 >
                   <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
                     <CheckCircle2 className="w-6 h-6 text-emerald-400" />
@@ -66,7 +69,7 @@ export const FutureSection = () => {
               ))}
             </div>
           </motion.div>
-
+ 
           {/* Left Side - Dashboard Simulation */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -83,59 +86,61 @@ export const FutureSection = () => {
               </div>
               <div className="text-slate-400 font-medium text-sm">محاكاة لوحة تحكم الإيرادات</div>
             </div>
-
+ 
             {/* Counters */}
             <div className="grid grid-cols-3 gap-4 mb-8">
               <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
                 <Target className="w-5 h-5 text-blue-400 mb-2" />
                 <div className="text-sm text-slate-400 mb-1">الفرص النشطة</div>
-                <div className="text-2xl font-bold text-white flex items-center gap-1">
-                  <CountUp end={180} duration={4} />
+                <div className="text-2xl font-bold text-white flex items-center gap-1 font-sans">
+                  <CountUp end={180} duration={4} enableScrollSpy scrollSpyOnce />
                   <Activity className="w-4 h-4 text-emerald-500 animate-pulse" />
                 </div>
               </div>
               <div className="bg-white/5 rounded-2xl p-4 border border-white/5">
                 <Users className="w-5 h-5 text-purple-400 mb-2" />
                 <div className="text-sm text-slate-400 mb-1">الاجتماعات</div>
-                <div className="text-2xl font-bold text-white flex items-center gap-1">
-                  <CountUp end={45} duration={4} />
+                <div className="text-2xl font-bold text-white flex items-center gap-1 font-sans">
+                  <CountUp end={45} duration={4} enableScrollSpy scrollSpyOnce />
                   <Activity className="w-4 h-4 text-emerald-500 animate-pulse" />
                 </div>
               </div>
               <div className="bg-gradient-to-br from-emerald-900/40 to-black rounded-2xl p-4 border border-emerald-500/30">
                 <Activity className="w-5 h-5 text-emerald-400 mb-2" />
                 <div className="text-sm text-emerald-400/80 mb-1">معدل النمو</div>
-                <div className="text-2xl font-bold text-emerald-400 flex items-center gap-1">
-                  +<CountUp end={320} duration={4} />%
+                <div className="text-2xl font-bold text-emerald-400 flex items-center gap-1 font-sans">
+                  +<CountUp end={320} duration={4} enableScrollSpy scrollSpyOnce />%
                 </div>
               </div>
             </div>
-
+ 
             {/* Chart */}
-            <div className="h-48 w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData}>
-                  <XAxis dataKey="month" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
-                    itemStyle={{ color: '#10b981' }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="value" 
-                    stroke="#10b981" 
-                    strokeWidth={4}
-                    dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-                    activeDot={{ r: 8, fill: '#10b981' }}
-                    animationDuration={3000}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+            <div ref={chartContainerRef} className="h-48 w-full">
+              {isChartInView && (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={chartData}>
+                    <XAxis dataKey="month" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px' }}
+                      itemStyle={{ color: '#10b981' }}
+                    />
+                    <Line 
+                      type="monotone" 
+                      dataKey="value" 
+                      stroke="#10b981" 
+                      strokeWidth={4}
+                      dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
+                      activeDot={{ r: 8, fill: '#10b981' }}
+                      animationDuration={3000}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
             
             <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-transparent to-transparent pointer-events-none" />
           </motion.div>
-
+ 
         </div>
       </div>
     </div>

@@ -90,14 +90,14 @@ export const DeliverablesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.08, duration: 0.5 }}
-              className="bg-slate-950/40 border border-slate-900/60 p-6 rounded-2xl flex flex-col justify-between hover:border-slate-800 transition-all duration-300 group relative overflow-hidden"
+              className="bg-slate-950/40 border border-slate-900/60 p-6 rounded-2xl flex flex-col justify-between hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.08)] transition-all duration-300 group relative overflow-hidden"
             >
               {/* Internal subtle glow */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.01] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/[0.02] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               
               <div>
                 {/* Icon row */}
-                <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 group-hover:text-emerald-400 group-hover:scale-105 transition-all duration-300 mb-6">
+                <div className="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 group-hover:text-emerald-400 group-hover:border-emerald-500/30 group-hover:bg-emerald-950/20 group-hover:scale-105 transition-all duration-300 mb-6">
                   <item.icon className="w-5 h-5" />
                 </div>
 

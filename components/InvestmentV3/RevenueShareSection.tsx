@@ -155,9 +155,58 @@ export const RevenueShareSection = () => {
                 {/* Dynamic Percentages Table / Cards */}
                 <div className="max-w-4xl mx-auto text-right">
                     <h3 className="text-3xl font-bold text-white mb-4 text-center">ويتم تطبيق نسب متدرجة حسب حجم الأعمال</h3>
-                    <p className="text-slate-400 text-center mb-12">
+                    <p className="text-slate-400 text-center mb-8">
                         كلما زادت قيمة الأعمال... قلت النسبة وزادت الشراكة الاستراتيجية
                     </p>
+
+                    {/* Dynamic sliding rate curve SVG */}
+                    <div className="w-full max-w-xl mx-auto mb-16 bg-slate-950/80 border border-slate-900/60 rounded-3xl p-6 relative select-none font-sans">
+                      <div className="text-[9px] font-bold text-slate-500 text-center mb-4">منحنى تناقص نسبة الشراكة مع ارتفاع حجم الصفقة</div>
+                      
+                      <div className="h-32 w-full">
+                        <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                          <defs>
+                            <linearGradient id="curve-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+                              <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                              <stop offset="100%" stopColor="#10b981" stopOpacity="0.0" />
+                            </linearGradient>
+                          </defs>
+                          
+                          {/* Curve fill */}
+                          <path d="M 0 5 Q 30 15, 60 25 T 100 35 L 100 40 L 0 40 Z" fill="url(#curve-glow)" />
+                          
+                          {/* Grid lines */}
+                          <line x1="0" y1="10" x2="100" y2="10" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                          <line x1="0" y1="20" x2="100" y2="20" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                          <line x1="0" y1="30" x2="100" y2="30" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+
+                          {/* Curve line */}
+                          <motion.path 
+                            initial={{ pathLength: 0 }}
+                            whileInView={{ pathLength: 1 }}
+                            transition={{ duration: 1.8, ease: "easeInOut" }}
+                            d="M 0 5 Q 30 15, 60 25 T 100 35" 
+                            stroke="#10b981" 
+                            strokeWidth="1.5" 
+                            fill="none" 
+                          />
+
+                          {/* Data points */}
+                          <circle cx="0" cy="5" r="1.2" fill="#ef4444" /> {/* 20% */}
+                          <circle cx="20" cy="11" r="1.2" fill="#f97316" /> {/* 15% */}
+                          <circle cx="45" cy="21" r="1.2" fill="#eab308" /> {/* 10% */}
+                          <circle cx="70" cy="28" r="1.2" fill="#10b981" /> {/* 7% */}
+                          <circle cx="100" cy="35" r="1.2" fill="#38bdf8" /> {/* 5% */}
+                        </svg>
+                      </div>
+                      
+                      {/* Axis Labels */}
+                      <div className="flex justify-between text-[7.5px] text-slate-500 font-black mt-3" dir="rtl">
+                        <span className="text-right">صفقات صغيرة (١-٥ آلاف)<br/>مشاركة تشغيل (٢٠٪)</span>
+                        <span className="text-center">صفقات متوسطة (١٠-٥٠ ألف)<br/>مشاركة متوازنة (١٠٪)</span>
+                        <span className="text-left">صفقات كبرى (+٢٥٠ ألف)<br/>شراكة استراتيجية (٥٪)</span>
+                      </div>
+                    </div>
 
                     <div className="space-y-4 relative">
                         {/* Connecting vertical line */}

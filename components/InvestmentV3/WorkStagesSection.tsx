@@ -1,10 +1,11 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Search, Bot, MapPin, Activity, Users, Presentation, Trophy } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export const WorkStagesSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [activeStageIdx, setActiveStageIdx] = useState(0);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -21,11 +22,31 @@ export const WorkStagesSection = () => {
     { title: "تحريك المشروع نحو الإغلاق", icon: Trophy, type: "إغلاق الصفقة", color: "from-amber-600 to-amber-500", desc: "رفع احتمالية الإغلاق والفوز بالفرصة." },
   ];
 
+  const leadLabels = [
+    "بيانات خام 📊",
+    "تأهيل فرصة 🔍",
+    "تواصل ذكي ⚡",
+    "فرصة مؤهلة 🎯",
+    "اهتمام بشري 🤝",
+    "اجتماع وعرض 📈",
+    "صفقة ناجحة 🏆"
+  ];
+
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    const idx = Math.min(
+      stages.length - 1,
+      Math.floor(latest * stages.length)
+    );
+    if (idx !== activeStageIdx) {
+      setActiveStageIdx(idx);
+    }
+  });
+
   // Map scroll progress to active index (0 to 6)
   const progressHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
-    <div ref={containerRef} className="py-40 bg-[#0A0A0A] relative overflow-hidden">
+    <div ref={containerRef} className="py-40 bg-[#0A0A0A] relative overflow-hidden" id="ninja-revenue-stages">
       <div className="container mx-auto px-4 max-w-4xl relative z-10">
         
         <div className="text-center mb-24">
@@ -49,19 +70,43 @@ export const WorkStagesSection = () => {
 
         <div className="relative pl-8 md:pl-0 md:mx-auto md:w-full">
           
-          {/* Central Line (Mobile: Left, Desktop: Center) */}
-          <div className="absolute top-0 bottom-0 right-8 md:left-1/2 md:-translate-x-1/2 w-1 bg-white/5 rounded-full overflow-hidden">
-            <motion.div 
-              style={{ height: progressHeight }} 
-              className="w-full bg-gradient-to-b from-blue-500 via-emerald-500 to-yellow-500 rounded-full"
-            />
+          {/* Central Line SVG (Mobile: Left/Right offset, Desktop: Center) */}
+          <div className="absolute top-0 bottom-0 right-[30px] md:left-1/2 md:-translate-x-1/2 w-[4px] pointer-events-none">
+            <svg className="w-full h-full" preserveAspectRatio="none">
+              <line x1="50%" y1="0%" x2="50%" y2="100%" stroke="rgba(255,255,255,0.05)" strokeWidth="4" strokeLinecap="round" />
+              <motion.line 
+                x1="50%" 
+                y1="0%" 
+                x2="50%" 
+                y2="100%" 
+                stroke="url(#line-grad)" 
+                strokeWidth="4" 
+                strokeLinecap="round"
+                style={{ pathLength: scrollYProgress }}
+              />
+              <defs>
+                <linearGradient id="line-grad" x1="0" y1="0" x2="0" y2="100%">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="50%" stopColor="#10b981" />
+                  <stop offset="100%" stopColor="#eab308" />
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
 
-          {/* Animated Lead Node flowing down */}
+          {/* Animated Lead Node flowing down with label */}
           <motion.div 
             style={{ top: progressHeight }}
-            className="absolute right-[28px] md:left-1/2 md:-translate-x-1/2 w-3 h-3 bg-white shadow-[0_0_20px_rgba(255,255,255,1)] rounded-full z-20 -translate-y-1/2 pointer-events-none"
-          />
+            className="absolute right-[22px] md:left-1/2 md:-translate-x-1/2 z-20 -translate-y-1/2 pointer-events-none flex items-center gap-2"
+          >
+            {/* Pulsing Core dot */}
+            <div className="w-4 h-4 bg-emerald-400 shadow-[0_0_15px_#10b981] rounded-full animate-pulse shrink-0" />
+            
+            {/* Morphing tooltip label */}
+            <div className="bg-slate-950/95 border border-emerald-500/30 text-[10px] text-emerald-400 font-black px-2.5 py-1 rounded-full whitespace-nowrap shadow-[0_0_15px_rgba(16,185,129,0.35)] md:translate-x-[-100%] md:absolute md:right-6">
+              {leadLabels[activeStageIdx]}
+            </div>
+          </motion.div>
 
           <div className="space-y-24">
             {stages.map((stage, i) => {

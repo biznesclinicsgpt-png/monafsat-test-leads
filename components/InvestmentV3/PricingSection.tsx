@@ -67,7 +67,8 @@ export const PricingSection = () => {
     <div className="py-32 bg-[#050505] relative overflow-hidden border-t border-slate-900/60" id="pricing">
       <div className="container mx-auto px-4 max-w-6xl relative z-10 text-right">
         
-        <div className="text-center mb-24">
+        {/* Header */}
+        <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -80,6 +81,43 @@ export const PricingSection = () => {
               اختر مستوى التمكين والوصول المناسب لأهداف شركتك بالسوق السعودي وابدأ البناء فوراً.
             </p>
           </motion.div>
+        </div>
+
+        {/* Flow Bifurcation Split SVG Header */}
+        <div className="w-full max-w-xl mx-auto mb-16 relative h-20 hidden md:block select-none font-sans">
+          <svg className="w-full h-full" viewBox="0 0 200 40" fill="none">
+            <defs>
+              <linearGradient id="main-bifur-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#10b981" />
+                <stop offset="100%" stopColor="#8b5cf6" />
+              </linearGradient>
+              <linearGradient id="sub-bifur-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.15" />
+              </linearGradient>
+            </defs>
+            {/* The single input path coming from top-center */}
+            <path d="M 100 0 L 100 12" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
+            <circle cx="100" cy="12" r="2.5" fill="#10b981" />
+            
+            {/* The main thick, glowing bifurcation branch going to the right (RTL: package cards side) */}
+            <path d="M 100 12 C 100 24, 150 20, 150 40" stroke="url(#main-bifur-grad)" strokeWidth="3" strokeLinecap="round" />
+            {/* Animated particle on main branch */}
+            <motion.circle cx="0" cy="0" r="1.5" fill="#a855f7" style={{ filter: "drop-shadow(0 0 4px #a855f7)" }}>
+              <animateMotion dur="2.5s" repeatCount="indefinite" path="M 100 12 C 100 24, 150 20, 150 40" />
+            </motion.circle>
+
+            {/* The alternative lighter bifurcation branch going to the left (credits portfolio side) */}
+            <path d="M 100 12 C 100 24, 50 20, 50 40" stroke="url(#sub-bifur-grad)" strokeWidth="1" strokeDasharray="3 3" strokeLinecap="round" />
+            {/* Animated particle on alternative branch (slower and dimmer) */}
+            <motion.circle cx="0" cy="0" r="1" fill="#3b82f6" opacity="0.6">
+              <animateMotion dur="4s" repeatCount="indefinite" path="M 100 12 C 100 24, 50 20, 50 40" />
+            </motion.circle>
+
+            {/* Labels */}
+            <text x="156" y="34" fill="#a855f7" className="text-[6.5px] font-black text-right" dir="rtl">المسار الرئيسي: باقات التشغيل الكامل</text>
+            <text x="44" y="34" fill="#64748b" className="text-[6.5px] font-black text-left" textAnchor="end" dir="rtl">المسار البديل: حزم الاجتماعات</text>
+          </svg>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 items-center lg:items-stretch justify-center">
