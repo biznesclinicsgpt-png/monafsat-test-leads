@@ -16,6 +16,7 @@ const toArabicNumerals = (num: number | string): string => {
 export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ className, highlightedMetric }) => {
     const shouldReduceMotion = useReducedMotion();
     const [activeTab, setActiveTab] = useState<'forecast' | 'channels'>('forecast');
+    const [hoveredPoint, setHoveredPoint] = useState<number | null>(null);
 
     // Load inputs from localStorage to calculate metrics dynamically
     const [calcValues, setCalcValues] = useState(() => {
@@ -59,6 +60,14 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
     const meetings = Math.ceil(proposals / 0.75);
     const conversations = Math.ceil(meetings / 0.07);
     const targetOutreach = Math.ceil(conversations / 0.28);
+
+    const chartPoints = [
+        { x: 10, y: 34, label: "البداية", value: 0 },
+        { x: 30, y: 30, label: "أسبوع ٣", value: Math.round(targetRevenue * 0.25) },
+        { x: 50, y: 19, label: "أسبوع ٦", value: Math.round(targetRevenue * 0.55) },
+        { x: 70, y: 11, label: "أسبوع ٩", value: Math.round(targetRevenue * 0.82) },
+        { x: 90, y: 5, label: "أسبوع ١٢", value: Math.round(targetRevenue * 1.24) }
+    ];
 
     const formatCurrency = (val: number): string => {
         if (val >= 1000000) {
@@ -205,18 +214,35 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch flex-1">
                         
                         {/* Interactive Graph Panel */}
-                        <div className="md:col-span-7 bg-slate-950/80 border border-slate-900/60 p-3 rounded-xl flex flex-col justify-between">
-                            <div className="relative w-full h-32 bg-slate-950/20 rounded overflow-hidden">
-                                <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
+                        <div className="md:col-span-7 bg-slate-950/80 border border-slate-900/60 p-3.5 rounded-xl flex flex-col justify-between relative">
+                            <div className="relative w-full h-36 bg-slate-950/20 rounded overflow-visible mt-2">
+                                <svg className="w-full h-full overflow-visible" viewBox="0 0 100 44" preserveAspectRatio="none">
                                     <defs>
                                         <linearGradient id="live-glow-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.15" />
+                                            <stop offset="0%" stopColor="#10b981" stopOpacity="0.18" />
                                             <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
                                         </linearGradient>
                                     </defs>
-                                    <path d="M 0 32 Q 20 30 40 18 T 80 8 T 100 3 L 100 40 L 0 40 Z" fill="url(#live-glow-gradient)" />
+                                    
+                                    {/* Horizontal gridlines */}
+                                    <line x1="10" y1="12" x2="90" y2="12" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="10" y1="19" x2="90" y2="19" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="10" y1="26" x2="90" y2="26" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="10" y1="34" x2="90" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+
+                                    {/* Vertical gridlines */}
+                                    <line x1="10" y1="5" x2="10" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="30" y1="5" x2="30" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="50" y1="5" x2="50" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="70" y1="5" x2="70" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+                                    <line x1="90" y1="5" x2="90" y2="34" stroke="rgba(255,255,255,0.03)" strokeWidth="0.3" strokeDasharray="1.5 2" />
+
+                                    {/* Gradient under the curve */}
+                                    <path d="M 10 34 Q 30 30 50 19 T 90 5 L 90 34 L 10 34 Z" fill="url(#live-glow-gradient)" />
+                                    
+                                    {/* Main curve path */}
                                     <motion.path 
-                                        d="M 0 32 Q 20 30 40 18 T 80 8 T 100 3" 
+                                        d="M 10 34 Q 30 30 50 19 T 90 5" 
                                         fill="none" 
                                         stroke="#10b981" 
                                         strokeWidth="1.2"
@@ -224,14 +250,73 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                                         animate={{ pathLength: 1 }}
                                         transition={{ duration: 1.5, ease: "easeOut" }}
                                     />
-                                    <circle cx="100" cy="3" r="1" fill="#10b981" />
-                                    {!shouldReduceMotion && <circle cx="100" cy="3" r="3" fill="#10b981" className="animate-ping opacity-45" />}
+                                    
+                                    {/* Axis Labels */}
+                                    <text x="10" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">البداية</text>
+                                    <text x="30" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">أسبوع ٣</text>
+                                    <text x="50" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">أسبوع ٦</text>
+                                    <text x="70" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">أسبوع ٩</text>
+                                    <text x="90" y="41" fill="rgba(255,255,255,0.25)" fontSize="2.5" textAnchor="middle" fontFamily="'Tajawal', sans-serif" fontWeight="bold">أسبوع ١٢</text>
+
+                                    {/* Interactive Circle points */}
+                                    {chartPoints.map((point, index) => {
+                                        const isHovered = hoveredPoint === index;
+                                        return (
+                                            <g key={index}>
+                                                {/* Hidden hover trigger circle (larger target) */}
+                                                <circle 
+                                                    cx={point.x} 
+                                                    cy={point.y} 
+                                                    r="4" 
+                                                    fill="transparent" 
+                                                    className="cursor-pointer"
+                                                    onMouseEnter={() => setHoveredPoint(index)}
+                                                    onMouseLeave={() => setHoveredPoint(null)}
+                                                />
+                                                {/* Visual glowing circle */}
+                                                <circle 
+                                                    cx={point.x} 
+                                                    cy={point.y} 
+                                                    r={isHovered ? "1.5" : "0.9"} 
+                                                    fill={isHovered ? "#34d399" : "#10b981"} 
+                                                    className="transition-all duration-200 pointer-events-none" 
+                                                />
+                                                {isHovered && (
+                                                    <circle 
+                                                        cx={point.x} 
+                                                        cy={point.y} 
+                                                        r="2.5" 
+                                                        fill="none" 
+                                                        stroke="#10b981" 
+                                                        strokeWidth="0.4" 
+                                                        className="animate-ping pointer-events-none" 
+                                                    />
+                                                )}
+                                            </g>
+                                        );
+                                    })}
                                 </svg>
-                                <span className="absolute top-2 right-2.5 text-[9px] md:text-xs text-slate-500 font-bold">مسار توقعات نمو الإيرادات المتراكم للربع الحالي</span>
+                                
+                                {/* Micro-interaction Tooltip Overlay */}
+                                {hoveredPoint !== null && (
+                                    <div 
+                                        className="absolute bg-[#090d16] border border-emerald-500/40 text-white text-[9px] md:text-[10px] p-2.5 rounded-xl font-bold shadow-[0_10px_25px_rgba(0,0,0,0.85)] pointer-events-none transform -translate-x-1/2 -translate-y-[115%] z-50 text-right min-w-[110px]"
+                                        style={{ 
+                                            left: `${chartPoints[hoveredPoint].x}%`, 
+                                            top: `${(chartPoints[hoveredPoint].y / 44) * 100}%` 
+                                        }}
+                                    >
+                                        <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-emerald-500 via-cyan-400 to-violet-500 rounded-t-xl" />
+                                        <div className="text-slate-500 text-[8px] mb-0.5">{chartPoints[hoveredPoint].label}</div>
+                                        <div className="text-emerald-400 font-extrabold font-sans leading-none">{formatCurrency(chartPoints[hoveredPoint].value)}</div>
+                                    </div>
+                                )}
+                                
+                                <span className="absolute top-2 right-2 text-[9px] text-slate-500 font-bold bg-[#050505]/40 px-2 py-0.5 rounded backdrop-blur-sm pointer-events-none">مسار الإيرادات المتراكمة للربع الحالي</span>
                             </div>
                             
                             {/* Graphic Footer info */}
-                            <div className="flex items-center justify-between text-[9px] md:text-xs text-slate-400 mt-2 px-1 font-bold">
+                            <div className="flex items-center justify-between text-[9px] md:text-xs text-slate-400 mt-2.5 px-1 font-bold">
                                 <span>الهدف: {formatCurrency(targetRevenue * 1.5)}</span>
                                 <span>الحالي: {formatCurrency(targetRevenue * 1.24)} (٨٢.٦٪)</span>
                             </div>

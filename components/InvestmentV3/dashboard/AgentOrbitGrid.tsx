@@ -33,31 +33,31 @@ export const AgentOrbitGrid = () => {
         { id: 4, name: "٠٤ جلب البيانات الذكية", desc: "يبحث ويفلتر البيانات من بين ملايين السجلات والشركات بالمملكة.", kpi: "تحديث فوري لـ ٨ مليون جهة اتصال", benefit: "قاعدة عملاء مستهدفة متكاملة ودقيقة", category: "data", position: { x: 36, y: 10 }, metricId: "decision_makers" },
         { id: 5, name: "٠٥ تنظيف وتدقيق البيانات", desc: "يتحقق من دقة وصلاحية أرقام الهواتف والبريد الإلكتروني للجهات.", kpi: "دقة وصول للعميل الفعلي تتجاوز ٩٥٪", benefit: "منع ارتداد الرسائل وهدر التواصل", category: "data", position: { x: 22, y: 6 }, metricId: "decision_makers" },
 
-        // RIGHT COLUMN (06 to 13) - X: Staggered 88% and 92% (Top to Bottom)
-        { id: 6, name: "٠٦ تحديد صناع القرار", desc: "يحدد هوية ومناصب المدراء والتنفيذيين المسؤولين مباشرة.", kpi: "كشف المسمى التنفيذي المسؤول بدقة", benefit: "تجاوز السكرتارية والوصول المباشر فوراً", category: "access", position: { x: 88, y: 17 }, metricId: "decision_makers" },
-        { id: 7, name: "٠٧ اختيار القناة الأنسب", desc: "يحدد قناة التواصل الفعالة لكل صانع قرار (واتساب، بريد، إلخ).", kpi: "رفع معدل استجابة القناة بنسبة ٤٠٪", benefit: "تواصل شخصي دافئ في القناة المفضلة للعميل", category: "access", position: { x: 92, y: 25 }, metricId: "conversations" },
-        { id: 8, name: "٠٨ تحديد احتمالية الرد", desc: "يحلل التجاوب التاريخي للمستهدفين لتوقع احتمالية رد العميل.", kpi: "ترتيب أولويات التواصل بذكاء وكفاءة", benefit: "توجيه الجهد البشري للعملاء الأكثر استعداداً للرد", category: "access", position: { x: 88, y: 33 }, metricId: "conversations" },
-        { id: 9, name: "٠٩ تخصيص الرسالة الأولى", desc: "يصيغ عروضًا ورسائل مخصصة تلائم طبيعة عمل وااحتياج كل جهة.", kpi: "تحقيق نسبة فتح وقراءة تتجاوز ٨٠٪", benefit: "خلق انطباع أولي احترافي يكسر الجليد", category: "access", position: { x: 92, y: 41 }, metricId: "conversations" },
-        { id: 10, name: "١٠ بدء المحادثة الذكية", desc: "يطلق حملات الوصول الأولي وبدء المحادثات عبر قنوات الاتصال.", kpi: "أتمتة إرسال وتوليد حملات مخصصة 24/7", benefit: "تدفق يومي مستمر للمهتمين دون تنقيب يدوي", category: "access", position: { x: 88, y: 49 }, metricId: "conversations" },
-        { id: 11, name: "١١ المتابعة الذكية والجدولة", desc: "يتابع بانتظام وااحترافية للحفاظ على حيوية المحادثات وحجز موعد.", kpi: "جدولة وتأكيد الاجتماع تلقائياً بالتقويم", benefit: "الحفاظ على العميل ومنع نسيان أي فرصة", category: "access", position: { x: 92, y: 57 }, metricId: "meetings" },
-        { id: 12, name: "١٢ تجهيز الاجتماع وتأهيله", desc: "يجمع ملفاً متكاملاً واحتياجات العميل قبل اللقاء البيعي.", kpi: "تجهيز ملخص الاحتياجات والملف التعريفي للعميل", benefit: "دخول الاجتماع بوعي كامل وقدرة إقناع عالية", category: "access", position: { x: 88, y: 65 }, metricId: "meetings" },
-        { id: 13, name: "١٣ تحليل مسار الاجتماعات", desc: "يحلل ما تم بالاجتماع لتسجيل النقاط والاعتراضات والخطوات القادمة.", kpi: "استخلاص الاعتراضات وبناء خطة الإغلاق", benefit: "ضمان توجيه الخطوة القادمة لإتمام البيع", category: "access", position: { x: 92, y: 73 }, metricId: "meetings" },
+        // LEFT COLUMN (06 to 13) - X: Staggered 8% and 12% (Top to Bottom)
+        { id: 6, name: "٠٦ تحديد صناع القرار", desc: "يحدد هوية ومناصب المدراء والتنفيذيين المسؤولين مباشرة.", kpi: "كشف المسمى التنفيذي المسؤول بدقة", benefit: "تجاوز السكرتارية والوصول المباشر فوراً", category: "access", position: { x: 12, y: 17 }, metricId: "decision_makers" },
+        { id: 7, name: "٠٧ اختيار القناة الأنسب", desc: "يحدد قناة التواصل الفعالة لكل صانع قرار (واتساب، بريد، إلخ).", kpi: "رفع معدل استجابة القناة بنسبة ٤٠٪", benefit: "تواصل شخصي دافئ في القناة المفضلة للعميل", category: "access", position: { x: 8, y: 25 }, metricId: "conversations" },
+        { id: 8, name: "٠٨ تحديد احتمالية الرد", desc: "يحلل التجاوب التاريخي للمستهدفين لتوقع احتمالية رد العميل.", kpi: "ترتيب أولويات التواصل بذكاء وكفاءة", benefit: "توجيه الجهد البشري للعملاء الأكثر استعداداً للرد", category: "access", position: { x: 12, y: 33 }, metricId: "conversations" },
+        { id: 9, name: "٠٩ تخصيص الرسالة الأولى", desc: "يصيغ عروضًا ورسائل مخصصة تلائم طبيعة عمل وااحتياج كل جهة.", kpi: "تحقيق نسبة فتح وقراءة تتجاوز ٨٠٪", benefit: "خلق انطباع أولي احترافي يكسر الجليد", category: "access", position: { x: 8, y: 41 }, metricId: "conversations" },
+        { id: 10, name: "١٠ بدء المحادثة الذكية", desc: "يطلق حملات الوصول الأولي وبدء المحادثات عبر قنوات الاتصال.", kpi: "أتمتة إرسال وتوليد حملات مخصصة 24/7", benefit: "تدفق يومي مستمر للمهتمين دون تنقيب يدوي", category: "access", position: { x: 12, y: 49 }, metricId: "conversations" },
+        { id: 11, name: "١١ المتابعة الذكية والجدولة", desc: "يتابع بانتظام وااحترافية للحفاظ على حيوية المحادثات وحجز موعد.", kpi: "جدولة وتأكيد الاجتماع تلقائياً بالتقويم", benefit: "الحفاظ على العميل ومنع نسيان أي فرصة", category: "access", position: { x: 8, y: 57 }, metricId: "meetings" },
+        { id: 12, name: "١٢ تجهيز الاجتماع وتأهيله", desc: "يجمع ملفاً متكاملاً واحتياجات العميل قبل اللقاء البيعي.", kpi: "تجهيز ملخص الاحتياجات والملف التعريفي للعميل", benefit: "دخول الاجتماع بوعي كامل وقدرة إقناع عالية", category: "access", position: { x: 12, y: 65 }, metricId: "meetings" },
+        { id: 13, name: "١٣ تحليل مسار الاجتماعات", desc: "يحلل ما تم بالاجتماع لتسجيل النقاط والاعتراضات والخطوات القادمة.", kpi: "استخلاص الاعتراضات وبناء خطة الإغلاق", benefit: "ضمان توجيه الخطوة القادمة لإتمام البيع", category: "access", position: { x: 8, y: 73 }, metricId: "meetings" },
 
-        // BOTTOM ROW (14 to 21) - Y: Staggered 89% and 94% (Sorted RTL: 14 starts on the right, 21 ends on the left)
-        { id: 14, name: "١٤ إدارة وتصنيف الفرص", desc: "يتابع حركة الصفقات داخل قمع المبيعات وتوجيهها للمرحلة الأنسب.", kpi: "تصنيف فوري للصفقات حسب الجدية", benefit: "رؤية شاملة وموثوقة لجميع صفقات الشركة النشطة", category: "closing", position: { x: 88, y: 89 }, metricId: "negotiations" },
-        { id: 15, name: "١٥ التنبؤ بفرص الإغلاق", desc: "يحلل سلوك العميل لتقييم مدى جاهزية الصفقة وتحديد موعد حسمها.", kpi: "دقة توقع مالي بالتدفقات بنسبة ٩٠٪", benefit: "رؤية استباقية دقيقة تخدم اتخاذ القرار", category: "closing", position: { x: 77, y: 94 }, metricId: "negotiations" },
-        { id: 16, name: "١٦ تحسين وتعديل العروض", desc: "يقترح التعديلات المناسبة على العروض الفنية والمالية لجذب العميل.", kpi: "تخصيص صيغة وتسعير العرض بما يطابق رغبة العميل", benefit: "عروض أسعار مثالية تكتسح المنافسين", category: "closing", position: { x: 66, y: 89 }, metricId: "negotiations" },
-        { id: 17, name: "١٧ دعم التفاوض وحسم السعر", desc: "يزود فريقكم بالردود المناسبة على الاعتراضات وتسهيل التفاوض.", kpi: "تزويد المبيعات بنقاط القوة لحسم السعر", benefit: "حماية هوامش الأرباح وإتمام الصفقة بقيمة ممتازة", category: "closing", position: { x: 55, y: 94 }, metricId: "negotiations" },
-        { id: 18, name: "١٨ توقع وتحليل الإيرادات", desc: "يحلل البيانات التاريخية والنشطة للتنبؤ بالتدفقات المالية القادمة.", kpi: "توقعات تدفق مالي تراكمي للربع القادم", benefit: "ثقة مطلقة في التخطيط لاستثمارات النمو والتوسع", category: "closing", position: { x: 44, y: 89 }, metricId: "expected_revenue" },
-        { id: 19, name: "١٩ تحليل المكالمات الصوتية", desc: "يقيم التسجيلات الصوتية لتحسين نبرة البيع ومعالجة الاعتراضات.", kpi: "رصد فوري لنسب الالتزام وجودة التحدث", benefit: "تطوير مستمر ومباشر لمهارات مبيعات الفريق البشري", category: "closing", position: { x: 33, y: 94 }, metricId: "negotiations" },
-        { id: 20, name: "٢٠ تحليل محادثات واتساب", desc: "يقيس تفاعلية وسرعة الردود عبر الواتساب ويقترح الرد الأفضل.", kpi: "تحسين سرعة الاستجابة ورفع الرضا للعميل", benefit: "حسم اهتمام العميل الفوري وتفادي برود المحادثة", category: "closing", position: { x: 22, y: 89 }, metricId: "conversations" },
-        { id: 21, name: "٢١ تحليل التفاعل المهني", desc: "يراقب التفاعلات المهنية لصناع القرار عبر لينكدإن لبناء علاقات.", kpi: "رصد اهتمامات ومشاركات صانع القرار لبناء الثقة", benefit: "فتح قنوات بيعية مبنية على العلاقات المهنية الوثيقة", category: "closing", position: { x: 11, y: 94 }, metricId: "decision_makers" },
+        // BOTTOM ROW (14 to 21) - Y: Staggered 89% and 94% (Left to Right)
+        { id: 14, name: "١٤ إدارة وتصنيف الفرص", desc: "يتابع حركة الصفقات داخل قمع المبيعات وتوجيهها للمرحلة الأنسب.", kpi: "تصنيف فوري للصفقات حسب الجدية", benefit: "رؤية شاملة وموثوقة لجميع صفقات الشركة النشطة", category: "closing", position: { x: 11, y: 94 }, metricId: "negotiations" },
+        { id: 15, name: "١٥ التنبؤ بفرص الإغلاق", desc: "يحلل سلوك العميل لتقييم مدى جاهزية الصفقة وتحديد موعد حسمها.", kpi: "دقة توقع مالي بالتدفقات بنسبة ٩٠٪", benefit: "رؤية استباقية دقيقة تخدم اتخاذ القرار", category: "closing", position: { x: 22, y: 89 }, metricId: "negotiations" },
+        { id: 16, name: "١٦ تحسين وتعديل العروض", desc: "يقترح التعديلات المناسبة على العروض الفنية والمالية لجذب العميل.", kpi: "تخصيص صيغة وتسعير العرض بما يطابق رغبة العميل", benefit: "عروض أسعار مثالية تكتسح المنافسين", category: "closing", position: { x: 33, y: 94 }, metricId: "negotiations" },
+        { id: 17, name: "١٧ دعم التفاوض وحسم السعر", desc: "يزود فريقكم بالردود المناسبة على الاعتراضات وتسهيل التفاوض.", kpi: "تزويد المبيعات بنقاط القوة لحسم السعر", benefit: "حماية هوامش الأرباح وإتمام الصفقة بقيمة ممتازة", category: "closing", position: { x: 44, y: 89 }, metricId: "negotiations" },
+        { id: 18, name: "١٨ توقع وتحليل الإيرادات", desc: "يحلل البيانات التاريخية والنشطة للتنبؤ بالتدفقات المالية القادمة.", kpi: "توقعات تدفق مالي تراكمي للربع القادم", benefit: "ثقة مطلقة في التخطيط لاستثمارات النمو والتوسع", category: "closing", position: { x: 55, y: 94 }, metricId: "expected_revenue" },
+        { id: 19, name: "١٩ تحليل المكالمات الصوتية", desc: "يقيم التسجيلات الصوتية لتحسين نبرة البيع ومعالجة الاعتراضات.", kpi: "رصد فوري لنسب الالتزام وجودة التحدث", benefit: "تطوير مستمر ومباشر لمهارات مبيعات الفريق البشري", category: "closing", position: { x: 66, y: 89 }, metricId: "negotiations" },
+        { id: 20, name: "٢٠ تحليل محادثات واتساب", desc: "يقيس تفاعلية وسرعة الردود عبر الواتساب ويقترح الرد الأفضل.", kpi: "تحسين سرعة الاستجابة ورفع الرضا للعميل", benefit: "حسم اهتمام العميل الفوري وتفادي برود المحادثة", category: "closing", position: { x: 77, y: 94 }, metricId: "conversations" },
+        { id: 21, name: "٢١ تحليل التفاعل المهني", desc: "يراقب التفاعلات المهنية لصناع القرار عبر لينكدإن لبناء علاقات.", kpi: "رصد اهتمامات ومشاركات صانع القرار لبناء الثقة", benefit: "فتح قنوات بيعية مبنية على العلاقات المهنية الوثيقة", category: "closing", position: { x: 88, y: 89 }, metricId: "decision_makers" },
 
-        // LEFT COLUMN (22 to 25) - X: Staggered 8% and 12% (Top to Bottom / Bottom to Top loop)
-        { id: 22, name: "٢٢ مراقبة السوق والمنافسين", desc: "يرصد تحركات المنافسين، تغييرات أسعارهم، والخدمات الجديدة.", kpi: "رصد تنافسي مستمر لحظة بلحظة", benefit: "الحفاظ على الصدارة وتعديل عروضكم استباقياً", category: "market", position: { x: 12, y: 17 }, metricId: "leads" },
-        { id: 23, name: "٢٣ رصد فرص منافسات", desc: "يمسح ويفلتر المناقصات والمشاريع الحكومية والخاصة لحظة بلحظة.", kpi: "مسح فوري وشامل لفرص مناقصات الخليج", benefit: "عدم تفويت أي مشروع أو منافسة تناسب تخصصكم", category: "market", position: { x: 8, y: 35 }, metricId: "leads" },
-        { id: 24, name: "٢٤ رصد واكتشاف الموردين", desc: "يبحث عن أفضل شركاء التنفيذ والموردين لدعم مشاريعكم.", kpi: "تقليص كلفة توريد مشاريعكم بنسبة ٢٠٪", benefit: "تقديم أسعار منافسة تضمن لكم الفوز بالصفقة", category: "market", position: { x: 12, y: 53 }, metricId: "leads" },
-        { id: 25, name: "٢٥ وكيل قيادة الإيرادات", desc: "الوكيل المحرك الرئيسي لتوجيه وتكامل عمل كافة الوكلاء.", kpi: "تشغيل متناغم للمنظومة كعقل ذكي واحد", benefit: "أتمتة شاملة وتكامل للنمو المستمر دون أي تعطل", category: "market", position: { x: 8, y: 71 }, metricId: "expected_revenue" },
+        // RIGHT COLUMN (22 to 25) - X: Staggered 88% and 92% (Bottom to Top)
+        { id: 22, name: "٢٢ مراقبة السوق والمنافسين", desc: "يرصد تحركات المنافسين، تغييرات أسعارهم، والخدمات الجديدة.", kpi: "رصد تنافسي مستمر لحظة بلحظة", benefit: "الحفاظ على الصدارة وتعديل عروضكم استباقياً", category: "market", position: { x: 88, y: 73 }, metricId: "leads" },
+        { id: 23, name: "٢٣ رصد فرص منافسات", desc: "يمسح ويفلتر المناقصات والمشاريع الحكومية والخاصة لحظة بلحظة.", kpi: "مسح فوري وشامل لفرص مناقصات الخليج", benefit: "عدم تفويت أي مشروع أو منافسة تناسب تخصصكم", category: "market", position: { x: 92, y: 55 }, metricId: "leads" },
+        { id: 24, name: "٢٤ رصد واكتشاف الموردين", desc: "يبحث عن أفضل شركاء التنفيذ والموردين لدعم مشاريعكم.", kpi: "تقليص كلفة توريد مشاريعكم بنسبة ٢٠٪", benefit: "تقديم أسعار منافسة تضمن لكم الفوز بالصفقة", category: "market", position: { x: 88, y: 37 }, metricId: "leads" },
+        { id: 25, name: "٢٥ وكيل قيادة الإيرادات", desc: "الوكيل المحرك الرئيسي لتوجيه وتكامل عمل كافة الوكلاء.", kpi: "تشغيل متناغم للمنظومة كعقل ذكي واحد", benefit: "أتمتة شاملة وتكامل للنمو المستمر دون أي تعطل", category: "market", position: { x: 92, y: 19 }, metricId: "expected_revenue" },
     ];
 
     // Helper map to assign category styling classes
@@ -105,6 +105,18 @@ export const AgentOrbitGrid = () => {
             {/* DESKTOP NEURAL ORBIT GRID VIEW (Height increased via aspect-780 for better vertical spacing) */}
             <div className="relative w-full aspect-[900/780] hidden lg:block">
                 
+                {/* Inline Styles for Orbit Loop Dash Offset Flow Animation */}
+                <style>{`
+                    @keyframes orbitFlow {
+                        to {
+                            stroke-dashoffset: -120;
+                        }
+                    }
+                    .animate-orbit-flow {
+                        animation: orbitFlow 25s linear infinite;
+                    }
+                `}</style>
+
                 {/* SVG Network Connector Lines */}
                 <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
                     <defs>
@@ -112,7 +124,56 @@ export const AgentOrbitGrid = () => {
                             <feGaussianBlur stdDeviation="2.5" result="blur" />
                             <feComposite in="SourceGraphic" in2="blur" operator="over" />
                         </filter>
+                        
+                        {/* Multicolor gradient for the continuous loop line */}
+                        <linearGradient id="orbit-loop-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.4" />
+                            <stop offset="25%" stopColor="#06b6d4" stopOpacity="0.4" />
+                            <stop offset="50%" stopColor="#3b82f6" stopOpacity="0.4" />
+                            <stop offset="75%" stopColor="#10b981" stopOpacity="0.4" />
+                            <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.4" />
+                        </linearGradient>
                     </defs>
+                    
+                    {/* Continuous circular loop line connecting agents 1 to 25 */}
+                    <path
+                        d={agents.map((agent, idx) => `${idx === 0 ? 'M' : 'L'} ${agent.position.x} ${agent.position.y}`).join(' ') + ' Z'}
+                        fill="none"
+                        stroke="url(#orbit-loop-grad)"
+                        strokeWidth="1.2"
+                        strokeDasharray="5 7"
+                        className="animate-orbit-flow"
+                    />
+
+                    {/* Animated moving data packet particles following the loop path */}
+                    {!shouldReduceMotion && (
+                        <>
+                            <circle r="0.8" fill="#8b5cf6">
+                                <animateMotion 
+                                    dur="18s" 
+                                    repeatCount="indefinite" 
+                                    begin="0s"
+                                    path={agents.map((agent, idx) => `${idx === 0 ? 'M' : 'L'} ${agent.position.x} ${agent.position.y}`).join(' ') + ' Z'} 
+                                />
+                            </circle>
+                            <circle r="0.8" fill="#06b6d4">
+                                <animateMotion 
+                                    dur="18s" 
+                                    repeatCount="indefinite" 
+                                    begin="6s"
+                                    path={agents.map((agent, idx) => `${idx === 0 ? 'M' : 'L'} ${agent.position.x} ${agent.position.y}`).join(' ') + ' Z'} 
+                                />
+                            </circle>
+                            <circle r="0.8" fill="#10b981">
+                                <animateMotion 
+                                    dur="18s" 
+                                    repeatCount="indefinite" 
+                                    begin="12s"
+                                    path={agents.map((agent, idx) => `${idx === 0 ? 'M' : 'L'} ${agent.position.x} ${agent.position.y}`).join(' ') + ' Z'} 
+                                />
+                            </circle>
+                        </>
+                    )}
                     
                     {agents.map((agent) => {
                         const { destX, destY } = getConnectPoints(agent.position.x, agent.position.y);
@@ -181,7 +242,8 @@ export const AgentOrbitGrid = () => {
                         <motion.div
                             key={agent.id}
                             className={cn(
-                                "absolute cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-full border text-[8.5px] xl:text-[9.5px] font-black z-30 transition-all duration-300 backdrop-blur-sm whitespace-nowrap select-none",
+                                "absolute cursor-pointer flex items-center gap-1.5 px-2.5 py-1.5 xl:px-3.5 xl:py-2 rounded-full border text-[8.5px] xl:text-[9.5px] font-black transition-all duration-300 backdrop-blur-sm whitespace-nowrap select-none",
+                                isHovered ? "z-50 shadow-2xl scale-105" : "z-30",
                                 getCategoryStyles(agent.category)
                             )}
                             style={{ 
@@ -230,13 +292,13 @@ export const AgentOrbitGrid = () => {
                                         exit={{ opacity: 0, scale: 0.95, y: agent.position.y > 50 ? -10 : 10 }}
                                         transition={{ duration: 0.2 }}
                                         className={cn(
-                                            "absolute w-[280px] p-5 rounded-2xl bg-slate-950/98 border shadow-2xl backdrop-blur-xl z-50 text-right cursor-default",
+                                            "absolute w-[280px] p-5 rounded-2xl bg-[#090d16] border shadow-[0_15px_40px_rgba(0,0,0,0.85)] z-50 text-right cursor-default",
                                             agent.position.y > 50 ? "bottom-[130%]" : "top-[130%]",
                                             agent.position.x > 50 ? "left-0" : "right-0",
-                                            agent.category === 'data' ? "border-violet-500/40 shadow-violet-950/20" :
-                                            agent.category === 'access' ? "border-cyan-500/40 shadow-cyan-950/20" :
-                                            agent.category === 'closing' ? "border-blue-500/40 shadow-blue-950/20" :
-                                            "border-emerald-500/40 shadow-emerald-950/20"
+                                            agent.category === 'data' ? "border-violet-500/50 shadow-violet-950/20" :
+                                            agent.category === 'access' ? "border-cyan-500/50 shadow-cyan-950/20" :
+                                            agent.category === 'closing' ? "border-blue-500/50 shadow-blue-950/20" :
+                                            "border-emerald-500/50 shadow-emerald-950/20"
                                         )}
                                         onClick={(e) => e.stopPropagation()}
                                     >
