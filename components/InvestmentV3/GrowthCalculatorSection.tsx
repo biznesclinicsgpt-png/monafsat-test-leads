@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { Calculator, Target, TrendingUp, CheckCircle, RefreshCw, BarChart3, HelpCircle } from 'lucide-react';
 import { cn } from '../../lib/utils';
@@ -24,6 +24,33 @@ export const GrowthCalculatorSection = () => {
 
     const sectors = ['مقاولات', 'مصانع', 'مستشفيات', 'شركات تقنية', 'خدمات لوجستية', 'أخرى'];
     const regions = ['الرياض', 'جدة', 'المنطقة الشرقية', 'السعودية بالكامل'];
+
+    // Load initial values from localStorage or set defaults
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const rev = localStorage.getItem('manafeth_target_revenue');
+            const deal = localStorage.getItem('manafeth_avg_deal_value');
+            const sec = localStorage.getItem('manafeth_sector');
+            const reg = localStorage.getItem('manafeth_region');
+
+            if (rev) setTargetRevenue(Number(rev));
+            if (deal) setAvgDealValue(Number(deal));
+            if (sec) setSector(sec);
+            if (reg) setRegion(reg);
+
+            if (!rev) {
+                localStorage.setItem('manafeth_target_revenue', '1000000');
+                localStorage.setItem('manafeth_avg_deal_value', '100000');
+                localStorage.setItem('manafeth_sector', 'مقاولات');
+                localStorage.setItem('manafeth_region', 'السعودية بالكامل');
+            }
+            
+            // Dispatch initial update event
+            setTimeout(() => {
+                window.dispatchEvent(new Event('manafeth_calculator_update'));
+            }, 100);
+        }
+    }, []);
 
     // Equations and calculations helper
     const calculatePlan = () => {
@@ -117,6 +144,15 @@ export const GrowthCalculatorSection = () => {
 
         setErrorMsg(null);
         setIsCalculated(true);
+
+        // Save inputs to localStorage to sync metrics across the page
+        localStorage.setItem('manafeth_target_revenue', targetRevenue.toString());
+        localStorage.setItem('manafeth_avg_deal_value', avgDealValue.toString());
+        localStorage.setItem('manafeth_sector', sector);
+        localStorage.setItem('manafeth_region', region);
+        
+        // Dispatch custom event to notify live dashboard panel
+        window.dispatchEvent(new Event('manafeth_calculator_update'));
     };
 
     const results = calculatePlan();

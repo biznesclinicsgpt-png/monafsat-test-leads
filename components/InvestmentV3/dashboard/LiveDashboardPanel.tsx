@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { TrendingUp, Users, MessageSquare, Calendar, Handshake, DollarSign, Activity, BarChart2, ShieldAlert } from 'lucide-react';
 import { cn } from '../../../lib/utils';
@@ -17,23 +17,128 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
     const shouldReduceMotion = useReducedMotion();
     const [activeTab, setActiveTab] = useState<'forecast' | 'channels'>('forecast');
 
-    // 6 Metrics daily logs - using Arabic Eastern numerals
+    // Load inputs from localStorage to calculate metrics dynamically
+    const [calcValues, setCalcValues] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const rev = localStorage.getItem('manafeth_target_revenue');
+            const deal = localStorage.getItem('manafeth_avg_deal_value');
+            const sec = localStorage.getItem('manafeth_sector');
+            return {
+                targetRevenue: rev ? Number(rev) : 1000000,
+                avgDealValue: deal ? Number(deal) : 100000,
+                sector: sec || 'مقاولات'
+            };
+        }
+        return {
+            targetRevenue: 1000000,
+            avgDealValue: 100000,
+            sector: 'مقاولات'
+        };
+    });
+
+    useEffect(() => {
+        const handleUpdate = () => {
+            const rev = localStorage.getItem('manafeth_target_revenue');
+            const deal = localStorage.getItem('manafeth_avg_deal_value');
+            const sec = localStorage.getItem('manafeth_sector');
+            setCalcValues({
+                targetRevenue: rev ? Number(rev) : 1000000,
+                avgDealValue: deal ? Number(deal) : 100000,
+                sector: sec || 'مقاولات'
+            });
+        };
+        window.addEventListener('manafeth_calculator_update', handleUpdate);
+        return () => window.removeEventListener('manafeth_calculator_update', handleUpdate);
+    }, []);
+
+    const { targetRevenue, avgDealValue } = calcValues;
+
+    // Realistic scenario calculator equations
+    const deals = Math.ceil(targetRevenue / avgDealValue);
+    const proposals = Math.ceil(deals / 0.25);
+    const meetings = Math.ceil(proposals / 0.75);
+    const conversations = Math.ceil(meetings / 0.07);
+    const targetOutreach = Math.ceil(conversations / 0.28);
+
+    const formatCurrency = (val: number): string => {
+        if (val >= 1000000) {
+            const num = (val / 1000000).toFixed(2);
+            const formatted = parseFloat(num).toString();
+            return `${toArabicNumerals(formatted)} مليون ر.س`;
+        } else {
+            const formatted = Math.round(val).toLocaleString('en-US');
+            return `${toArabicNumerals(formatted)} ر.س`;
+        }
+    };
+
+    const formatWeeklyChange = (val: number): string => {
+        if (val >= 1000000) {
+            return `+${toArabicNumerals((val / 1000000).toFixed(1))} مليون أسبوعياً`;
+        } else if (val >= 1000) {
+            return `+${toArabicNumerals(Math.round(val / 1000))} ألف أسبوعياً`;
+        }
+        return `+${toArabicNumerals(Math.round(val))} ر.س أسبوعياً`;
+    };
+
+    // 6 Metrics dynamically scaled
     const metrics = [
-        { id: 'leads', label: "الفرص الساخنة", value: "١٢", change: "🔥 +٣ اليوم", color: "text-amber-500", glow: "rgba(245,158,11,0.05)" },
-        { id: 'decision_makers', label: "صناع القرار", value: "١٢٨", change: "👤 +٢٤ اليوم", color: "text-cyan-400", glow: "rgba(34,211,238,0.05)" },
-        { id: 'conversations', label: "محادثات نشطة", value: "٣٤٧", change: "💬 +٥٧ اليوم", color: "text-emerald-400", glow: "rgba(16,185,129,0.05)" },
-        { id: 'meetings', label: "اجتماعات قادمة", value: "١٨", change: "📅 +٥ اليوم", color: "text-violet-400", glow: "rgba(167,139,250,0.05)" },
-        { id: 'negotiations', label: "تحت التفاوض", value: "٧", change: "🤝 +٢ اليوم", color: "text-blue-400", glow: "rgba(59,130,246,0.05)" },
-        { id: 'expected_revenue', label: "إيراد متوقع", value: "١.٢ مليون ر.س", change: "📈 +١٨٠ ألف أسبوعياً", color: "text-emerald-400", glow: "rgba(16,185,129,0.08)" }
+        { 
+            id: 'leads', 
+            label: "الفرص الساخنة", 
+            value: toArabicNumerals(Math.round(proposals * 0.3)), 
+            change: `🔥 +${toArabicNumerals(Math.ceil(proposals * 0.07))} اليوم`, 
+            color: "text-amber-500", 
+            glow: "rgba(245,158,11,0.05)" 
+        },
+        { 
+            id: 'decision_makers', 
+            label: "صناع القرار", 
+            value: toArabicNumerals(Math.round(targetOutreach * 0.046)), 
+            change: `👤 +${toArabicNumerals(Math.ceil(targetOutreach * 0.0087))} اليوم`, 
+            color: "text-cyan-400", 
+            glow: "rgba(34,211,238,0.05)" 
+        },
+        { 
+            id: 'conversations', 
+            label: "محادثات نشطة", 
+            value: toArabicNumerals(Math.round(conversations * 0.45)), 
+            change: `💬 +${toArabicNumerals(Math.ceil(conversations * 0.074))} اليوم`, 
+            color: "text-emerald-400", 
+            glow: "rgba(16,185,129,0.05)" 
+        },
+        { 
+            id: 'meetings', 
+            label: "اجتماعات قادمة", 
+            value: toArabicNumerals(Math.round(meetings * 0.33)), 
+            change: `📅 +${toArabicNumerals(Math.ceil(meetings * 0.09))} اليوم`, 
+            color: "text-violet-400", 
+            glow: "rgba(167,139,250,0.05)" 
+        },
+        { 
+            id: 'negotiations', 
+            label: "تحت التفاوض", 
+            value: toArabicNumerals(Math.round(deals * 0.7)), 
+            change: `🤝 +${toArabicNumerals(Math.ceil(deals * 0.2))} اليوم`, 
+            color: "text-blue-400", 
+            glow: "rgba(59,130,246,0.05)" 
+        },
+        { 
+            id: 'expected_revenue', 
+            label: "إيراد متوقع", 
+            value: formatCurrency(targetRevenue * 1.2), 
+            change: `📈 ${formatWeeklyChange(targetRevenue * 0.18)}`, 
+            color: "text-emerald-400", 
+            glow: "rgba(16,185,129,0.08)" 
+        }
     ];
 
-    // Revenue Forecast: 5 business indicators with full Arabic numerals
+    // Revenue Forecast indicators dynamically scaled
     const businessIndicators = [
-        { label: "إيراد ربع سنوي متوقع", value: "١,٢٤٠,٠٠٠ ر.س", desc: "بناءً على الصفقات المفتوحة", color: "text-white" },
-        { label: "قيمة قمع الفرص (Pipeline)", value: "٤,٨٥٠,٠٠٠ ر.س", desc: "مجموع الفرص النشطة حالياً", color: "text-cyan-400" },
-        { label: "الصفقات المتوقعة", value: "١٤ صفقة", desc: "خلال الـ ٤ أسابيع القادمة", color: "text-violet-400" },
+        { label: "إيراد ربع سنوي متوقع", value: formatCurrency(targetRevenue * 1.24), desc: "بناءً على الصفقات المفتوحة", color: "text-white" },
+        { label: "قيمة قمع الفرص (Pipeline)", value: formatCurrency(targetRevenue * 4.85), desc: "مجموع الفرص النشطة حالياً", color: "text-cyan-400" },
+        { label: "الصفقات المتوقعة", value: `${toArabicNumerals(Math.round(deals * 1.4))} صفقة`, desc: "خلال الـ ٤ أسابيع القادمة", color: "text-violet-400" },
         { label: "احتمالية الإغلاق (Win Rate)", value: "٢٦.٨٪", desc: "المتوسط العام للمنظومة", color: "text-emerald-400" },
-        { label: "إيراد تحت الخطر", value: "١٩٠,٠٠٠ ر.س", desc: "تأخر العميل بالرد أو المفاوضات", color: "text-rose-500" }
+        { label: "إيراد تحت الخطر", value: formatCurrency(targetRevenue * 0.19), desc: "تأخر العميل بالرد أو المفاوضات", color: "text-rose-500" }
     ];
 
     return (
@@ -69,7 +174,7 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                 </div>
             </div>
 
-            {/* Six Metrics Cards Grid - Increased sizes */}
+            {/* Six Metrics Cards Grid */}
             <div className="grid grid-cols-3 gap-3 my-4">
                 {metrics.map((metric) => {
                     const isHighlighted = highlightedMetric === metric.id;
@@ -99,7 +204,7 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                 {activeTab === 'forecast' && (
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch flex-1">
                         
-                        {/* Interactive Graph Panel - Increased h-24 to h-32 */}
+                        {/* Interactive Graph Panel */}
                         <div className="md:col-span-7 bg-slate-950/80 border border-slate-900/60 p-3 rounded-xl flex flex-col justify-between">
                             <div className="relative w-full h-32 bg-slate-950/20 rounded overflow-hidden">
                                 <svg className="w-full h-full" viewBox="0 0 100 40" preserveAspectRatio="none">
@@ -125,10 +230,10 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                                 <span className="absolute top-2 right-2.5 text-[9px] md:text-xs text-slate-500 font-bold">مسار توقعات نمو الإيرادات المتراكم للربع الحالي</span>
                             </div>
                             
-                            {/* Graphic Footer info in Arabic digits */}
+                            {/* Graphic Footer info */}
                             <div className="flex items-center justify-between text-[9px] md:text-xs text-slate-400 mt-2 px-1 font-bold">
-                                <span>الهدف: ١.٥ مليون ر.س</span>
-                                <span>الحالي: ١.٢٤ مليون (٨٢.٦٪)</span>
+                                <span>الهدف: {formatCurrency(targetRevenue * 1.5)}</span>
+                                <span>الحالي: {formatCurrency(targetRevenue * 1.24)} (٨٢.٦٪)</span>
                             </div>
                         </div>
 
@@ -214,17 +319,17 @@ export const LiveDashboardPanel: React.FC<LiveDashboardPanelProps> = ({ classNam
                                     <div className="flex justify-between py-1">
                                         <span className="text-slate-200">مجموعة الشايع</span>
                                         <span className="text-blue-400">تفاوض</span>
-                                        <span className="text-emerald-400 font-bold">٢٤٠ ألف ر.س</span>
+                                        <span className="text-emerald-400 font-bold">{formatCurrency(targetRevenue * 0.24)}</span>
                                     </div>
                                     <div className="flex justify-between py-1">
                                         <span className="text-slate-200">الخزف السعودي</span>
                                         <span className="text-violet-400">اجتماع محجوز</span>
-                                        <span className="text-emerald-400 font-bold">١٨٠ ألف ر.س</span>
+                                        <span className="text-emerald-400 font-bold">{formatCurrency(targetRevenue * 0.18)}</span>
                                     </div>
                                     <div className="flex justify-between py-1">
                                         <span className="text-slate-200">سدافكو الغذائية</span>
                                         <span className="text-cyan-400">تقديم عرض سعر</span>
-                                        <span className="text-emerald-400 font-bold">١٥٠ ألف ر.س</span>
+                                        <span className="text-emerald-400 font-bold">{formatCurrency(targetRevenue * 0.15)}</span>
                                     </div>
                                 </div>
                             </div>
