@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
-export const NinjaAgentsSection = () => {
+export const GrowthTriangleSection = () => {
     const [activeNode, setActiveNode] = useState<string | null>(null);
 
     const journeySteps = [
@@ -102,9 +102,12 @@ export const NinjaAgentsSection = () => {
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
                             مثلث النمو والمبيعات المتكامل
                         </h2>
-                        <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-                            لا نعتمد على الوصول للسوق فقط… بل نبني معكم منظومة متكاملة تجمع بين <span className="text-violet-400 font-bold">تطوير فريقكم البيعي</span>، <span className="text-cyan-400 font-bold">تشغيل السوق وتحريك الفرص</span>، و <span className="text-emerald-400 font-bold">نظام النينجا الذكي</span> لضمان نمو أسرع ونسب إغلاق أعلى.
+                        <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed mb-4">
+                            لا نعتمد على الوصول للسوق فقط… بل نبني معكم منظومة متكاملة تجمع بين <span className="text-violet-400 font-bold">تطوير فريقكم البيعي</span>، <span className="text-cyan-400 font-bold">تشغيل السوق وتحريك الفرص</span>، و <span className="text-emerald-400 font-bold">نظام النينجا الذكي</span>.
                         </p>
+                        <div className="inline-block bg-emerald-500/10 border border-emerald-500/25 px-5 py-2.5 rounded-2xl text-base font-extrabold text-emerald-400">
+                            النتيجة: فريق أقوى + فرص أكثر + متابعة أذكى + إغلاق أعلى.
+                        </div>
                     </motion.div>
                 </div>
 

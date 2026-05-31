@@ -138,10 +138,10 @@ export const GrowthCalculatorSection = () => {
                     targetOutreach
                 },
                 assumptions: {
-                    closeRatePercent: `${toArabicNumerals(config.closeRate * 100)}٪`,
+                    closeRatePercent: `${toArabicNumerals(Math.round(config.closeRate * 100))}٪`,
                     meetingPercent: "٧٥٪",
-                    convPercent: `${toArabicNumerals(config.convToMeetingRate * 100)}٪`,
-                    openPercent: `${toArabicNumerals(config.openRate * 100)}٪`
+                    convPercent: `${toArabicNumerals(Math.round(config.convToMeetingRate * 100))}٪`,
+                    openPercent: `${toArabicNumerals(Math.round(config.openRate * 100))}٪`
                 }
             };
         });

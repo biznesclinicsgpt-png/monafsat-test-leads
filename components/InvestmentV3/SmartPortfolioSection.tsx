@@ -62,11 +62,11 @@ export const SmartPortfolioSection = () => {
                             <Zap className="w-5 h-5" />
                             <span className="font-semibold text-sm">مسار بديل</span>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight max-w-4xl mx-auto">
-                            لو كنت تفضل تعاوناً آخر غير الشراكة، وتريد أن يكون الحساب بالاجتماعات فقط... فهذا هو المسار البديل
+                        <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight max-w-4xl mx-auto">
+                            تفضل نموذجًا أبسط؟ اختر محفظة الاجتماعات المؤهلة
                         </h2>
-                        <p className="text-xl text-slate-400 max-w-3xl mx-auto mb-8">
-                            نموذج المحفظة الذكية (نظام الاجتماعات) — ادفع فقط مقابل النتائج والفرص المحققة.
+                        <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto mb-8 leading-relaxed">
+                            <span className="text-emerald-400 font-bold">الباقات =</span> منظومة تشغيل ونمو متكاملة لشركتك | <span className="text-cyan-400 font-bold">محفظة الاجتماعات =</span> شراء اجتماعات وفرص مؤهلة فقط بدون تشغيل المنظومة.
                         </p>
 
                         {/* Billing Toggle */}

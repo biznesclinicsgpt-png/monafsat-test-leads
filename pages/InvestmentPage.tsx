@@ -1,17 +1,20 @@
 import React from 'react';
 import { HeroSection } from '../components/InvestmentV3/HeroSection';
+import { StatsRow } from '../components/InvestmentV3/dashboard/StatsRow';
 import { ProblemSection } from '../components/InvestmentV3/ProblemSection';
 import { MoatSection } from '../components/InvestmentV3/MoatSection';
-import { NinjaAgentsSection } from '../components/InvestmentV3/NinjaAgentsSection';
-import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
-import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
-import { PricingSection } from '../components/InvestmentV3/PricingSection';
-import { RevenueShareSection } from '../components/InvestmentV3/RevenueShareSection';
 import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
-import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection';
+import { GrowthTriangleSection } from '../components/InvestmentV3/GrowthTriangleSection';
 import { WorkStagesSection } from '../components/InvestmentV3/WorkStagesSection';
+import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
+import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
+import { DeliverablesSection } from '../components/InvestmentV3/DeliverablesSection';
+import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
+import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection';
 import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
+import { PricingSection } from '../components/InvestmentV3/PricingSection';
+import { RevenueShareSection } from '../components/InvestmentV3/RevenueShareSection';
 import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { FinalCtaSection } from '../components/InvestmentV3/FinalCtaSection';
 
@@ -28,26 +31,21 @@ const InvestmentPage = () => {
             }}
         >
             <HeroSection />
+            <StatsRow />
             <ProblemSection />
             <MoatSection />
-            <NinjaAgentsSection />
-            
-            {/* Smart growth calculator */}
-            <GrowthCalculatorSection />
-            
-            {/* Command center & agents dashboard */}
-            <SmartDashboardSection />
-            
-            {/* Packages & Pricing */}
-            <PricingSection />
-            <RevenueShareSection />
-            
-            {/* Supplementary info sections */}
             <MonafsatNetworkSection />
-            <ComparisonSection />
+            <GrowthTriangleSection />
             <WorkStagesSection />
+            <SmartDashboardSection />
+            <HumanTeamSection />
+            <DeliverablesSection />
+            <GrowthCalculatorSection />
+            <ComparisonSection />
             <AssetsSection />
             <FutureSection />
+            <PricingSection />
+            <RevenueShareSection />
             <SmartPortfolioSection />
             <FinalCtaSection />
         </div>

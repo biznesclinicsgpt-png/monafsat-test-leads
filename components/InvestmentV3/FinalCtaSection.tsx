@@ -3,8 +3,15 @@ import { motion } from 'framer-motion';
 import { Rocket, Sparkles, ChevronLeft } from 'lucide-react';
 
 export const FinalCtaSection = () => {
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <div className="py-40 bg-black relative overflow-hidden flex flex-col justify-center items-center">
+    <div className="py-40 bg-black relative overflow-hidden flex flex-col justify-center items-center border-t border-slate-900/60">
       
       {/* Cinematic Background */}
       <div className="absolute inset-0 z-0">
@@ -46,40 +53,25 @@ export const FinalCtaSection = () => {
           viewport={{ once: true }}
           transition={{ duration: 1 }}
         >
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
-            الشركات التي ستقود السوق مستقبلًا... <br/>
-            <span className="text-slate-500 text-3xl md:text-5xl font-normal">ليست الأكثر إرسالًا للرسائل</span>
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-16 leading-tight max-w-4xl mx-auto">
+            الشركات التي ستقود السوق ليست الأكثر إرسالًا للرسائل… <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400 mt-2 block">
+              بل الأكثر حضورًا، وصولًا، متابعة، وفهمًا لحركة الفرص.
+            </span>
           </h2>
-          
-          <div className="text-2xl md:text-3xl text-emerald-400 font-bold mb-12">
-            بل الأكثر:
-          </div>
-
-          <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-20">
-            {["حضورًا", "وصولًا", "متابعة", "فهمًا للسوق", "قدرة على تحريك الفرص"].map((word, i) => (
-              <motion.span
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 + (i * 0.2) }}
-                className="text-xl md:text-2xl font-bold text-white bg-white/5 border border-white/10 px-6 py-3 rounded-full shadow-[0_0_20px_rgba(255,255,255,0.05)]"
-              >
-                {word}
-              </motion.span>
-            ))}
-          </div>
 
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="group relative inline-flex items-center justify-center gap-3 px-8 py-5 bg-emerald-500 text-white rounded-full font-bold text-xl overflow-hidden shadow-[0_0_40px_rgba(16,185,129,0.4)] hover:shadow-[0_0_60px_rgba(16,185,129,0.6)] transition-all"
+            onClick={() => scrollToSection('pricing')}
+            className="group relative inline-flex items-center justify-center gap-3 px-8 py-5 bg-emerald-500 text-slate-950 rounded-2xl font-black text-lg overflow-hidden shadow-[0_0_40px_rgba(16,185,129,0.3)] hover:shadow-[0_0_60px_rgba(16,185,129,0.5)] transition-all duration-300"
           >
             <span className="relative z-10 flex items-center gap-2">
-              <Rocket className="w-6 h-6" />
-              احجز جلسة بناء منظومة النمو
-              <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform" />
+              <Rocket className="w-5 h-5 text-slate-950" />
+              ابدأ بناء منظومة النمو الخاصة بك
+              <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity z-0" />
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-300 opacity-0 group-hover:opacity-100 transition-opacity z-0" />
             
             {/* Sparkle effect on hover */}
             <Sparkles className="absolute top-2 left-4 w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:animate-ping text-white z-10" />
