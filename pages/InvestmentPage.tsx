@@ -32,11 +32,11 @@ const InvestmentPage = () => {
             <MoatSection />
             <NinjaAgentsSection />
             
-            {/* Command center & agents dashboard */}
-            <SmartDashboardSection />
-            
             {/* Smart growth calculator */}
             <GrowthCalculatorSection />
+            
+            {/* Command center & agents dashboard */}
+            <SmartDashboardSection />
             
             {/* Packages & Pricing */}
             <PricingSection />
