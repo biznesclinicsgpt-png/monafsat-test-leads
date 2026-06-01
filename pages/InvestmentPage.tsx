@@ -10,7 +10,6 @@ import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboard
 import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
 import { DeliverablesSection } from '../components/InvestmentV3/DeliverablesSection';
 import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
-import { ComparisonSection } from '../components/InvestmentV3/ComparisonSection';
 import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { PricingSection } from '../components/InvestmentV3/PricingSection';
@@ -106,10 +105,7 @@ const InvestmentPage = () => {
                 <GrowthCalculatorSection />
             </div>
             
-            <SectionBridge label="أثر المنظومة مقارنة بالجهود التقليدية" color="emerald" />
-            <div id="comparison">
-                <ComparisonSection />
-            </div>
+
             
             <SectionBridge label="بنية الأدوات والأصول التي تبقى للشركة" color="emerald" />
             <div id="tech-assets">

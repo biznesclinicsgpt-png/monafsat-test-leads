@@ -22,7 +22,6 @@ export const FlowRail = () => {
     { id: 'deliverables', name: 'ما تستلمه فعلياً' },
     { id: 'use-cases', name: 'نتائج وحالات تشغيل' },
     { id: 'growth-calculator', name: 'حاسبة النمو' },
-    { id: 'comparison', name: 'المقارنة الفنية' },
     { id: 'tech-assets', name: 'أصول مبيعاتك' },
     { id: 'future', name: 'النمو بعد ٦ شهور' },
     { id: 'pricing', name: 'باقات المبيعات' },
