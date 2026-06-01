@@ -39,8 +39,10 @@ export const partnersLogos: PartnerLogo[] = [
   { name: "Dimensions Solutions", logoSrc: "/logos/partners/dimensions.png", alt: "Dimensions Solutions logo", category: "corporate", sizeHint: "square" },
   { name: "Nixpend", logoSrc: "/logos/partners/nixpend.png", alt: "Nixpend logo", category: "technology", sizeHint: "wide" },
   { name: "Tamara", logoSrc: "/logos/partners/tamara.png", alt: "Tamara logo", category: "finance", sizeHint: "square" },
-  { name: "Qtech", logoSrc: "/logos/partners/qtech.png", alt: "Qtech logo", category: "technology", sizeHint: "square" },
-  { name: "Rqmii", logoSrc: "/logos/partners/rqmii.png", alt: "Rqmii logo", category: "technology", sizeHint: "square" },
+  { name: "درر الليالي", logoSrc: "/logos/partners/dorar_layali.png", alt: "درر الليالي logo", category: "realestate", sizeHint: "square" },
+  { name: "دوائر المعرفة", logoSrc: "/logos/partners/knowledge_circles.png", alt: "دوائر المعرفة logo", category: "finance", sizeHint: "square" },
+  { name: "EduStation", logoSrc: "/logos/partners/edustation.png", alt: "EduStation logo", category: "education", sizeHint: "square" },
+  { name: "دفاتر DAFATER", logoSrc: "/logos/partners/dafater.png", alt: "Dafater logo", category: "technology", sizeHint: "wide" },
 ];
 
 // 2. Opportunity Sources (Organized in Strategic Layers)
