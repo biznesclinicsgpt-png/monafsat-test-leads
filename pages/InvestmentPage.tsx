@@ -19,6 +19,9 @@ import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolio
 import { FinalCtaSection } from '../components/InvestmentV3/FinalCtaSection';
 import { FlowRail } from '../components/InvestmentV3/FlowRail';
 import { SectionBridge } from '../components/InvestmentV3/SectionBridge';
+import { PartnersMarqueeSection } from '../components/InvestmentV3/PartnersMarqueeSection';
+import { OpportunitySourcesSection } from '../components/InvestmentV3/OpportunitySourcesSection';
+import { UseCasesSection } from '../components/InvestmentV3/UseCasesSection';
 
 const InvestmentPage = () => {
     return (
@@ -43,6 +46,11 @@ const InvestmentPage = () => {
                 <StatsRow />
             </div>
             
+            <SectionBridge label="عملاء وشركاء خاضوا التجربة معنا" color="aqua" />
+            <div id="partners">
+                <PartnersMarqueeSection />
+            </div>
+            
             <SectionBridge label="رصد أين تتسرب فرص المبيعات" color="aqua" />
             <div id="problem">
                 <ProblemSection />
@@ -51,6 +59,11 @@ const InvestmentPage = () => {
             <SectionBridge label="التحول من الفوضى لميزة تنافسية" color="aqua" />
             <div id="moat">
                 <MoatSection />
+            </div>
+            
+            <SectionBridge label="وفرنا فرصًا من جهات وقطاعات مختلفة" color="aqua" />
+            <div id="opportunity-sources">
+                <OpportunitySourcesSection />
             </div>
             
             <SectionBridge label="الميزة التنافسية ← السيطرة وإدارة دفة الفرص" color="aqua" />
@@ -81,6 +94,11 @@ const InvestmentPage = () => {
             <SectionBridge label="مخرجات وأصول مبيعات حقيقية" color="emerald" />
             <div id="deliverables">
                 <DeliverablesSection />
+            </div>
+            
+            <SectionBridge label="حالات تشغيل حقيقية من نتائج حركة الفرص" color="emerald" />
+            <div id="use-cases">
+                <UseCasesSection />
             </div>
             
             <SectionBridge label="المخرجات ← محاكاة النمو المالي المتوقع" color="emerald" />

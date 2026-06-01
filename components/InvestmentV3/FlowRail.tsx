@@ -10,14 +10,17 @@ export const FlowRail = () => {
   const sections = [
     { id: 'hero', name: 'الوعد الكبير' },
     { id: 'stats-row', name: 'أرقام الثقة' },
+    { id: 'partners', name: 'شركاء خاضوا التجربة' },
     { id: 'problem', name: 'المشكلة الأساسية' },
     { id: 'moat', name: 'الميزة التنافسية' },
+    { id: 'opportunity-sources', name: 'مصادر الفرص' },
     { id: 'radar-system', name: 'دفة الفرص' },
     { id: 'growth-triangle', name: 'مثلث النمو' },
     { id: 'work-stages', name: 'رحلة الإيرادات' },
     { id: 'dashboard-cmd', name: '٢٥ وكيل ذكي' },
     { id: 'human-team', name: 'الفريق البشري' },
     { id: 'deliverables', name: 'ما تستلمه فعلياً' },
+    { id: 'use-cases', name: 'نتائج وحالات تشغيل' },
     { id: 'growth-calculator', name: 'حاسبة النمو' },
     { id: 'comparison', name: 'المقارنة الفنية' },
     { id: 'tech-assets', name: 'أصول مبيعاتك' },
@@ -82,7 +85,7 @@ export const FlowRail = () => {
         <div className="flex flex-col">
           <span className="text-[10px] text-slate-500 font-bold">رحلة الإيرادات التفاعلية</span>
           <span className="text-xs font-black text-white mt-0.5">
-            {activeSection + 1}. {sections[activeSection]?.name}
+            {activeSection + 1} / {sections.length} — {sections[activeSection]?.name}
           </span>
         </div>
 
@@ -125,7 +128,7 @@ export const FlowRail = () => {
       {/* Floating Side Nav Journey widget */}
       <div className="fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden xl:flex flex-col gap-3.5 bg-slate-950/80 border border-slate-900 p-5 rounded-3xl backdrop-blur-md shadow-2xl max-w-[200px]" dir="rtl">
         <div className="text-[10px] text-slate-500 font-extrabold pb-2 border-b border-slate-900 text-center tracking-wider uppercase">
-          رحلة النمو (١٨ مرحلة)
+          رحلة النمو (٢١ مرحلة)
         </div>
         
         <div className="flex flex-col gap-2 max-h-[70vh] overflow-y-auto pr-1 text-right">

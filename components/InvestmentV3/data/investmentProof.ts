@@ -1,0 +1,114 @@
+export interface PartnerLogo {
+  name: string;
+  logoSrc: string;
+  alt: string;
+  category?: string;
+  sizeHint?: string;
+}
+
+export interface OpportunitySource {
+  name: string;
+  logoSrc: string;
+  type: 'govt' | 'semigov' | 'corporate' | 'private';
+  typeName: string;
+  note: string;
+}
+
+export interface UseCase {
+  id: string;
+  title: string;
+  sector: string;
+  outreach: number | null;
+  positiveConversations: number | null;
+  bookedMeetings: number | null;
+  qualifiedMeetings: number | null;
+  channels: string[];
+  timeframe: string;
+  result: string;
+  approved: boolean;
+}
+
+// 1. Partners Logos Data (Demo values)
+export const partnersLogos: PartnerLogo[] = [
+  { name: "أرامكو السعودية", logoSrc: "/logos/partners/aramco.svg", alt: "Aramco logo", category: "energy", sizeHint: "max-w-[110px]" },
+  { name: "سابك", logoSrc: "/logos/partners/sabic.svg", alt: "Sabic logo", category: "industrial", sizeHint: "max-w-[100px]" },
+  { name: "الاتصالات السعودية STC", logoSrc: "/logos/partners/stc.svg", alt: "STC logo", category: "telecom", sizeHint: "max-w-[90px]" },
+  { name: "البنك الأهلي السعودي SNB", logoSrc: "/logos/partners/snb.svg", alt: "SNB logo", category: "finance", sizeHint: "max-w-[115px]" },
+  { name: "مصرف الراجحي", logoSrc: "/logos/partners/rajhi.svg", alt: "Al Rajhi logo", category: "finance", sizeHint: "max-w-[105px]" },
+  { name: "شركة المراعي", logoSrc: "/logos/partners/almarai.svg", alt: "Almarai logo", category: "food", sizeHint: "max-w-[100px]" },
+  { name: "الشركة السعودية للكهرباء", logoSrc: "/logos/partners/se.svg", alt: "Saudi Electricity logo", category: "utilities", sizeHint: "max-w-[110px]" },
+  { name: "نادك", logoSrc: "/logos/partners/nadec.svg", alt: "Nadec logo", category: "food", sizeHint: "max-w-[95px]" },
+  { name: "مجموعة العبيكان", logoSrc: "/logos/partners/obeikan.svg", alt: "Obeikan logo", category: "industrial", sizeHint: "max-w-[120px]" },
+  { name: "شركة معادن", logoSrc: "/logos/partners/maaden.svg", alt: "Maaden logo", category: "mining", sizeHint: "max-w-[110px]" },
+  { name: "مجموعة التميمي", logoSrc: "/logos/partners/tamimi.svg", alt: "Tamimi logo", category: "retail", sizeHint: "max-w-[105px]" },
+  { name: "شركة الطيار", logoSrc: "/logos/partners/altayyar.svg", alt: "Altayyar logo", category: "travel", sizeHint: "max-w-[115px]" },
+  { name: "شركة جرير", logoSrc: "/logos/partners/jarir.svg", alt: "Jarir logo", category: "retail", sizeHint: "max-w-[90px]" },
+  { name: "مجموعة الشايع", logoSrc: "/logos/partners/shaya.svg", alt: "Shaya logo", category: "retail", sizeHint: "max-w-[100px]" },
+  { name: "الخزف السعودي", logoSrc: "/logos/partners/ceramics.svg", alt: "Saudi Ceramics logo", category: "manufacturing", sizeHint: "max-w-[110px]" },
+];
+
+// 2. Opportunity Sources (Organized in Strategic Layers)
+export const opportunitySources: OpportunitySource[] = [
+  // Govt Layer
+  { name: "وزارة الشؤون البلدية والقروية والإسكان", logoSrc: "/logos/sources/housing.svg", type: "govt", typeName: "جهة حكومية", note: "مصدر فرص تعميد وتوريد" },
+  { name: "وزارة الصحة السعودية", logoSrc: "/logos/sources/moh.svg", type: "govt", typeName: "جهة حكومية", note: "مصدر فرص خدمات طبية وتوريد" },
+  { name: "وزارة التعليم", logoSrc: "/logos/sources/moe.svg", type: "govt", typeName: "جهة حكومية", note: "مصدر فرص خدمات تقنية وتجهيز" },
+  
+  // Semi-Gov Layer
+  { name: "هيئة تطوير بوابة الدرعية", logoSrc: "/logos/sources/dgda.svg", type: "semigov", typeName: "هيئة شبه حكومية", note: "مصدر فرص مقاولات وخدمات استشارية" },
+  { name: "هيئة البيانات والذكاء الاصطناعي (سدايا)", logoSrc: "/logos/sources/sdaia.svg", type: "semigov", typeName: "هيئة شبه حكومية", note: "مصدر فرص حلول تقنية وبرمجيات" },
+  { name: "مشروع نيوم (NEOM)", logoSrc: "/logos/sources/neom.svg", type: "semigov", typeName: "مشروع وطني كبـير", note: "مصدر فرص عقود وتوريد ومقاولات" },
+
+  // Corporate Layer
+  { name: "شركة الاتصالات السعودية (حلول stc)", logoSrc: "/logos/sources/solutions-stc.svg", type: "corporate", typeName: "شركة كبرى مدرجة", note: "مصدر فرص مشاريع تقنية متكاملة" },
+  { name: "مجموعة العليان", logoSrc: "/logos/sources/olayan.svg", type: "corporate", typeName: "مجموعة استثمارية كبرى", note: "مصدر فرص خدمات تشغيلية B2B" },
+  { name: "مجموعة بن لادن السعودية", logoSrc: "/logos/sources/sbg.svg", type: "corporate", typeName: "شركة تشييد كبرى", note: "مصدر فرص سلاسل التوريد والخدمات المساندة" },
+
+  // Private Sector Layer
+  { name: "مجموعات مقاولات إنشائية خاصة", logoSrc: "/logos/sources/const.svg", type: "private", typeName: "قطاع مقاولات خاص", note: "فرص مقاولات فرعية وتوريد مواد" },
+  { name: "سلسلة مستشفيات ومراكز طبية خاصة", logoSrc: "/logos/sources/med.svg", type: "private", typeName: "قطاع رعاية صحية خاص", note: "فرص توريد أجهزة وأنظمة تشغيل" },
+  { name: "شركات تجارة جملة وتجزئة أغذية", logoSrc: "/logos/sources/retail-p.svg", type: "private", typeName: "مجموعة أغذية وتجزئة", note: "فرص لوجستيات وسلاسل إمداد" },
+];
+
+// 3. Operational Use Cases (Demo templates with approved logic)
+export const useCases: UseCase[] = [
+  {
+    id: "usecase-erp",
+    title: "حملة نمو قطاع أنظمة ERP للمقاولات",
+    sector: "أنظمة ERP وتطبيقات سحابية",
+    outreach: 12000,
+    positiveConversations: 430,
+    bookedMeetings: 48,
+    qualifiedMeetings: 34,
+    channels: ["WhatsApp", "LinkedIn", "Email"],
+    timeframe: "90 يوم",
+    result: "تحويل الاستهداف عالي الجودة إلى اجتماعات مؤهلة مباشرة مع مدراء المشاريع والمدراء الماليين في شركات التشييد والمقاولات المصنفة.",
+    approved: true, // Approved for public display in visual verification
+  },
+  {
+    id: "usecase-healthcare",
+    title: "توسيع مبيعات الأجهزة الطبية B2B",
+    sector: "مستلزمات طبية ورعاية صحية",
+    outreach: 4800,
+    positiveConversations: 195,
+    bookedMeetings: 26,
+    qualifiedMeetings: 19,
+    channels: ["WhatsApp", "Calls", "Email"],
+    timeframe: "60 يوم",
+    result: "اختراق وتجاوز البيروقراطية الإدارية والوصول المباشر للمدراء التنفيذيين ورؤساء الأقسام بالمستشفيات الخاصة الكبرى.",
+    approved: false, // Internal/Preview Mode only
+  },
+  {
+    id: "usecase-industrial",
+    title: "توريد معدات ومواد مصانع التعبئة والتغليف",
+    sector: "توريد صناعي وخدمات لوجستية",
+    outreach: 8500,
+    positiveConversations: 310,
+    bookedMeetings: 32,
+    qualifiedMeetings: 22,
+    channels: ["LinkedIn", "Calls", "Email"],
+    timeframe: "90 يوم",
+    result: "ربط المصنع المحلي بمدراء المشتريات وسلاسل الإمداد في مصانع الأغذية والمشروبات الكبرى بالمملكة.",
+    approved: false, // Internal/Preview Mode only
+  }
+];
