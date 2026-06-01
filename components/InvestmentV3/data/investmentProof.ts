@@ -29,6 +29,11 @@ export interface UseCase {
 }
 
 export const partnersLogos: PartnerLogo[] = [
+  { name: "InduBridge", logoSrc: "/logos/partners/indubridge.png", alt: "InduBridge logo", category: "industrial", sizeHint: "wide" },
+  { name: "Vorvix", logoSrc: "/logos/partners/vorvix.png", alt: "Vorvix logo", category: "technology", sizeHint: "wide" },
+  { name: "AMASI Tech", logoSrc: "/logos/partners/amasi.png", alt: "AMASI Tech logo", category: "technology", sizeHint: "wide" },
+  { name: "Stehr Corp", logoSrc: "/logos/partners/stehr.png", alt: "Stehr Corp logo", category: "corporate", sizeHint: "square" },
+  { name: "CIS Co.", logoSrc: "/logos/partners/cis.png", alt: "CIS Co. logo", category: "technology", sizeHint: "wide" },
   { name: "Logix", logoSrc: "/logos/partners/logix.png", alt: "Logix logo", category: "technology", sizeHint: "wide" },
   { name: "Flex", logoSrc: "/logos/partners/flex.png", alt: "Flex logo", category: "technology", sizeHint: "wide" },
   { name: "Dimensions Solutions", logoSrc: "/logos/partners/dimensions.png", alt: "Dimensions Solutions logo", category: "corporate", sizeHint: "square" },
@@ -36,8 +41,6 @@ export const partnersLogos: PartnerLogo[] = [
   { name: "Tamara", logoSrc: "/logos/partners/tamara.png", alt: "Tamara logo", category: "finance", sizeHint: "square" },
   { name: "Qtech", logoSrc: "/logos/partners/qtech.png", alt: "Qtech logo", category: "technology", sizeHint: "square" },
   { name: "Rqmii", logoSrc: "/logos/partners/rqmii.png", alt: "Rqmii logo", category: "technology", sizeHint: "square" },
-  { name: "Almentor", logoSrc: "/logos/partners/almentor.png", alt: "Almentor logo", category: "education", sizeHint: "wide" },
-  { name: "OSolutions", logoSrc: "/logos/partners/osolutions.png", alt: "OSolutions logo", category: "technology", sizeHint: "wide" },
 ];
 
 // 2. Opportunity Sources (Organized in Strategic Layers)
