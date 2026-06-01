@@ -50,19 +50,19 @@ export const partnersLogos: PartnerLogo[] = [
 // 2. Opportunity Sources (Organized in Strategic Layers)
 export const opportunitySources: OpportunitySource[] = [
   // Govt Layer
-  { name: "وزارة الشؤون البلدية والقروية والإسكان", logoSrc: "/logos/sources/housing.svg", type: "govt", typeName: "جهة حكومية", note: "مصدر فرص تعميد وتوريد" },
-  { name: "وزارة الصحة السعودية", logoSrc: "/logos/sources/moh.svg", type: "govt", typeName: "جهة حكومية", note: "مصدر فرص خدمات طبية وتوريد" },
-  { name: "وزارة التعليم", logoSrc: "/logos/sources/moe.svg", type: "govt", typeName: "جهة حكومية", note: "مصدر فرص خدمات تقنية وتجهيز" },
+  { name: "وزارة الصحة السعودية", logoSrc: "/logos/sources/cropped/gov_logo_6.png", type: "govt", typeName: "جهة حكومية", note: "فرص توريد وخدمات طبية مساندة" },
+  { name: "وزارة الشؤون البلدية والقروية والإسكان", logoSrc: "/logos/sources/cropped/gov_logo_3.png", type: "govt", typeName: "جهة حكومية", note: "فرص مشاريع تطوير بلدي وإسكان" },
+  { name: "وزارة الدفاع", logoSrc: "/logos/sources/cropped/gov_logo_13.png", type: "govt", typeName: "جهة حكومية", note: "فرص عقود توريد وتجهيزات هندسية" },
   
-  // Semi-Gov Layer
-  { name: "هيئة تطوير بوابة الدرعية", logoSrc: "/logos/sources/dgda.svg", type: "semigov", typeName: "هيئة شبه حكومية", note: "مصدر فرص مقاولات وخدمات استشارية" },
-  { name: "هيئة البيانات والذكاء الاصطناعي (سدايا)", logoSrc: "/logos/sources/sdaia.svg", type: "semigov", typeName: "هيئة شبه حكومية", note: "مصدر فرص حلول تقنية وبرمجيات" },
-  { name: "مشروع نيوم (NEOM)", logoSrc: "/logos/sources/neom.svg", type: "semigov", typeName: "مشروع وطني كبـير", note: "مصدر فرص عقود وتوريد ومقاولات" },
+  // Semi-Gov / Municipal Layer
+  { name: "أمانة منطقة الرياض", logoSrc: "/logos/sources/riyadh.png", type: "semigov", typeName: "أمانة منطقة", note: "فرص تشغيل وصيانة وتطوير بلدي" },
+  { name: "أمانة منطقة المدينة المنورة", logoSrc: "/logos/sources/madinah.png", type: "semigov", typeName: "أمانة منطقة", note: "فرص تطوير وتنمية بلدي متكاملة" },
+  { name: "أمانة الأحساء", logoSrc: "/logos/sources/alahsa.png", type: "semigov", typeName: "أمانة منطقة", note: "مشاريع بنية تحتية وعقود توريد" },
 
   // Corporate Layer
-  { name: "شركة الاتصالات السعودية (حلول stc)", logoSrc: "/logos/sources/solutions-stc.svg", type: "corporate", typeName: "شركة كبرى مدرجة", note: "مصدر فرص مشاريع تقنية متكاملة" },
-  { name: "مجموعة العليان", logoSrc: "/logos/sources/olayan.svg", type: "corporate", typeName: "مجموعة استثمارية كبرى", note: "مصدر فرص خدمات تشغيلية B2B" },
-  { name: "مجموعة بن لادن السعودية", logoSrc: "/logos/sources/sbg.svg", type: "corporate", typeName: "شركة تشييد كبرى", note: "مصدر فرص سلاسل التوريد والخدمات المساندة" },
+  { name: "أرامكو السعودية", logoSrc: "/logos/sources/cropped/gov_logo_24.png", type: "corporate", typeName: "شركة طاقة كبرى مدرجة", note: "فرص عقود خدمات وسلاسل إمداد B2B" },
+  { name: "البريد السعودي (سبل)", logoSrc: "/logos/sources/cropped/gov_logo_17.png", type: "corporate", typeName: "مؤسسة بريدية لوجستية", note: "فرص عقود تشغيل وخدمات لوجستية" },
+  { name: "المؤسسة العامة للتأمينات الاجتماعية", logoSrc: "/logos/sources/cropped/gov_logo_21.png", type: "corporate", typeName: "مؤسسة عامة استثمارية", note: "فرص عقود أنظمة وتجهيزات تقنية" },
 
   // Private Sector Layer
   { name: "مجموعات مقاولات إنشائية خاصة", logoSrc: "/logos/sources/const.svg", type: "private", typeName: "قطاع مقاولات خاص", note: "فرص مقاولات فرعية وتوريد مواد" },

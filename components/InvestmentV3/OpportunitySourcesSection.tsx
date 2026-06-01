@@ -152,22 +152,43 @@ export const OpportunitySourcesSection = () => {
                             onMouseEnter={() => setHoveredNode(`${cat.id}-${idx}`)}
                             onMouseLeave={() => setHoveredNode(null)}
                             className={cn(
-                              "relative p-3.5 rounded-xl border transition-all duration-300 cursor-pointer flex items-center justify-between text-right",
+                              "relative p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex items-center justify-between text-right gap-3",
                               isHovered 
-                                ? "border-cyan-500/50 bg-[#0B0F19] shadow-[0_0_15px_rgba(6,182,212,0.1)]" 
+                                ? "border-cyan-500/50 bg-[#0B0F19] shadow-[0_0_15px_rgba(6,182,212,0.15)]" 
                                 : "border-slate-900/60 bg-black/40 hover:border-slate-800"
                             )}
                           >
+                            {/* Logo image container and text (RTL Flow: Right to Left) */}
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center p-1.5 shrink-0 overflow-hidden transition-colors duration-300" style={{ backdropFilter: 'blur(4px)' }}>
+                                <img 
+                                  src={source.logoSrc} 
+                                  alt={source.name} 
+                                  className={cn(
+                                    "w-full h-full object-contain filter grayscale brightness-90 contrast-125 transition-all duration-300",
+                                    isHovered ? "grayscale-0 brightness-100 scale-105" : "opacity-60"
+                                  )}
+                                  onError={(e) => {
+                                    // Fallback if image fails to load
+                                    e.currentTarget.style.display = 'none';
+                                    const dot = e.currentTarget.parentElement?.querySelector('.fallback-dot');
+                                    if (dot) dot.classList.remove('hidden');
+                                  }}
+                                />
+                                <div className="fallback-dot hidden w-1.5 h-1.5 rounded-full bg-slate-500" />
+                              </div>
+                              
+                              {/* Label representing source name */}
+                              <span className="text-[10px] md:text-xs font-black text-slate-300 truncate max-w-[140px] transition-colors group-hover:text-white">
+                                {source.name}
+                              </span>
+                            </div>
+
                             {/* Inner glowing dot */}
                             <div className={cn(
-                              "w-1.5 h-1.5 rounded-full shrink-0 ml-2 transition-all duration-300",
+                              "w-1.5 h-1.5 rounded-full shrink-0 ml-1 transition-all duration-300",
                               isHovered ? "bg-cyan-400 shadow-[0_0_8px_#22d3ee] scale-125" : "bg-slate-700"
                             )} />
-                            
-                            {/* Label representing source name */}
-                            <span className="text-[10px] md:text-xs font-black text-slate-300 truncate max-w-[170px] transition-colors group-hover:text-white">
-                              {source.name}
-                            </span>
 
                             {/* Hover detail popup overlay */}
                             <AnimatePresence>
