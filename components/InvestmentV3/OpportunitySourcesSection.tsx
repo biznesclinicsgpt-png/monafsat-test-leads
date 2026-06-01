@@ -4,6 +4,30 @@ import { Target, HelpCircle, ArrowLeft } from 'lucide-react';
 import { opportunitySources } from './data/investmentProof';
 import { cn } from '../../lib/utils';
 
+const SourceLogo = ({ src, alt, isHovered }: { src: string; alt: string; isHovered: boolean }) => {
+  const [error, setError] = useState(false);
+  
+  if (error || !src) {
+    return (
+      <div className="w-full h-full flex items-center justify-center bg-cyan-500/5 text-cyan-400">
+        <Target className="w-4 h-4 shrink-0" />
+      </div>
+    );
+  }
+
+  return (
+    <img 
+      src={src} 
+      alt={alt} 
+      className={cn(
+        "w-full h-full object-contain transition-all duration-300",
+        isHovered ? "scale-105 opacity-100" : "opacity-90"
+      )}
+      onError={() => setError(true)}
+    />
+  );
+};
+
 export const OpportunitySourcesSection = () => {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
 
@@ -161,29 +185,15 @@ export const OpportunitySourcesSection = () => {
                             {/* Logo image container and text (RTL Flow: Right to Left) */}
                             <div className="flex items-center gap-3 min-w-0">
                               <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center p-1.5 shrink-0 overflow-hidden transition-colors duration-300" style={{ backdropFilter: 'blur(4px)' }}>
-                                <img 
-                                  src={source.logoSrc} 
-                                  alt={source.name} 
-                                  className={cn(
-                                    "w-full h-full object-contain transition-all duration-300",
-                                    isHovered ? "scale-105 opacity-100" : "opacity-90"
-                                  )}
-                                  onError={(e) => {
-                                    // Fallback if image fails to load
-                                    e.currentTarget.style.display = 'none';
-                                    const dot = e.currentTarget.parentElement?.querySelector('.fallback-dot');
-                                    if (dot) dot.classList.remove('hidden');
-                                  }}
-                                />
-                                <div className="fallback-dot hidden w-1.5 h-1.5 rounded-full bg-slate-500" />
+                                <SourceLogo src={source.logoSrc} alt={source.name} isHovered={isHovered} />
                               </div>
                               
                               {/* Label representing source name and sub-type */}
                               <div className="flex flex-col min-w-0 text-right">
-                                <span className="text-[10px] md:text-xs font-black text-white truncate max-w-[140px] transition-colors leading-tight">
+                                <span className="text-[10px] md:text-xs font-black text-white whitespace-normal transition-colors leading-tight">
                                   {source.name}
                                 </span>
-                                <span className="text-[8px] text-slate-500 font-bold mt-1.5">
+                                <span className="text-[8px] text-slate-500 font-bold mt-1">
                                   {source.typeName}
                                 </span>
                               </div>
