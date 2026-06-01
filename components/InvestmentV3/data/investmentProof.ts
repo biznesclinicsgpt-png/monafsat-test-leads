@@ -28,28 +28,27 @@ export interface UseCase {
   approved: boolean;
 }
 
-// 1. Partners Logos Data (Demo values)
 export const partnersLogos: PartnerLogo[] = [
-  { name: "InduBridge", logoSrc: "/logos/partners/indubridge.png", alt: "InduBridge logo", category: "industrial", sizeHint: "max-w-[115px]" },
-  { name: "Vorvix", logoSrc: "/logos/partners/vorvix.png", alt: "Vorvix logo", category: "technology", sizeHint: "max-w-[100px]" },
-  { name: "AMASI Tech", logoSrc: "/logos/partners/amasi.png", alt: "AMASI Tech logo", category: "technology", sizeHint: "max-w-[115px]" },
-  { name: "Stehr Corp", logoSrc: "/logos/partners/stehr.png", alt: "Stehr Corp logo", category: "corporate", sizeHint: "max-w-[90px]" },
-  { name: "CIS Co.", logoSrc: "/logos/partners/cis.png", alt: "CIS Co. logo", category: "technology", sizeHint: "max-w-[110px]" },
-  { name: "أرامكو السعودية", logoSrc: "/logos/partners/aramco.svg", alt: "Aramco logo", category: "energy", sizeHint: "max-w-[110px]" },
-  { name: "سابك", logoSrc: "/logos/partners/sabic.svg", alt: "Sabic logo", category: "industrial", sizeHint: "max-w-[100px]" },
-  { name: "الاتصالات السعودية STC", logoSrc: "/logos/partners/stc.svg", alt: "STC logo", category: "telecom", sizeHint: "max-w-[90px]" },
-  { name: "البنك الأهلي السعودي SNB", logoSrc: "/logos/partners/snb.svg", alt: "SNB logo", category: "finance", sizeHint: "max-w-[115px]" },
-  { name: "مصرف الراجحي", logoSrc: "/logos/partners/rajhi.svg", alt: "Al Rajhi logo", category: "finance", sizeHint: "max-w-[105px]" },
-  { name: "شركة المراعي", logoSrc: "/logos/partners/almarai.svg", alt: "Almarai logo", category: "food", sizeHint: "max-w-[100px]" },
-  { name: "الشركة السعودية للكهرباء", logoSrc: "/logos/partners/se.svg", alt: "Saudi Electricity logo", category: "utilities", sizeHint: "max-w-[110px]" },
-  { name: "نادك", logoSrc: "/logos/partners/nadec.svg", alt: "Nadec logo", category: "food", sizeHint: "max-w-[95px]" },
-  { name: "مجموعة العبيكان", logoSrc: "/logos/partners/obeikan.svg", alt: "Obeikan logo", category: "industrial", sizeHint: "max-w-[120px]" },
-  { name: "شركة معادن", logoSrc: "/logos/partners/maaden.svg", alt: "Maaden logo", category: "mining", sizeHint: "max-w-[110px]" },
-  { name: "مجموعة التميمي", logoSrc: "/logos/partners/tamimi.svg", alt: "Tamimi logo", category: "retail", sizeHint: "max-w-[105px]" },
-  { name: "شركة الطيار", logoSrc: "/logos/partners/altayyar.svg", alt: "Altayyar logo", category: "travel", sizeHint: "max-w-[115px]" },
-  { name: "شركة جرير", logoSrc: "/logos/partners/jarir.svg", alt: "Jarir logo", category: "retail", sizeHint: "max-w-[90px]" },
-  { name: "مجموعة الشايع", logoSrc: "/logos/partners/shaya.svg", alt: "Shaya logo", category: "retail", sizeHint: "max-w-[100px]" },
-  { name: "الخزف السعودي", logoSrc: "/logos/partners/ceramics.svg", alt: "Saudi Ceramics logo", category: "manufacturing", sizeHint: "max-w-[110px]" },
+  { name: "InduBridge", logoSrc: "/logos/partners/indubridge.png", alt: "InduBridge logo", category: "industrial", sizeHint: "square" },
+  { name: "أرامكو السعودية", logoSrc: "/logos/partners/aramco.svg", alt: "Aramco logo", category: "energy", sizeHint: "wide" },
+  { name: "سابك", logoSrc: "/logos/partners/sabic.svg", alt: "Sabic logo", category: "industrial", sizeHint: "wide" },
+  { name: "الاتصالات السعودية STC", logoSrc: "/logos/partners/stc.svg", alt: "STC logo", category: "telecom", sizeHint: "compact" },
+  { name: "Vorvix", logoSrc: "/logos/partners/vorvix.png", alt: "Vorvix logo", category: "technology", sizeHint: "wide" },
+  { name: "البنك الأهلي السعودي SNB", logoSrc: "/logos/partners/snb.svg", alt: "SNB logo", category: "finance", sizeHint: "wide" },
+  { name: "مصرف الراجحي", logoSrc: "/logos/partners/rajhi.svg", alt: "Al Rajhi logo", category: "finance", sizeHint: "wide" },
+  { name: "شركة المراعي", logoSrc: "/logos/partners/almarai.svg", alt: "Almarai logo", category: "food", sizeHint: "wide" },
+  { name: "AMASI Tech", logoSrc: "/logos/partners/amasi.png", alt: "AMASI Tech logo", category: "technology", sizeHint: "wide" },
+  { name: "الشركة السعودية للكهرباء", logoSrc: "/logos/partners/se.svg", alt: "Saudi Electricity logo", category: "utilities", sizeHint: "wide" },
+  { name: "نادك", logoSrc: "/logos/partners/nadec.svg", alt: "Nadec logo", category: "food", sizeHint: "wide" },
+  { name: "مجموعة العبيكان", logoSrc: "/logos/partners/obeikan.svg", alt: "Obeikan logo", category: "industrial", sizeHint: "wide" },
+  { name: "Stehr Corp", logoSrc: "/logos/partners/stehr.png", alt: "Stehr Corp logo", category: "corporate", sizeHint: "square" },
+  { name: "شركة معادن", logoSrc: "/logos/partners/maaden.svg", alt: "Maaden logo", category: "mining", sizeHint: "wide" },
+  { name: "مجموعة التميمي", logoSrc: "/logos/partners/tamimi.svg", alt: "Tamimi logo", category: "retail", sizeHint: "wide" },
+  { name: "شركة الطيار", logoSrc: "/logos/partners/altayyar.svg", alt: "Altayyar logo", category: "travel", sizeHint: "wide" },
+  { name: "CIS Co.", logoSrc: "/logos/partners/cis.png", alt: "CIS Co. logo", category: "technology", sizeHint: "square" },
+  { name: "شركة جرير", logoSrc: "/logos/partners/jarir.svg", alt: "Jarir logo", category: "retail", sizeHint: "wide" },
+  { name: "مجموعة الشايع", logoSrc: "/logos/partners/shaya.svg", alt: "Shaya logo", category: "retail", sizeHint: "wide" },
+  { name: "الخزف السعودي", logoSrc: "/logos/partners/ceramics.svg", alt: "Saudi Ceramics logo", category: "manufacturing", sizeHint: "wide" },
 ];
 
 // 2. Opportunity Sources (Organized in Strategic Layers)

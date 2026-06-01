@@ -13,38 +13,47 @@ export const PartnersMarqueeSection = () => {
   const row3 = [...partnersLogos].slice(5).concat([...partnersLogos].slice(0, 5));
 
   const renderLogoCard = (logo: typeof partnersLogos[0], idx: number, isStatic = false) => {
+    // Determine custom dimensions based on sizeHint
+    let maxW = '68%';
+    let maxH = '54px';
+    if (logo.sizeHint === 'compact') {
+      maxW = '75%';
+      maxH = '60px';
+    } else if (logo.sizeHint === 'wide') {
+      maxW = '72%';
+      maxH = '48px';
+    } else if (logo.sizeHint === 'tall') {
+      maxW = '52%';
+      maxH = '64px';
+    } else if (logo.sizeHint === 'square') {
+      maxW = '58%';
+      maxH = '58px';
+    }
+
     return (
       <div 
         key={`${logo.name}-${idx}`}
         className={cn(
-          "px-6 py-4 rounded-2xl bg-[#090D16]/60 border border-slate-900 flex items-center justify-center backdrop-blur-sm transition-all duration-300 min-w-[160px] h-[75px]",
-          isStatic 
-            ? "hover:border-slate-800" 
-            : "mx-3 hover:border-cyan-500/40 hover:bg-[#0B0F19] hover:shadow-[0_0_20px_rgba(6,182,212,0.15)] group shrink-0 cursor-help"
+          "partner-logo-card px-4 py-2 rounded-2xl flex items-center justify-center backdrop-blur-sm min-w-[165px] md:min-w-[210px] h-[88px] md:h-[118px] shrink-0 cursor-help",
+          isStatic ? "static-card" : "mx-3 group"
         )}
       >
         <img 
           src={logo.logoSrc} 
           alt={logo.alt} 
-          className={cn(
-            "h-7 object-contain filter brightness-0 invert opacity-45 transition-all duration-300",
-            !isStatic && "group-hover:opacity-100 group-hover:scale-105",
-            logo.sizeHint || "max-w-[130px]"
-          )}
+          className="partner-logo-image object-contain"
+          style={{ maxWidth: maxW, maxHeight: maxH }}
           onError={(e) => {
             // Graceful fallback for missing SVG/PNG assets
             e.currentTarget.style.display = 'none';
             const parent = e.currentTarget.parentElement;
             if (parent) {
-              const fallback = parent.querySelector('.logo-fallback');
+              const fallback = parent.querySelector('.partner-logo-fallback');
               if (fallback) fallback.classList.remove('hidden');
             }
           }}
         />
-        <span className={cn(
-          "logo-fallback hidden text-xs font-black text-slate-500 text-center transition-colors duration-300",
-          !isStatic && "group-hover:text-cyan-400"
-        )}>
+        <span className="partner-logo-fallback logo-fallback hidden text-center select-none">
           {logo.name}
         </span>
       </div>
@@ -54,7 +63,7 @@ export const PartnersMarqueeSection = () => {
   return (
     <div className="py-24 bg-[#050505] relative overflow-hidden border-t border-slate-900/60" id="partners">
       
-      {/* Inline Styles for CSS Animation (Infinite loop marquee) */}
+      {/* Inline Styles for CSS Animation & Logo Aesthetics */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee-left {
           0% { transform: translate3d(0, 0, 0); }
@@ -72,6 +81,56 @@ export const PartnersMarqueeSection = () => {
         }
         .pause-on-hover:hover .marquee-inner {
           animation-play-state: paused;
+        }
+        
+        /* Premium Card styling with customizable contrast */
+        .partner-logo-card {
+          background: rgba(8, 15, 20, 0.72);
+          border: 1px solid rgba(102, 202, 218, 0.16);
+          box-shadow: inset 0 0 24px rgba(102, 202, 218, 0.03);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .partner-logo-card:not(.static-card):hover {
+          background: rgba(10, 22, 28, 0.86);
+          border-color: rgba(102, 202, 218, 0.42);
+          box-shadow: 0 0 28px rgba(102, 202, 218, 0.12);
+          transform: translateY(-3px) scale(1.02);
+        }
+        
+        /* Visible monochrome default state & hover glow */
+        .partner-logo-image {
+          filter: brightness(0) invert(0.78);
+          opacity: 0.72;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .partner-logo-card:not(.static-card):hover .partner-logo-image {
+          filter: brightness(0) invert(1);
+          opacity: 1;
+          transform: scale(1.05);
+        }
+        .partner-logo-card.static-card .partner-logo-image {
+          filter: brightness(0) invert(0.85);
+          opacity: 0.8;
+        }
+        
+        /* Bold typographic fallback text */
+        .partner-logo-fallback {
+          font-size: 14px;
+          font-weight: 800;
+          color: rgba(255, 255, 255, 0.72);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @media (min-width: 768px) {
+          .partner-logo-fallback {
+            font-size: 16px;
+          }
+        }
+        .partner-logo-card:not(.static-card):hover .partner-logo-fallback {
+          color: #66cada;
+          transform: scale(1.05);
+        }
+        .partner-logo-card.static-card .partner-logo-fallback {
+          color: rgba(255, 255, 255, 0.85);
         }
       `}} />
 
