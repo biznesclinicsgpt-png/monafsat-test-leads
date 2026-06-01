@@ -27,8 +27,8 @@ export const PartnersMarqueeSection = () => {
           src={logo.logoSrc} 
           alt={logo.alt} 
           className={cn(
-            "h-7 object-contain filter grayscale brightness-75 opacity-40 transition-all duration-300",
-            !isStatic && "group-hover:grayscale-0 group-hover:brightness-100 group-hover:opacity-100",
+            "h-7 object-contain filter brightness-0 invert opacity-45 transition-all duration-300",
+            !isStatic && "group-hover:opacity-100 group-hover:scale-105",
             logo.sizeHint || "max-w-[130px]"
           )}
           onError={(e) => {
