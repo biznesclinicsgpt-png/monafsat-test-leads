@@ -30,6 +30,11 @@ export interface UseCase {
 
 // 1. Partners Logos Data (Demo values)
 export const partnersLogos: PartnerLogo[] = [
+  { name: "InduBridge", logoSrc: "/logos/partners/indubridge.png", alt: "InduBridge logo", category: "industrial", sizeHint: "max-w-[115px]" },
+  { name: "Vorvix", logoSrc: "/logos/partners/vorvix.png", alt: "Vorvix logo", category: "technology", sizeHint: "max-w-[100px]" },
+  { name: "AMASI Tech", logoSrc: "/logos/partners/amasi.png", alt: "AMASI Tech logo", category: "technology", sizeHint: "max-w-[115px]" },
+  { name: "Stehr Corp", logoSrc: "/logos/partners/stehr.png", alt: "Stehr Corp logo", category: "corporate", sizeHint: "max-w-[90px]" },
+  { name: "CIS Co.", logoSrc: "/logos/partners/cis.png", alt: "CIS Co. logo", category: "technology", sizeHint: "max-w-[110px]" },
   { name: "أرامكو السعودية", logoSrc: "/logos/partners/aramco.svg", alt: "Aramco logo", category: "energy", sizeHint: "max-w-[110px]" },
   { name: "سابك", logoSrc: "/logos/partners/sabic.svg", alt: "Sabic logo", category: "industrial", sizeHint: "max-w-[100px]" },
   { name: "الاتصالات السعودية STC", logoSrc: "/logos/partners/stc.svg", alt: "STC logo", category: "telecom", sizeHint: "max-w-[90px]" },
