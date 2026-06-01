@@ -152,21 +152,21 @@ export const OpportunitySourcesSection = () => {
                             onMouseEnter={() => setHoveredNode(`${cat.id}-${idx}`)}
                             onMouseLeave={() => setHoveredNode(null)}
                             className={cn(
-                              "relative p-2.5 rounded-xl border transition-all duration-300 cursor-pointer flex items-center justify-between text-right gap-3",
+                              "relative p-3 rounded-xl border transition-all duration-300 cursor-pointer flex items-center justify-between text-right gap-3",
                               isHovered 
                                 ? "border-cyan-500/50 bg-[#0B0F19] shadow-[0_0_15px_rgba(6,182,212,0.15)]" 
                                 : "border-slate-900/60 bg-black/40 hover:border-slate-800"
                             )}
                           >
                             {/* Logo image container and text (RTL Flow: Right to Left) */}
-                            <div className="flex items-center gap-2.5 min-w-0">
-                              <div className="w-7 h-7 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center p-1.5 shrink-0 overflow-hidden transition-colors duration-300" style={{ backdropFilter: 'blur(4px)' }}>
+                            <div className="flex items-center gap-3 min-w-0">
+                              <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center p-1.5 shrink-0 overflow-hidden transition-colors duration-300" style={{ backdropFilter: 'blur(4px)' }}>
                                 <img 
                                   src={source.logoSrc} 
                                   alt={source.name} 
                                   className={cn(
-                                    "w-full h-full object-contain filter grayscale brightness-90 contrast-125 transition-all duration-300",
-                                    isHovered ? "grayscale-0 brightness-100 scale-105" : "opacity-60"
+                                    "w-full h-full object-contain transition-all duration-300",
+                                    isHovered ? "scale-105 opacity-100" : "opacity-90"
                                   )}
                                   onError={(e) => {
                                     // Fallback if image fails to load
@@ -178,10 +178,15 @@ export const OpportunitySourcesSection = () => {
                                 <div className="fallback-dot hidden w-1.5 h-1.5 rounded-full bg-slate-500" />
                               </div>
                               
-                              {/* Label representing source name */}
-                              <span className="text-[10px] md:text-xs font-black text-slate-300 truncate max-w-[140px] transition-colors group-hover:text-white">
-                                {source.name}
-                              </span>
+                              {/* Label representing source name and sub-type */}
+                              <div className="flex flex-col min-w-0 text-right">
+                                <span className="text-[10px] md:text-xs font-black text-white truncate max-w-[140px] transition-colors leading-tight">
+                                  {source.name}
+                                </span>
+                                <span className="text-[8px] text-slate-500 font-bold mt-1.5">
+                                  {source.typeName}
+                                </span>
+                              </div>
                             </div>
 
                             {/* Inner glowing dot */}
@@ -214,14 +219,6 @@ export const OpportunitySourcesSection = () => {
                           </div>
                         );
                       })}
-                    </div>
-                  </div>
-
-                  {/* Footer hint */}
-                  <div className="mt-6 pt-3 border-t border-slate-900/60 flex items-center justify-between text-[8px] text-slate-500 font-bold">
-                    <span>رصد مستمر للفرص</span>
-                    <div className="flex items-center gap-1">
-                      <span>Opportunity Source</span>
                     </div>
                   </div>
 
