@@ -19,7 +19,483 @@ import {
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
+type TriangleInfoItem = {
+    id: string;
+    kind: 'node' | 'edge';
+    title: string;
+    label: string;
+    description: string;
+    short: string;
+    bullets: string[];
+    color: 'emerald' | 'cyan' | 'violet' | 'blue';
+    icon: React.ReactNode;
+    connected?: string[];
+};
+
+const colorClasses = {
+    emerald: {
+        text: 'text-emerald-300',
+        border: 'border-emerald-500/45',
+        bg: 'bg-emerald-500/10',
+        shadow: 'shadow-[0_0_36px_rgba(16,185,129,0.22)]',
+        stroke: '#34d399',
+    },
+    cyan: {
+        text: 'text-cyan-300',
+        border: 'border-cyan-500/45',
+        bg: 'bg-cyan-500/10',
+        shadow: 'shadow-[0_0_36px_rgba(6,182,212,0.20)]',
+        stroke: '#22d3ee',
+    },
+    violet: {
+        text: 'text-violet-300',
+        border: 'border-violet-500/45',
+        bg: 'bg-violet-500/10',
+        shadow: 'shadow-[0_0_36px_rgba(139,92,246,0.22)]',
+        stroke: '#a78bfa',
+    },
+    blue: {
+        text: 'text-blue-300',
+        border: 'border-blue-500/45',
+        bg: 'bg-blue-500/10',
+        shadow: 'shadow-[0_0_36px_rgba(59,130,246,0.20)]',
+        stroke: '#60a5fa',
+    },
+};
+
+const ClientSalesInteractiveTriangle = () => {
+    const nodes: TriangleInfoItem[] = [
+        {
+            id: 'sales',
+            kind: 'node',
+            title: 'فريق مبيعات العميل',
+            label: 'الدائرة = دور الطرف',
+            description: 'يتعامل مع المحادثات النشطة ويحوّلها إلى اجتماعات، عروض، تفاوض، وصفقات.',
+            short: 'قلب المنظومة الذي يستقبل فرصًا أجهز ويركز على التحويل بدل البحث والمطاردة.',
+            bullets: [
+                'يستلم محادثات وفرص أكثر جاهزية',
+                'يرد بناءً على سياق واضح وتوصية مناسبة',
+                'يركز على التحويل بدل البحث والمطاردة',
+            ],
+            color: 'emerald',
+            icon: <Briefcase className="h-7 w-7" />,
+        },
+        {
+            id: 'ninja',
+            kind: 'node',
+            title: 'نظام النينجا الذكي',
+            label: 'الدائرة = دور الطرف',
+            description: 'محرك الذكاء والأتمتة الذي ينجز الجزء البارد والتشغيلي من رحلة الوصول.',
+            short: 'ينجز التحليل والبيانات والرسائل والمتابعة الأولية قبل وصول الفرصة لفريقك.',
+            bullets: [
+                'يحلل السوق والقطاعات',
+                'يستخرج الحسابات وصناع القرار',
+                'يجهز البيانات والرسائل والقنوات',
+                'يرصد الردود ويصنف المحادثات النشطة',
+            ],
+            color: 'blue',
+            icon: <BrainCircuit className="h-6 w-6" />,
+        },
+        {
+            id: 'monafsat',
+            kind: 'node',
+            title: 'فريق منافسات',
+            label: 'الدائرة = دور الطرف',
+            description: 'كادر موازٍ يفتح فرصًا مباشرة من السوق السعودي بمدخل مختلف.',
+            short: 'يفتح مصدرًا موازيًا للفرص حتى لا يعتمد فريقك على قناة واحدة فقط.',
+            bullets: [
+                'يرصد فرصًا واحتياجات من السوق',
+                'يفتح مدخلًا موازيًا غير معتمد فقط على الحملات',
+                'يضيف تدفق فرص مباشر لفريق العميل',
+            ],
+            color: 'cyan',
+            icon: <Target className="h-6 w-6" />,
+        },
+        {
+            id: 'advisory',
+            kind: 'node',
+            title: 'الفريق الاستشاري والقيادي',
+            label: 'الدائرة = دور الطرف',
+            description: 'يقود الخطة، يطوّر الأداء، ويضمن أن القمع يتحسن أسبوعيًا.',
+            short: 'يربط الهدف بالتنفيذ ويرفع قدرة الفريق على الرد والتأهيل والإغلاق.',
+            bullets: [
+                'يحدد المستهدف والقطاعات وصناع القرار',
+                'يدرب الفريق على الردود والاعتراضات',
+                'يراجع النتائج ويقود التحسين الأسبوعي',
+            ],
+            color: 'violet',
+            icon: <Users className="h-6 w-6" />,
+        },
+    ];
+
+    const edges: TriangleInfoItem[] = [
+        {
+            id: 'sales-ninja',
+            kind: 'edge',
+            title: 'جهد أقل + فرص أجهز',
+            label: 'الضلع = ناتج التعاون',
+            description: 'النظام ينجز البحث، البيانات، الرسائل، والوصول الأولي، وفريق المبيعات يستلم محادثات نشطة أكثر جاهزية للتحويل.',
+            short: 'النظام ينجز الشغل البارد… وفريقك يركز على المحادثات النشطة الأقرب للاجتماع.',
+            bullets: ['تقليل عبء البحث البارد', 'رفع جودة المحادثات', 'تسريع الحجز والتأهيل', 'وضوح الخطوة التالية لكل فرصة'],
+            color: 'emerald',
+            icon: <Zap className="h-5 w-5" />,
+            connected: ['sales', 'ninja'],
+        },
+        {
+            id: 'sales-monafsat',
+            kind: 'edge',
+            title: 'فرص مباشرة تدعم خط المبيعات',
+            label: 'الضلع = ناتج التعاون',
+            description: 'فريق منافسات يفتح مدخلًا موازيًا للفرص من السوق، وفريق العميل يستقبل فرصًا يمكن تحويلها إلى اجتماعات وعروض.',
+            short: 'فريقك لا ينتظر فقط نتائج الحملات… بل يستقبل فرصًا مباشرة يفتحها منافسات.',
+            bullets: ['مصدر فرص إضافي', 'تنويع قنوات الوصول', 'فرص أقرب لاحتياج السوق', 'خط مبيعات أقوى لفريق المبيعات'],
+            color: 'cyan',
+            icon: <TrendingUp className="h-5 w-5" />,
+            connected: ['sales', 'monafsat'],
+        },
+        {
+            id: 'sales-advisory',
+            kind: 'edge',
+            title: 'فريق أقوى وتحويل أعلى',
+            label: 'الضلع = ناتج التعاون',
+            description: 'الفريق الاستشاري يرفع جودة ردود فريق المبيعات، تأهيله، تعامله مع الاعتراضات، وطريقة تحويل المحادثة إلى اجتماع أو عرض.',
+            short: 'تدريب ومتابعة وتحليل يرفع قدرة فريقك على تحويل الفرص إلى نتائج.',
+            bullets: ['ردود أكثر احترافية', 'اجتماعات مؤهلة أكثر', 'معالجة اعتراضات أفضل', 'تحسن مستمر في الأداء'],
+            color: 'violet',
+            icon: <Activity className="h-5 w-5" />,
+            connected: ['sales', 'advisory'],
+        },
+        {
+            id: 'ninja-monafsat',
+            kind: 'edge',
+            title: 'تغذية مزدوجة للفرص',
+            label: 'الضلع = ناتج التعاون',
+            description: 'النينجا يشغل الوصول الذكي، ومنافسات يفتح فرصًا مباشرة من السوق، فيتكون تدفق فرص أقوى وأكثر تنوعًا.',
+            short: 'وصول ذكي + فرص مباشرة من السوق = تدفق فرص أسرع وأقوى.',
+            bullets: ['مصادر فرص أكثر', 'سرعة أعلى في الوصول', 'قمع مبيعات أغنى', 'فرص أكثر جاهزية للتأهيل'],
+            color: 'blue',
+            icon: <Sparkles className="h-5 w-5" />,
+            connected: ['ninja', 'monafsat'],
+        },
+        {
+            id: 'ninja-advisory',
+            kind: 'edge',
+            title: 'استراتيجية أوضح + تنفيذ أذكى',
+            label: 'الضلع = ناتج التعاون',
+            description: 'الفريق الاستشاري يحدد أين نتحرك وكيف نقيس، والنينجا يحول ذلك إلى بيانات ورسائل وقنوات وتشغيل فعلي.',
+            short: 'من الخطة إلى التنفيذ الذكي: استهداف أدق، رسائل أفضل، وتشغيل أسرع.',
+            bullets: ['استهداف أدق', 'رسائل أكثر ملاءمة', 'قرارات أسرع', 'تحسين مبني على البيانات'],
+            color: 'violet',
+            icon: <BrainCircuit className="h-5 w-5" />,
+            connected: ['ninja', 'advisory'],
+        },
+        {
+            id: 'monafsat-advisory',
+            kind: 'edge',
+            title: 'فهم السوق + فرص أكثر ملاءمة',
+            label: 'الضلع = ناتج التعاون',
+            description: 'الفريق الاستشاري يحدد الأولويات، وفريق منافسات يرصد ويحرك الفرص وفق هذه الأولويات داخل السوق السعودي.',
+            short: 'الاستراتيجية توجه السوق، ومنافسات تغذيها بفرص أقرب للواقع.',
+            bullets: ['قطاعات أكثر دقة', 'فرص أقرب للاحتياج الحقيقي', 'تقليل الهدر في الفرص الضعيفة', 'توجيه أفضل لموارد العميل'],
+            color: 'cyan',
+            icon: <Target className="h-5 w-5" />,
+            connected: ['monafsat', 'advisory'],
+        },
+    ];
+
+    const allItems = [...nodes, ...edges];
+    const [activeId, setActiveId] = useState('sales');
+    const [mobileMode, setMobileMode] = useState<'nodes' | 'edges'>('nodes');
+    const active = allItems.find((item) => item.id === activeId) ?? nodes[0];
+
+    const isNodeActive = (id: string) => active.id === id || active.connected?.includes(id);
+    const isEdgeActive = (id: string) => active.id === id;
+
+    const nodePositions = {
+        sales: { top: '52%', left: '50%' },
+        advisory: { top: '12%', left: '50%' },
+        monafsat: { top: '78%', left: '18%' },
+        ninja: { top: '78%', left: '82%' },
+    };
+
+    const edgePaths = [
+        { id: 'sales-ninja', d: 'M 50 52 L 82 78' },
+        { id: 'sales-monafsat', d: 'M 50 52 L 18 78' },
+        { id: 'sales-advisory', d: 'M 50 52 L 50 12' },
+        { id: 'ninja-monafsat', d: 'M 82 78 L 18 78' },
+        { id: 'ninja-advisory', d: 'M 82 78 L 50 12' },
+        { id: 'monafsat-advisory', d: 'M 18 78 L 50 12' },
+    ];
+
+    return (
+        <section className="relative overflow-hidden bg-[#050505] py-16 md:py-20" id="ninja-growth-triangle">
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-[14%] right-[12%] h-[420px] w-[420px] rounded-full bg-emerald-500/[0.045] blur-[120px]" />
+                <div className="absolute bottom-[12%] left-[10%] h-[460px] w-[460px] rounded-full bg-cyan-500/[0.04] blur-[130px]" />
+                <div className="absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/[0.025] blur-[150px]" />
+            </div>
+
+            <div className="container relative z-10 mx-auto max-w-7xl px-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 22 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.55 }}
+                    className="mx-auto mb-10 max-w-4xl text-center md:mb-12"
+                >
+                    <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-xs font-bold text-emerald-300">
+                        <Users className="h-4 w-4" />
+                        فريقك في المركز
+                    </div>
+                    <h2 className="text-3xl font-black leading-tight tracking-tight text-white md:text-5xl">
+                        3 محركات تغذي فريق مبيعاتك
+                    </h2>
+                    <p className="mx-auto mt-5 max-w-3xl text-base font-medium leading-relaxed text-slate-400 md:text-lg">
+                        لا نطلب من فريقك أن يبدأ من القوائم الباردة. ننجز عنه التحليل، البيانات، الرسائل، الوصول، والمتابعة الأولية… ثم نغذيه بمحادثات نشطة وفرص أقرب للاجتماع والعرض والإغلاق.
+                    </p>
+                </motion.div>
+
+                <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_420px]">
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.96 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="relative mx-auto w-full max-w-4xl"
+                    >
+                        <div className="relative mx-auto aspect-[1.28/1] min-h-[420px] rounded-[28px] border border-slate-900/80 bg-slate-950/25 p-4 shadow-[0_24px_90px_rgba(0,0,0,0.35)] md:min-h-[560px]">
+                            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                                <defs>
+                                    <linearGradient id="client-triangle-main" x1="10%" y1="10%" x2="90%" y2="90%">
+                                        <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.72" />
+                                        <stop offset="48%" stopColor="#22d3ee" stopOpacity="0.62" />
+                                        <stop offset="100%" stopColor="#34d399" stopOpacity="0.70" />
+                                    </linearGradient>
+                                    <filter id="client-triangle-glow" x="-30%" y="-30%" width="160%" height="160%">
+                                        <feGaussianBlur stdDeviation="3.5" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                </defs>
+
+                                {edgePaths.map((edge) => {
+                                    const item = edges.find((entry) => entry.id === edge.id);
+                                    const activeEdge = isEdgeActive(edge.id);
+                                    const relatedNode = active.kind === 'node' && item?.connected?.includes(active.id);
+                                    return (
+                                        <g key={edge.id}>
+                                            <path
+                                                d={edge.d}
+                                                stroke="rgba(148,163,184,0.12)"
+                                                strokeWidth="1.1"
+                                                fill="none"
+                                            />
+                                            <motion.path
+                                                d={edge.d}
+                                                stroke={activeEdge ? colorClasses[item?.color ?? 'emerald'].stroke : 'url(#client-triangle-main)'}
+                                                strokeWidth={activeEdge ? 2.5 : relatedNode ? 1.8 : 1.15}
+                                                fill="none"
+                                                strokeLinecap="round"
+                                                style={{
+                                                    filter: activeEdge ? 'url(#client-triangle-glow)' : 'none',
+                                                    opacity: activeEdge ? 1 : relatedNode ? 0.72 : 0.35,
+                                                }}
+                                                animate={activeEdge ? { strokeDashoffset: -42 } : { strokeDashoffset: 0 }}
+                                                transition={{ repeat: activeEdge ? Infinity : 0, duration: 3.2, ease: 'linear' }}
+                                                strokeDasharray={activeEdge ? '6 7' : 'none'}
+                                            />
+                                            <path
+                                                d={edge.d}
+                                                stroke="transparent"
+                                                strokeWidth="8"
+                                                fill="none"
+                                                className="cursor-pointer"
+                                                onMouseEnter={() => setActiveId(edge.id)}
+                                                onClick={() => setActiveId(edge.id)}
+                                            />
+                                        </g>
+                                    );
+                                })}
+                            </svg>
+
+                            <div className="absolute left-1/2 top-[52%] h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-500/15 bg-emerald-500/[0.025] blur-[2px] md:h-72 md:w-72" />
+                            <div className="absolute left-1/2 top-[52%] h-32 w-32 -translate-x-1/2 -translate-y-1/2 rounded-full border border-emerald-500/20 bg-emerald-500/[0.035] md:h-44 md:w-44" />
+
+                            {nodes.map((node) => {
+                                const position = nodePositions[node.id as keyof typeof nodePositions];
+                                const activeNode = isNodeActive(node.id);
+                                const palette = colorClasses[node.color];
+                                const isCenter = node.id === 'sales';
+                                return (
+                                    <button
+                                        key={node.id}
+                                        type="button"
+                                        className="absolute z-20 -translate-x-1/2 -translate-y-1/2 text-center outline-none"
+                                        style={position}
+                                        onMouseEnter={() => setActiveId(node.id)}
+                                        onFocus={() => setActiveId(node.id)}
+                                        onClick={() => setActiveId(node.id)}
+                                    >
+                                        <motion.div
+                                            animate={{
+                                                y: active.id === node.id ? -4 : [0, -5, 0],
+                                                scale: activeNode ? 1.05 : 1,
+                                            }}
+                                            transition={{
+                                                y: active.id === node.id ? { duration: 0.2 } : { duration: 4, repeat: Infinity, ease: 'easeInOut' },
+                                                scale: { duration: 0.2 },
+                                            }}
+                                            className={cn(
+                                                'mx-auto flex items-center justify-center rounded-full border bg-slate-950/95 text-white transition-all duration-300',
+                                                isCenter ? 'h-24 w-24 md:h-32 md:w-32' : 'h-16 w-16 md:h-20 md:w-20',
+                                                activeNode ? `${palette.border} ${palette.bg} ${palette.shadow}` : 'border-slate-800/80 shadow-[0_0_18px_rgba(15,23,42,0.6)]'
+                                            )}
+                                        >
+                                            <div className={cn('transition-colors', activeNode ? palette.text : 'text-slate-400')}>
+                                                {node.icon}
+                                            </div>
+                                        </motion.div>
+                                        <span
+                                            className={cn(
+                                                'mt-3 block whitespace-nowrap text-[11px] font-extrabold md:text-sm',
+                                                activeNode ? palette.text : 'text-slate-300'
+                                            )}
+                                        >
+                                            {node.title}
+                                        </span>
+                                        {isCenter && (
+                                            <span className="mt-1 block whitespace-nowrap text-[10px] font-bold text-slate-500 md:text-xs">
+                                                محادثات ← اجتماعات ← عروض ← صفقات
+                                            </span>
+                                        )}
+                                    </button>
+                                );
+                            })}
+
+                            <div className="absolute bottom-5 left-1/2 z-20 hidden -translate-x-1/2 items-center gap-2 rounded-full border border-slate-800 bg-slate-950/85 px-4 py-2 text-xs font-bold text-slate-400 backdrop-blur md:flex">
+                                <span>الدائرة = دور الطرف</span>
+                                <span className="h-1 w-1 rounded-full bg-slate-700" />
+                                <span>الضلع = ناتج التعاون</span>
+                            </div>
+                        </div>
+
+                        <div className="mt-5 flex justify-center gap-2 lg:hidden">
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setMobileMode('nodes');
+                                    setActiveId('sales');
+                                }}
+                                className={cn(
+                                    'rounded-full border px-4 py-2 text-xs font-bold transition-colors',
+                                    mobileMode === 'nodes' ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300' : 'border-slate-800 bg-slate-950 text-slate-400'
+                                )}
+                            >
+                                الأطراف
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setMobileMode('edges');
+                                    setActiveId('sales-ninja');
+                                }}
+                                className={cn(
+                                    'rounded-full border px-4 py-2 text-xs font-bold transition-colors',
+                                    mobileMode === 'edges' ? 'border-cyan-500/40 bg-cyan-500/10 text-cyan-300' : 'border-slate-800 bg-slate-950 text-slate-400'
+                                )}
+                            >
+                                التفاعلات
+                            </button>
+                        </div>
+
+                        <div className="mt-4 grid grid-cols-2 gap-2 lg:hidden">
+                            {(mobileMode === 'nodes' ? nodes : edges).map((item) => (
+                                <button
+                                    key={item.id}
+                                    type="button"
+                                    onClick={() => setActiveId(item.id)}
+                                    className={cn(
+                                        'rounded-2xl border px-3 py-3 text-right text-[11px] font-bold transition-colors',
+                                        active.id === item.id
+                                            ? `${colorClasses[item.color].border} ${colorClasses[item.color].bg} ${colorClasses[item.color].text}`
+                                            : 'border-slate-900 bg-slate-950/60 text-slate-400'
+                                    )}
+                                >
+                                    {item.title}
+                                </button>
+                            ))}
+                        </div>
+                    </motion.div>
+
+                    <motion.aside
+                        initial={{ opacity: 0, x: -18 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.55, delay: 0.1 }}
+                        className="lg:sticky lg:top-24"
+                    >
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                key={active.id}
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: -10 }}
+                                transition={{ duration: 0.22 }}
+                                className={cn(
+                                    'rounded-[24px] border bg-slate-950/70 p-6 text-right shadow-[0_24px_80px_rgba(0,0,0,0.28)] backdrop-blur md:p-7',
+                                    colorClasses[active.color].border
+                                )}
+                            >
+                                <div className="mb-5 flex items-start justify-between gap-4">
+                                    <div className={cn('rounded-2xl border p-3', colorClasses[active.color].border, colorClasses[active.color].bg, colorClasses[active.color].text)}>
+                                        {active.icon}
+                                    </div>
+                                    <div>
+                                        <div className={cn('mb-2 inline-flex rounded-full border px-3 py-1 text-[11px] font-bold', colorClasses[active.color].border, colorClasses[active.color].bg, colorClasses[active.color].text)}>
+                                            {active.label}
+                                        </div>
+                                        <h3 className="text-2xl font-black leading-tight text-white">
+                                            {active.title}
+                                        </h3>
+                                    </div>
+                                </div>
+                                <p className={cn('mb-4 text-sm font-extrabold leading-relaxed', colorClasses[active.color].text)}>
+                                    {active.short}
+                                </p>
+                                <p className="mb-6 text-sm font-medium leading-relaxed text-slate-400">
+                                    {active.description}
+                                </p>
+                                <div className="space-y-3">
+                                    {active.bullets.map((bullet) => (
+                                        <div key={bullet} className="flex items-start gap-3 rounded-2xl border border-slate-900/80 bg-slate-950/65 px-4 py-3 text-sm font-bold text-slate-200">
+                                            <Check className={cn('mt-0.5 h-4 w-4 shrink-0', colorClasses[active.color].text)} />
+                                            <span>{bullet}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </motion.div>
+                        </AnimatePresence>
+                    </motion.aside>
+                </div>
+
+                <motion.div
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="mx-auto mt-8 max-w-4xl rounded-[24px] border border-emerald-500/20 bg-emerald-500/[0.055] px-5 py-5 text-center text-base font-extrabold leading-relaxed text-emerald-100 md:text-lg"
+                >
+                    نحن لا نزيد العبء على فريق المبيعات… نحن ننقله من البحث والمطاردة إلى التعامل مع محادثات نشطة قابلة للتحويل.
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
 export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSalesCenter?: boolean }) => {
+    if (clientSalesCenter) {
+        return <ClientSalesInteractiveTriangle />;
+    }
+
     const [activeNode, setActiveNode] = useState<string | null>(null);
     const centerNodeLabel = clientSalesCenter ? 'فريق مبيعات العميل' : 'نظام النينجا الذكي';
     const rightNodeLabel = clientSalesCenter ? 'نظام النينجا الذكي' : 'فريقكم البيعي';
