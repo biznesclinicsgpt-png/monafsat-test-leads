@@ -31,7 +31,6 @@ import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetwo
 import { GrowthTriangleSection } from '../components/InvestmentV3/GrowthTriangleSection';
 import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
 import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
-import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { cn } from '../lib/utils';
@@ -959,10 +958,6 @@ const Investment2Page = () => {
         <HumanTeamSection />
       </div>
 
-      <SectionBridge label="البنية التقنية والأصول التي تبقى للشركة" color="emerald" />
-      <div id="tech-assets">
-        <AssetsSection />
-      </div>
       <div id="future">
         <FutureSection />
       </div>
