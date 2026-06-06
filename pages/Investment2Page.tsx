@@ -173,26 +173,16 @@ const HeroSection2 = () => (
     </div>
 
     <div className="container mx-auto px-4 max-w-6xl relative z-10">
-      <div className="grid lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-7 text-right">
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-300 mb-7"
-          >
-            <Target className="w-4 h-4" />
-            <span className="text-xs font-black">نسخة الاستثمار الثانية | اختبار مقارنة</span>
-          </motion.div>
-
+      <div className="max-w-5xl mr-auto text-right">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight max-w-5xl"
           >
-            اتفق معنا على مستهدف مبيعات خلال 90 يوم...
+            نساعد فريق مبيعاتك يبيع أكثر
             <span className="block text-transparent bg-clip-text bg-gradient-to-l from-emerald-300 via-cyan-300 to-white mt-3">
-              ونبني لك طريق الوصول إليه
+              في السوق السعودي خلال 90 يوم
             </span>
           </motion.h1>
 
@@ -202,7 +192,7 @@ const HeroSection2 = () => (
             transition={{ delay: 0.2 }}
             className="text-base md:text-xl text-slate-300 leading-relaxed mt-7 max-w-4xl"
           >
-            نحدد معك القطاع، صناع القرار، متوسط قيمة الصفقة، وحجم الوصول المطلوب. ثم نشغل فريقك الحالي مع وكلاء النينجا وفريق منافسات الموازي لتحويل السوق إلى محادثات، اجتماعات، عروض، وصفقات.
+            نحدد القطاع، نصل لصناع القرار، نفتح المحادثات، ثم نساعد فريقك على تحويلها إلى اجتماعات، عروض، وصفقات.
           </motion.p>
 
           <motion.div
@@ -224,38 +214,6 @@ const HeroSection2 = () => (
               ابدأ بتجربة قطاع واحد
             </button>
           </motion.div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, scale: 0.96 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2 }}
-          className="lg:col-span-5 bg-slate-950/70 border border-slate-800/80 rounded-3xl p-6 md:p-8 backdrop-blur-md"
-        >
-          <div className="text-sm font-black text-slate-300 mb-6 flex items-center gap-2">
-            <LineChart className="w-5 h-5 text-emerald-300" />
-            طريق 90 يوم المختصر
-          </div>
-          {[
-            ['نحدد الهدف', 'المنتج، القطاع، قيمة الصفقة، وعدد الصفقات المطلوبة'],
-            ['نستخرج السوق الأنسب', 'أفضل الحسابات وصناع القرار بدل استهداف الجميع'],
-            ['نشغل 3 محركات', 'فريقك، وكلاء النينجا، وكادر منافسات الموازي'],
-            ['نقيس القمع أسبوعيًا', 'محادثات ← اجتماعات ← عروض ← تفاوض ← صفقات'],
-          ].map(([title, text], idx) => (
-            <div key={title} className="flex gap-4 pb-5 last:pb-0">
-              <div className="flex flex-col items-center">
-                <div className="w-9 h-9 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 flex items-center justify-center font-black text-sm">
-                  {idx + 1}
-                </div>
-                {idx < 3 && <div className="w-px flex-1 bg-slate-800 mt-2" />}
-              </div>
-              <div>
-                <h3 className="text-white font-black mb-1">{title}</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{text}</p>
-              </div>
-            </div>
-          ))}
-        </motion.div>
       </div>
     </div>
   </section>
