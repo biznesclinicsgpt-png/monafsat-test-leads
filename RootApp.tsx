@@ -25,6 +25,7 @@ import LoginPage from './pages/LoginPage';
 import AdminLoginPage from './pages/AdminLoginPage';
 import GrowthSystemPage from './pages/GrowthSystemPage';
 import InvestmentPage from './pages/InvestmentPage';
+import Investment2Page from './pages/Investment2Page';
 import TestDeployment from './pages/TestDeployment';
 import DataCenterLayout from './layouts/DataCenterLayout';
 import DataCenterPage from './pages/DataCenter/DataCenterPage';
@@ -56,6 +57,7 @@ const App = () => {
           <Route path="/" element={<GrowthSystemPage />} />
           <Route path="/growth" element={<GrowthSystemPage />} />
           <Route path="/investment" element={<InvestmentPage key="v3-forced" />} />
+          <Route path="/investment-2" element={<Investment2Page key="investment-2" />} />
           <Route path="/investment-v3" element={<InvestmentPage key="v3-explicit" />} />
           <Route path="/scanner" element={<LandingPage />} />
           <Route path="/landing-legacy" element={<LandingPage />} />
