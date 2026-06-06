@@ -28,7 +28,6 @@ import { OpportunitySourcesSection } from '../components/InvestmentV3/Opportunit
 import { UseCasesSection } from '../components/InvestmentV3/UseCasesSection';
 import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
 import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
-import { GrowthTriangleSection } from '../components/InvestmentV3/GrowthTriangleSection';
 import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
 import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
@@ -326,6 +325,145 @@ const EnginesSection = () => {
             هذه المحركات لا تعمل بشكل منفصل؛ بل تدخل في خطة تشغيل أسبوعية واضحة تبدأ من التشخيص وتنتهي بقياس النتائج وتحسين القمع.
           </p>
         </motion.div>
+      </div>
+    </section>
+  );
+};
+
+const TargetTriangleSection = () => {
+  const sides = [
+    {
+      title: 'كادر تطوير المبيعات',
+      text: 'يدرب، يتابع، يحلل، ويحسن أداء موظفك أسبوعيًا حتى يتحول من منفذ عشوائي إلى صاحب قناة مبيعات واضحة.',
+      icon: Users,
+      color: 'emerald',
+    },
+    {
+      title: 'وكلاء النينجا الذكيون',
+      text: 'يقومون بالبحث، التحليل، إثراء البيانات، تخصيص الرسائل، المتابعة الأولية، وتصنيف الردود قبل وصولها لفريقك.',
+      icon: Bot,
+      color: 'cyan',
+    },
+    {
+      title: 'كادر منافسات الموازي',
+      text: 'يرصد فرص السوق ويفتح مدخلًا مختلفًا بالتوازي، ثم يوجه الفرص المناسبة إلى فريق العميل.',
+      icon: BriefcaseBusiness,
+      color: 'violet',
+    },
+  ];
+
+  const responsibilityLines = [
+    {
+      title: 'نحن نتولى قبل الرد',
+      steps: ['السوق', 'البيانات', 'صناع القرار', 'الرسائل', 'القنوات', 'المتابعة الأولية', 'تصنيف الردود'],
+      color: 'cyan',
+    },
+    {
+      title: 'موظف العميل يتدخل بعد الرد',
+      steps: ['الرد المناسب', 'تأكيد الاحتياج', 'حجز الاجتماع', 'إرسال العرض', 'متابعة التفاوض'],
+      color: 'emerald',
+    },
+    {
+      title: 'كادر منافسات يعمل بالتوازي',
+      steps: ['رصد فرص السوق', 'فتح مدخل مختلف', 'توجيه الفرص المناسبة للعميل'],
+      color: 'violet',
+    },
+  ];
+
+  return (
+    <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <SectionHeader
+          eyebrow="خريطة المحركات"
+          title="3 محركات حول مستهدف واحد"
+          description="قبل تفاصيل التنفيذ، هذه هي الخريطة البسيطة: كل محرك يخدم نفس الهدف، لكن كل واحد يتحمل جزءًا مختلفًا من الرحلة حتى لا يزيد العبء على فريق المبيعات."
+        />
+
+        <div className="grid lg:grid-cols-12 gap-6 items-stretch mb-8">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="lg:col-span-5 bg-slate-950/75 border border-emerald-500/25 rounded-3xl p-7 flex flex-col items-center justify-center text-center min-h-[360px]"
+          >
+            <div className="relative w-full max-w-sm aspect-square flex items-center justify-center">
+              <div className="absolute inset-6 rounded-[2rem] border border-emerald-500/20 rotate-45" />
+              <div className="absolute inset-14 rounded-[1.5rem] border border-cyan-500/15 -rotate-45" />
+              <div className="relative z-10 w-56 h-56 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center p-6 shadow-[0_0_50px_rgba(16,185,129,0.10)]">
+                <Target className="w-9 h-9 text-emerald-300 mb-4" />
+                <div className="text-2xl font-black text-white mb-3">مستهدف 90 يوم</div>
+                <div className="text-sm text-slate-300 font-black leading-relaxed">
+                  محادثات ← اجتماعات ← عروض ← صفقات
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          <div className="lg:col-span-7 grid gap-4">
+            {sides.map((side, idx) => (
+              <motion.div
+                key={side.title}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.06 }}
+                className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 flex items-start gap-4"
+              >
+                <div
+                  className={cn(
+                    'w-12 h-12 rounded-2xl border flex items-center justify-center shrink-0',
+                    side.color === 'emerald' && 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
+                    side.color === 'cyan' && 'bg-cyan-500/10 border-cyan-500/25 text-cyan-300',
+                    side.color === 'violet' && 'bg-violet-500/10 border-violet-500/25 text-violet-300'
+                  )}
+                >
+                  <side.icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-black text-white mb-2">{side.title}</h3>
+                  <p className="text-sm text-slate-400 font-bold leading-relaxed">{side.text}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-5">
+          {responsibilityLines.map((line, idx) => (
+            <motion.div
+              key={line.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.06 }}
+              className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6"
+            >
+              <h3
+                className={cn(
+                  'text-lg font-black mb-4',
+                  line.color === 'cyan' && 'text-cyan-300',
+                  line.color === 'emerald' && 'text-emerald-300',
+                  line.color === 'violet' && 'text-violet-300'
+                )}
+              >
+                {line.title}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {line.steps.map((step) => (
+                  <span key={step} className="rounded-full bg-black/35 border border-slate-800 px-3 py-1.5 text-xs text-slate-200 font-black">
+                    {step}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-8 rounded-3xl bg-emerald-500/10 border border-emerald-500/20 p-6 text-center">
+          <p className="text-emerald-50 font-black leading-relaxed">
+            النتيجة: لا نزيد العبء على موظف المبيعات، بل ننقله من البحث والمطاردة إلى التعامل مع محادثات نشطة قابلة للتحويل.
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -905,6 +1043,9 @@ const Investment2Page = () => {
       <div id="engines">
         <EnginesSection />
       </div>
+      <div id="target-triangle">
+        <TargetTriangleSection />
+      </div>
       <div id="execution-plan">
         <ExecutionTimelineSection />
       </div>
@@ -947,9 +1088,6 @@ const Investment2Page = () => {
       <SectionBridge label="تفاصيل المنظومة لمن يريد فهم التشغيل بعمق" color="purple" />
       <div id="radar-system">
         <MonafsatNetworkSection />
-      </div>
-      <div id="growth-triangle">
-        <GrowthTriangleSection />
       </div>
       <div id="dashboard-cmd">
         <SmartDashboardSection simple />
