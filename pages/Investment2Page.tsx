@@ -21,7 +21,6 @@ import {
   UserRoundCheck,
   Users,
 } from 'lucide-react';
-import { SectionBridge } from '../components/InvestmentV3/SectionBridge';
 import { StatsRow } from '../components/InvestmentV3/dashboard/StatsRow';
 import { PartnersMarqueeSection } from '../components/InvestmentV3/PartnersMarqueeSection';
 import { OpportunitySourcesSection } from '../components/InvestmentV3/OpportunitySourcesSection';
@@ -147,12 +146,6 @@ const SectionHeader = ({
     viewport={{ once: true }}
     className="text-center mb-14"
   >
-    {eyebrow && (
-      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 mb-5">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-        <span className="text-[10px] font-black">{eyebrow}</span>
-      </div>
-    )}
     <h2 className="text-3xl md:text-5xl font-black text-white leading-tight max-w-4xl mx-auto">
       {title}
     </h2>
@@ -165,7 +158,7 @@ const SectionHeader = ({
 );
 
 const HeroSection2 = () => (
-  <section className="relative min-h-[92vh] bg-[#050505] overflow-hidden flex items-center py-24 border-b border-slate-900/70">
+  <section className="relative min-h-[86vh] bg-[#050505] overflow-hidden flex items-center py-20 border-b border-slate-900/70">
     <div className="absolute inset-0 opacity-25">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415533_1px,transparent_1px),linear-gradient(to_bottom,#33415533_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,#000_60%,transparent_100%)]" />
       <div className="absolute top-1/4 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px]" />
@@ -173,7 +166,7 @@ const HeroSection2 = () => (
     </div>
 
     <div className="container mx-auto px-4 max-w-6xl relative z-10">
-      <div className="max-w-5xl mr-auto text-right">
+      <div className="max-w-5xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -190,7 +183,7 @@ const HeroSection2 = () => (
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base md:text-xl text-slate-300 leading-relaxed mt-7 max-w-4xl"
+            className="text-base md:text-xl text-slate-300 leading-relaxed mt-7 max-w-4xl mx-auto"
           >
             نحدد القطاع، نصل لصناع القرار، نفتح المحادثات، ثم نساعد فريقك على تحويلها إلى اجتماعات، عروض، وصفقات.
           </motion.p>
@@ -199,7 +192,7 @@ const HeroSection2 = () => (
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row gap-4 mt-9"
+            className="flex flex-col sm:flex-row gap-4 mt-9 justify-center"
           >
             <button
               onClick={() => scrollToSection('growth-calculator')}
@@ -242,7 +235,7 @@ const EnginesSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-[#050505] border-t border-slate-900/60">
+    <section className="py-16 bg-[#050505] border-t border-slate-900/60">
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
           eyebrow="المعادلة البسيطة"
@@ -349,7 +342,7 @@ const ExecutionTimelineSection = () => {
   const CurrentIcon = bucketMeta[activeBucket].icon;
 
   return (
-    <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+    <section className="py-16 bg-[#080808] border-t border-slate-900/60">
       <div className="container mx-auto px-4 max-w-7xl">
         <SectionHeader
           eyebrow="المدخلات ← التنفيذ ← المخرجات ← النتائج"
@@ -454,7 +447,7 @@ const ExecutionTimelineSection = () => {
 };
 
 const OneSalespersonSection = () => (
-  <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+  <section className="py-16 bg-[#080808] border-t border-slate-900/60">
     <div className="container mx-auto px-4 max-w-6xl">
       <div className="grid lg:grid-cols-12 gap-8 items-center">
         <motion.div
@@ -513,7 +506,7 @@ const OneSalespersonSection = () => (
 );
 
 const FocusedTargetingSection = () => (
-  <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+  <section className="py-16 bg-[#080808] border-t border-slate-900/60">
     <div className="container mx-auto px-4 max-w-6xl">
       <div className="grid lg:grid-cols-12 gap-8 items-center">
         <div className="lg:col-span-6">
@@ -549,7 +542,7 @@ const FocusedTargetingSection = () => (
 );
 
 const DailySalesSystemSection = () => (
-  <section className="py-24 bg-[#050505] border-t border-slate-900/60">
+  <section className="py-16 bg-[#050505] border-t border-slate-900/60">
     <div className="container mx-auto px-4 max-w-6xl">
       <SectionHeader
         eyebrow="مخرجات ملموسة"
@@ -650,7 +643,7 @@ const WeeklyReviewSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+    <section className="py-16 bg-[#080808] border-t border-slate-900/60">
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
           eyebrow="تشغيل منضبط"
@@ -734,7 +727,7 @@ const PricingSection2 = () => {
   ];
 
   return (
-    <section className="py-28 bg-[#050505] border-t border-slate-900/60" id="pricing">
+    <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="pricing">
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
           eyebrow="خطة التشغيل"
@@ -790,7 +783,7 @@ const PricingSection2 = () => {
 };
 
 const RevenueShareSimpleSection = () => (
-  <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+  <section className="py-16 bg-[#080808] border-t border-slate-900/60">
     <div className="container mx-auto px-4 max-w-5xl text-center">
       <SectionHeader
         eyebrow="مشاركة النجاح"
@@ -810,7 +803,7 @@ const RevenueShareSimpleSection = () => (
 );
 
 const FinalCtaSection2 = () => (
-  <section className="py-28 bg-[#050505] border-t border-slate-900/60" id="final-cta">
+  <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="final-cta">
     <div className="container mx-auto px-4 max-w-5xl text-center">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -846,7 +839,7 @@ const FinalCtaSection2 = () => (
 const Investment2Page = () => {
   return (
     <div
-      className="min-h-screen selection:bg-emerald-500/30 font-sans relative overflow-x-hidden"
+      className="investment2-page min-h-screen selection:bg-emerald-500/30 font-sans relative overflow-x-hidden"
       dir="rtl"
       style={{
         fontFamily: "'IBM Plex Sans Arabic', 'Tajawal', sans-serif",
@@ -855,6 +848,31 @@ const Investment2Page = () => {
         lineHeight: 1.7,
       }}
     >
+      <style dangerouslySetInnerHTML={{ __html: `
+        .investment2-page #partners > div,
+        .investment2-page #opportunity-sources > div,
+        .investment2-page #use-cases > div,
+        .investment2-page #growth-calculator > div,
+        .investment2-page #radar-system > div,
+        .investment2-page #dashboard-cmd > div,
+        .investment2-page #human-team > div,
+        .investment2-page #future > div,
+        .investment2-page #smart-portfolio > div {
+          padding-top: 4.5rem !important;
+          padding-bottom: 4.5rem !important;
+        }
+        .investment2-page .partner-logo-card,
+        .investment2-page .rounded-3xl {
+          border-radius: 1.25rem;
+        }
+        .investment2-page button,
+        .investment2-page a {
+          transform: none !important;
+        }
+        .investment2-page * {
+          scroll-margin-top: 1.5rem;
+        }
+      `}} />
       <ArabicOnlyTextSanitizer />
 
       <div id="hero">
@@ -885,27 +903,22 @@ const Investment2Page = () => {
         <TrustStatsIntro />
       </div>
 
-      <SectionBridge label="شركات خاضت التجربة معنا" color="aqua" />
       <div id="partners">
         <PartnersMarqueeSection />
       </div>
 
-      <SectionBridge label="جهات وقطاعات ظهرت منها فرص" color="aqua" />
       <div id="opportunity-sources">
         <OpportunitySourcesSection />
       </div>
 
-      <SectionBridge label="نماذج من فرص تحولت إلى اجتماعات مؤهلة" color="emerald" />
       <div id="use-cases">
         <UseCasesSection />
       </div>
 
-      <SectionBridge label="حوّل المستهدف إلى أرقام تشغيل واضحة" color="emerald" />
       <div id="growth-calculator">
         <GrowthCalculatorSection />
       </div>
 
-      <SectionBridge label="تفاصيل المنظومة لمن يريد فهم التشغيل بعمق" color="purple" />
       <div id="radar-system">
         <MonafsatNetworkSection />
       </div>
@@ -927,7 +940,6 @@ const Investment2Page = () => {
         <RevenueShareSimpleSection />
       </div>
 
-      <SectionBridge label="تريد اجتماعات فقط بدون تشغيل كامل؟" color="aqua" />
       <div id="smart-portfolio">
         <SmartPortfolioSection />
       </div>

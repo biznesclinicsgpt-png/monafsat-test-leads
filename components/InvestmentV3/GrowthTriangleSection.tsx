@@ -98,10 +98,12 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                         viewport={{ once: true }}
                         transition={{ duration: 0.5 }}
                     >
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white mb-6 backdrop-blur-sm">
-                            <Activity className="w-4 h-4 text-emerald-400 animate-pulse" />
-                            <span className="font-semibold text-xs text-slate-300">محرك الإيرادات الحقيقي</span>
-                        </div>
+                        {!clientSalesCenter && (
+                            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white mb-6 backdrop-blur-sm">
+                                <Activity className="w-4 h-4 text-emerald-400 animate-pulse" />
+                                <span className="font-semibold text-xs text-slate-300">محرك الإيرادات الحقيقي</span>
+                            </div>
+                        )}
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
                             {clientSalesCenter ? '3 محركات حول مستهدف واحد' : 'مثلث النمو والمبيعات المتكامل'}
                         </h2>
