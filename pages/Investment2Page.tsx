@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -43,6 +43,96 @@ const scrollToSection = (id: string) => {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
+};
+
+const ArabicOnlyTextSanitizer = () => {
+  useEffect(() => {
+    const replacements: Array<[RegExp, string]> = [
+      [/\bInvestment\s*2\b/gi, 'نسخة الاستثمار الثانية'],
+      [/\bA\/B\b/gi, 'مقارنة'],
+      [/\bInputs\b/g, 'المدخلات'],
+      [/\bInput\b/g, 'المدخل'],
+      [/\bProcess\b/g, 'التنفيذ'],
+      [/\bOutputs\b/g, 'المخرجات'],
+      [/\bOutput\b/g, 'المخرج'],
+      [/\bOutcomes\b/g, 'النتائج'],
+      [/\bOutcome\b/g, 'النتيجة'],
+      [/\bActivity\b/g, 'النشاط'],
+      [/\bConversion\b/g, 'التحويل'],
+      [/\bQuality\b/g, 'الجودة'],
+      [/\bAction Plan\b/g, 'خطة العمل'],
+      [/\bWhatsApp Script\b/g, 'نص واتساب'],
+      [/\bCall Script\b/g, 'نص المكالمة'],
+      [/\bFollow-up Step\b/g, 'خطوة المتابعة'],
+      [/\bFollow[- ]?up\b/gi, 'المتابعة'],
+      [/\bDashboard\b/g, 'لوحة المتابعة'],
+      [/\bPlaybook\b/g, 'دليل التشغيل'],
+      [/\bCRM\b/g, 'نظام المتابعة'],
+      [/\bICP\b/g, 'ملف العميل المثالي'],
+      [/\bLinkedIn\b/g, 'لينكدإن'],
+      [/\bEmail\b/g, 'البريد الإلكتروني'],
+      [/\bAI\b/g, 'الذكاء الاصطناعي'],
+      [/\bAPI\b/g, 'واجهة الربط'],
+      [/\bLive\b/g, 'مباشر'],
+      [/\bData\b/g, 'البيانات'],
+      [/\bConversion Funnel\b/g, 'قمع التحويل'],
+      [/\bAutomated\b/g, 'آلية'],
+      [/\bAutomation\b/g, 'الأتمتة'],
+      [/\bApollo\b/g, 'مصدر بيانات خارجي'],
+      [/\bLusha\b/g, 'مصدر بيانات خارجي'],
+      [/\bClay\b/g, 'أداة إثراء بيانات'],
+      [/\bHubSpot\b/g, 'نظام علاقات العملاء'],
+      [/\bSalesforce\b/g, 'نظام علاقات العملاء'],
+      [/\bWhatsApp\b/g, 'واتساب'],
+      [/\bLinkedin\b/g, 'لينكدإن'],
+      [/\bCSV\b/g, 'ملف بيانات'],
+      [/\bPDF\b/g, 'ملف تقرير'],
+    ];
+
+    const sanitizeText = (text: string) =>
+      replacements.reduce((current, [pattern, replacement]) => current.replace(pattern, replacement), text);
+
+    const sanitizeNode = (root: ParentNode) => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes: Text[] = [];
+      while (walker.nextNode()) {
+        nodes.push(walker.currentNode as Text);
+      }
+
+      nodes.forEach((node) => {
+        const next = sanitizeText(node.nodeValue || '');
+        if (next !== node.nodeValue) {
+          node.nodeValue = next;
+        }
+      });
+    };
+
+    sanitizeNode(document.body);
+
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const textNode = node as Text;
+            const next = sanitizeText(textNode.nodeValue || '');
+            if (next !== textNode.nodeValue) {
+              textNode.nodeValue = next;
+            }
+            return;
+          }
+
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            sanitizeNode(node as Element);
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => observer.disconnect();
+  }, []);
+
+  return null;
 };
 
 const SectionHeader = ({
@@ -94,7 +184,7 @@ const HeroSection2 = () => (
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-cyan-300 mb-7"
           >
             <Target className="w-4 h-4" />
-            <span className="text-xs font-black">Investment 2 | اختبار A/B</span>
+            <span className="text-xs font-black">نسخة الاستثمار الثانية | اختبار مقارنة</span>
           </motion.div>
 
           <motion.h1
@@ -251,10 +341,10 @@ const ExecutionTimelineSection = () => {
   const [activeBucket, setActiveBucket] = useState<TimelineBucket>('inputs');
 
   const bucketMeta: Record<TimelineBucket, { label: string; question: string; icon: React.ElementType }> = {
-    inputs: { label: 'Inputs', question: 'ما الذي نحتاجه منك؟', icon: ClipboardList },
-    process: { label: 'Process', question: 'ما الذي سنفعله؟', icon: Settings2 },
-    outputs: { label: 'Outputs', question: 'ما الذي ستستلمه؟', icon: FileText },
-    outcomes: { label: 'Outcomes', question: 'ما النتيجة المتوقعة؟', icon: Target },
+    inputs: { label: 'المدخلات', question: 'ما الذي نحتاجه منك؟', icon: ClipboardList },
+    process: { label: 'التنفيذ', question: 'ما الذي سنفعله؟', icon: Settings2 },
+    outputs: { label: 'المخرجات', question: 'ما الذي ستستلمه؟', icon: FileText },
+    outcomes: { label: 'النتائج', question: 'ما النتيجة المتوقعة؟', icon: Target },
   };
 
   const stages = [
@@ -264,7 +354,7 @@ const ExecutionTimelineSection = () => {
       title: 'التشخيص وتجهيز المدخلات',
       summary: 'نحدد المنتج، القطاع، صناع القرار، متوسط الصفقة، والمستهدف البيعي.',
       inputs: ['المنتج أو الخدمة', 'القطاع المستهدف', 'متوسط قيمة الصفقة', 'المستهدف البيعي خلال 90 يوم', 'بيانات العملاء الحالية إن وجدت', 'فريق المبيعات المسؤول', 'العروض والخدمات الحالية', 'الموقع وملف الشركة'],
-      process: ['تحليل المنتج والسوق', 'تحديد القطاعات الأنسب', 'تحديد صناع القرار', 'بناء ICP واضح', 'حساب القمع المطلوب', 'تحديد القنوات المناسبة', 'مراجعة جاهزية فريق المبيعات'],
+      process: ['تحليل المنتج والسوق', 'تحديد القطاعات الأنسب', 'تحديد صناع القرار', 'بناء ملف العميل المثالي بوضوح', 'حساب القمع المطلوب', 'تحديد القنوات المناسبة', 'مراجعة جاهزية فريق المبيعات'],
       outputs: ['خريطة استهداف أولية', 'تعريف العميل المثالي', 'قائمة القطاعات ذات الأولوية', 'نموذج القمع المطلوب', 'مؤشرات قياس أولية', 'خطة تشغيل أول أسبوعين'],
       outcomes: ['وضوح كامل للمستهدف، القطاع، الجمهور، والقنوات قبل بدء التشغيل.'],
     },
@@ -273,9 +363,9 @@ const ExecutionTimelineSection = () => {
       shortPeriod: 'الأسبوع 2-3',
       title: 'بناء قاعدة التشغيل',
       summary: 'نجهز البيانات، الرسائل، القنوات، السكريبتات، ولوحة المتابعة.',
-      inputs: ['ICP المعتمد', 'القطاعات المختارة', 'صناع القرار المطلوبين', 'القنوات المناسبة', 'رسائل العميل الحالية', 'نظام CRM أو طريقة المتابعة الحالية'],
+      inputs: ['ملف العميل المثالي المعتمد', 'القطاعات المختارة', 'صناع القرار المطلوبين', 'القنوات المناسبة', 'رسائل العميل الحالية', 'نظام المتابعة أو طريقة المتابعة الحالية'],
       process: ['استخراج الحسابات المناسبة من قاعدة البيانات', 'إثراء بيانات صناع القرار', 'التحقق من الأرقام والإيميلات', 'تجهيز الرسائل والسكريبتات', 'تجهيز قنوات التواصل', 'تدريب موظف المبيعات أو الفريق', 'ضبط مراحل المتابعة داخل النظام'],
-      outputs: ['قائمة حسابات مستهدفة جاهزة', 'بيانات صناع قرار', 'رسائل واتساب / لينكدإن / إيميل', 'سكريبت مكالمات', 'قنوات تواصل مفعلة', 'Dashboard متابعة', 'Playbook لفريق المبيعات'],
+      outputs: ['قائمة حسابات مستهدفة جاهزة', 'بيانات صناع قرار', 'رسائل واتساب / لينكدإن / بريد إلكتروني', 'نص مكالمات', 'قنوات تواصل مفعلة', 'لوحة متابعة', 'دليل تشغيل لفريق المبيعات'],
       outcomes: ['فريق العميل يصبح جاهزًا للعمل على قائمة واضحة، برسائل واضحة، وقنوات واضحة.'],
     },
     {
@@ -307,7 +397,7 @@ const ExecutionTimelineSection = () => {
     <section className="py-24 bg-[#080808] border-t border-slate-900/60">
       <div className="container mx-auto px-4 max-w-7xl">
         <SectionHeader
-          eyebrow="Inputs → Process → Outputs → Outcomes"
+          eyebrow="المدخلات ← التنفيذ ← المخرجات ← النتائج"
           title="كيف ننفذ خطة 90 يوم عمليًا؟"
           description="لا نبدأ بإرسال رسائل عشوائية. نبدأ من هدفك البيعي، ثم نبني خطة تشغيل أسبوعية تجمع بين البيانات، الذكاء الاصطناعي، فريقك، وكادر منافسات الموازي."
         />
@@ -467,37 +557,6 @@ const OneSalespersonSection = () => (
   </section>
 );
 
-const TargetFirstSection = () => {
-  const items = ['المنتج أو الخدمة', 'القطاع المستهدف', 'صناع القرار', 'متوسط قيمة الصفقة', 'المستهدف البيعي', 'عدد الصفقات المطلوبة', 'حجم الوصول اللازم'];
-
-  return (
-    <section className="py-24 bg-[#050505] border-t border-slate-900/60">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <SectionHeader
-          eyebrow="نبدأ من الهدف وليس الأدوات"
-          title="اتفق معنا على مستهدف مبيعات خلال 90 يوم... ونبني لك طريق الوصول إليه"
-          description="قبل أن نتحدث عن قواعد البيانات أو الوكلاء أو القنوات، نحدد المطلوب تجاريًا ثم نترجم الهدف إلى قمع مبيعات قابل للتشغيل."
-        />
-        <div className="grid md:grid-cols-7 gap-3">
-          {items.map((item, idx) => (
-            <motion.div
-              key={item}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.04 }}
-              className="bg-slate-950/70 border border-slate-800 rounded-2xl p-4 text-center min-h-[92px] flex flex-col justify-center"
-            >
-              <span className="text-emerald-300 font-black text-sm mb-2">{idx + 1}</span>
-              <span className="text-white font-black text-xs leading-relaxed">{item}</span>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
 const FocusedTargetingSection = () => (
   <section className="py-24 bg-[#080808] border-t border-slate-900/60">
     <div className="container mx-auto px-4 max-w-6xl">
@@ -591,9 +650,9 @@ const DailySalesSystemSection = () => (
           className="lg:col-span-5 grid gap-4"
         >
           {[
-            ['WhatsApp Script', 'رسالة قصيرة قابلة للإرسال مباشرة مع تخصيص اسم الشركة والقطاع.', MessageSquare],
-            ['Call Script', 'افتتاحية المكالمة، سؤال التأهيل، وطريقة طلب الاجتماع بدون إطالة.', PhoneCall],
-            ['Follow-up Step', 'تذكير تلقائي بعد 48 ساعة، ثم نقل الحالة حسب الرد أو عدم الرد.', RefreshCw],
+            ['نص واتساب', 'رسالة قصيرة قابلة للإرسال مباشرة مع تخصيص اسم الشركة والقطاع.', MessageSquare],
+            ['نص المكالمة', 'افتتاحية المكالمة، سؤال التأهيل، وطريقة طلب الاجتماع بدون إطالة.', PhoneCall],
+            ['خطوة المتابعة', 'تذكير تلقائي بعد 48 ساعة، ثم نقل الحالة حسب الرد أو عدم الرد.', RefreshCw],
           ].map(([title, text, Icon]) => (
             <div key={title as string} className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6">
               <Icon className="w-7 h-7 text-emerald-300 mb-4" />
@@ -610,25 +669,25 @@ const DailySalesSystemSection = () => (
 const WeeklyReviewSection = () => {
   const controlRoom = [
     {
-      title: 'Activity',
+      title: 'النشاط',
       label: 'ماذا حدث؟',
       icon: Activity,
       items: ['الرسائل', 'المكالمات', 'المحاولات', 'المتابعة'],
     },
     {
-      title: 'Conversion',
+      title: 'التحويل',
       label: 'أين تحول؟',
       icon: LineChart,
       items: ['الردود', 'المهتمون', 'الاجتماعات', 'العروض'],
     },
     {
-      title: 'Quality',
+      title: 'الجودة',
       label: 'لماذا توقف؟',
       icon: ShieldCheck,
       items: ['جودة الاجتماعات', 'ملاءمة العملاء', 'أسباب الرفض', 'نقاط التعطل'],
     },
     {
-      title: 'Action Plan',
+      title: 'خطة العمل',
       label: 'ماذا سنغير؟',
       icon: Settings2,
       items: ['مهام الأسبوع القادم', 'تحسين الرسائل', 'تعديل الاستهداف', 'تدريب الفريق'],
@@ -841,6 +900,8 @@ const Investment2Page = () => {
         lineHeight: 1.7,
       }}
     >
+      <ArabicOnlyTextSanitizer />
+
       <div id="hero">
         <HeroSection2 />
       </div>
@@ -852,9 +913,6 @@ const Investment2Page = () => {
       </div>
       <div id="one-salesperson">
         <OneSalespersonSection />
-      </div>
-      <div id="target-first">
-        <TargetFirstSection />
       </div>
       <div id="focused-targeting">
         <FocusedTargetingSection />
