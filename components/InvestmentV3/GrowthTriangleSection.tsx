@@ -19,8 +19,10 @@ import {
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
-export const GrowthTriangleSection = () => {
+export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSalesCenter?: boolean }) => {
     const [activeNode, setActiveNode] = useState<string | null>(null);
+    const centerNodeLabel = clientSalesCenter ? 'فريق مبيعات العميل' : 'نظام النينجا الذكي';
+    const rightNodeLabel = clientSalesCenter ? 'نظام النينجا الذكي' : 'فريقكم البيعي';
 
     const journeySteps = [
         {
@@ -101,7 +103,7 @@ export const GrowthTriangleSection = () => {
                             <span className="font-semibold text-xs text-slate-300">محرك الإيرادات الحقيقي</span>
                         </div>
                         <h2 className="text-3xl md:text-5xl font-black text-white mb-6 tracking-tight leading-tight">
-                            مثلث النمو والمبيعات المتكامل
+                            {clientSalesCenter ? '3 محركات حول مستهدف واحد' : 'مثلث النمو والمبيعات المتكامل'}
                         </h2>
                         <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed mb-4">
                             لا نعتمد على الوصول للسوق فقط… بل نبني معكم منظومة متكاملة تجمع بين <span className="text-violet-400 font-bold">تطوير فريقكم البيعي</span>، <span className="text-cyan-400 font-bold">تشغيل السوق وتحريك الفرص</span>، و <span className="text-emerald-400 font-bold">نظام النينجا الذكي</span>.
@@ -382,7 +384,7 @@ export const GrowthTriangleSection = () => {
                                 </div>
                             </motion.div>
 
-                            {/* Node 3: Right (فريقكم البيعي) */}
+                            {/* Node 3: Right */}
                             <motion.div 
                                 className="absolute top-[74%] left-[74%] z-20"
                                 style={{ x: "-50%", y: "-50%" }}
@@ -396,7 +398,7 @@ export const GrowthTriangleSection = () => {
                                 }}
                             >
                                 <div className="absolute -top-10 left-6 whitespace-nowrap text-left">
-                                    <span className="block text-xs font-bold text-blue-400">فريقكم البيعي</span>
+                                    <span className="block text-xs font-bold text-blue-400">{rightNodeLabel}</span>
                                 </div>
                                 <div className={cn(
                                     "w-16 h-16 rounded-full flex items-center justify-center border bg-[#050810]/95 cursor-pointer transition-all duration-300 shadow-[0_0_20px_rgba(59,130,246,0.1)]",
@@ -404,11 +406,15 @@ export const GrowthTriangleSection = () => {
                                         ? "border-blue-500 shadow-[0_0_25px_rgba(59,130,246,0.35)] scale-105" 
                                         : "border-blue-500/30 hover:border-blue-500/70"
                                 )}>
-                                    <Briefcase className="w-6 h-6 text-blue-400" />
+                                    {clientSalesCenter ? (
+                                        <BrainCircuit className="w-6 h-6 text-blue-400" />
+                                    ) : (
+                                        <Briefcase className="w-6 h-6 text-blue-400" />
+                                    )}
                                 </div>
                             </motion.div>
 
-                            {/* Node 4: Center Core (نظام النينجا الذكي) */}
+                            {/* Node 4: Center Core */}
                             <motion.div 
                                 className="absolute top-[52%] left-[50%] z-30"
                                 style={{ x: "-50%", y: "-50%" }}
@@ -436,13 +442,20 @@ export const GrowthTriangleSection = () => {
                                 )}>
                                     {/* Pulse effect rings */}
                                     <div className="absolute inset-0 rounded-full border border-emerald-500/20 animate-pulse pointer-events-none" />
-                                    <BrainCircuit className={cn(
+                                    {clientSalesCenter ? (
+                                        <Briefcase className={cn(
+                                            "w-8 h-8 transition-colors duration-300",
+                                            activeNode === 'ninja' ? "text-emerald-400" : "text-emerald-500"
+                                        )} />
+                                    ) : (
+                                        <BrainCircuit className={cn(
                                         "w-8 h-8 transition-colors duration-300",
                                         activeNode === 'ninja' ? "text-emerald-400" : "text-emerald-500"
-                                    )} />
+                                        )} />
+                                    )}
                                 </div>
                                 <div className="absolute -bottom-10 left-1/2 whitespace-nowrap text-center z-10" style={{ transform: 'translateX(-50%)' }}>
-                                    <span className="block text-[11px] font-extrabold text-emerald-400">نظام النينجا الذكي</span>
+                                    <span className="block text-[11px] font-extrabold text-emerald-400">{centerNodeLabel}</span>
                                 </div>
                             </motion.div>
 
@@ -530,20 +543,20 @@ export const GrowthTriangleSection = () => {
                                     >
                                         <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
                                             <span className="w-1 h-1 rounded-full bg-blue-400" />
-                                            فريق المبيعات الداخلي
+                                            {clientSalesCenter ? 'نظام النينجا الذكي' : 'فريق المبيعات الداخلي'}
                                         </h4>
                                         <ul className="space-y-1.5 text-[9px] leading-tight">
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
-                                                <span>إدارة الاجتماعات وتقديم العروض</span>
+                                                <span>{clientSalesCenter ? 'إثراء البيانات والبحث الذكي للفرص' : 'إدارة الاجتماعات وتقديم العروض'}</span>
                                             </li>
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
-                                                <span>التفاوض وإتمام صفقات الإغلاق</span>
+                                                <span>{clientSalesCenter ? 'أتمتة المتابعة الأولية وتصنيف الردود' : 'التفاوض وإتمام صفقات الإغلاق'}</span>
                                             </li>
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-blue-400 shrink-0 mt-0.5" />
-                                                <span>تحويل الفرص المتاحة لإيرادات</span>
+                                                <span>{clientSalesCenter ? 'تجهيز المحادثات النشطة قبل وصولها للفريق' : 'تحويل الفرص المتاحة لإيرادات'}</span>
                                             </li>
                                         </ul>
                                     </motion.div>
@@ -563,20 +576,20 @@ export const GrowthTriangleSection = () => {
                                     >
                                         <h4 className="text-[10px] font-bold text-emerald-400 mb-2 flex items-center gap-1.5 justify-start">
                                             <Bot className="w-3.5 h-3.5" />
-                                            نظام النينجا الذكي
+                                            {clientSalesCenter ? 'فريق مبيعات العميل' : 'نظام النينجا الذكي'}
                                         </h4>
                                         <ul className="space-y-1.5 text-[8.5px] text-slate-300 leading-tight">
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-emerald-400 shrink-0 mt-0.5" />
-                                                <span>إثراء البيانات والبحث الذكي للفرص</span>
+                                                <span>{clientSalesCenter ? 'استلام المحادثات النشطة الجاهزة' : 'إثراء البيانات والبحث الذكي للفرص'}</span>
                                             </li>
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-emerald-400 shrink-0 mt-0.5" />
-                                                <span>أتمتة المحادثات ورصد الاهتمام</span>
+                                                <span>{clientSalesCenter ? 'تأكيد الاحتياج وحجز الاجتماعات' : 'أتمتة المحادثات ورصد الاهتمام'}</span>
                                             </li>
                                             <li className="flex items-start gap-1">
                                                 <Check className="w-2.5 h-2.5 text-emerald-400 shrink-0 mt-0.5" />
-                                                <span>إدارة علاقات العملاء وسير الفرص</span>
+                                                <span>{clientSalesCenter ? 'إرسال العروض ومتابعة التفاوض' : 'إدارة علاقات العملاء وسير الفرص'}</span>
                                             </li>
                                         </ul>
                                     </motion.div>
