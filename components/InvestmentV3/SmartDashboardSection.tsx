@@ -7,7 +7,7 @@ import { AgentOrbitGrid } from './dashboard/AgentOrbitGrid';
 import { MonafsatBridge } from './dashboard/MonafsatBridge';
 import { DashboardCTA } from './dashboard/DashboardCTA';
 
-export const SmartDashboardSection = () => {
+export const SmartDashboardSection = ({ showComparison = true }: { showComparison?: boolean }) => {
     const [hoveredQuestionIdx, setHoveredQuestionIdx] = useState<number | null>(null);
 
     return (
@@ -50,7 +50,7 @@ export const SmartDashboardSection = () => {
                 </div>
 
                 {/* 4. Before / After Interactive Comparison Toggle */}
-                <BeforeAfterToggle />
+                {showComparison && <BeforeAfterToggle />}
 
                 {/* 5. Monafsat Positioning Bridge */}
                 <MonafsatBridge />

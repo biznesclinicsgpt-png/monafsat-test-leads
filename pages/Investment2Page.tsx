@@ -29,10 +29,8 @@ import { UseCasesSection } from '../components/InvestmentV3/UseCasesSection';
 import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
 import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
 import { GrowthTriangleSection } from '../components/InvestmentV3/GrowthTriangleSection';
-import { WorkStagesSection } from '../components/InvestmentV3/WorkStagesSection';
 import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
 import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
-import { DeliverablesSection } from '../components/InvestmentV3/DeliverablesSection';
 import { AssetsSection } from '../components/InvestmentV3/AssetsSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
@@ -954,17 +952,11 @@ const Investment2Page = () => {
       <div id="growth-triangle">
         <GrowthTriangleSection />
       </div>
-      <div id="work-stages">
-        <WorkStagesSection />
-      </div>
       <div id="dashboard-cmd">
-        <SmartDashboardSection />
+        <SmartDashboardSection showComparison={false} />
       </div>
       <div id="human-team">
         <HumanTeamSection />
-      </div>
-      <div id="deliverables">
-        <DeliverablesSection />
       </div>
 
       <SectionBridge label="البنية التقنية والأصول التي تبقى للشركة" color="emerald" />
