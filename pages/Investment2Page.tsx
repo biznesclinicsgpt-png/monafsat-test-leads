@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
+  Activity,
   BarChart3,
   Bot,
   BriefcaseBusiness,
@@ -9,14 +10,17 @@ import {
   CheckCircle2,
   ClipboardList,
   Database,
+  FileText,
   LineChart,
+  MessageSquare,
   PhoneCall,
+  RefreshCw,
+  Settings2,
   ShieldCheck,
   Target,
   UserRoundCheck,
   Users,
 } from 'lucide-react';
-import { FlowRail } from '../components/InvestmentV3/FlowRail';
 import { SectionBridge } from '../components/InvestmentV3/SectionBridge';
 import { StatsRow } from '../components/InvestmentV3/dashboard/StatsRow';
 import { PartnersMarqueeSection } from '../components/InvestmentV3/PartnersMarqueeSection';
@@ -225,6 +229,180 @@ const EnginesSection = () => {
             </motion.div>
           ))}
         </div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-5 py-4 text-center"
+        >
+          <p className="text-sm md:text-base text-emerald-100 font-bold leading-relaxed">
+            هذه المحركات لا تعمل بشكل منفصل؛ بل تدخل في خطة تشغيل أسبوعية واضحة تبدأ من التشخيص وتنتهي بقياس النتائج وتحسين القمع.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+type TimelineBucket = 'inputs' | 'process' | 'outputs' | 'outcomes';
+
+const ExecutionTimelineSection = () => {
+  const [activeStage, setActiveStage] = useState(0);
+  const [activeBucket, setActiveBucket] = useState<TimelineBucket>('inputs');
+
+  const bucketMeta: Record<TimelineBucket, { label: string; question: string; icon: React.ElementType }> = {
+    inputs: { label: 'Inputs', question: 'ما الذي نحتاجه منك؟', icon: ClipboardList },
+    process: { label: 'Process', question: 'ما الذي سنفعله؟', icon: Settings2 },
+    outputs: { label: 'Outputs', question: 'ما الذي ستستلمه؟', icon: FileText },
+    outcomes: { label: 'Outcomes', question: 'ما النتيجة المتوقعة؟', icon: Target },
+  };
+
+  const stages = [
+    {
+      period: 'اليوم 1 إلى 7',
+      shortPeriod: 'الأسبوع 1',
+      title: 'التشخيص وتجهيز المدخلات',
+      summary: 'نحدد المنتج، القطاع، صناع القرار، متوسط الصفقة، والمستهدف البيعي.',
+      inputs: ['المنتج أو الخدمة', 'القطاع المستهدف', 'متوسط قيمة الصفقة', 'المستهدف البيعي خلال 90 يوم', 'بيانات العملاء الحالية إن وجدت', 'فريق المبيعات المسؤول', 'العروض والخدمات الحالية', 'الموقع وملف الشركة'],
+      process: ['تحليل المنتج والسوق', 'تحديد القطاعات الأنسب', 'تحديد صناع القرار', 'بناء ICP واضح', 'حساب القمع المطلوب', 'تحديد القنوات المناسبة', 'مراجعة جاهزية فريق المبيعات'],
+      outputs: ['خريطة استهداف أولية', 'تعريف العميل المثالي', 'قائمة القطاعات ذات الأولوية', 'نموذج القمع المطلوب', 'مؤشرات قياس أولية', 'خطة تشغيل أول أسبوعين'],
+      outcomes: ['وضوح كامل للمستهدف، القطاع، الجمهور، والقنوات قبل بدء التشغيل.'],
+    },
+    {
+      period: 'الأسبوع 2 إلى 3',
+      shortPeriod: 'الأسبوع 2-3',
+      title: 'بناء قاعدة التشغيل',
+      summary: 'نجهز البيانات، الرسائل، القنوات، السكريبتات، ولوحة المتابعة.',
+      inputs: ['ICP المعتمد', 'القطاعات المختارة', 'صناع القرار المطلوبين', 'القنوات المناسبة', 'رسائل العميل الحالية', 'نظام CRM أو طريقة المتابعة الحالية'],
+      process: ['استخراج الحسابات المناسبة من قاعدة البيانات', 'إثراء بيانات صناع القرار', 'التحقق من الأرقام والإيميلات', 'تجهيز الرسائل والسكريبتات', 'تجهيز قنوات التواصل', 'تدريب موظف المبيعات أو الفريق', 'ضبط مراحل المتابعة داخل النظام'],
+      outputs: ['قائمة حسابات مستهدفة جاهزة', 'بيانات صناع قرار', 'رسائل واتساب / لينكدإن / إيميل', 'سكريبت مكالمات', 'قنوات تواصل مفعلة', 'Dashboard متابعة', 'Playbook لفريق المبيعات'],
+      outcomes: ['فريق العميل يصبح جاهزًا للعمل على قائمة واضحة، برسائل واضحة، وقنوات واضحة.'],
+    },
+    {
+      period: 'الأسبوع 4 إلى 8',
+      shortPeriod: 'الأسبوع 4-8',
+      title: 'التشغيل وتحريك الفرص',
+      summary: 'نفتح المحادثات، نتابع الردود، نحجز الاجتماعات، ونحسن الأداء أسبوعيًا.',
+      inputs: ['القوائم الجاهزة', 'الرسائل المعتمدة', 'فريق المبيعات', 'وكلاء النينجا', 'كادر منافسات الموازي', 'القنوات المفعلة'],
+      process: ['تشغيل حملات التواصل', 'فتح المحادثات', 'متابعة الردود', 'تصنيف المهتمين', 'نقل الفرص لفريق المبيعات', 'تحليل المكالمات', 'تحسين الرسائل أسبوعيًا', 'تشغيل كادر منافسات الموازي لفتح فرص مباشرة'],
+      outputs: ['محادثات نشطة', 'ردود إيجابية', 'اجتماعات محجوزة', 'اجتماعات مؤهلة', 'فرص داخل القمع', 'تقارير أسبوعية', 'توصيات تحسين للفريق', 'قائمة اعتراضات وأسئلة متكررة'],
+      outcomes: ['تحول الاستهداف إلى محادثات واجتماعات وفرص حقيقية قابلة للقياس.'],
+    },
+    {
+      period: 'الأسبوع 9 إلى 12',
+      shortPeriod: 'الأسبوع 9-12',
+      title: 'التحسين والإغلاق',
+      summary: 'نحلل القمع، نتابع العروض، ندعم التفاوض، ونبني خطة التوسع التالية.',
+      inputs: ['نتائج الأسابيع السابقة', 'بيانات القمع', 'المكالمات المسجلة', 'الاعتراضات', 'العروض المرسلة', 'الفرص المفتوحة', 'حالة كل فرصة'],
+      process: ['تحليل القنوات الأفضل', 'تحسين السكريبتات', 'تدريب الفريق على الاعتراضات', 'متابعة العروض', 'دعم التفاوض', 'تحديد أسباب التعطل', 'تعديل الاستهداف حسب النتائج', 'بناء خطة الشهر التالي'],
+      outputs: ['فرص أقرب للإغلاق', 'عروض سعر أكثر دقة', 'قائمة فرص ساخنة', 'تحليل أداء الفريق', 'تقرير 90 يوم', 'خطة استمرار أو توسع', 'توصيات للقطاعات التالية'],
+      outcomes: ['وضوح ما تحقق، ما تعطل، ما يجب تحسينه، وكيف يتم توسيع التشغيل بعد أول 90 يوم.'],
+    },
+  ];
+
+  const currentStage = stages[activeStage];
+  const CurrentIcon = bucketMeta[activeBucket].icon;
+
+  return (
+    <section className="py-24 bg-[#080808] border-t border-slate-900/60">
+      <div className="container mx-auto px-4 max-w-7xl">
+        <SectionHeader
+          eyebrow="Inputs → Process → Outputs → Outcomes"
+          title="كيف ننفذ خطة 90 يوم عمليًا؟"
+          description="لا نبدأ بإرسال رسائل عشوائية. نبدأ من هدفك البيعي، ثم نبني خطة تشغيل أسبوعية تجمع بين البيانات، الذكاء الاصطناعي، فريقك، وكادر منافسات الموازي."
+        />
+
+        <div className="grid lg:grid-cols-12 gap-6 items-start">
+          <div className="lg:col-span-5 grid gap-4">
+            {stages.map((stage, idx) => (
+              <button
+                key={stage.title}
+                onClick={() => {
+                  setActiveStage(idx);
+                  setActiveBucket('inputs');
+                }}
+                className={cn(
+                  'text-right rounded-3xl border p-5 transition-all duration-300',
+                  activeStage === idx
+                    ? 'bg-emerald-500/10 border-emerald-400/50 shadow-[0_0_28px_rgba(16,185,129,0.12)]'
+                    : 'bg-slate-950/55 border-slate-800 hover:border-slate-700'
+                )}
+              >
+                <div className="flex items-start gap-4">
+                  <div
+                    className={cn(
+                      'w-11 h-11 rounded-2xl border flex items-center justify-center font-black shrink-0',
+                      activeStage === idx ? 'bg-emerald-400 text-slate-950 border-emerald-300' : 'bg-slate-900 text-slate-400 border-slate-800'
+                    )}
+                  >
+                    {idx + 1}
+                  </div>
+                  <div>
+                    <div className="text-xs font-black text-cyan-300 mb-1">{stage.shortPeriod}</div>
+                    <h3 className="text-lg md:text-xl font-black text-white mb-2">{stage.title}</h3>
+                    <p className="text-sm text-slate-400 leading-relaxed">{stage.summary}</p>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <motion.div
+            key={`${activeStage}-${activeBucket}`}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8"
+          >
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7 pb-5 border-b border-slate-800">
+              <div>
+                <div className="text-xs font-black text-emerald-300 mb-2">{currentStage.period}</div>
+                <h3 className="text-2xl md:text-3xl font-black text-white">{currentStage.title}</h3>
+              </div>
+              <div className="grid grid-cols-2 sm:flex gap-2">
+                {(Object.keys(bucketMeta) as TimelineBucket[]).map((bucket) => (
+                  <button
+                    key={bucket}
+                    onClick={() => setActiveBucket(bucket)}
+                    className={cn(
+                      'px-3 py-2 rounded-xl text-xs font-black border transition-colors',
+                      activeBucket === bucket
+                        ? 'bg-cyan-400 text-slate-950 border-cyan-300'
+                        : 'bg-black/35 text-slate-400 border-slate-800 hover:text-white'
+                    )}
+                  >
+                    {bucketMeta[bucket].label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl bg-black/30 border border-slate-900 p-5">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex items-center justify-center">
+                  <CurrentIcon className="w-5 h-5" />
+                </div>
+                <div>
+                  <div className="text-xs text-slate-500 font-black">{bucketMeta[activeBucket].label}</div>
+                  <div className="text-white font-black">{bucketMeta[activeBucket].question}</div>
+                </div>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3">
+                {currentStage[activeBucket].map((item) => (
+                  <div key={item} className="rounded-xl bg-slate-950/80 border border-slate-800 px-4 py-3 flex items-start gap-3">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-300 mt-1 shrink-0" />
+                    <span className="text-sm text-slate-300 font-bold leading-relaxed">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-5 py-4">
+              <p className="text-emerald-100 font-black leading-relaxed">
+                بنهاية 90 يوم، لا تحصل فقط على تقرير... بل تحصل على قناة مبيعات قابلة للتكرار والتحسين.
+              </p>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
@@ -242,31 +420,47 @@ const OneSalespersonSection = () => (
         >
           <UserRoundCheck className="w-12 h-12 text-emerald-300 mb-6" />
           <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
-            حتى لو لديك موظف مبيعات واحد فقط
+            حتى لو لديك موظف مبيعات واحد فقط... سنبني حوله نظام تشغيل
           </h2>
           <p className="text-slate-300 leading-relaxed">
-            لا تحتاج فريقًا كبيرًا لتبدأ. نساعدك على تحويل موظف واحد قابل للتطوير إلى قناة مبيعات منظمة، مزودة بالبيانات، الرسائل، القنوات، والمتابعة.
+            نحن لا نحتاج فريقًا كبيرًا. نحتاج شخصًا واحدًا قابلًا للتطوير، ثم نزوده يوميًا بما يحتاجه ليعمل بوضوح: من يستهدف، ماذا يقول، أي قناة يستخدم، متى يتابع، وكيف يحول الرد إلى اجتماع.
           </p>
         </motion.div>
-        <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-          {[
-            'قائمة يومية بحسابات وصناع قرار مناسبين',
-            'رسائل وقنوات تواصل جاهزة حسب القطاع',
-            'نظام متابعة يوضح الخطوة التالية لكل فرصة',
-            'مراجعة أسبوعية لتحسين الأداء بدل الاجتهاد الفردي',
-          ].map((item, idx) => (
-            <motion.div
-              key={item}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.06 }}
-              className="bg-slate-950/60 border border-slate-800 rounded-2xl p-5 flex items-start gap-3"
-            >
-              <CheckCircle2 className="w-5 h-5 text-emerald-300 mt-1 shrink-0" />
-              <span className="text-slate-200 font-bold text-sm leading-relaxed">{item}</span>
-            </motion.div>
-          ))}
+        <div className="lg:col-span-7">
+          <div className="relative bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8 overflow-hidden">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12),transparent_48%)] pointer-events-none" />
+            <div className="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
+              {[
+                ['بيانات جاهزة', Database],
+                ['رسائل جاهزة', MessageSquare],
+                ['قنوات مفعلة', PhoneCall],
+                ['متابعة', CalendarCheck],
+                ['تدريب', Users],
+                ['تقارير', BarChart3],
+              ].map(([item, Icon], idx) => (
+                <motion.div
+                  key={item as string}
+                  initial={{ opacity: 0, y: 18 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="bg-black/35 border border-slate-800 rounded-2xl p-4 text-center min-h-[110px] flex flex-col items-center justify-center"
+                >
+                  <Icon className="w-6 h-6 text-cyan-300 mb-3" />
+                  <span className="text-slate-200 font-black text-sm">{item as string}</span>
+                </motion.div>
+              ))}
+            </div>
+            <div className="relative z-10 my-5 flex justify-center">
+              <div className="rounded-full bg-emerald-400 text-slate-950 px-6 py-3 font-black border border-emerald-200 shadow-[0_0_30px_rgba(52,211,153,0.25)]">
+                موظف المبيعات
+              </div>
+            </div>
+            <div className="relative z-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex items-center justify-center gap-3">
+              <BriefcaseBusiness className="w-5 h-5 text-emerald-300 shrink-0" />
+              <span className="text-emerald-100 font-black text-sm">فرص مباشرة تدخل القمع بدل انتظار المحاولات العشوائية</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -340,68 +534,145 @@ const FocusedTargetingSection = () => (
   </section>
 );
 
-const DailySalesSystemSection = () => {
-  const fields = [
-    ['اسم الشركة', Database],
-    ['اسم صانع القرار', UserRoundCheck],
-    ['المنصب', BriefcaseBusiness],
-    ['رقم الهاتف', PhoneCall],
-    ['البريد', ClipboardList],
-    ['LinkedIn', Users],
-    ['نبذة مختصرة', ClipboardList],
-    ['درجة ملاءمة العميل', Target],
-    ['أفضل قناة تواصل', BarChart3],
-    ['رسالة مقترحة', ClipboardList],
-    ['حالة المتابعة', CalendarCheck],
-    ['الخطوة التالية', ArrowLeft],
-  ];
+const DailySalesSystemSection = () => (
+  <section className="py-24 bg-[#050505] border-t border-slate-900/60">
+    <div className="container mx-auto px-4 max-w-6xl">
+      <SectionHeader
+        eyebrow="مخرجات ملموسة"
+        title="ماذا يرى موظفك داخل النظام؟"
+        description="بدل كلمة منظومة بشكل عام، يرى موظفك قائمة تشغيل واضحة: من يتواصل معه، لماذا هو مناسب، ما الرسالة المقترحة، وما الخطوة التالية."
+      />
+      <div className="grid lg:grid-cols-12 gap-6 items-stretch">
+        <motion.div
+          initial={{ opacity: 0, x: 28 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8"
+        >
+          <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-slate-800">
+            <div>
+              <div className="text-xs font-black text-cyan-300 mb-2">بطاقة عميل محتمل</div>
+              <h3 className="text-2xl md:text-3xl font-black text-white">شركة مقاولات متوسطة</h3>
+              <p className="text-sm text-slate-500 font-bold mt-1">الرياض | قطاع المقاولات والتشغيل</p>
+            </div>
+            <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 px-4 py-3 text-center">
+              <div className="text-[10px] text-emerald-300 font-black mb-1">درجة الملاءمة</div>
+              <div className="text-xl font-black text-white">عالية</div>
+            </div>
+          </div>
 
-  return (
-    <section className="py-24 bg-[#050505] border-t border-slate-900/60">
-      <div className="container mx-auto px-4 max-w-6xl">
-        <SectionHeader
-          eyebrow="مخرجات ملموسة"
-          title="ماذا يستلم فريق المبيعات لديك يوميًا؟"
-          description="بدل كلمة منظومة بشكل عام، يرى موظفك قائمة تشغيل واضحة: من يتواصل معه، لماذا هو مناسب، ما الرسالة المقترحة، وما الخطوة التالية."
-        />
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {fields.map(([field, Icon], idx) => (
-            <motion.div
-              key={field as string}
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.025 }}
-              className="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 flex items-center gap-3"
-            >
-              <Icon className="w-5 h-5 text-cyan-300 shrink-0" />
-              <span className="text-sm font-black text-slate-200">{field as string}</span>
-            </motion.div>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {[
+              ['صانع القرار', 'مدير المشتريات', UserRoundCheck],
+              ['القناة الأنسب', 'واتساب + اتصال', PhoneCall],
+              ['سبب الملاءمة', 'نشاط الشركة وحجمها مناسب للخدمة', Target],
+              ['الخطوة التالية', 'إرسال الرسالة ثم متابعة بعد 48 ساعة', CalendarCheck],
+            ].map(([label, value, Icon]) => (
+              <div key={label as string} className="rounded-2xl bg-black/30 border border-slate-900 p-4">
+                <Icon className="w-5 h-5 text-cyan-300 mb-3" />
+                <div className="text-[10px] text-slate-500 font-black mb-1">{label as string}</div>
+                <div className="text-sm text-white font-black leading-relaxed">{value as string}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-5">
+            <div className="text-[10px] text-emerald-300 font-black mb-2">الرسالة المقترحة</div>
+            <p className="text-sm text-emerald-50 font-bold leading-relaxed">
+              لاحظنا أن شركتكم تعمل في مشاريع تشغيلية متوسطة داخل الرياض. لدينا تجربة تساعد فرق المبيعات على الوصول لصناع القرار وتحويل الفرص إلى اجتماعات مؤهلة خلال 90 يوم. هل يناسبك اتصال قصير هذا الأسبوع؟
+            </p>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: -28 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          className="lg:col-span-5 grid gap-4"
+        >
+          {[
+            ['WhatsApp Script', 'رسالة قصيرة قابلة للإرسال مباشرة مع تخصيص اسم الشركة والقطاع.', MessageSquare],
+            ['Call Script', 'افتتاحية المكالمة، سؤال التأهيل، وطريقة طلب الاجتماع بدون إطالة.', PhoneCall],
+            ['Follow-up Step', 'تذكير تلقائي بعد 48 ساعة، ثم نقل الحالة حسب الرد أو عدم الرد.', RefreshCw],
+          ].map(([title, text, Icon]) => (
+            <div key={title as string} className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6">
+              <Icon className="w-7 h-7 text-emerald-300 mb-4" />
+              <h3 className="text-xl font-black text-white mb-2">{title as string}</h3>
+              <p className="text-sm text-slate-400 font-bold leading-relaxed">{text as string}</p>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 const WeeklyReviewSection = () => {
-  const metrics = ['الجهات المستهدفة', 'الرسائل المرسلة', 'المكالمات', 'الردود', 'المهتمون', 'الاجتماعات المحجوزة', 'الاجتماعات المؤهلة', 'عروض السعر', 'التفاوض', 'الصفقات', 'نقاط التعطل', 'خطة الأسبوع القادم'];
+  const controlRoom = [
+    {
+      title: 'Activity',
+      label: 'ماذا حدث؟',
+      icon: Activity,
+      items: ['الرسائل', 'المكالمات', 'المحاولات', 'المتابعة'],
+    },
+    {
+      title: 'Conversion',
+      label: 'أين تحول؟',
+      icon: LineChart,
+      items: ['الردود', 'المهتمون', 'الاجتماعات', 'العروض'],
+    },
+    {
+      title: 'Quality',
+      label: 'لماذا توقف؟',
+      icon: ShieldCheck,
+      items: ['جودة الاجتماعات', 'ملاءمة العملاء', 'أسباب الرفض', 'نقاط التعطل'],
+    },
+    {
+      title: 'Action Plan',
+      label: 'ماذا سنغير؟',
+      icon: Settings2,
+      items: ['مهام الأسبوع القادم', 'تحسين الرسائل', 'تعديل الاستهداف', 'تدريب الفريق'],
+    },
+  ];
 
   return (
     <section className="py-24 bg-[#080808] border-t border-slate-900/60">
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
           eyebrow="تشغيل منضبط"
-          title="كل أسبوع نراجع: هل اقتربنا من المستهدف؟"
-          description="نتعامل مع المبيعات مثل التشخيص. نقيس حركة المبيعات من أول الاستهداف حتى التفاوض، ونحدد أين يتوقف الفريق، وما الذي يجب تحسينه في الأسبوع التالي."
+          title="كل أسبوع نفتح غرفة تحكم المبيعات"
+          description="لا نكتفي بسؤال: كم اجتماعًا تم حجزه؟ نراجع ماذا حدث، أين توقف القمع، لماذا توقف، وما الذي سنغيره في الأسبوع القادم."
         />
-        <div className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          {controlRoom.map((block, idx) => (
+            <motion.div
+              key={block.title}
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.06 }}
+              className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6"
+            >
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 flex items-center justify-center mb-5">
+                <block.icon className="w-6 h-6" />
+              </div>
+              <div className="text-xs font-black text-cyan-300 mb-1">{block.title}</div>
+              <h3 className="text-xl font-black text-white mb-5">{block.label}</h3>
+              <div className="space-y-3">
+                {block.items.map((item) => (
+                  <div key={item} className="flex items-center gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 shrink-0" />
+                    <span className="text-sm text-slate-300 font-bold">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <div className="mt-6 bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {metrics.map((metric, idx) => (
-              <div key={metric} className="rounded-xl bg-black/35 border border-slate-900 px-4 py-3 flex items-center gap-3">
-                <span className="w-7 h-7 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 flex items-center justify-center text-xs font-black">
-                  {idx + 1}
-                </span>
+            {['الاجتماعات المحجوزة', 'الاجتماعات المؤهلة', 'عروض السعر', 'الصفقات ونقاط التعطل'].map((metric) => (
+              <div key={metric} className="rounded-xl bg-black/35 border border-slate-900 px-4 py-3 text-center">
                 <span className="text-xs font-black text-slate-300">{metric}</span>
               </div>
             ))}
@@ -534,17 +805,25 @@ const FinalCtaSection2 = () => (
         className="rounded-3xl bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-slate-950 border border-emerald-500/30 p-8 md:p-12"
       >
         <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
-          ابدأ بتجربة 90 يوم على منتج واحد وقطاع واحد
+          ابدأ بخطة تشغيل 90 يوم على منتج واحد وقطاع واحد
         </h2>
         <p className="text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto mb-8">
-          نحدد المستهدف، نختار القطاع، نجهز البيانات، ونبدأ تشغيل فريقك مع المنظومة.
+          نحدد المستهدف، نختار القطاع، نجهز البيانات، نشغل القنوات، ندعم موظفك، ونراجع النتائج أسبوعيًا حتى تتحول الفرص إلى اجتماعات وعروض وصفقات.
         </p>
-        <button
-          onClick={() => scrollToSection('growth-calculator')}
-          className="px-8 py-4 rounded-2xl bg-emerald-400 text-slate-950 font-black hover:bg-emerald-300 transition-colors"
-        >
-          احسب مستهدفك خلال 90 يوم
-        </button>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            onClick={() => scrollToSection('growth-calculator')}
+            className="px-8 py-4 rounded-2xl bg-emerald-400 text-slate-950 font-black hover:bg-emerald-300 transition-colors"
+          >
+            ابدأ بتحديد مستهدفك
+          </button>
+          <button
+            onClick={() => scrollToSection('pricing')}
+            className="px-8 py-4 rounded-2xl bg-slate-950/70 border border-slate-800 text-white font-black hover:border-cyan-500/50 transition-colors"
+          >
+            احجز جلسة تشخيص القطاع
+          </button>
+        </div>
       </motion.div>
     </div>
   </section>
@@ -553,7 +832,7 @@ const FinalCtaSection2 = () => (
 const Investment2Page = () => {
   return (
     <div
-      className="min-h-screen selection:bg-emerald-500/30 font-sans relative overflow-x-hidden pt-[60px] md:pt-0"
+      className="min-h-screen selection:bg-emerald-500/30 font-sans relative overflow-x-hidden"
       dir="rtl"
       style={{
         fontFamily: "'IBM Plex Sans Arabic', 'Tajawal', sans-serif",
@@ -562,13 +841,14 @@ const Investment2Page = () => {
         lineHeight: 1.7,
       }}
     >
-      <FlowRail />
-
       <div id="hero">
         <HeroSection2 />
       </div>
       <div id="engines">
         <EnginesSection />
+      </div>
+      <div id="execution-plan">
+        <ExecutionTimelineSection />
       </div>
       <div id="one-salesperson">
         <OneSalespersonSection />
