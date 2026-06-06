@@ -953,7 +953,7 @@ const Investment2Page = () => {
         <GrowthTriangleSection />
       </div>
       <div id="dashboard-cmd">
-        <SmartDashboardSection showComparison={false} />
+        <SmartDashboardSection simple />
       </div>
       <div id="human-team">
         <HumanTeamSection />
