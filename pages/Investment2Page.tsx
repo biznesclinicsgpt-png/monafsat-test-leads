@@ -820,14 +820,29 @@ const RevenueShareSimpleSection = () => {
         </motion.div>
 
         <div className="relative rounded-2xl border border-slate-800 bg-slate-950/55 px-4 py-7 md:px-7 md:py-10">
-          <div className="absolute inset-x-8 top-10 hidden h-px bg-gradient-to-l from-red-400/45 via-emerald-300/45 to-emerald-300 md:block" />
+          <div className="absolute left-[10%] right-[10%] top-10 hidden h-px bg-gradient-to-l from-emerald-300 via-emerald-300/45 to-red-400/45 md:block" />
           <motion.div
-            initial={{ right: '1%', opacity: 0 }}
-            whileInView={{ right: ['1%', '18%', '36%', '54%', '72%', '94%'], opacity: [0, 1, 1, 1, 1, 1] }}
-            viewport={{ once: true, amount: 0.45 }}
-            transition={{ duration: 2.2, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.54, 0.72, 1] }}
-            className="absolute top-[2.15rem] z-20 hidden h-5 w-5 rounded-full bg-emerald-300 shadow-[0_0_28px_rgba(16,185,129,0.9)] md:block"
+            aria-hidden="true"
+            initial={{ width: '0%' }}
+            whileInView={{ width: ['0%', '18%', '36%', '54%', '72%', '100%'] }}
+            viewport={{ once: false, amount: 0.45 }}
+            transition={{ duration: 3.6, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.54, 0.72, 1], repeat: Infinity, repeatDelay: 0.8 }}
+            className="absolute right-[10%] top-10 z-10 hidden h-px max-w-[80%] bg-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75)] md:block"
           />
+          <motion.div
+            aria-hidden="true"
+            initial={{ left: '90%', opacity: 0, scale: 0.85 }}
+            whileInView={{
+              left: ['90%', '74%', '58%', '42%', '26%', '10%'],
+              opacity: [0, 1, 1, 1, 1, 1],
+              scale: [0.85, 1, 1, 1, 1, 1.16],
+            }}
+            viewport={{ once: false, amount: 0.45 }}
+            transition={{ duration: 3.6, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.54, 0.72, 1], repeat: Infinity, repeatDelay: 0.8 }}
+            className="absolute top-[2.02rem] z-20 hidden h-6 w-6 -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.95)] md:block"
+          >
+            <span className="absolute inset-0 rounded-full bg-emerald-300/40 animate-ping" />
+          </motion.div>
 
           <div className="hidden md:grid md:grid-cols-6 md:gap-3" dir="rtl">
             {revenueTiers.map((tier, idx) => (
@@ -847,9 +862,7 @@ const RevenueShareSimpleSection = () => {
                 <div
                   className={cn(
                     'absolute top-0 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full border-2 bg-[#080808]',
-                    tier.featured
-                      ? 'h-6 w-6 border-emerald-300 bg-emerald-300 shadow-[0_0_26px_rgba(16,185,129,0.9)]'
-                      : 'border-slate-500'
+                    tier.featured ? 'border-slate-500 shadow-[0_0_14px_rgba(16,185,129,0.25)]' : 'border-slate-500'
                   )}
                 />
                 <div
