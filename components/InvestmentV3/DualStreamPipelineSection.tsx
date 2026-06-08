@@ -247,8 +247,8 @@ export const DualStreamPipelineSection = () => {
             </div>
 
             {/* Connecting SVG 1: Y-Shape Merging Path */}
-            <div className="w-full my-4 relative z-0">
-              <svg className="w-full h-16 overflow-visible" viewBox="0 0 100 80" fill="none" preserveAspectRatio="none">
+            <div className="w-full my-2 relative z-0">
+              <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 80" fill="none" preserveAspectRatio="none">
                 <defs>
                   <linearGradient id="cyan-glow-grad" x1="1" y1="0" x2="0.5" y2="1">
                     <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
@@ -319,8 +319,8 @@ export const DualStreamPipelineSection = () => {
             </div>
 
             {/* Connecting SVG 2: Pool -> Sales Rep */}
-            <div className="w-full my-3 relative z-0">
-              <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 60" fill="none" preserveAspectRatio="none">
+            <div className="w-full my-1.5 relative z-0">
+              <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 60" fill="none" preserveAspectRatio="none">
                 <line 
                   x1="50" y1="0" x2="50" y2="60" 
                   stroke="rgba(6, 182, 212, 0.4)" 
@@ -359,9 +359,9 @@ export const DualStreamPipelineSection = () => {
               </div>
             </div>
 
-            {/* Connecting SVG 3: Sales Rep -> Vertical Pipeline */}
-            <div className="w-full my-3 relative z-0">
-              <svg className="w-full h-10 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
+            {/* Connecting SVG 3: Sales Rep -> Pipeline */}
+            <div className="w-full my-1.5 relative z-0">
+              <svg className="w-full h-6 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
                 <line 
                   x1="50" y1="0" x2="50" y2="50" 
                   stroke="rgba(16, 185, 129, 0.4)" 
@@ -374,8 +374,8 @@ export const DualStreamPipelineSection = () => {
               </svg>
             </div>
 
-            {/* Vertical Flow of Pipeline Steps */}
-            <div className="flex flex-col items-center gap-2.5 relative z-10 w-full max-w-xs mx-auto">
+            {/* Final Path (مسار الفرص) Timeline Row */}
+            <div className="flex justify-center items-center gap-2 relative z-10 w-full max-w-lg mx-auto">
               {[
                 { label: "فرص جاهزة للتحريك", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
                 { label: "اجتماعات مؤهلة", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
@@ -385,21 +385,21 @@ export const DualStreamPipelineSection = () => {
               ].map((step, idx) => (
                 <React.Fragment key={idx}>
                   <div className={cn(
-                    "w-full text-center py-2.5 px-4 rounded-xl border bg-gradient-to-b text-xs font-black tracking-wide shadow-sm",
+                    "flex-1 text-center py-2 px-1.5 rounded-xl border bg-gradient-to-b text-[9.5px] font-black tracking-wide leading-tight",
                     step.color
                   )}>
                     {step.label}
                   </div>
                   {idx < 4 && (
-                    <ArrowDown className="w-3.5 h-3.5 text-slate-700 animate-bounce" />
+                    <ArrowDown className="w-3.5 h-3.5 text-slate-700 shrink-0 rotate-90" />
                   )}
                 </React.Fragment>
               ))}
             </div>
 
             {/* Connecting SVG 4: Pipeline -> Target */}
-            <div className="w-full my-3 relative z-0">
-              <svg className="w-full h-10 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
+            <div className="w-full my-1.5 relative z-0">
+              <svg className="w-full h-6 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
                 <line 
                   x1="50" y1="0" x2="50" y2="50" 
                   stroke="rgba(245, 158, 11, 0.4)" 
