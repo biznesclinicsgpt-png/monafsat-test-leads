@@ -389,7 +389,7 @@ export const DualStreamPipelineSection = () => {
                     {step.label}
                   </div>
                   {idx < 4 && (
-                    <ArrowDown className="w-3 h-3 text-slate-700 shrink-0 rotate-[270deg]" />
+                    <ArrowDown className="w-3 h-3 text-slate-700 shrink-0 rotate-90" />
                   )}
                 </React.Fragment>
               ))}
