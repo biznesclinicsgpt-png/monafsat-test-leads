@@ -105,176 +105,145 @@ export const SmartPortfolioSection = () => {
                             <span className="font-semibold text-sm">مسار بديل</span>
                         </div>
 
-                        {/* Default state: Question only */}
-                        {hasSalesperson === null && (
-                            <div className="text-center py-4">
-                                <h3 className="text-xl md:text-2xl font-black text-white mb-6 leading-relaxed">
-                                    هل لا يوجد لديكم مسؤول مبيعات داخل الفريق نقدر نبني حوله التشغيل؟
-                                </h3>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                                    <button
-                                        onClick={() => setHasSalesperson(false)}
-                                        className="px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] min-w-[260px] text-base cursor-pointer"
-                                    >
-                                        نعم، لا يوجد لدينا مسؤول مبيعات
-                                    </button>
-                                    <button
-                                        onClick={() => setHasSalesperson(true)}
-                                        className="px-8 py-3.5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-black transition-all min-w-[260px] text-base cursor-pointer"
-                                    >
-                                        لا، يوجد لدينا مسؤول مبيعات
-                                    </button>
-                                </div>
+                        {/* Question section with dynamic button styling */}
+                        <div className="text-center py-4">
+                            <h3 className="text-xl md:text-2xl font-black text-white mb-6 leading-relaxed">
+                                هل لا يوجد لديكم مسؤول مبيعات داخل الفريق نقدر نبني حوله التشغيل؟
+                            </h3>
+                            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                                <button
+                                    onClick={() => setHasSalesperson(false)}
+                                    className={cn(
+                                        "px-8 py-3.5 rounded-2xl font-black transition-all min-w-[260px] text-base cursor-pointer border",
+                                        hasSalesperson === false
+                                            ? "bg-blue-600 hover:bg-blue-500 text-white border-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.25)]"
+                                            : "bg-slate-950/40 border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white"
+                                    )}
+                                >
+                                    نعم، لا يوجد لدينا مسؤول مبيعات
+                                </button>
+                                <button
+                                    onClick={() => setHasSalesperson(true)}
+                                    className={cn(
+                                        "px-8 py-3.5 rounded-2xl font-black transition-all min-w-[260px] text-base cursor-pointer border",
+                                        hasSalesperson === true
+                                            ? "bg-blue-600 hover:bg-blue-500 text-white border-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.25)]"
+                                            : "bg-slate-950/40 border-slate-800 hover:border-slate-700 text-slate-400 hover:text-white"
+                                    )}
+                                >
+                                    لا، يوجد لدينا مسؤول مبيعات
+                                </button>
                             </div>
-                        )}
+                        </div>
 
-                        {/* Selected "Yes, salesperson exists" */}
+                        {/* Selected "No, salesperson exists" -> Show small hint */}
                         {hasSalesperson === true && (
-                            <div className="text-center py-4">
-                                <h3 className="text-xl md:text-2xl font-black text-white mb-6 leading-relaxed">
-                                    هل لا يوجد لديكم مسؤول مبيعات داخل الفريق نقدر نبني حوله التشغيل؟
-                                </h3>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
-                                    <button
-                                        onClick={() => setHasSalesperson(false)}
-                                        className="px-8 py-3.5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-black transition-all min-w-[260px] text-base cursor-pointer"
-                                    >
-                                        نعم، لا يوجد لدينا مسؤول مبيعات
-                                    </button>
-                                    <button
-                                        onClick={() => setHasSalesperson(true)}
-                                        className="px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] min-w-[260px] text-base cursor-pointer"
-                                    >
-                                        لا، يوجد لدينا مسؤول مبيعات
-                                    </button>
-                                </div>
-                                <motion.p
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    className="text-emerald-400 font-black text-base md:text-lg"
-                                >
-                                    ممتاز، باقات التشغيل الأساسية موضحة بالأعلى.
-                                </motion.p>
-                            </div>
+                            <motion.p
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="text-emerald-400 font-black text-base md:text-lg mt-6"
+                            >
+                                ممتاز، باقات التشغيل الأساسية موضحة بالأعلى.
+                            </motion.p>
                         )}
 
-                        {/* Selected "No salesperson" -> Reveals Alternative Path */}
+                        {/* Selected "Yes, no salesperson" -> Reveals Alternative Path details */}
                         {hasSalesperson === false && (
-                            <div className="text-right">
-                                <h3 className="text-xl md:text-2xl font-black text-white mb-6 leading-relaxed text-center">
-                                    هل لا يوجد لديكم مسؤول مبيعات داخل الفريق نقدر نبني حوله التشغيل؟
-                                </h3>
-                                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+                            <motion.div
+                                initial={{ opacity: 0, height: 0 }}
+                                animate={{ opacity: 1, height: 'auto' }}
+                                transition={{ duration: 0.35, ease: 'easeOut' }}
+                                className="border-t border-slate-800/80 mt-8 pt-6 overflow-hidden text-right"
+                            >
+                                <h4 className="text-xl md:text-3xl font-black text-white mb-4">
+                                    المسار البديل لمن لا يملك مسؤول مبيعات حاليًا
+                                </h4>
+                                <p className="text-sm md:text-base text-slate-300 mb-6 leading-relaxed font-bold">
+                                    إذا لم يكن لديكم مسؤول مبيعات داخل الفريق حاليًا، يمكننا البدء معكم بمسار بديل أخف، يساعدكم على الوصول إلى فرص مؤهلة وتحريك الاهتمام، إلى أن تصبحوا جاهزين لبناء تشغيل كامل لاحقًا.
+                                </p>
+
+                                <div className="grid md:grid-cols-2 gap-4 bg-black/40 border border-white/5 rounded-2xl p-5 mb-6">
+                                    <div>
+                                        <h5 className="text-xs text-blue-400 font-black mb-2">باقات التشغيل الأساسية:</h5>
+                                        <p className="text-xs text-slate-400 leading-relaxed font-bold">
+                                            مناسبة إذا لديكم مسؤول مبيعات أو موظف واحد نقدر نبني حوله التشغيل.
+                                        </p>
+                                    </div>
+                                    <div className="border-r border-slate-800/80 pr-4 md:border-r md:pr-4">
+                                        <h5 className="text-xs text-emerald-400 font-black mb-2">المسار البديل:</h5>
+                                        <p className="text-xs text-slate-400 leading-relaxed font-bold">
+                                            مناسب إذا لا يوجد لديكم مسؤول مبيعات حالياً، وتريدون بداية أخف لفتح فرص مؤهلة وتحريك الاهتمام.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="mb-6">
+                                    <h5 className="text-xs text-blue-400 font-black mb-3">العناصر المختصرة داخل المسار البديل:</h5>
+                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
+                                        {[
+                                            'رصد الفرص المناسبة',
+                                            'فتح المحادثات الأولية',
+                                            'فرز الاهتمام',
+                                            'تسليم الفرص الجادة',
+                                            'دعم الانتقال للمرحلة التالية'
+                                        ].map((item) => (
+                                            <div key={item} className="flex items-center gap-2 rounded-xl bg-blue-500/5 border border-blue-500/10 px-3 py-2 justify-center">
+                                                <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                                                <span className="text-xs text-slate-300 font-black">{item}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mt-8 border-t border-slate-800/80 pt-6">
+                                    <div className="text-right mb-4 sm:mb-0">
+                                        <span className="text-xs text-slate-400 font-black block mb-1">اختر باقة المحفظة بالأسفل أو ابدأ بالمسار البديل مباشرة:</span>
+                                        <span className="text-sm text-slate-300 font-bold">يمكنك تحديد رصيد الفرص المناسب لنشاطك</span>
+                                    </div>
                                     <button
-                                        onClick={() => setHasSalesperson(false)}
-                                        className="px-8 py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-black transition-all shadow-[0_0_20px_rgba(37,99,235,0.25)] min-w-[260px] text-base cursor-pointer"
+                                        onClick={() => {
+                                            scrollToSection('final-cta');
+                                            if (window.history.pushState) {
+                                                const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?interest=alternative_path&selected_path=meeting_wallet';
+                                                window.history.pushState({path:newurl},'',newurl);
+                                            }
+                                        }}
+                                        className="px-8 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] text-base self-stretch sm:self-auto text-center cursor-pointer"
                                     >
-                                        نعم، لا يوجد لدينا مسؤول مبيعات
-                                    </button>
-                                    <button
-                                        onClick={() => setHasSalesperson(true)}
-                                        className="px-8 py-3.5 rounded-2xl bg-slate-900 border border-slate-800 hover:border-slate-700 text-slate-300 hover:text-white font-black transition-all min-w-[260px] text-base cursor-pointer"
-                                    >
-                                        لا، يوجد لدينا مسؤول مبيعات
+                                        ابدأ بالمسار البديل
                                     </button>
                                 </div>
 
-                                <motion.div
-                                    initial={{ opacity: 0, height: 0 }}
-                                    animate={{ opacity: 1, height: 'auto' }}
-                                    transition={{ duration: 0.35, ease: 'easeOut' }}
-                                    className="border-t border-slate-800/80 pt-6 overflow-hidden"
-                                >
-                                    <h4 className="text-xl md:text-3xl font-black text-white mb-4">
-                                        المسار البديل لمن لا يملك مسؤول مبيعات حاليًا
-                                    </h4>
-                                    <p className="text-sm md:text-base text-slate-300 mb-6 leading-relaxed font-bold">
-                                        إذا لم يكن لديكم مسؤول مبيعات داخل الفريق حاليًا، يمكننا البدء معكم بمسار بديل أخف، يساعدكم على الوصول إلى فرص مؤهلة وتحريك الاهتمام، إلى أن تصبحوا جاهزين لبناء تشغيل كامل لاحقًا.
-                                    </p>
-
-                                    <div className="grid md:grid-cols-2 gap-4 bg-black/40 border border-white/5 rounded-2xl p-5 mb-6">
-                                        <div>
-                                            <h5 className="text-xs text-blue-400 font-black mb-2">باقات التشغيل الأساسية:</h5>
-                                            <p className="text-xs text-slate-400 leading-relaxed font-bold">
-                                                مناسبة إذا لديكم مسؤول مبيعات أو موظف واحد نقدر نبني حوله التشغيل.
-                                            </p>
-                                        </div>
-                                        <div className="border-r border-slate-800/80 pr-4 md:border-r md:pr-4">
-                                            <h5 className="text-xs text-emerald-400 font-black mb-2">المسار البديل:</h5>
-                                            <p className="text-xs text-slate-400 leading-relaxed font-bold">
-                                                مناسب إذا لا يوجد لديكم مسؤول مبيعات حالياً، وتريدون بداية أخف لفتح فرص مؤهلة وتحريك الاهتمام.
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div className="mb-6">
-                                        <h5 className="text-xs text-blue-400 font-black mb-3">العناصر المختصرة داخل المسار البديل:</h5>
-                                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                                            {[
-                                                'رصد الفرص المناسبة',
-                                                'فتح المحادثات الأولية',
-                                                'فرز الاهتمام',
-                                                'تسليم الفرص الجادة',
-                                                'دعم الانتقال للمرحلة التالية'
-                                            ].map((item) => (
-                                                <div key={item} className="flex items-center gap-2 rounded-xl bg-blue-500/5 border border-blue-500/10 px-3 py-2 justify-center">
-                                                    <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                                                    <span className="text-xs text-slate-300 font-black">{item}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <div className="flex flex-col sm:flex-row gap-4 items-center justify-between mt-8 border-t border-slate-800/80 pt-6">
-                                        <div className="text-right mb-4 sm:mb-0">
-                                            <span className="text-xs text-slate-400 font-black block mb-1">اختر باقة المحفظة بالأسفل أو ابدأ بالمسار البديل مباشرة:</span>
-                                            <span className="text-sm text-slate-300 font-bold">يمكنك تحديد رصيد الفرص المناسب لنشاطك</span>
-                                        </div>
+                                {/* Billing Toggle (Shows under revealed contents) */}
+                                <div className="flex justify-center mt-8 pt-4 border-t border-slate-800/50">
+                                    <div className="inline-flex bg-black/40 rounded-full p-1.5 shadow-inner border border-white/5 backdrop-blur-sm">
                                         <button
-                                            onClick={() => {
-                                                scrollToSection('final-cta');
-                                                if (window.history.pushState) {
-                                                    const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?interest=alternative_path&selected_path=meeting_wallet';
-                                                    window.history.pushState({path:newurl},'',newurl);
-                                                }
-                                            }}
-                                            className="px-8 py-3.5 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] text-base self-stretch sm:self-auto text-center cursor-pointer"
+                                            onClick={() => setIsQuarterly(false)}
+                                            className={cn(
+                                                "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 cursor-pointer",
+                                                !isQuarterly ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]' : 'text-slate-400 hover:text-white'
+                                            )}
                                         >
-                                            ابدأ بالمسار البديل
+                                            شهري
+                                        </button>
+                                        <button
+                                            onClick={() => setIsQuarterly(true)}
+                                            className={cn(
+                                                "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer",
+                                                isQuarterly ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]' : 'text-slate-400 hover:text-white'
+                                            )}
+                                        >
+                                            ربع سنوي
+                                            <span className={cn(
+                                                "text-[10px] px-2 py-0.5 rounded-full",
+                                                isQuarterly ? 'bg-blue-500 text-white border border-blue-400' : 'bg-amber-500/20 text-amber-400 border border-amber-500/20'
+                                            )}>
+                                                خصم 33%
+                                            </span>
                                         </button>
                                     </div>
-
-                                    {/* Billing Toggle (Shows under revealed contents) */}
-                                    <div className="flex justify-center mt-8 pt-4 border-t border-slate-800/50">
-                                        <div className="inline-flex bg-black/40 rounded-full p-1.5 shadow-inner border border-white/5 backdrop-blur-sm">
-                                            <button
-                                                onClick={() => setIsQuarterly(false)}
-                                                className={cn(
-                                                    "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 cursor-pointer",
-                                                    !isQuarterly ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]' : 'text-slate-400 hover:text-white'
-                                                )}
-                                            >
-                                                شهري
-                                            </button>
-                                            <button
-                                                onClick={() => setIsQuarterly(true)}
-                                                className={cn(
-                                                    "px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 flex items-center gap-2 cursor-pointer",
-                                                    isQuarterly ? 'bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]' : 'text-slate-400 hover:text-white'
-                                                )}
-                                            >
-                                                ربع سنوي
-                                                <span className={cn(
-                                                    "text-[10px] px-2 py-0.5 rounded-full",
-                                                    isQuarterly ? 'bg-blue-500 text-white border border-blue-400' : 'bg-amber-500/20 text-amber-400 border border-amber-500/20'
-                                                )}>
-                                                    خصم 33%
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </motion.div>
-                            </div>
+                                </div>
+                            </motion.div>
                         )}
                     </motion.div>
                 </div>
