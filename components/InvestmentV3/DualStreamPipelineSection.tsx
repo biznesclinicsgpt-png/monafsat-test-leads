@@ -30,7 +30,7 @@ interface StepDetail {
 const PIPELINE_CONFIG = {
   targetAmount: "1,000,000 ريال",
   targetPeriod: "خلال 90 يوم",
-  subText: "كل مسار يضيف فرصاً، وكل فرصة تقرّب فريقك من هذا الرقم."
+  subText: "كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم."
 };
 
 const STEPS_DATA: StepDetail[] = [
@@ -41,12 +41,10 @@ const STEPS_DATA: StepDetail[] = [
     short: "استشارات + تدريب + قيادة + متابعة + تطوير + أتمتة + ذكاء اصطناعي",
     description: "يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، يطورون الرسائل والقنوات، ويتابعون الأداء حتى تتحول المحادثات إلى فرص مؤهلة.",
     points: [
-      "استشارات لتحديد القطاع وصناع القرار وقنوات الوصول.",
-      "تدريب موظف المبيعات على الردود وتجاوز الاعتراضات والتحويل.",
-      "قيادة خطة الـ 90 يوم ومتابعة الحركة داخل قمع المبيعات أسبوعياً.",
-      "تطوير مستمر لمحتوى الرسائل بناءً على تفاعل السوق.",
-      "أتمتة المتابعة وخطوات العمل لتقليل الجهد اليدوي.",
-      "ذكاء اصطناعي لتحليل السوق وتخصيص الرسائل وإثراء البيانات."
+      "تحديد القطاع وصناع القرار",
+      "تجهيز الرسائل والقنوات",
+      "تدريب موظف المبيعات على الرد والتحويل",
+      "متابعة الأداء وتطوير القمع أسبوعياً"
     ],
     output: "محادثات نشطة + فرص مؤهلة",
     icon: Sparkles,
@@ -57,16 +55,15 @@ const STEPS_DATA: StepDetail[] = [
     id: 'monafsat-stream',
     title: "كادر فرص منافسات المباشرة",
     badge: "كادر فرص منافسات المباشرة",
-    short: "رصد احتياج + طلبات شراء + فرص مباشرة + تأهيل أولي + تحريك الفرص",
-    description: "يرصدون فرصاً مباشرة من السوق، طلبات شراء، واحتياجات قائمة داخل القطاعات المستهدفة، ثم يمررون الفرص الأنسب للتحريك.",
+    short: "فرص مباشرة من السوق",
+    description: "يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين داخل القطاعات المستهدفة.",
     points: [
-      "رصد احتياج قائم وإشارات الشراء داخل القطاع المستهدف.",
-      "تصفية طلبات الشراء والمناقصات المتوفرة في السوق.",
-      "مدخل فرص مباشرة للشركات التي تبحث عن موردين بشكل عاجل.",
-      "تأهيل أولي للفرص للتأكد من مناسبتها للعميل قبل تمريرها.",
-      "تحريك الفرص وتمريرها بسياق واضح لموظف مبيعات العميل."
+      "رصد احتياج الجهات المستهدفة",
+      "رصد طلبات الشراء العاجلة",
+      "فرص مباشرة وتأهيل أولي",
+      "تحريك وتمرير الفرصة الأنسب"
     ],
-    output: "فرص مباشرة من السوق",
+    output: "فرص مباشرة جاهزة للتحريك",
     icon: BriefcaseBusiness,
     accentColor: "text-emerald-400 border-emerald-500/30 bg-emerald-950/20",
     glowColor: "shadow-[0_0_20px_rgba(16,185,129,0.25)]"
@@ -75,12 +72,12 @@ const STEPS_DATA: StepDetail[] = [
     id: 'opportunity-pool',
     title: "حصيلة الفرص",
     badge: "حصيلة الفرص",
-    short: "محادثات مؤهلة + فرص مباشرة = حصيلة فرص أقوى",
+    short: "محادثات مؤهلة + فرص مباشرة",
     description: "هنا تلتقي الفرص القادمة من المسارين: محادثات مؤهلة من كادر قيادة النمو الذكي، وفرص مباشرة من كادر فرص منافسات.",
     points: [
-      "محادثات مؤهلة من كادر قيادة النمو الذكي (عبر النينجا والوصول المباشر).",
-      "فرص مباشرة من كادر فرص منافسات (عبر طلبات الشراء والمناقصات المرصودة).",
-      "تجميع كافة الفرص النشطة في قناة واحدة متكاملة لزيادة قوة خط المبيعات."
+      "محادثات مؤهلة من كادر قيادة النمو الذكي",
+      "فرص مباشرة من كادر فرص منافسات",
+      "كل الفرص تتجمع هنا قبل أن تصل للموظف"
     ],
     output: "محادثات مؤهلة + فرص مباشرة = حصيلة فرص أقوى",
     icon: Layers,
@@ -94,10 +91,10 @@ const STEPS_DATA: StepDetail[] = [
     short: "لا يبدأ من الصفر… يبدأ من فرص أجهز.",
     description: "يستلم حصيلة فرص أجهز، مدعومة بالسياق والبيانات والتوصيات، ثم يحولها إلى اجتماعات، عروض، تفاوض، وصفقات.",
     points: [
-      "يؤكد الاحتياج الحقيقي للجهة المهتمة ويحدد الملاءمة.",
-      "يحجز الاجتماع التنسيقي ويعرض القيمة المضافة للشركة.",
-      "يرسل عروض الأسعار والحلول الفنية المناسبة.",
-      "يتابع التفاوض مع صناع القرار ويحرك الصفقة نحو الإغلاق."
+      "تأكيد الاحتياج والملاءمة للفرصة",
+      "حجز الاجتماعات وتقديم العروض",
+      "متابعة التفاوض وتحريك الصفقات",
+      "التركيز الكامل على الإغلاق والنتائج"
     ],
     output: "لا يبدأ من الصفر… يبدأ من فرص أجهز.",
     icon: Users,
@@ -112,8 +109,7 @@ const STEPS_DATA: StepDetail[] = [
     description: "الهدف الاستراتيجي الواضح الذي نقود العمل بأكمله نحوه، لترجمة الفرص والمحادثات إلى عقود وعوائد فعلية للشركة.",
     points: [
       `تحقيق المستهدف المالي البالغ ${PIPELINE_CONFIG.targetAmount} خلال فترة 90 يوماً.`,
-      "تحريك الفرص عبر مسار واضح: فرص جاهزة للتحريك ← اجتماعات مؤهلة ← عروض سعر ← تفاوض ← صفقات",
-      "إثبات نجاح وجدوى تشغيل منظومة المبيعات الذكية."
+      "مسار فرص واضح يرفع كفاءة التحويل للإغلاق."
     ],
     output: `${PIPELINE_CONFIG.targetAmount} خلال 90 يوم`,
     icon: Target,
@@ -176,10 +172,10 @@ export const DualStreamPipelineSection = () => {
             <span className="text-[10px] font-bold">تكامل منظومة المبيعات</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
-            مصدران للفرص… ومسار واحد نحو المستهدف
+            نزيد حصيلة الفرص التي تصل لفريق مبيعاتك
           </h2>
           <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            نغذي موظف مبيعاتك من مسارين متوازيين: <span className="text-cyan-400 font-bold">كادر قيادة النمو الذكي</span> يفتح محادثات مؤهلة من خلال النينجا، البيانات، الرسائل، التدريب، والمتابعة. و<span className="text-emerald-400 font-bold">كادر فرص منافسات المباشرة</span> يرصد فرصاً مباشرة من السوق واحتياجات قائمة. ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
+            مسار قيادة النمو الذكي يفتح محادثات مؤهلة، وكادر منافسات يرصد فرصاً مباشرة من السوق. ثم تلتقي الفرص في حصيلة واحدة، ليبدأ فريقك من فرص أجهز وأقرب للتحويل.
           </p>
         </div>
 
@@ -213,7 +209,7 @@ export const DualStreamPipelineSection = () => {
                   )}
                 </div>
                 <h3 className="text-base font-black text-white mb-2">كادر قيادة النمو الذكي</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed">يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، ويطورون الرسائل والقنوات.</p>
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، ويطورون الرسائل والقنوات.</p>
                 <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-cyan-400 font-bold">
                   <span>محادثات نشطة + فرص مؤهلة</span>
                   <span className="px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">نشط</span>
@@ -223,7 +219,7 @@ export const DualStreamPipelineSection = () => {
               {/* Left: Monafsat Stream */}
               <div 
                 className={cn(
-                  "p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-right",
+                  "p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-right relative overflow-hidden",
                   activeStepId === 'monafsat-stream'
                     ? "border-emerald-500/50 bg-[#091512] shadow-[0_0_15px_rgba(16,185,129,0.15)]"
                     : "border-slate-800/80 bg-slate-950/60 hover:border-slate-700"
@@ -236,14 +232,14 @@ export const DualStreamPipelineSection = () => {
                   <div className="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-500/20">
                     <BriefcaseBusiness className="w-5 h-5" />
                   </div>
-                  {isLocked && activeStepId === 'monafsat-stream' && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                  )}
+                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[9px] font-black text-emerald-400">
+                    فرص مباشرة من السوق
+                  </span>
                 </div>
                 <h3 className="text-base font-black text-white mb-2">كادر فرص منافسات المباشرة</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed">يرصدون فرصاً مباشرة من السوق، طلبات شراء، واحتياجات قائمة داخل القطاعات.</p>
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم أو طلب شراء.</p>
                 <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-emerald-400 font-bold">
-                  <span>فرص مباشرة من السوق</span>
+                  <span>فرص مباشرة جاهزة للتحريك</span>
                   <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">مباشر</span>
                 </div>
               </div>
@@ -291,10 +287,13 @@ export const DualStreamPipelineSection = () => {
             </div>
 
             {/* Middle Row: Opportunity Pool (نقطة التلاقي) */}
-            <div className="flex justify-center relative z-10">
+            <div className="flex flex-col items-center relative z-10">
+              <span className="text-[10px] text-cyan-400 font-black mb-1.5 select-none tracking-wider px-2 py-0.5 bg-cyan-500/5 border border-cyan-500/15 rounded-md">
+                نقطة التلاقي
+              </span>
               <div 
                 className={cn(
-                  "px-8 py-4 rounded-full border transition-all duration-300 cursor-pointer flex items-center gap-3 text-right max-w-sm",
+                  "px-10 py-5 rounded-3xl border transition-all duration-300 cursor-pointer flex items-center gap-3.5 text-right max-w-sm",
                   activeStepId === 'opportunity-pool'
                     ? "border-cyan-500 bg-[#081822] shadow-[0_0_20px_rgba(6,182,212,0.25)] scale-105"
                     : "border-slate-800 bg-[#0d0d0d] hover:border-slate-600 shadow-[0_0_15px_rgba(0,0,0,0.4)]"
@@ -303,17 +302,20 @@ export const DualStreamPipelineSection = () => {
                 onMouseLeave={() => handleStepHover(null)}
                 onClick={() => handleStepClick('opportunity-pool')}
               >
-                <div className="p-2 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 text-cyan-300 border border-cyan-500/20">
-                  <Layers className="w-5 h-5" />
+                <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 text-cyan-300 border border-cyan-500/20">
+                  <Layers className="w-5.5 h-5.5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-white">حصيلة الفرص</h3>
-                  <p className="text-[10px] text-slate-400 mt-0.5">تجمع محادثات مؤهلة + فرص مباشرة من السوق</p>
+                  <h3 className="text-base font-black text-white">حصيلة الفرص</h3>
+                  <p className="text-[10.5px] text-slate-400 mt-0.5 font-bold">محادثات مؤهلة + فرص مباشرة</p>
                 </div>
                 {activeStepId === 'opportunity-pool' && (
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
                 )}
               </div>
+              <p className="text-[10px] text-slate-500 font-extrabold mt-2 text-center select-none">
+                كل الفرص تتجمع هنا قبل أن تصل لموظف المبيعات.
+              </p>
             </div>
 
             {/* Connecting SVG 2: Pool -> Sales Rep */}
@@ -357,7 +359,7 @@ export const DualStreamPipelineSection = () => {
               </div>
             </div>
 
-            {/* Connecting SVG 3: Sales Rep -> Final Path */}
+            {/* Connecting SVG 3: Sales Rep -> Vertical Pipeline */}
             <div className="w-full my-3 relative z-0">
               <svg className="w-full h-10 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
                 <line 
@@ -372,8 +374,8 @@ export const DualStreamPipelineSection = () => {
               </svg>
             </div>
 
-            {/* Final Path (مسار الفرص) Timeline Row */}
-            <div className="flex justify-center items-center gap-2 relative z-10 w-full max-w-lg mx-auto">
+            {/* Vertical Flow of Pipeline Steps */}
+            <div className="flex flex-col items-center gap-2.5 relative z-10 w-full max-w-xs mx-auto">
               {[
                 { label: "فرص جاهزة للتحريك", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
                 { label: "اجتماعات مؤهلة", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
@@ -383,13 +385,13 @@ export const DualStreamPipelineSection = () => {
               ].map((step, idx) => (
                 <React.Fragment key={idx}>
                   <div className={cn(
-                    "flex-1 text-center py-2 px-1 rounded-xl border bg-gradient-to-b text-[9px] font-black tracking-wide leading-tight",
+                    "w-full text-center py-2.5 px-4 rounded-xl border bg-gradient-to-b text-xs font-black tracking-wide shadow-sm",
                     step.color
                   )}>
                     {step.label}
                   </div>
                   {idx < 4 && (
-                    <ArrowDown className="w-3 h-3 text-slate-700 shrink-0 rotate-90" />
+                    <ArrowDown className="w-3.5 h-3.5 text-slate-700 animate-bounce" />
                   )}
                 </React.Fragment>
               ))}
@@ -445,91 +447,76 @@ export const DualStreamPipelineSection = () => {
           {/* Left Column (40%): Info Panel & Growth partner details */}
           <div className="col-span-5 flex flex-col gap-6">
             
-            {/* Dynamic Step Detail Box */}
-            <div className="flex-1 bg-slate-950/45 border border-slate-900 rounded-3xl p-6 md:p-8 backdrop-blur-md flex flex-col justify-between relative overflow-hidden min-h-[360px]">
-              
-              {/* Reset Lock instruction when active */}
-              {isLocked && (
-                <button 
-                  onClick={() => { setIsLocked(false); setActiveStepId(null); }}
-                  className="absolute top-4 left-4 text-[9px] px-2 py-1 rounded bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition-colors"
+            {/* Dynamic Step Detail Box - Collapsible when empty */}
+            <AnimatePresence initial={false}>
+              {currentStep && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0, scale: 0.95 }}
+                  animate={{ height: "auto", opacity: 1, scale: 1 }}
+                  exit={{ height: 0, opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.25 }}
+                  className="bg-slate-950/45 border border-slate-900 rounded-3xl p-6 backdrop-blur-md flex flex-col justify-between relative overflow-hidden text-right"
                 >
-                  إلغاء التثبيت ✕
-                </button>
+                  {/* Reset Lock instruction when active */}
+                  {isLocked && (
+                    <button 
+                      onClick={() => { setIsLocked(false); setActiveStepId(null); }}
+                      className="absolute top-4 left-4 text-[9px] px-2 py-1 rounded bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition-colors"
+                    >
+                      إلغاء التثبيت ✕
+                    </button>
+                  )}
+
+                  <div>
+                    {/* Step Header */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className={cn("p-2 rounded-xl border shrink-0", currentStep.accentColor)}>
+                        <currentStep.icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <span className="text-[9px] text-slate-500 font-extrabold">{currentStep.badge}</span>
+                        <h3 className="text-base font-black text-white leading-tight mt-0.5">{currentStep.title}</h3>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-xs text-slate-300 leading-relaxed mb-4 font-bold">{currentStep.description}</p>
+
+                    {/* Detail tags / points */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {currentStep.points.map((pt, idx) => (
+                        <div key={idx} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-bold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                          <span>{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Bottom Result Box */}
+                  <div className="border-t border-slate-900 pt-3 mt-2">
+                    <div className="text-[9px] text-slate-500 font-extrabold mb-0.5">الناتج:</div>
+                    <div className="text-xs font-black text-white">{currentStep.output}</div>
+                  </div>
+                </motion.div>
               )}
+            </AnimatePresence>
 
-              <AnimatePresence mode="wait">
-                {currentStep ? (
-                  <motion.div
-                    key={currentStep.id}
-                    initial={{ opacity: 0, x: -15 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 15 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-right flex flex-col h-full justify-between"
-                  >
-                    <div>
-                      {/* Step Header */}
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className={cn("p-2 rounded-xl border shrink-0", currentStep.accentColor)}>
-                          <currentStep.icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <span className="text-[9px] text-slate-500 font-extrabold">{currentStep.badge}</span>
-                          <h3 className="text-xl font-black text-white leading-tight">{currentStep.title}</h3>
-                        </div>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-xs text-slate-300 leading-relaxed mb-6 font-bold">{currentStep.description}</p>
-
-                      {/* Detail tags / points */}
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {currentStep.points.map((pt, idx) => (
-                          <div key={idx} className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-bold">
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                            <span>{pt}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Bottom Result Box */}
-                    <div className="border-t border-slate-900 pt-4 mt-auto">
-                      <div className="text-[10px] text-slate-500 font-extrabold mb-1">الناتج:</div>
-                      <div className="text-xs font-black text-white">{currentStep.output}</div>
-                    </div>
-
-                  </motion.div>
-                ) : (
-                  // Default panel content
-                  <motion.div
-                    key="default"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="text-right flex flex-col h-full justify-center py-6"
-                  >
-                    <div className="text-center mb-6">
-                      <div className="w-12 h-12 rounded-2xl bg-cyan-500/5 border border-cyan-500/10 flex items-center justify-center mx-auto text-cyan-400 mb-4">
-                        <HelpCircle className="w-6 h-6" />
-                      </div>
-                      <h3 className="text-lg font-black text-white mb-2">مصدران للفرص… ومسار واحد نحو المستهدف</h3>
-                    </div>
-                    <p className="text-xs text-slate-400 leading-relaxed text-center font-bold mb-4">
-                      كادر قيادة النمو الذكي يفتح محادثات مؤهلة عبر النينجا، البيانات، الرسائل، التدريب، والمتابعة.
-                      وكادر فرص منافسات المباشرة يرصد فرصاً مباشرة من السوق وااحتياجات قائمة.
-                      ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
-                    </p>
-                    <p className="text-xs text-cyan-400/90 leading-relaxed text-center font-black border-t border-slate-900 pt-4 mt-2">
-                      نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى اجتماعات وعروض وصفقات.
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-            </div>
+            {/* Default Card Overview - only shown when no step is highlighted */}
+            {!currentStep && (
+              <div className="bg-slate-950/45 border border-slate-900 rounded-3xl p-6 text-right">
+                <div className="flex items-center gap-2 mb-3">
+                  <HelpCircle className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <h3 className="text-sm font-black text-white">مصدران للفرص… ومسار واحد</h3>
+                </div>
+                <p className="text-xs text-slate-400 leading-relaxed font-bold mb-3">
+                  مسار قيادة النمو الذكي يفتح محادثات مؤهلة، وكادر منافسات يرصد فرصاً مباشرة من السوق. ثم تلتقي الفرص في حصيلة واحدة، ليبدأ فريقك من فرص أجهز وأقرب للتحويل.
+                </p>
+                <p className="text-[10px] text-cyan-400 font-black border-t border-slate-900 pt-3">
+                  نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى صفقات.
+                </p>
+              </div>
+            )}
 
             {/* Growth Leadership Partner Card */}
             <div className="bg-gradient-to-br from-slate-950/60 to-slate-900/20 border border-slate-900 rounded-3xl p-6 text-right relative overflow-hidden">
@@ -589,12 +576,10 @@ export const DualStreamPipelineSection = () => {
           <div className="bg-slate-950/45 border border-slate-900 rounded-2xl p-5 mb-3 text-right">
             <h3 className="text-base font-black text-white mb-2">مصدران للفرص… ومسار واحد نحو المستهدف</h3>
             <p className="text-xs text-slate-400 leading-relaxed mb-3">
-              كادر قيادة النمو الذكي يفتح محادثات مؤهلة عبر النينجا، البيانات، الرسائل، التدريب، والمتابعة.
-              وكادر فرص منافسات المباشرة يرصد فرصاً مباشرة من السوق واحتياجات قائمة.
-              ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
+              مسار قيادة النمو الذكي يفتح محادثات مؤهلة، وكادر منافسات يرصد فرصاً مباشرة من السوق. ثم تلتقي الفرص في حصيلة واحدة، ليبدأ فريقك من فرص أجهز وأقرب للتحويل.
             </p>
             <p className="text-[11px] text-cyan-400 font-bold border-t border-slate-900 pt-3">
-              نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى اجتماعات وعروض وصفقات.
+              نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى صفقات.
             </p>
           </div>
 
