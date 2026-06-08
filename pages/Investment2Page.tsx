@@ -33,6 +33,7 @@ import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboard
 import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
+import { DualStreamPipelineSection } from '../components/InvestmentV3/DualStreamPipelineSection';
 import { cn } from '../lib/utils';
 
 const scrollToSection = (id: string) => {
@@ -1102,6 +1103,9 @@ const Investment2Page = () => {
       </div>
       <div id="focused-targeting">
         <FocusedTargetingSection />
+      </div>
+      <div id="pipeline-stream">
+        <DualStreamPipelineSection />
       </div>
       <div id="daily-system">
         <DailySalesSystemSection />
