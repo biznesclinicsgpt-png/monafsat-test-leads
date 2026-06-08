@@ -4,17 +4,13 @@ import {
   Target, 
   Users, 
   BriefcaseBusiness, 
-  Bot, 
   Sparkles, 
-  Activity, 
-  ChevronDown, 
-  FileText, 
   Layers, 
   ArrowDown, 
   HelpCircle, 
   Award, 
-  MessageSquare,
-  TrendingUp
+  ChevronDown,
+  Activity
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
@@ -40,16 +36,17 @@ const PIPELINE_CONFIG = {
 const STEPS_DATA: StepDetail[] = [
   {
     id: 'ninja-stream',
-    title: "مسار النينجا والاستشارات",
-    badge: "النينجا والفريق الاستشاري",
-    short: "بيانات ورسائل وقنوات ← محادثات نشطة ← فرص مؤهلة",
-    description: "نساعد موظف المبيعات على فتح محادثات نشطة من خلال التحليل، البيانات، الرسائل، القنوات، المتابعة، والتطوير المستمر.",
+    title: "كادر قيادة النمو الذكي",
+    badge: "كادر قيادة النمو الذكي",
+    short: "استشارات + تدريب + قيادة + متابعة + تطوير + أتمتة + ذكاء اصطناعي",
+    description: "يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، يطورون الرسائل والقنوات، ويتابعون الأداء حتى تتحول المحادثات إلى فرص مؤهلة.",
     points: [
-      "الاستشارات: نحدد القطاع، صناع القرار، عرض القيمة، والقنوات المناسبة للوصول.",
-      "التدريب: نجهز موظف المبيعات بالسكريبتات، طريقة الرد، الاعتراضات، وكيفية التحويل.",
-      "القيادة والمتابعة: نقود خطة 90 يوم بأولويات واضحة، وأهداف أسبوعية ومراجعة مستمرة للحركة.",
-      "التطوير المستمر: نحسن الرسائل والقنوات بناءً على نتائج السوق الحقيقية.",
-      "الأتمتة والذكاء الاصطناعي: أتمتة الخطوات المكررة، تخصيص الرسائل وإثراء البيانات للوصول الذكي."
+      "استشارات لتحديد القطاع وصناع القرار وقنوات الوصول.",
+      "تدريب موظف المبيعات على الردود وتجاوز الاعتراضات والتحويل.",
+      "قيادة خطة الـ 90 يوم ومتابعة الحركة داخل قمع المبيعات أسبوعياً.",
+      "تطوير مستمر لمحتوى الرسائل بناءً على تفاعل السوق.",
+      "أتمتة المتابعة وخطوات العمل لتقليل الجهد اليدوي.",
+      "ذكاء اصطناعي لتحليل السوق وتخصيص الرسائل وإثراء البيانات."
     ],
     output: "محادثات نشطة + فرص مؤهلة",
     icon: Sparkles,
@@ -58,18 +55,18 @@ const STEPS_DATA: StepDetail[] = [
   },
   {
     id: 'monafsat-stream',
-    title: "مسار فرص منافسات المباشرة",
-    badge: "كادر منافسات البيعي",
-    short: "رصد احتياج / RFP ← فرص مباشرة ← فرص جاهزة للتحريك",
-    description: "كادر منافسات البيعي يعمل كمسار موازٍ يرصد احتياجات السوق وطلبات الشراء وRFPs، ثم يوفر فرصاً مباشرة يمكن تمريرها لموظف مبيعاتك.",
+    title: "كادر فرص منافسات المباشرة",
+    badge: "كادر فرص منافسات المباشرة",
+    short: "رصد احتياج + طلبات شراء + فرص مباشرة + تأهيل أولي + تحريك الفرص",
+    description: "يرصدون فرصاً مباشرة من السوق، طلبات شراء، واحتياجات قائمة داخل القطاعات المستهدفة، ثم يمررون الفرص الأنسب للتحريك.",
     points: [
-      "رصد الاحتياج: متابعة إشارات السوق والجهات المهتمة والفرص المناسبة داخل القطاع.",
-      "فرص RFP وطلبات الشراء: تصفية الفرص للجهات التي لديها ميزانية وطلب شراء قائم.",
-      "مدخل مختلف للسوق: فتح قنوات تواصل موازية باسم منافسات لتجاوز حواجز التواصل التقليدية.",
-      "تأهيل أولي: تصفية وفرز مبدئي لضمان ملاءمة الفرصة قبل تمريرها.",
-      "تمرير الفرص: تسليم الفرصة بسياق واضح يساعد موظف مبيعاتك على التحرك الفوري."
+      "رصد احتياج قائم وإشارات الشراء داخل القطاع المستهدف.",
+      "تصفية طلبات الشراء والمناقصات المتوفرة في السوق.",
+      "مدخل فرص مباشرة للشركات التي تبحث عن موردين بشكل عاجل.",
+      "تأهيل أولي للفرص للتأكد من مناسبتها للعميل قبل تمريرها.",
+      "تحريك الفرص وتمريرها بسياق واضح لموظف مبيعات العميل."
     ],
-    output: "فرص مباشرة من السوق + RFP / احتياج قائم",
+    output: "فرص مباشرة من السوق",
     icon: BriefcaseBusiness,
     accentColor: "text-emerald-400 border-emerald-500/30 bg-emerald-950/20",
     glowColor: "shadow-[0_0_20px_rgba(16,185,129,0.25)]"
@@ -77,15 +74,15 @@ const STEPS_DATA: StepDetail[] = [
   {
     id: 'opportunity-pool',
     title: "حصيلة الفرص",
-    badge: "نقطة التلاقي المركزية",
-    short: "فرص المحادثات + فرص السوق = Pipeline أقوى",
-    description: "كل الفرص الناتجة من المسارين تتجمع وتلتقي في هذا المصب المركزي المشترك لتغذية وتوحيد قمع المبيعات قبل الانتقال للموظف.",
+    badge: "حصيلة الفرص",
+    short: "محادثات مؤهلة + فرص مباشرة = حصيلة فرص أقوى",
+    description: "هنا تلتقي الفرص القادمة من المسارين: محادثات مؤهلة من كادر قيادة النمو الذكي، وفرص مباشرة من كادر فرص منافسات.",
     points: [
-      "من مسار النينجا: محادثات نشطة، ردود إيجابية، وفرص مؤهلة من Outreach.",
-      "من مسار منافسات: فرص مباشرة من السوق، RFP، وجهات لديها طلب توريد نشط.",
-      "تكامل القنوات: توحيد مصادر الفرص لمنع تشتت موظف المبيعات وضمان الاستمرارية."
+      "محادثات مؤهلة من كادر قيادة النمو الذكي (عبر النينجا والوصول المباشر).",
+      "فرص مباشرة من كادر فرص منافسات (عبر طلبات الشراء والمناقصات المرصودة).",
+      "تجميع كافة الفرص النشطة في قناة واحدة متكاملة لزيادة قوة خط المبيعات."
     ],
-    output: "فرص نشطة ومباشرة جاهزة للتحويل في مكان واحد",
+    output: "محادثات مؤهلة + فرص مباشرة = حصيلة فرص أقوى",
     icon: Layers,
     accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
     glowColor: "shadow-[0_0_25px_rgba(6,182,212,0.3)]"
@@ -93,15 +90,16 @@ const STEPS_DATA: StepDetail[] = [
   {
     id: 'sales-rep',
     title: "موظف مبيعات العميل",
-    badge: "مستلم الفرص والتحويل",
-    short: "يبدأ من فرص أجهز... لا من الصفر",
-    description: "يتوقف موظفك عن هدر الوقت في البحث البارد أو القوائم العشوائية. يستلم فرصاً جاهزة للتحريك فوراً مدعومة بالتوجيهات والرسائل المناسبة.",
+    badge: "موظف مبيعات العميل",
+    short: "لا يبدأ من الصفر… يبدأ من فرص أجهز.",
+    description: "يستلم حصيلة فرص أجهز، مدعومة بالسياق والبيانات والتوصيات، ثم يحولها إلى اجتماعات، عروض، تفاوض، وصفقات.",
     points: [
-      "ما يستلمه: تفاصيل الفرصة، سياق الملاءمة، أفضل قناة تواصل، والرد المقترح.",
-      "ما يفعله: يؤكد الاحتياج، يحجز الاجتماع، يرسل العرض، ويقود المفاوضات للإغلاق.",
-      "الدعم والتمكين: نتابعه ونساعده في صياغة الردود وتجاوز الاعتراضات خطوة بخطوة."
+      "يؤكد الاحتياج الحقيقي للجهة المهتمة ويحدد الملاءمة.",
+      "يحجز الاجتماع التنسيقي ويعرض القيمة المضافة للشركة.",
+      "يرسل عروض الأسعار والحلول الفنية المناسبة.",
+      "يتابع التفاوض مع صناع القرار ويحرك الصفقة نحو الإغلاق."
     ],
-    output: "تركيز 100% على الاجتماعات والإغلاق",
+    output: "لا يبدأ من الصفر… يبدأ من فرص أجهز.",
     icon: Users,
     accentColor: "text-emerald-400 border-emerald-500/30 bg-emerald-950/20",
     glowColor: "shadow-[0_0_20px_rgba(16,185,129,0.25)]"
@@ -109,15 +107,15 @@ const STEPS_DATA: StepDetail[] = [
   {
     id: 'sales-target',
     title: "المستهدف البيعي",
-    badge: "الهدف النهائي للتشغيل",
+    badge: "المستهدف البيعي خلال 90 يوم",
     short: "تحقيق العقود والصفقات خلال 90 يوم",
     description: "الهدف الاستراتيجي الواضح الذي نقود العمل بأكمله نحوه، لترجمة الفرص والمحادثات إلى عقود وعوائد فعلية للشركة.",
     points: [
-      `تحقيق المستهدف البيعي البالغ ${PIPELINE_CONFIG.targetAmount} خلال فترة 90 يوماً.`,
-      "تحريك الفرص عبر قمع واضح: اجتماعات مؤهلة ← عروض سعر ← تفاوض ← صفقات.",
-      "تحقيق عائد مستدام يثبت جدوى التشغيل الذكي للمبيعات."
+      `تحقيق المستهدف المالي البالغ ${PIPELINE_CONFIG.targetAmount} خلال فترة 90 يوماً.`,
+      "تحريك الفرص عبر مسار واضح: فرص جاهزة للتحريك ← اجتماعات مؤهلة ← عروض سعر ← تفاوض ← صفقات",
+      "إثبات نجاح وجدوى تشغيل منظومة المبيعات الذكية."
     ],
-    output: "1,000,000 ريال عوائد مستهدفة",
+    output: `${PIPELINE_CONFIG.targetAmount} خلال 90 يوم`,
     icon: Target,
     accentColor: "text-amber-400 border-amber-500/30 bg-amber-950/20",
     glowColor: "shadow-[0_0_20px_rgba(245,158,11,0.25)]"
@@ -150,7 +148,6 @@ export const DualStreamPipelineSection = () => {
 
   const handleStepClick = (id: string) => {
     if (activeStepId === id && isLocked) {
-      // Toggle off if clicking the already locked step
       setIsLocked(false);
       setActiveStepId(null);
     } else {
@@ -179,10 +176,10 @@ export const DualStreamPipelineSection = () => {
             <span className="text-[10px] font-bold">تكامل منظومة المبيعات</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-black text-white mb-6 leading-tight">
-            كيف نقرّب موظف مبيعاتك من المستهدف البيعي؟
+            مصدران للفرص… ومسار واحد نحو المستهدف
           </h2>
           <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-            لا نعتمد على مصدر واحد للفرص. نحن نغذي موظف مبيعاتك من مسارين متوازيين، تلتقي فيهما الفرص في نقطة واحدة تسمى <span className="text-cyan-400 font-bold">“حصيلة الفرص”</span> لإنشاء قمع مبيعات قوي.
+            نغذي موظف مبيعاتك من مسارين متوازيين: <span className="text-cyan-400 font-bold">كادر قيادة النمو الذكي</span> يفتح محادثات مؤهلة من خلال النينجا، البيانات، الرسائل، التدريب، والمتابعة. و<span className="text-emerald-400 font-bold">كادر فرص منافسات المباشرة</span> يرصد فرصاً مباشرة من السوق واحتياجات قائمة. ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
           </p>
         </div>
 
@@ -215,10 +212,10 @@ export const DualStreamPipelineSection = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
                   )}
                 </div>
-                <h3 className="text-base font-black text-white mb-2">مسار النينجا والاستشارات</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed">يفتح محادثات نشطة مع صناع القرار عبر Outreach مدروس ومخصص.</p>
+                <h3 className="text-base font-black text-white mb-2">كادر قيادة النمو الذكي</h3>
+                <p className="text-[11px] text-slate-400 leading-relaxed">يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، ويطورون الرسائل والقنوات.</p>
                 <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-cyan-400 font-bold">
-                  <span>فرص مؤهلة</span>
+                  <span>محادثات نشطة + فرص مؤهلة</span>
                   <span className="px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">نشط</span>
                 </div>
               </div>
@@ -243,8 +240,8 @@ export const DualStreamPipelineSection = () => {
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
                   )}
                 </div>
-                <h3 className="text-base font-black text-white mb-2">مسار فرص منافسات</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed">يرصد RFPs وطلبات الشراء والجهات الحكومية والخاصة ذات الاحتياج المباشر.</p>
+                <h3 className="text-base font-black text-white mb-2">كادر فرص منافسات المباشرة</h3>
+                <p className="text-[11px] text-slate-400 leading-relaxed">يرصدون فرصاً مباشرة من السوق، طلبات شراء، واحتياجات قائمة داخل القطاعات.</p>
                 <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-emerald-400 font-bold">
                   <span>فرص مباشرة من السوق</span>
                   <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">مباشر</span>
@@ -310,8 +307,8 @@ export const DualStreamPipelineSection = () => {
                   <Layers className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black text-white">حصيلة الفرص (Opportunity Pool)</h3>
-                  <p className="text-[10px] text-slate-400 mt-0.5">تجمع فرص المحادثات النشطة + طلبات الشراء المباشرة</p>
+                  <h3 className="text-sm font-black text-white">حصيلة الفرص</h3>
+                  <p className="text-[10px] text-slate-400 mt-0.5">تجمع محادثات مؤهلة + فرص مباشرة من السوق</p>
                 </div>
                 {activeStepId === 'opportunity-pool' && (
                   <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
@@ -352,7 +349,7 @@ export const DualStreamPipelineSection = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-black text-white">موظف مبيعات العميل</h3>
-                  <p className="text-[10px] text-slate-400 mt-0.5">يستلم فرصاً أجهز، مدعومة بالتوجيه والسياق الكامل</p>
+                  <p className="text-[10px] text-slate-400 mt-0.5">لا يبدأ من الصفر… يبدأ من فرص أجهز.</p>
                 </div>
                 {activeStepId === 'sales-rep' && (
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
@@ -360,7 +357,7 @@ export const DualStreamPipelineSection = () => {
               </div>
             </div>
 
-            {/* Connecting SVG 3: Sales Rep -> Pipeline */}
+            {/* Connecting SVG 3: Sales Rep -> Final Path */}
             <div className="w-full my-3 relative z-0">
               <svg className="w-full h-10 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
                 <line 
@@ -375,9 +372,10 @@ export const DualStreamPipelineSection = () => {
               </svg>
             </div>
 
-            {/* Pipeline Steps Row */}
-            <div className="flex justify-center items-center gap-3 relative z-10 w-full max-w-md mx-auto">
+            {/* Final Path (مسار الفرص) Timeline Row */}
+            <div className="flex justify-center items-center gap-2 relative z-10 w-full max-w-lg mx-auto">
               {[
+                { label: "فرص جاهزة للتحريك", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
                 { label: "اجتماعات مؤهلة", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
                 { label: "عروض سعر", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
                 { label: "تفاوض", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
@@ -385,13 +383,13 @@ export const DualStreamPipelineSection = () => {
               ].map((step, idx) => (
                 <React.Fragment key={idx}>
                   <div className={cn(
-                    "flex-1 text-center py-2 px-1 rounded-xl border bg-gradient-to-b text-[10px] font-black tracking-wide",
+                    "flex-1 text-center py-2 px-1 rounded-xl border bg-gradient-to-b text-[9px] font-black tracking-wide leading-tight",
                     step.color
                   )}>
                     {step.label}
                   </div>
-                  {idx < 3 && (
-                    <ArrowDown className="w-3.5 h-3.5 text-slate-700 shrink-0 rotate-[270deg]" />
+                  {idx < 4 && (
+                    <ArrowDown className="w-3 h-3 text-slate-700 shrink-0 rotate-[270deg]" />
                   )}
                 </React.Fragment>
               ))}
@@ -485,12 +483,12 @@ export const DualStreamPipelineSection = () => {
                       {/* Description */}
                       <p className="text-xs text-slate-300 leading-relaxed mb-6 font-bold">{currentStep.description}</p>
 
-                      {/* Detail points */}
-                      <div className="space-y-2 mb-6">
+                      {/* Detail tags / points */}
+                      <div className="flex flex-wrap gap-2 mb-6">
                         {currentStep.points.map((pt, idx) => (
-                          <div key={idx} className="flex items-start gap-2 text-right">
-                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-1.5 shrink-0" />
-                            <span className="text-[11px] text-slate-400 font-bold leading-relaxed">{pt}</span>
+                          <div key={idx} className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-bold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                            <span>{pt}</span>
                           </div>
                         ))}
                       </div>
@@ -498,7 +496,7 @@ export const DualStreamPipelineSection = () => {
 
                     {/* Bottom Result Box */}
                     <div className="border-t border-slate-900 pt-4 mt-auto">
-                      <div className="text-[10px] text-slate-500 font-extrabold mb-1">النتيجة والمخرجات:</div>
+                      <div className="text-[10px] text-slate-500 font-extrabold mb-1">الناتج:</div>
                       <div className="text-xs font-black text-white">{currentStep.output}</div>
                     </div>
 
@@ -520,10 +518,12 @@ export const DualStreamPipelineSection = () => {
                       <h3 className="text-lg font-black text-white mb-2">مصدران للفرص… ومسار واحد نحو المستهدف</h3>
                     </div>
                     <p className="text-xs text-slate-400 leading-relaxed text-center font-bold mb-4">
-                      نحن لا نبيع تدريبًا فقط، ولا داتا فقط، ولا اجتماعات فقط. نحن نبني حول موظف المبيعات منظومة تشغيل متكاملة تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، والذكاء الاصطناعي...
+                      كادر قيادة النمو الذكي يفتح محادثات مؤهلة عبر النينجا، البيانات، الرسائل، التدريب، والمتابعة.
+                      وكادر فرص منافسات المباشرة يرصد فرصاً مباشرة من السوق وااحتياجات قائمة.
+                      ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
                     </p>
-                    <p className="text-[10px] text-slate-500 leading-relaxed text-center font-bold">
-                      (مرر الفأرة فوق أي خطوة في الرسم البياني لعرض تفاصيلها، واضغط عليها لتثبيتها)
+                    <p className="text-xs text-cyan-400/90 leading-relaxed text-center font-black border-t border-slate-900 pt-4 mt-2">
+                      نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى اجتماعات وعروض وصفقات.
                     </p>
                   </motion.div>
                 )}
@@ -537,43 +537,43 @@ export const DualStreamPipelineSection = () => {
               
               <div className="flex items-center gap-2 mb-3">
                 <Award className="w-4 h-4 text-cyan-400 shrink-0" />
-                <h3 className="text-sm font-black text-white">دورنا لا يتوقف عند التشغيل</h3>
+                <h3 className="text-sm font-black text-white">دورنا: قيادة نمو كاملة حول فريقك</h3>
               </div>
               <p className="text-[11px] text-slate-400 leading-relaxed mb-4">
-                نعمل كشريك قيادي للنمو (<span className="text-cyan-400 font-bold">Growth Leadership Partner</span>) لبناء وتوجيه المنظومة كاملة:
+                لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
               </p>
               
               <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-slate-400 font-bold">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                  <span>استشارات تحديد قطاع وصناع قرار</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                  <span>استشارات لتحديد القطاع وصناع القرار</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                  <span>تدريب الموظف على الرد والتحويل</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                  <span>تدريب موظف المبيعات على الرد والتحويل</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                  <span>قيادة خطة 90 يوم ومؤشرات أداء</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                  <span>قيادة خطة 90 يوم ومؤشرات الأداء</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                  <span>متابعة أسبوعية للفانل والأنشطة</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                  <span>متابعة أسبوعية لحركة الفرص والأنشطة</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
-                  <span>تطوير مستمر للرسائل والعروض</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                  <span>تطوير مستمر للرسائل والقنوات</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
-                  <span>أتمتة للمتابعة وتنظيم الفانل</span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
+                  <span>أتمتة للمتابعة وتنظيم الخطوات</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
                   <span>ذكاء اصطناعي للتحليل والتخصيص</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                   <span>فرص مباشرة من كادر منافسات</span>
                 </div>
               </div>
@@ -588,13 +588,18 @@ export const DualStreamPipelineSection = () => {
           
           <div className="bg-slate-950/45 border border-slate-900 rounded-2xl p-5 mb-3 text-right">
             <h3 className="text-base font-black text-white mb-2">مصدران للفرص… ومسار واحد نحو المستهدف</h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
-              نغذي فريق مبيعات العميل من مسارين متوازيين، ثم تلتقي هذه الفرص في نقطة واحدة تسمى “حصيلة الفرص”، ليتحرك موظف المبيعات نحو الاجتماعات والصفقات.
+            <p className="text-xs text-slate-400 leading-relaxed mb-3">
+              كادر قيادة النمو الذكي يفتح محادثات مؤهلة عبر النينجا، البيانات، الرسائل، التدريب، والمتابعة.
+              وكادر فرص منافسات المباشرة يرصد فرصاً مباشرة من السوق واحتياجات قائمة.
+              ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
+            </p>
+            <p className="text-[11px] text-cyan-400 font-bold border-t border-slate-900 pt-3">
+              نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى اجتماعات وعروض وصفقات.
             </p>
           </div>
 
           <div className="space-y-4">
-            {STEPS_DATA.map((step, idx) => {
+            {STEPS_DATA.map((step) => {
               const isExpanded = expandedMobileStep === step.id;
               const StepIcon = step.icon;
 
@@ -641,17 +646,17 @@ export const DualStreamPipelineSection = () => {
                             {step.description}
                           </p>
 
-                          <div className="space-y-2 pl-1">
+                          <div className="flex flex-wrap gap-2">
                             {step.points.map((pt, pIdx) => (
-                              <div key={pIdx} className="flex items-start gap-2 text-right">
-                                <span className="w-1 h-1 rounded-full bg-cyan-400 mt-1.5 shrink-0" />
-                                <span className="text-[10px] text-slate-400 font-bold leading-relaxed">{pt}</span>
+                              <div key={pIdx} className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[9px] text-slate-400 font-bold">
+                                <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                                <span>{pt}</span>
                               </div>
                             ))}
                           </div>
 
                           <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-900 flex justify-between items-center text-[10px]">
-                            <span className="text-slate-500 font-bold">المخرج / النتيجة:</span>
+                            <span className="text-slate-500 font-bold">الناتج:</span>
                             <span className="font-black text-white">{step.output}</span>
                           </div>
                         </div>
@@ -683,30 +688,30 @@ export const DualStreamPipelineSection = () => {
           <div className="bg-gradient-to-br from-slate-950/60 to-slate-900/20 border border-slate-900 rounded-2xl p-5 text-right mt-3">
             <div className="flex items-center gap-2 mb-3">
               <Award className="w-4 h-4 text-cyan-400 shrink-0" />
-              <h3 className="text-xs font-black text-white">دورنا لا يتوقف عند التشغيل</h3>
+              <h3 className="text-xs font-black text-white">دورنا: قيادة نمو كاملة حول فريقك</h3>
             </div>
             <p className="text-[10px] text-slate-400 leading-relaxed mb-3">
-              نعمل كشريك قيادي للنمو لبناء وتوجيه كامل المنظومة:
+              لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
             </p>
             <div className="grid grid-cols-1 gap-y-2 text-[9px] text-slate-400 font-bold">
               <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                <span>استشارات تحديد قطاع وصناع قرار</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                <span>استشارات لتحديد القطاع وصناع القرار</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                <span>تدريب الموظف وتجهيز السكريبتات</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                <span>تدريب موظف المبيعات على الرد والتحويل</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-cyan-400 shrink-0" />
-                <span>قيادة خطة 90 يوم ومراجعة القمع أسبوعياً</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                <span>قيادة خطة 90 يوم ومؤشرات الأداء</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                 <span>تطوير مستمر للرسائل وأتمتة للمتابعة</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <span className="w-1 h-1 rounded-full bg-emerald-400 shrink-0" />
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
                 <span>فرص مباشرة من كادر منافسات البيعي</span>
               </div>
             </div>
