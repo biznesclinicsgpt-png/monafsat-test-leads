@@ -18,6 +18,7 @@ import {
   Settings2,
   ShieldCheck,
   Target,
+  TrendingDown,
   UserRoundCheck,
   Users,
 } from 'lucide-react';
@@ -782,25 +783,136 @@ const PricingSection2 = () => {
   );
 };
 
-const RevenueShareSimpleSection = () => (
-  <section className="py-16 bg-[#080808] border-t border-slate-900/60">
-    <div className="container mx-auto px-4 max-w-5xl text-center">
-      <SectionHeader
-        eyebrow="مشاركة النجاح"
-        title="نربح أكثر عندما تربح أكثر"
-        description="جزء من نموذجنا مرتبط بالصفقات الناتجة من الفرص التي نوفرها ونساعد في تحريكها. نبدأ بشرح واضح للنموذج، ثم يتم تفصيل النسب حسب حجم الصفقة وطبيعة دورة البيع."
-      />
-      <div className="grid md:grid-cols-3 gap-4">
-        {['فرصة مؤهلة', 'اجتماع وعرض سعر', 'صفقة ونمو فعلي'].map((step, idx) => (
-          <div key={step} className="bg-slate-950/70 border border-slate-800 rounded-2xl p-6">
-            <div className="text-3xl font-black text-emerald-300 mb-2">{idx + 1}</div>
-            <div className="text-white font-black">{step}</div>
+const RevenueShareSimpleSection = () => {
+  const [hoveredTier, setHoveredTier] = useState<number | null>(null);
+  const revenueTiers = [
+    { percent: '20%', range: 'من ١,٠٠٠ إلى ٤,٩٩٩ ريال', note: 'صفقات أصغر' },
+    { percent: '15%', range: 'من ٥,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى' },
+    { percent: '10%', range: 'من ١٠,٠٠٠ إلى ٤٩,٩٩٩ ريال', note: 'صفقات متوسطة' },
+    { percent: '7%', range: 'من ٥٠,٠٠٠ إلى ٢٥٠,٠٠٠ ريال', note: 'عقود أكبر' },
+    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠٠,٠٠٠ ريال', note: 'عقود كبرى' },
+    { percent: '2%', range: 'أكثر من ١,٠٠٠,٠٠٠ ريال', note: 'من 2% للعقود الكبرى', featured: true },
+  ];
+
+  return (
+    <section className="py-20 bg-[#080808] border-t border-slate-900/60 overflow-hidden" id="revenue-share-simple">
+      <div className="container mx-auto px-4 max-w-6xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          className="text-center mb-12"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/35 bg-emerald-400/10 px-5 py-2 text-emerald-200 mb-5">
+            <TrendingDown className="w-4 h-4" />
+            <span className="text-sm font-black">من 2% فقط</span>
           </div>
-        ))}
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-black text-white leading-tight max-w-full">
+            <span className="block md:inline">نسبتنا تبدأ</span>{' '}
+            <span className="block md:inline">من 2% فقط</span>
+          </h2>
+          <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed mt-5">
+            كلما زادت قيمة الصفقة المغلقة، انخفضت نسبتنا. لأننا نربح معك بالحجم، لا برفع النسبة.
+          </p>
+          <p className="text-sm md:text-base text-slate-500 max-w-2xl mx-auto mt-3">
+            مشاركة النجاح ليست نسبة ثابتة، بل نسبة تتناقص كلما كبرت قيمة العقد.
+          </p>
+        </motion.div>
+
+        <div className="relative rounded-2xl border border-slate-800 bg-slate-950/55 px-4 py-7 md:px-7 md:py-10">
+          <div className="absolute inset-x-8 top-10 hidden h-px bg-gradient-to-l from-red-400/45 via-emerald-300/45 to-emerald-300 md:block" />
+          <motion.div
+            initial={{ right: '1%', opacity: 0 }}
+            whileInView={{ right: ['1%', '18%', '36%', '54%', '72%', '94%'], opacity: [0, 1, 1, 1, 1, 1] }}
+            viewport={{ once: true, amount: 0.45 }}
+            transition={{ duration: 2.2, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.54, 0.72, 1] }}
+            className="absolute top-[2.15rem] z-20 hidden h-5 w-5 rounded-full bg-emerald-300 shadow-[0_0_28px_rgba(16,185,129,0.9)] md:block"
+          />
+
+          <div className="hidden md:grid md:grid-cols-6 md:gap-3" dir="rtl">
+            {revenueTiers.map((tier, idx) => (
+              <motion.div
+                key={tier.range}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08 }}
+                onHoverStart={() => setHoveredTier(idx)}
+                onHoverEnd={() => setHoveredTier(null)}
+                className={cn(
+                  'relative pt-9 text-center transition-all duration-300',
+                  tier.featured ? 'scale-[1.04]' : hoveredTier === idx ? '-translate-y-1' : ''
+                )}
+              >
+                <div
+                  className={cn(
+                    'absolute top-0 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full border-2 bg-[#080808]',
+                    tier.featured
+                      ? 'h-6 w-6 border-emerald-300 bg-emerald-300 shadow-[0_0_26px_rgba(16,185,129,0.9)]'
+                      : 'border-slate-500'
+                  )}
+                />
+                <div
+                  className={cn(
+                    'min-h-[154px] rounded-xl border p-4 transition-all duration-300',
+                    tier.featured
+                      ? 'border-emerald-300/70 bg-emerald-400/12 shadow-[0_0_32px_rgba(16,185,129,0.16)]'
+                      : 'border-slate-800 bg-[#080808]/70 hover:border-slate-600'
+                  )}
+                >
+                  <div className={cn('font-black leading-none', tier.featured ? 'text-5xl text-emerald-200' : 'text-3xl text-white')}>
+                    {tier.percent}
+                  </div>
+                  <div className="mt-4 text-xs font-black text-slate-300 leading-relaxed">{tier.range}</div>
+                  <div className={cn('mt-3 text-[11px] font-bold leading-relaxed', tier.featured ? 'text-emerald-200' : 'text-slate-500')}>
+                    {tier.note}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="md:hidden space-y-3">
+            {revenueTiers.map((tier, idx) => (
+              <motion.div
+                key={tier.range}
+                initial={{ opacity: 0, x: 18 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.06 }}
+                className={cn(
+                  'relative flex items-center justify-between gap-4 rounded-xl border p-4',
+                  tier.featured
+                    ? 'border-emerald-300/70 bg-emerald-400/12 shadow-[0_0_30px_rgba(16,185,129,0.14)]'
+                    : 'border-slate-800 bg-[#080808]/70'
+                )}
+              >
+                {idx < revenueTiers.length - 1 && <div className="absolute right-6 top-full h-3 w-px bg-slate-700" />}
+                <div className="text-right">
+                  <div className="text-xs font-black text-slate-400">{tier.note}</div>
+                  <div className="mt-1 text-sm font-bold text-slate-200">{tier.range}</div>
+                </div>
+                <div className={cn('shrink-0 font-black leading-none', tier.featured ? 'text-5xl text-emerald-200' : 'text-3xl text-white')}>
+                  {tier.percent}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.45 }}
+            className="mt-8 text-center text-lg md:text-xl font-black text-white"
+          >
+            العقد الأكبر = نسبة أقل
+          </motion.div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const FinalCtaSection2 = () => (
   <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="final-cta">
