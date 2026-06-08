@@ -237,7 +237,7 @@ const EnginesSection = () => {
 
   return (
     <section className="py-16 bg-[#050505] border-t border-slate-900/60">
-      <div className="container mx-auto px-4 max-w-6xl">
+      <div className="container mx-auto px-4 max-w-7xl">
         <SectionHeader
           eyebrow="المعادلة البسيطة"
           title="3 محركات تعمل على نفس مستهدفك البيعي"
@@ -785,14 +785,32 @@ const PricingSection2 = () => {
 
 const RevenueShareSimpleSection = () => {
   const [hoveredTier, setHoveredTier] = useState<number | null>(null);
+  const [activeTier, setActiveTier] = useState(5);
   const revenueTiers = [
-    { percent: '20%', range: 'من ١,٠٠٠ إلى ٤,٩٩٩ ريال', note: 'صفقات أصغر' },
-    { percent: '15%', range: 'من ٥,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى' },
-    { percent: '10%', range: 'من ١٠,٠٠٠ إلى ٤٩,٩٩٩ ريال', note: 'صفقات متوسطة' },
-    { percent: '7%', range: 'من ٥٠,٠٠٠ إلى ٢٥٠,٠٠٠ ريال', note: 'عقود أكبر' },
-    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠٠,٠٠٠ ريال', note: 'عقود كبرى' },
-    { percent: '2%', range: 'أكثر من ١,٠٠٠,٠٠٠ ريال', note: 'من 2% للعقود الكبرى', featured: true },
+    { percent: '20%', range: 'من ١,٠٠٠ إلى ٤,٩٩٩ ريال', note: 'عقد صغير', insight: 'النسبة الأعلى لأن قيمة العقد أقل.', scale: 'md:scale-[0.94]' },
+    { percent: '15%', range: 'من ٥,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى', insight: 'تبدأ النسبة تنخفض مع ارتفاع قيمة التعاقد.', scale: 'md:scale-[0.96]' },
+    { percent: '10%', range: 'من ١٠,٠٠٠ إلى ٤٩,٩٩٩ ريال', note: 'عقد متوسط', insight: 'توازن أفضل بين حجم العقد ونسبة المشاركة.', scale: 'md:scale-[0.98]' },
+    { percent: '7%', range: 'من ٥٠,٠٠٠ إلى ٢٥٠,٠٠٠ ريال', note: 'عقد أكبر', insight: 'كلما كبر العقد، أصبح العائد عليك أفضل.', scale: 'md:scale-[1.01]' },
+    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠٠,٠٠٠ ريال', note: 'عقد كبير', insight: 'فرصة أقوى: تعاقد أعلى ونسبة مشاركة أقل.', scale: 'md:scale-[1.05]' },
+    { percent: '2%', range: 'أكثر من ١,٠٠٠,٠٠٠ ريال', note: 'أفضل فرصة', insight: 'أفضل نتيجة: أعلى قيمة عقد مع أقل نسبة مشاركة.', scale: 'md:scale-[1.1]', featured: true },
   ];
+  const activeTierData = revenueTiers[activeTier];
+  const mobileRevenueTiers = [...revenueTiers].reverse();
+
+  useEffect(() => {
+    const interval = window.setInterval(() => {
+      setActiveTier((current) => (current >= revenueTiers.length - 1 ? 0 : current + 1));
+    }, 2600);
+
+    return () => window.clearInterval(interval);
+  }, [revenueTiers.length]);
+
+  const goToNextTier = () => setActiveTier((current) => (current >= revenueTiers.length - 1 ? 0 : current + 1));
+  const goToPreviousTier = () => setActiveTier((current) => (current <= 0 ? revenueTiers.length - 1 : current - 1));
+  const markerPositions = ['92.8%', '78.4%', '62.9%', '46.5%', '29%', '10%'];
+  const progressWidths = ['0%', '14.4%', '29.9%', '46.3%', '63.8%', '82.8%'];
+  const progressWidth = progressWidths[activeTier];
+  const markerLeft = markerPositions[activeTier];
 
   return (
     <section className="py-20 bg-[#080808] border-t border-slate-900/60 overflow-hidden" id="revenue-share-simple">
@@ -820,31 +838,55 @@ const RevenueShareSimpleSection = () => {
         </motion.div>
 
         <div className="relative rounded-2xl border border-slate-800 bg-slate-950/55 px-4 py-7 md:px-7 md:py-10">
-          <div className="absolute left-[10%] right-[10%] top-10 hidden h-px bg-gradient-to-l from-emerald-300 via-emerald-300/45 to-red-400/45 md:block" />
+          <div className="mb-7 grid gap-3 md:grid-cols-[1fr_auto] md:items-center">
+            <div className="rounded-xl border border-emerald-400/25 bg-emerald-400/8 px-4 py-3 text-right">
+              <div className="text-xs font-black text-emerald-200">القيمة الأعلى = نسبة أقل</div>
+              <div className="mt-1 text-sm font-bold text-slate-300">
+                {activeTierData.insight}
+              </div>
+            </div>
+            <div className="flex items-center justify-center gap-2" dir="ltr">
+              <button
+                type="button"
+                onClick={goToPreviousTier}
+                className="h-10 w-10 rounded-full border border-slate-700 bg-[#080808] text-white hover:border-emerald-300 hover:text-emerald-200 transition-colors"
+                aria-label="الشريحة السابقة"
+              >
+                ‹
+              </button>
+              <div className="min-w-24 rounded-full border border-slate-800 bg-[#080808] px-4 py-2 text-center text-sm font-black text-white">
+                {activeTierData.percent}
+              </div>
+              <button
+                type="button"
+                onClick={goToNextTier}
+                className="h-10 w-10 rounded-full border border-slate-700 bg-[#080808] text-white hover:border-emerald-300 hover:text-emerald-200 transition-colors"
+                aria-label="الشريحة التالية"
+              >
+                ›
+              </button>
+            </div>
+          </div>
+
+          <div className="absolute left-[10%] right-[7.2%] top-[8.75rem] hidden h-px bg-gradient-to-l from-emerald-300 via-emerald-300/45 to-red-400/45 md:block" />
           <motion.div
             aria-hidden="true"
             initial={{ width: '0%' }}
-            whileInView={{ width: ['0%', '18%', '36%', '54%', '72%', '100%'] }}
-            viewport={{ once: false, amount: 0.45 }}
-            transition={{ duration: 3.6, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.54, 0.72, 1], repeat: Infinity, repeatDelay: 0.8 }}
-            className="absolute right-[10%] top-10 z-10 hidden h-px max-w-[80%] bg-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75)] md:block"
+            animate={{ width: progressWidth }}
+            transition={{ duration: 0.7, ease: 'easeInOut' }}
+            className="absolute right-[7.2%] top-[8.75rem] z-10 hidden h-px max-w-[82.8%] bg-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75)] md:block"
           />
           <motion.div
             aria-hidden="true"
             initial={{ left: '90%', opacity: 0, scale: 0.85 }}
-            whileInView={{
-              left: ['90%', '74%', '58%', '42%', '26%', '10%'],
-              opacity: [0, 1, 1, 1, 1, 1],
-              scale: [0.85, 1, 1, 1, 1, 1.16],
-            }}
-            viewport={{ once: false, amount: 0.45 }}
-            transition={{ duration: 3.6, ease: 'easeInOut', times: [0, 0.18, 0.36, 0.54, 0.72, 1], repeat: Infinity, repeatDelay: 0.8 }}
-            className="absolute top-[2.02rem] z-20 hidden h-6 w-6 -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.95)] md:block"
+            animate={{ left: markerLeft, opacity: 1, scale: activeTier >= 4 ? 1.15 : 1 }}
+            transition={{ duration: 0.7, ease: 'easeInOut' }}
+            className="absolute top-[8.47rem] z-20 hidden h-6 w-6 -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.95)] md:block"
           >
             <span className="absolute inset-0 rounded-full bg-emerald-300/40 animate-ping" />
           </motion.div>
 
-          <div className="hidden md:grid md:grid-cols-6 md:gap-3" dir="rtl">
+          <div className="hidden md:grid md:grid-cols-[1.25fr_1.14fr_1.06fr_1fr_.94fr_.88fr] md:gap-3" dir="rtl">
             {revenueTiers.map((tier, idx) => (
               <motion.div
                 key={tier.range}
@@ -854,21 +896,23 @@ const RevenueShareSimpleSection = () => {
                 transition={{ delay: idx * 0.08 }}
                 onHoverStart={() => setHoveredTier(idx)}
                 onHoverEnd={() => setHoveredTier(null)}
+                onClick={() => setActiveTier(idx)}
                 className={cn(
-                  'relative pt-9 text-center transition-all duration-300',
-                  tier.featured ? 'scale-[1.04]' : hoveredTier === idx ? '-translate-y-1' : ''
+                  'relative pt-9 text-center transition-all duration-300 cursor-pointer',
+                  tier.scale,
+                  activeTier === idx ? '-translate-y-2' : hoveredTier === idx ? '-translate-y-1' : ''
                 )}
               >
                 <div
                   className={cn(
                     'absolute top-0 left-1/2 h-4 w-4 -translate-x-1/2 rounded-full border-2 bg-[#080808]',
-                    tier.featured ? 'border-slate-500 shadow-[0_0_14px_rgba(16,185,129,0.25)]' : 'border-slate-500'
+                    activeTier === idx ? 'border-transparent bg-transparent' : 'border-slate-500'
                   )}
                 />
                 <div
                   className={cn(
-                    'min-h-[154px] rounded-xl border p-4 transition-all duration-300',
-                    tier.featured
+                    'min-h-[170px] rounded-xl border p-4 transition-all duration-300',
+                    activeTier === idx || tier.featured
                       ? 'border-emerald-300/70 bg-emerald-400/12 shadow-[0_0_32px_rgba(16,185,129,0.16)]'
                       : 'border-slate-800 bg-[#080808]/70 hover:border-slate-600'
                   )}
@@ -877,7 +921,7 @@ const RevenueShareSimpleSection = () => {
                     {tier.percent}
                   </div>
                   <div className="mt-4 text-xs font-black text-slate-300 leading-relaxed">{tier.range}</div>
-                  <div className={cn('mt-3 text-[11px] font-bold leading-relaxed', tier.featured ? 'text-emerald-200' : 'text-slate-500')}>
+                  <div className={cn('mt-3 text-[11px] font-bold leading-relaxed', tier.featured || activeTier === idx ? 'text-emerald-200' : 'text-slate-500')}>
                     {tier.note}
                   </div>
                 </div>
@@ -886,21 +930,25 @@ const RevenueShareSimpleSection = () => {
           </div>
 
           <div className="md:hidden space-y-3">
-            {revenueTiers.map((tier, idx) => (
+            {mobileRevenueTiers.map((tier, mobileIdx) => {
+              const idx = revenueTiers.indexOf(tier);
+
+              return (
               <motion.div
                 key={tier.range}
                 initial={{ opacity: 0, x: 18 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: idx * 0.06 }}
+                transition={{ delay: mobileIdx * 0.06 }}
+                onClick={() => setActiveTier(idx)}
                 className={cn(
-                  'relative flex items-center justify-between gap-4 rounded-xl border p-4',
-                  tier.featured
+                  'relative flex items-center justify-between gap-4 rounded-xl border p-4 transition-all duration-300',
+                  activeTier === idx || tier.featured
                     ? 'border-emerald-300/70 bg-emerald-400/12 shadow-[0_0_30px_rgba(16,185,129,0.14)]'
                     : 'border-slate-800 bg-[#080808]/70'
                 )}
               >
-                {idx < revenueTiers.length - 1 && <div className="absolute right-6 top-full h-3 w-px bg-slate-700" />}
+                {mobileIdx < mobileRevenueTiers.length - 1 && <div className="absolute right-6 top-full h-3 w-px bg-slate-700" />}
                 <div className="text-right">
                   <div className="text-xs font-black text-slate-400">{tier.note}</div>
                   <div className="mt-1 text-sm font-bold text-slate-200">{tier.range}</div>
@@ -909,7 +957,8 @@ const RevenueShareSimpleSection = () => {
                   {tier.percent}
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
 
           <motion.div
@@ -919,7 +968,7 @@ const RevenueShareSimpleSection = () => {
             transition={{ delay: 0.45 }}
             className="mt-8 text-center text-lg md:text-xl font-black text-white"
           >
-            العقد الأكبر = نسبة أقل
+            العقود الأكبر هي أفضل فرصتك: تعاقد أعلى ونسبة أقل
           </motion.div>
         </div>
       </div>
