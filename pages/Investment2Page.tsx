@@ -786,27 +786,39 @@ const PricingSection2 = () => {
 const RevenueShareSimpleSection = () => {
   const [hoveredTier, setHoveredTier] = useState<number | null>(null);
   const [activeTier, setActiveTier] = useState(5);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
   const revenueTiers = [
-    { percent: '20%', range: 'من ١,٠٠٠ إلى ٤,٩٩٩ ريال', note: 'عقد صغير', insight: 'النسبة الأعلى لأن قيمة العقد أقل.', scale: 'md:scale-[0.94]' },
-    { percent: '15%', range: 'من ٥,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى', insight: 'تبدأ النسبة تنخفض مع ارتفاع قيمة التعاقد.', scale: 'md:scale-[0.96]' },
-    { percent: '10%', range: 'من ١٠,٠٠٠ إلى ٤٩,٩٩٩ ريال', note: 'عقد متوسط', insight: 'توازن أفضل بين حجم العقد ونسبة المشاركة.', scale: 'md:scale-[0.98]' },
-    { percent: '7%', range: 'من ٥٠,٠٠٠ إلى ٢٥٠,٠٠٠ ريال', note: 'عقد أكبر', insight: 'كلما كبر العقد، أصبح العائد عليك أفضل.', scale: 'md:scale-[1.01]' },
-    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠٠,٠٠٠ ريال', note: 'عقد كبير', insight: 'فرصة أقوى: تعاقد أعلى ونسبة مشاركة أقل.', scale: 'md:scale-[1.05]' },
-    { percent: '2%', range: 'أكثر من ١,٠٠٠,٠٠٠ ريال', note: 'أفضل فرصة', insight: 'أفضل نتيجة: أعلى قيمة عقد مع أقل نسبة مشاركة.', scale: 'md:scale-[1.1]', featured: true },
+    { percent: '20%', range: 'من ١,٠٠٠ إلى ٤,٩٩٩ ريال', note: 'عقد صغير', insight: 'النسبة الأعلى لأن قيمة العقد أقل.', baseScale: 0.86, percentSize: 'text-2xl' },
+    { percent: '15%', range: 'من ٥,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى', insight: 'تبدأ النسبة تنخفض مع ارتفاع قيمة التعاقد.', baseScale: 0.91, percentSize: 'text-3xl' },
+    { percent: '10%', range: 'من ١٠,٠٠٠ إلى ٤٩,٩٩٩ ريال', note: 'عقد متوسط', insight: 'توازن أفضل بين حجم العقد ونسبة المشاركة.', baseScale: 0.96, percentSize: 'text-3xl' },
+    { percent: '7%', range: 'من ٥٠,٠٠٠ إلى ٢٥٠,٠٠٠ ريال', note: 'عقد أكبر', insight: 'كلما كبر العقد، أصبح العائد عليك أفضل.', baseScale: 1.01, percentSize: 'text-4xl' },
+    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠٠,٠٠٠ ريال', note: 'عقد كبير', insight: 'فرصة أقوى: تعاقد أعلى ونسبة مشاركة أقل.', baseScale: 1.07, percentSize: 'text-4xl' },
+    { percent: '2%', range: 'أكثر من ١,٠٠٠,٠٠0 ريال', note: 'أفضل فرصة', insight: 'أفضل نتيجة: أعلى قيمة عقد مع أقل نسبة مشاركة.', baseScale: 1.15, percentSize: 'text-5xl', featured: true },
   ];
   const activeTierData = revenueTiers[activeTier];
   const mobileRevenueTiers = [...revenueTiers].reverse();
 
   useEffect(() => {
+    if (!isAutoPlay) return;
+
     const interval = window.setInterval(() => {
       setActiveTier((current) => (current >= revenueTiers.length - 1 ? 0 : current + 1));
     }, 2600);
 
     return () => window.clearInterval(interval);
-  }, [revenueTiers.length]);
+  }, [isAutoPlay, revenueTiers.length]);
 
-  const goToNextTier = () => setActiveTier((current) => (current >= revenueTiers.length - 1 ? 0 : current + 1));
-  const goToPreviousTier = () => setActiveTier((current) => (current <= 0 ? revenueTiers.length - 1 : current - 1));
+  const goToNextTier = () => {
+    setIsAutoPlay(false);
+    setActiveTier((current) => (current >= revenueTiers.length - 1 ? 0 : current + 1));
+  };
+  
+  const goToPreviousTier = () => {
+    setIsAutoPlay(false);
+    setActiveTier((current) => (current <= 0 ? revenueTiers.length - 1 : current - 1));
+  };
+
   const markerPositions = ['92.8%', '78.4%', '62.9%', '46.5%', '29%', '10%'];
   const progressWidths = ['0%', '14.4%', '29.9%', '46.3%', '63.8%', '82.8%'];
   const progressWidth = progressWidths[activeTier];
@@ -832,8 +844,11 @@ const RevenueShareSimpleSection = () => {
           <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed mt-5">
             كلما زادت قيمة الصفقة المغلقة، انخفضت نسبتنا. لأننا نربح معك بالحجم، لا برفع النسبة.
           </p>
-          <p className="text-sm md:text-base text-slate-500 max-w-2xl mx-auto mt-3">
+          <p className="text-sm md:text-base text-slate-400 font-bold max-w-2xl mx-auto mt-3">
             مشاركة النجاح ليست نسبة ثابتة، بل نسبة تتناقص كلما كبرت قيمة العقد.
+          </p>
+          <p className="text-base md:text-xl text-emerald-400 font-black max-w-2xl mx-auto mt-5">
+            هدفنا دائماً نصلك بالعروض الكبيرة اللي بتناسب قوة شغلك
           </p>
         </motion.div>
 
@@ -873,20 +888,20 @@ const RevenueShareSimpleSection = () => {
             aria-hidden="true"
             initial={{ width: '0%' }}
             animate={{ width: progressWidth }}
-            transition={{ duration: 0.7, ease: 'easeInOut' }}
+            transition={{ type: 'spring', stiffness: 150, damping: 20 }}
             className="absolute right-[7.2%] top-[8.75rem] z-10 hidden h-px max-w-[82.8%] bg-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75)] md:block"
           />
           <motion.div
             aria-hidden="true"
             initial={{ left: '90%', opacity: 0, scale: 0.85 }}
             animate={{ left: markerLeft, opacity: 1, scale: activeTier >= 4 ? 1.15 : 1 }}
-            transition={{ duration: 0.7, ease: 'easeInOut' }}
+            transition={{ type: 'spring', stiffness: 150, damping: 20 }}
             className="absolute top-[8.47rem] z-20 hidden h-6 w-6 -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.95)] md:block"
           >
             <span className="absolute inset-0 rounded-full bg-emerald-300/40 animate-ping" />
           </motion.div>
 
-          <div className="hidden md:grid md:grid-cols-[1.25fr_1.14fr_1.06fr_1fr_.94fr_.88fr] md:gap-3" dir="rtl">
+          <div className="hidden md:grid md:grid-cols-[0.88fr_0.94fr_1fr_1.06fr_1.14fr_1.25fr] md:gap-3" dir="rtl">
             {revenueTiers.map((tier, idx) => (
               <motion.div
                 key={tier.range}
@@ -896,11 +911,22 @@ const RevenueShareSimpleSection = () => {
                 transition={{ delay: idx * 0.08 }}
                 onHoverStart={() => setHoveredTier(idx)}
                 onHoverEnd={() => setHoveredTier(null)}
-                onClick={() => setActiveTier(idx)}
+                onClick={() => {
+                  setIsAutoPlay(false);
+                  setActiveTier(idx);
+                }}
+                style={{
+                  scale: (tier.baseScale || 1.0) * (activeTier === idx ? 1.08 : hoveredTier === idx ? 1.03 : 1)
+                }}
                 className={cn(
                   'relative pt-9 text-center transition-all duration-300 cursor-pointer',
-                  tier.scale,
-                  activeTier === idx ? '-translate-y-2' : hoveredTier === idx ? '-translate-y-1' : ''
+                  activeTier === idx
+                    ? '-translate-y-3 z-30 opacity-100'
+                    : hoveredTier === idx
+                    ? '-translate-y-1.5 z-20 opacity-95'
+                    : tier.featured
+                    ? 'z-10 opacity-90'
+                    : 'z-10 opacity-70'
                 )}
               >
                 <div
@@ -912,12 +938,14 @@ const RevenueShareSimpleSection = () => {
                 <div
                   className={cn(
                     'min-h-[170px] rounded-xl border p-4 transition-all duration-300',
-                    activeTier === idx || tier.featured
-                      ? 'border-emerald-300/70 bg-emerald-400/12 shadow-[0_0_32px_rgba(16,185,129,0.16)]'
-                      : 'border-slate-800 bg-[#080808]/70 hover:border-slate-600'
+                    activeTier === idx
+                      ? 'border-emerald-400 bg-emerald-400/15 shadow-[0_0_35px_rgba(16,185,129,0.25)] ring-1 ring-emerald-400/50'
+                      : tier.featured
+                      ? 'border-emerald-500/40 bg-emerald-500/5 shadow-[0_0_20px_rgba(16,185,129,0.08)]'
+                      : 'border-slate-800 bg-[#080808]/70 hover:border-slate-700'
                   )}
                 >
-                  <div className={cn('font-black leading-none', tier.featured ? 'text-5xl text-emerald-200' : 'text-3xl text-white')}>
+                  <div className={cn('font-black leading-none transition-colors duration-300', activeTier === idx ? 'text-emerald-300' : tier.featured ? 'text-emerald-200' : 'text-white', tier.percentSize)}>
                     {tier.percent}
                   </div>
                   <div className="mt-4 text-xs font-black text-slate-300 leading-relaxed">{tier.range}</div>
@@ -937,23 +965,31 @@ const RevenueShareSimpleSection = () => {
               <motion.div
                 key={tier.range}
                 initial={{ opacity: 0, x: 18 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: mobileIdx * 0.06 }}
-                onClick={() => setActiveTier(idx)}
+                onClick={() => {
+                  setIsAutoPlay(false);
+                  setActiveTier(idx);
+                }}
                 className={cn(
-                  'relative flex items-center justify-between gap-4 rounded-xl border p-4 transition-all duration-300',
-                  activeTier === idx || tier.featured
-                    ? 'border-emerald-300/70 bg-emerald-400/12 shadow-[0_0_30px_rgba(16,185,129,0.14)]'
-                    : 'border-slate-800 bg-[#080808]/70'
+                  'relative flex items-center justify-between gap-4 rounded-xl border p-4 transition-all duration-300 cursor-pointer',
+                  activeTier === idx
+                    ? 'border-emerald-400 bg-emerald-400/15 shadow-[0_0_30px_rgba(16,185,129,0.20)] scale-[1.03] z-10 opacity-100'
+                    : tier.featured
+                    ? 'border-emerald-500/40 bg-emerald-500/5 shadow-[0_0_15px_rgba(16,185,129,0.06)] opacity-95'
+                    : 'border-slate-800 bg-[#080808]/70 opacity-75'
                 )}
+                style={{
+                  padding: tier.percent === '2%' ? '1.5rem 1rem' : tier.percent === '5%' ? '1.25rem 1rem' : '1rem'
+                }}
               >
                 {mobileIdx < mobileRevenueTiers.length - 1 && <div className="absolute right-6 top-full h-3 w-px bg-slate-700" />}
                 <div className="text-right">
                   <div className="text-xs font-black text-slate-400">{tier.note}</div>
                   <div className="mt-1 text-sm font-bold text-slate-200">{tier.range}</div>
                 </div>
-                <div className={cn('shrink-0 font-black leading-none', tier.featured ? 'text-5xl text-emerald-200' : 'text-3xl text-white')}>
+                <div className={cn('shrink-0 font-black leading-none transition-colors duration-300', activeTier === idx ? 'text-emerald-300' : tier.featured ? 'text-emerald-200' : 'text-white', tier.percentSize)}>
                   {tier.percent}
                 </div>
               </motion.div>
