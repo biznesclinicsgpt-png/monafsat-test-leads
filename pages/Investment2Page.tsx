@@ -709,22 +709,28 @@ const PricingSection2 = () => {
   const tiers = [
     {
       name: 'تجربة شهرية',
-      price: '4,000 ريال / شهر',
+      monthlyPrice: '4,000 ريال',
+      billing: 'تدفع شهرياً',
+      totalPriceText: 'التزام مرن شهري',
       icon: Target,
       features: ['تجربة قطاع واحد', 'قائمة فرص أولية', 'تشغيل قنوات أساسية', 'تقرير أداء شهري'],
     },
     {
-      name: 'تشغيل 90 يوم',
-      price: '9,000 ريال / 3 شهور',
-      icon: ShieldCheck,
+      name: 'شراكة سنوية',
+      monthlyPrice: '1,500 ريال',
+      billing: 'تدفع سنوياً',
+      totalPriceText: 'إجمالي 18,000 ريال / سنة',
+      icon: BriefcaseBusiness,
       recommended: true,
-      features: ['بناء قناة مبيعات كاملة', 'بيانات ورسائل ومتابعة', 'تطوير أداء الفريق أسبوعيًا', 'قياس القمع حتى العروض والتفاوض'],
+      features: ['تشغيل مستمر متعدد القطاعات', 'مدير حساب ومراجعات استراتيجية', 'أصول بيانات ولوحات أوسع', 'نموذج مشاركة نجاح مخصص'],
     },
     {
-      name: 'شراكة سنوية',
-      price: 'تسعير حسب المستهدف',
-      icon: BriefcaseBusiness,
-      features: ['تشغيل مستمر متعدد القطاعات', 'مدير حساب ومراجعات استراتيجية', 'أصول بيانات ولوحات أوسع', 'نموذج مشاركة نجاح مخصص'],
+      name: 'تشغيل 90 يوم',
+      monthlyPrice: '3,000 ريال',
+      billing: 'تدفع ربع سنوي',
+      totalPriceText: 'إجمالي 9,000 ريال / 3 شهور',
+      icon: ShieldCheck,
+      features: ['بناء قناة مبيعات كاملة', 'بيانات ورسائل ومتابعة', 'تطوير أداء الفريق أسبوعيًا', 'قياس القمع حتى العروض والتفاوض'],
     },
   ];
 
@@ -733,8 +739,8 @@ const PricingSection2 = () => {
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
           eyebrow="خطة التشغيل"
-          title="خطة تشغيل 90 يوم لبناء قناة مبيعات جديدة"
-          description="أنت لا تدفع مقابل أداة فقط. أنت تدفع لتجهيز البيانات، تشغيل القنوات، تدريب فريقك، متابعة الأداء، وتحريك الفرص. وجزء كبير من نجاحنا مرتبط بنتائجك الفعلية."
+          title="خطط التشغيل وبناء القنوات: من 90 يومًا إلى شراكة سنوية كاملة"
+          description="أنت لا تدفع مقابل أداة فقط. أنت تدفع لتجهيز البيانات، تشغيل القنوات، تدريب فريقك، ومتابعة الأداء. اختر الخطة الأنسب لمؤسستك لبدء التشغيل والتحويل الفعلي."
         />
         <div className="grid md:grid-cols-3 gap-6">
           {tiers.map((tier, idx) => (
@@ -751,13 +757,20 @@ const PricingSection2 = () => {
             >
               {tier.recommended && (
                 <div className="absolute top-0 inset-x-0 bg-emerald-400 text-slate-950 text-center text-xs font-black py-1 rounded-t-3xl">
-                  الأنسب لاختبار 90 يوم
+                  الخيار الأنسب لشراكة نمو مستدامة
                 </div>
               )}
               <div className={cn('pt-4', tier.recommended && 'pt-7')}>
                 <tier.icon className="w-10 h-10 text-emerald-300 mb-5" />
                 <h3 className="text-2xl font-black text-white mb-3">{tier.name}</h3>
-                <div className="text-xl md:text-2xl font-black text-emerald-300 mb-6">{tier.price}</div>
+                <div className="mb-6 text-right">
+                  <div className="text-xl md:text-2xl font-black text-emerald-300">
+                    {tier.monthlyPrice} <span className="text-xs text-slate-400 font-bold">/ شهر</span>
+                  </div>
+                  <div className="text-[11px] text-slate-400 font-extrabold mt-1">
+                    {tier.billing} <span className="text-[10px] text-slate-500">({tier.totalPriceText})</span>
+                  </div>
+                </div>
                 <div className="space-y-3">
                   {tier.features.map((feature) => (
                     <div key={feature} className="flex items-start gap-3 text-sm text-slate-300">
