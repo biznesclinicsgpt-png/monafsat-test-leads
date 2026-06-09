@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { 
   Target, 
   Users, 
@@ -7,25 +7,10 @@ import {
   Sparkles, 
   Layers, 
   ArrowDown, 
-  HelpCircle, 
   Award, 
-  ChevronDown,
   Activity
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
-
-interface StepDetail {
-  id: string;
-  title: string;
-  badge: string;
-  short: string;
-  description: string;
-  points: string[];
-  output: string;
-  icon: React.ElementType;
-  accentColor: string;
-  glowColor: string;
-}
 
 const PIPELINE_CONFIG = {
   targetAmount: "1,000,000 ريال",
@@ -33,169 +18,14 @@ const PIPELINE_CONFIG = {
   subText: "كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم."
 };
 
-const STEPS_DATA: StepDetail[] = [
-  {
-    id: 'ninja-before',
-    title: "كادر قيادة النمو - ما قبل الفرص",
-    badge: "كادر قيادة النمو الذكي",
-    short: "تحديد الاستراتيجية وتجهيز البيانات وتفعيل القنوات",
-    description: "يقودون خطة الـ 90 يوم ويقومون بتجهيز كامل البنية التحتية والمستهدفين وتفعيل قنوات التواصل قبل إطلاق الوصول المباشر.",
-    points: [
-      "تحديد القطاع والحسابات وصناع القرار المناسبين",
-      "تجهيز البيانات وتصفية القوائم بدقة",
-      "تجهيز وصياغة الرسائل المخصصة وجاذبة للانتباه",
-      "تفعيل قنوات الوصول وإعداد ملفات العمل والمتابعة"
-    ],
-    output: "بنية تحتية وقنوات تواصل جاهزة للتواصل المباشر",
-    icon: Sparkles,
-    accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
-    glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.25)]"
-  },
-  {
-    id: 'ninja-during',
-    title: "كادر قيادة النمو - أثناء الفرص",
-    badge: "كادر قيادة النمو الذكي",
-    short: "إدارة وتأهيل المحادثات والمساعدة في التحويل",
-    description: "إدارة التفاعل اليومي وتوجيه المحادثات النشطة وتجاوز الاعتراضات لمساعدة موظف المبيعات على حجز الاجتماعات.",
-    points: [
-      "إدارة المحادثات النشطة ودعم صياغة الردود المناسبة",
-      "تنظيم المتابعة والفرز الأولي لتأهيل الفرص الواردة",
-      "المساعدة الميدانية لتحويل الاهتمام إلى موعد اجتماع مؤكد",
-      "ترتيب وتنسيق الخطوة التالية المناسبة لتسريع الصفقة"
-    ],
-    output: "محادثات نشطة واجتماعات مؤهلة محجوزة",
-    icon: Sparkles,
-    accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
-    glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.25)]"
-  },
-  {
-    id: 'ninja-after',
-    title: "كادر قيادة النمو - ما بعد الفرص",
-    badge: "كادر قيادة النمو الذكي",
-    short: "تحليل الأداء وتطوير الرسائل وتجاوز الاعتراضات أسبوعياً",
-    description: "مراجعة النتائج وتدريب موظف المبيعات وتطوير سكريبتات الردود ومعالجة أسباب التعثر لرفع نسب التحويل.",
-    points: [
-      "تحليل الأداء العام ومؤشرات الأنشطة أسبوعياً",
-      "مراجعة تفصيلية لأسباب التحويل أو التعثر الميداني",
-      "تطوير مستمر للرسائل ومعالجة الاعتراضات المتكررة",
-      "تدريب وتأهيل مستمر لمسؤول المبيعات لزيادة كفاءة الإغلاق"
-    ],
-    output: "تطوير مستمر للقمع ورفع مهارات موظف مبيعاتك أسبوعياً",
-    icon: Sparkles,
-    accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
-    glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.25)]"
-  },
-  {
-    id: 'monafsat-stream',
-    title: "كادر فرص منافسات المباشرة",
-    badge: "كادر فرص منافسات المباشرة",
-    short: "فرص مباشرة من السوق",
-    description: "يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين داخل القطاعات المستهدفة.",
-    points: [
-      "رصد احتياج الجهات المستهدفة",
-      "رصد طلبات الشراء العاجلة",
-      "فرص مباشرة وتأهيل أولي",
-      "تحريك وتمرير الفرصة الأنسب"
-    ],
-    output: "فرص مباشرة جاهزة للتحريك",
-    icon: BriefcaseBusiness,
-    accentColor: "text-emerald-400 border-emerald-500/30 bg-emerald-950/20",
-    glowColor: "shadow-[0_0_20px_rgba(16,185,129,0.25)]"
-  },
-  {
-    id: 'opportunity-pool',
-    title: "حصيلة الفرص",
-    badge: "حصيلة الفرص",
-    short: "محادثات مؤهلة + فرص مباشرة",
-    description: "هنا تلتقي الفرص القادمة من المسارين: محادثات مؤهلة من كادر قيادة النمو الذكي، وفرص مباشرة من كادر فرص منافسات.",
-    points: [
-      "محادثات مؤهلة من كادر قيادة النمو الذكي",
-      "فرص مباشرة من كادر فرص منافسات",
-      "كل الفرص تتجمع هنا قبل أن تصل للموظف"
-    ],
-    output: "محادثات مؤهلة + فرص مباشرة = حصيلة فرص أقوى",
-    icon: Layers,
-    accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
-    glowColor: "shadow-[0_0_25px_rgba(6,182,212,0.3)]"
-  },
-  {
-    id: 'sales-rep',
-    title: "موظف مبيعات العميل",
-    badge: "موظف مبيعات العميل",
-    short: "لا يبدأ من الصفر… يبدأ من فرص أجهز.",
-    description: "يستلم حصيلة فرص أجهز، مدعومة بالسياق والبيانات والتوصيات، ثم يحولها إلى اجتماعات، عروض، تفاوض، وصفقات.",
-    points: [
-      "تأكيد الاحتياج والملاءمة للفرصة",
-      "حجز الاجتماعات وتقديم العروض",
-      "متابعة التفاوض وتحريك الصفقات",
-      "التركيز الكامل على الإغلاق والنتائج"
-    ],
-    output: "لا يبدأ من الصفر… يبدأ من فرص أجهز.",
-    icon: Users,
-    accentColor: "text-emerald-400 border-emerald-500/30 bg-emerald-950/20",
-    glowColor: "shadow-[0_0_20px_rgba(16,185,129,0.25)]"
-  },
-  {
-    id: 'sales-target',
-    title: "المستهدف البيعي",
-    badge: "المستهدف البيعي خلال 90 يوم",
-    short: "تحقيق العقود والصفقات خلال 90 يوم",
-    description: "الهدف الاستراتيجي الواضح الذي نقود العمل بأكمله نحوه، لترجمة الفرص والمحادثات إلى عقود وعوائد فعلية للشركة.",
-    points: [
-      `تحقيق المستهدف المالي البالغ ${PIPELINE_CONFIG.targetAmount} خلال فترة 90 يوماً.`,
-      "مسار فرص واضح يرفع كفاءة التحويل للإغلاق."
-    ],
-    output: `${PIPELINE_CONFIG.targetAmount} خلال 90 يوم`,
-    icon: Target,
-    accentColor: "text-amber-400 border-amber-500/30 bg-amber-950/20",
-    glowColor: "shadow-[0_0_20px_rgba(245,158,11,0.25)]"
-  }
-];
-
 export const DualStreamPipelineSection = () => {
-  const [activeStepId, setActiveStepId] = useState<string | null>(null);
-  const [isLocked, setIsLocked] = useState(false);
-  const [expandedMobileStep, setExpandedMobileStep] = useState<string | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Click outside to reset selection
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-        setIsLocked(false);
-        setActiveStepId(null);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleStepHover = (id: string | null) => {
-    if (!isLocked) {
-      setActiveStepId(id);
-    }
-  };
-
-  const handleStepClick = (id: string) => {
-    if (activeStepId === id && isLocked) {
-      setIsLocked(false);
-      setActiveStepId(null);
-    } else {
-      setActiveStepId(id);
-      setIsLocked(true);
-    }
-  };
-
-  const currentStep = STEPS_DATA.find(s => s.id === activeStepId);
-
   return (
     <section 
-      ref={containerRef}
       className="py-20 bg-[#060606] border-t border-slate-900/60 relative overflow-hidden" 
       id="dual-stream-pipeline"
     >
       {/* Background radial glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-950/5 rounded-full blur-[120px] pointer-events-none select-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-950/5 rounded-full blur-[140px] pointer-events-none select-none" />
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         
@@ -213,544 +43,448 @@ export const DualStreamPipelineSection = () => {
           </p>
         </div>
 
-        {/* Desktop Layout (Split 60% Diagram / 40% Panel) */}
-        <div className="hidden lg:grid grid-cols-12 gap-8 items-stretch">
+        {/* Desktop Layout (Full-width 3-Column Diagram) */}
+        <div className="hidden lg:grid grid-cols-12 gap-y-2 gap-x-8 items-center relative">
           
-          {/* Right Column (60%): Interactive Y-Shape Diagram */}
-          <div className="col-span-7 flex flex-col justify-between bg-slate-950/30 border border-slate-900/80 rounded-3xl p-8 relative interactive-diagram-container">
-            
-            {/* Upper Row: Two Streams */}
-            <div className="grid grid-cols-2 gap-8 relative z-10 items-stretch">
-              
-              {/* Right: Ninja Stream / كادر قيادة النمو الذكي */}
-              <div 
-                className="p-4 rounded-2xl border border-slate-900 bg-slate-950/20 text-right flex flex-col justify-between gap-3 h-full"
-              >
-                <div className="flex items-center gap-2 border-b border-slate-900 pb-2">
+          {/* ================= ROW 1 ================= */}
+          {/* Row 1 - Left: Monafsat Card */}
+          <div className="col-span-4 h-full flex flex-col justify-between">
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="p-5 rounded-2xl border border-emerald-500/20 bg-slate-950/40 text-right hover:border-emerald-500/40 transition-all duration-300 shadow-lg relative h-full flex flex-col justify-between min-h-[170px]"
+            >
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-1.5 rounded-lg bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 shrink-0">
+                    <BriefcaseBusiness className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-black text-white">كادر فرص منافسات المباشرة</h3>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
+                  يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين داخل القطاعات المستهدفة.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/5 border border-emerald-500/20 text-emerald-400">فرص مباشرة من السوق</span>
+                  <span>• رصد احتياج وطلبات شراء</span>
+                  <span>• تأهيل وتمرير للفرص</span>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-emerald-400 font-black">
+                الناتج: فرص مباشرة جاهزة للتحريك
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Row 1 - Center: Empty */}
+          <div className="col-span-4"></div>
+
+          {/* Row 1 - Right: Before Opportunities Card */}
+          <div className="col-span-4 h-full flex flex-col justify-between">
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative h-full flex flex-col justify-between min-h-[170px]"
+            >
+              <div>
+                <div className="flex items-center gap-2 mb-3">
                   <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
                     <Sparkles className="w-4 h-4" />
                   </div>
-                  <h3 className="text-sm font-black text-white">كادر قيادة النمو الذكي</h3>
+                  <h3 className="text-sm font-black text-white">قبل الفرص</h3>
                 </div>
-
-                <div className="flex flex-col gap-2 flex-1 justify-center">
-                  {[
-                    { id: 'ninja-before', title: "قبل الفرص (تجهيز وتفعيل)", desc: "تحديد القطاع والحسابات، وصناع القرار، وتجهيز الرسائل والقنوات" },
-                    { id: 'ninja-during', title: "أثناء الفرص (إدارة وتأهيل)", desc: "إدارة المحادثات، دعم الردود، وحجز الاجتماعات والتحويل" },
-                    { id: 'ninja-after', title: "بعد الفرص (تحليل وتطوير)", desc: "تحليل الأداء، معالجة الاعتراضات، وتدريب موظفك أسبوعياً" },
-                  ].map((sub) => {
-                    const isSubActive = activeStepId === sub.id;
-                    return (
-                      <div
-                        key={sub.id}
-                        className={cn(
-                          "p-2.5 rounded-xl border text-right transition-all duration-200 cursor-pointer flex-1 flex flex-col justify-center",
-                          isSubActive
-                            ? "border-cyan-500/60 bg-[#0b131a] shadow-[0_0_12px_rgba(6,182,212,0.15)] scale-[1.02]"
-                            : "border-slate-900/60 bg-black/40 hover:border-slate-800"
-                        )}
-                        onMouseEnter={() => handleStepHover(sub.id)}
-                        onMouseLeave={() => handleStepHover(null)}
-                        onClick={() => handleStepClick(sub.id)}
-                      >
-                        <div className="text-[10px] font-black text-cyan-400 flex items-center justify-between">
-                          <span>{sub.title}</span>
-                          {isSubActive && <span className="w-1 h-1 rounded-full bg-cyan-400 animate-ping" />}
-                        </div>
-                        <div className="text-[9px] text-slate-400 mt-0.5 font-bold leading-normal">{sub.desc}</div>
-                      </div>
-                    );
-                  })}
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
+                  نجهز السوق قبل أن يصل لمسؤول المبيعات: بيانات، حسابات مستهدفة، صناع قرار، رسائل، قنوات، وملفات متابعة.
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
+                  <span>• تجهيز البيانات والملفات</span>
+                  <span>• تحديد الحسابات وصناع القرار</span>
+                  <span>• تجهيز الرسائل والقنوات</span>
                 </div>
               </div>
-
-              {/* Left: Monafsat Stream */}
-              <div 
-                className={cn(
-                  "p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-right relative overflow-hidden flex flex-col justify-between h-full",
-                  activeStepId === 'monafsat-stream'
-                    ? "border-emerald-500/50 bg-[#091512] shadow-[0_0_15px_rgba(16,185,129,0.15)]"
-                    : "border-slate-800/80 bg-slate-950/60 hover:border-slate-700"
-                )}
-                onMouseEnter={() => handleStepHover('monafsat-stream')}
-                onMouseLeave={() => handleStepHover(null)}
-                onClick={() => handleStepClick('monafsat-stream')}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-500/20">
-                    <BriefcaseBusiness className="w-5 h-5" />
-                  </div>
-                  <span className="px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[9px] font-black text-emerald-400">
-                    فرص مباشرة من السوق
-                  </span>
-                </div>
-                <h3 className="text-base font-black text-white mb-2">كادر فرص منافسات المباشرة</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين.</p>
-                <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-emerald-400 font-bold">
-                  <span>فرص مباشرة جاهزة للتحريك</span>
-                  <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">مباشر</span>
-                </div>
+              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
+                المحرك: تجهيز ما قبل وصول الفرصة
               </div>
-
-            </div>
-
-            {/* Connecting SVG 1: Y-Shape Merging Path */}
-            <div className="w-full my-2 relative z-0">
-              <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 80" fill="none" preserveAspectRatio="none">
-                <defs>
-                  <linearGradient id="cyan-glow-grad" x1="1" y1="0" x2="0.5" y2="1">
-                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.1" />
-                  </linearGradient>
-                  <linearGradient id="emerald-glow-grad" x1="0" y1="0" x2="0.5" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.8" />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.1" />
-                  </linearGradient>
-                </defs>
-                
-                {/* Right Branch (Ninja -> Pool) */}
-                <path 
-                  d="M 75 0 C 75 40, 50 40, 50 80" 
-                  stroke="url(#cyan-glow-grad)" 
-                  strokeWidth="1.5" 
-                  strokeDasharray="4 4" 
-                />
-                
-                {/* Left Branch (Monafsat -> Pool) */}
-                <path 
-                  d="M 25 0 C 25 40, 50 40, 50 80" 
-                  stroke="url(#emerald-glow-grad)" 
-                  strokeWidth="1.5" 
-                  strokeDasharray="4 4" 
-                />
-
-                {/* Animated Particles flowing down */}
-                <circle r="3" fill="#06b6d4" filter="drop-shadow(0 0 4px #06b6d4)">
-                  <animateMotion dur="2.8s" repeatCount="indefinite" path="M 75 0 C 75 40, 50 40, 50 80" />
-                </circle>
-                <circle r="3" fill="#10b981" filter="drop-shadow(0 0 4px #10b981)">
-                  <animateMotion dur="2.8s" repeatCount="indefinite" path="M 25 0 C 25 40, 50 40, 50 80" />
-                </circle>
-              </svg>
-            </div>
-
-            {/* Middle Row: Opportunity Pool (نقطة التلاقي) */}
-            <div className="flex flex-col items-center relative z-10">
-              <span className="text-[10px] text-cyan-400 font-black mb-1.5 select-none tracking-wider px-2 py-0.5 bg-cyan-500/5 border border-cyan-500/15 rounded-md">
-                نقطة التلاقي
-              </span>
-              <div 
-                className={cn(
-                  "px-10 py-5 rounded-3xl border transition-all duration-300 cursor-pointer flex items-center gap-3.5 text-right max-w-sm",
-                  activeStepId === 'opportunity-pool'
-                    ? "border-cyan-500 bg-[#081822] shadow-[0_0_20px_rgba(6,182,212,0.25)] scale-105"
-                    : "border-slate-800 bg-[#0d0d0d] hover:border-slate-600 shadow-[0_0_15px_rgba(0,0,0,0.4)]"
-                )}
-                onMouseEnter={() => handleStepHover('opportunity-pool')}
-                onMouseLeave={() => handleStepHover(null)}
-                onClick={() => handleStepClick('opportunity-pool')}
-              >
-                <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 text-cyan-300 border border-cyan-500/20">
-                  <Layers className="w-5.5 h-5.5" />
-                </div>
-                <div>
-                  <h3 className="text-base font-black text-white">حصيلة الفرص</h3>
-                  <p className="text-[10.5px] text-slate-400 mt-0.5 font-bold">محادثات مؤهلة + فرص مباشرة</p>
-                </div>
-                {activeStepId === 'opportunity-pool' && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                )}
-              </div>
-              <p className="text-[10px] text-slate-500 font-extrabold mt-2 text-center select-none">
-                كل الفرص تتجمع هنا قبل أن تصل لموظف المبيعات.
-              </p>
-            </div>
-
-            {/* Connecting SVG 2: Pool -> Sales Rep */}
-            <div className="w-full my-1.5 relative z-0">
-              <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 60" fill="none" preserveAspectRatio="none">
-                <line 
-                  x1="50" y1="0" x2="50" y2="60" 
-                  stroke="rgba(6, 182, 212, 0.4)" 
-                  strokeWidth="1.5" 
-                  strokeDasharray="4 4" 
-                />
-                <circle r="3" fill="#06b6d4" filter="drop-shadow(0 0 4px #06b6d4)">
-                  <animateMotion dur="2s" repeatCount="indefinite" path="M 50 0 L 50 60" />
-                </circle>
-              </svg>
-            </div>
-
-            {/* Next Row: Sales Rep (موظف مبيعات العميل) */}
-            <div className="flex justify-center relative z-10">
-              <div 
-                className={cn(
-                  "px-8 py-4 rounded-2xl border transition-all duration-300 cursor-pointer flex items-center gap-3 text-right max-w-sm",
-                  activeStepId === 'sales-rep'
-                    ? "border-emerald-500 bg-[#091814] shadow-[0_0_20px_rgba(16,185,129,0.25)] scale-105"
-                    : "border-slate-800 bg-[#0c0c0c] hover:border-slate-700"
-                )}
-                onMouseEnter={() => handleStepHover('sales-rep')}
-                onMouseLeave={() => handleStepHover(null)}
-                onClick={() => handleStepClick('sales-rep')}
-              >
-                <div className="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-500/20">
-                  <Users className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-sm font-black text-white">موظف مبيعات العميل</h3>
-                  <p className="text-[10px] text-slate-400 mt-0.5">لا يبدأ من الصفر… يبدأ من فرص أجهز.</p>
-                </div>
-                {activeStepId === 'sales-rep' && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                )}
-              </div>
-            </div>
-
-            {/* Connecting SVG 3: Sales Rep -> Pipeline */}
-            <div className="w-full my-1.5 relative z-0">
-              <svg className="w-full h-6 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
-                <line 
-                  x1="50" y1="0" x2="50" y2="50" 
-                  stroke="rgba(16, 185, 129, 0.4)" 
-                  strokeWidth="1.5" 
-                  strokeDasharray="4 4" 
-                />
-                <circle r="2.5" fill="#10b981" filter="drop-shadow(0 0 3px #10b981)">
-                  <animateMotion dur="1.8s" repeatCount="indefinite" path="M 50 0 L 50 50" />
-                </circle>
-              </svg>
-            </div>
-
-            {/* Final Path (مسار الفرص) Timeline Row */}
-            <div className="flex justify-center items-center gap-2 relative z-10 w-full max-w-lg mx-auto">
-              {[
-                { label: "فرص جاهزة للتحريك", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
-                { label: "اجتماعات مؤهلة", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
-                { label: "عروض سعر", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
-                { label: "تفاوض", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
-                { label: "صفقات", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
-              ].map((step, idx) => (
-                <React.Fragment key={idx}>
-                  <div className={cn(
-                    "flex-1 text-center py-2 px-1.5 rounded-xl border bg-gradient-to-b text-[9.5px] font-black tracking-wide leading-tight",
-                    step.color
-                  )}>
-                    {step.label}
-                  </div>
-                  {idx < 4 && (
-                    <ArrowDown className="w-3.5 h-3.5 text-slate-700 shrink-0 rotate-90" />
-                  )}
-                </React.Fragment>
-              ))}
-            </div>
-
-            {/* Connecting SVG 4: Pipeline -> Target */}
-            <div className="w-full my-1.5 relative z-0">
-              <svg className="w-full h-6 overflow-visible" viewBox="0 0 100 50" fill="none" preserveAspectRatio="none">
-                <line 
-                  x1="50" y1="0" x2="50" y2="50" 
-                  stroke="rgba(245, 158, 11, 0.4)" 
-                  strokeWidth="1.5" 
-                  strokeDasharray="4 4" 
-                />
-                <circle r="2.5" fill="#f59e0b" filter="drop-shadow(0 0 3px #f59e0b)">
-                  <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50 0 L 50 50" />
-                </circle>
-              </svg>
-            </div>
-
-            {/* Bottom Row: Target (المستهدف البيعي) */}
-            <div className="flex flex-col items-center relative z-10">
-              <div 
-                className={cn(
-                  "px-10 py-5 rounded-2xl border transition-all duration-300 cursor-pointer text-center",
-                  activeStepId === 'sales-target'
-                    ? "border-amber-500/60 bg-[#16120b] shadow-[0_0_25px_rgba(245,158,11,0.25)] scale-105"
-                    : "border-slate-800 bg-[#0d0d0d] hover:border-slate-700 shadow-[0_0_15px_rgba(245,158,11,0.08)]"
-                )}
-                onMouseEnter={() => handleStepHover('sales-target')}
-                onMouseLeave={() => handleStepHover(null)}
-                onClick={() => handleStepClick('sales-target')}
-              >
-                <div className="flex justify-center mb-1">
-                  <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    <Target className="w-4 h-4" />
-                  </div>
-                </div>
-                <div className="text-2xl md:text-3xl font-black text-amber-400 tracking-tight select-none">
-                  {PIPELINE_CONFIG.targetAmount}
-                </div>
-                <div className="text-xs text-slate-300 font-extrabold mt-1 select-none">
-                  {PIPELINE_CONFIG.targetPeriod}
-                </div>
-              </div>
-              <p className="text-[10px] text-slate-500 font-bold mt-3 text-center max-w-xs leading-normal select-none">
-                {PIPELINE_CONFIG.subText}
-              </p>
-            </div>
-
+            </motion.div>
           </div>
 
-          {/* Left Column (40%): Info Panel & Growth partner details */}
-          <div className="col-span-5 flex flex-col gap-6">
-            
-            {/* Dynamic Step Detail Box - Collapsible when empty */}
-            <AnimatePresence mode="wait">
-              {currentStep && (
-                <motion.div
-                  key={currentStep.id}
-                  initial={{ height: 0, opacity: 0, scale: 0.95 }}
-                  animate={{ height: "auto", opacity: 1, scale: 1 }}
-                  exit={{ height: 0, opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-slate-950/45 border border-slate-900 rounded-3xl p-6 backdrop-blur-md flex flex-col justify-between relative overflow-hidden text-right"
-                >
-                  {/* Reset Lock instruction when active */}
-                  {isLocked && (
-                    <button 
-                      onClick={() => { setIsLocked(false); setActiveStepId(null); }}
-                      className="absolute top-4 left-4 text-[9px] px-2 py-1 rounded bg-slate-900 text-slate-400 border border-slate-800 hover:text-white transition-colors"
-                    >
-                      إلغاء التثبيت ✕
-                    </button>
-                  )}
+          {/* ================= CONNECTOR 1 (Y-Shape) ================= */}
+          <div className="col-span-12 my-1 relative z-0">
+            <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 40" fill="none" preserveAspectRatio="none">
+              {/* Monafsat center (x = 16.6) -> Pool top-center (x = 50) */}
+              <path d="M 16.6 0 C 16.6 20, 50 20, 50 40" stroke="rgba(16, 185, 129, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+              {/* Before Opportunities center (x = 83.3) -> Pool top-center (x = 50) */}
+              <path d="M 83.3 0 C 83.3 20, 50 20, 50 40" stroke="rgba(6, 182, 212, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+              
+              {/* Flow particles */}
+              <circle r="2.5" fill="#10b981" filter="drop-shadow(0 0 3px #10b981)">
+                <animateMotion dur="2.4s" repeatCount="indefinite" path="M 16.6 0 C 16.6 20, 50 20, 50 40" />
+              </circle>
+              <circle r="2.5" fill="#06b6d4" filter="drop-shadow(0 0 3px #06b6d4)">
+                <animateMotion dur="2.4s" repeatCount="indefinite" path="M 83.3 0 C 83.3 20, 50 20, 50 40" />
+              </circle>
+            </svg>
+          </div>
 
-                  <div>
-                    {/* Step Header */}
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className={cn("p-2 rounded-xl border shrink-0", currentStep.accentColor)}>
-                        <currentStep.icon className="w-5 h-5" />
-                      </div>
-                      <div>
-                        <span className="text-[9px] text-slate-500 font-extrabold">{currentStep.badge}</span>
-                        <h3 className="text-base font-black text-white leading-tight mt-0.5">{currentStep.title}</h3>
-                      </div>
-                    </div>
+          {/* ================= ROW 2 ================= */}
+          {/* Row 2 - Left: Empty */}
+          <div className="col-span-4"></div>
 
-                    {/* Description */}
-                    <p className="text-xs text-slate-300 leading-relaxed mb-4 font-bold">{currentStep.description}</p>
+          {/* Row 2 - Center: Opportunity Pool Card */}
+          <div className="col-span-4 flex flex-col items-center">
+            <span className="text-[10px] text-cyan-400 font-black mb-1.5 select-none tracking-wider px-2 py-0.5 bg-cyan-500/5 border border-cyan-500/15 rounded-md">
+              نقطة التلاقي
+            </span>
+            <div 
+              className="px-10 py-5 rounded-3xl border border-cyan-500/30 bg-[#081822] shadow-[0_0_20px_rgba(6,182,212,0.25)] flex items-center gap-3.5 text-right w-full justify-center max-w-sm"
+            >
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 text-cyan-300 border border-cyan-500/20">
+                <Layers className="w-5.5 h-5.5" />
+              </div>
+              <div>
+                <h3 className="text-base font-black text-white">حصيلة الفرص</h3>
+                <p className="text-[10.5px] text-slate-400 mt-0.5 font-bold">محادثات مؤهلة + فرص مباشرة</p>
+              </div>
+            </div>
+            <p className="text-[10px] text-slate-500 font-extrabold mt-2 text-center select-none">
+              كل الفرص تتجمع هنا قبل أن تصل لمسؤول المبيعات.
+            </p>
+          </div>
 
-                    {/* Detail tags / points */}
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {currentStep.points.map((pt, idx) => (
-                        <div key={idx} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-bold w-full">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 ml-2" />
-                          <span className="text-right leading-relaxed">{pt}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Bottom Result Box */}
-                  <div className="border-t border-slate-900 pt-3 mt-2">
-                    <div className="text-[9px] text-slate-500 font-extrabold mb-0.5">الناتج:</div>
-                    <div className="text-xs font-black text-white">{currentStep.output}</div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Default Card Overview - only shown when no step is highlighted */}
-            {!currentStep && (
-              <div className="bg-slate-950/45 border border-slate-900 rounded-3xl p-6 text-right">
+          {/* Row 2 - Right: During Opportunities Card */}
+          <div className="col-span-4 h-full flex flex-col justify-between">
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative h-full flex flex-col justify-between min-h-[150px]"
+            >
+              <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <HelpCircle className="w-4 h-4 text-cyan-400 shrink-0" />
-                  <h3 className="text-sm font-black text-white">مصدران للفرص… ومسار واحد</h3>
+                  <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-black text-white">أثناء الفرص</h3>
                 </div>
-                <p className="text-xs text-slate-400 leading-relaxed font-bold mb-3">
-                  مسار قيادة النمو الذكي يفتح محادثات مؤهلة، وكادر منافسات يرصد فرصاً مباشرة من السوق. ثم تلتقي الفرص في حصيلة واحدة، ليبدأ فريقك من فرص أجهز وأقرب للتحويل.
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
+                  ندعم مسؤول المبيعات أثناء تحرك الفرصة: ردود مناسبة، تأهيل، متابعة، وتحويل الاهتمام إلى اجتماع.
                 </p>
-                <p className="text-[10px] text-cyan-400 font-black border-t border-slate-900 pt-3">
-                  نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى صفقات.
-                </p>
+                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
+                  <span>• دعم الردود والمحادثات</span>
+                  <span>• تأهيل الفرص النشطة</span>
+                  <span>• توجيه الخطوة التالية</span>
+                </div>
               </div>
-            )}
+              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
+                الدعم: دعم وتحريك الفرصة وهي نشطة
+              </div>
+            </motion.div>
+          </div>
 
-            {/* Growth Leadership Partner Card */}
-            <div className="bg-gradient-to-br from-slate-950/60 to-slate-900/20 border border-slate-900 rounded-3xl p-6 text-right relative overflow-hidden">
-              <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500/40 via-emerald-500/40 to-transparent" />
-              
-              <div className="flex items-center gap-2 mb-3">
-                <Award className="w-4 h-4 text-cyan-400 shrink-0" />
-                <h3 className="text-sm font-black text-white">دورنا: قيادة نمو كاملة حول فريقك</h3>
+          {/* ================= CONNECTOR 2 ================= */}
+          <div className="col-span-12 my-1 relative z-0">
+            <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 40" fill="none" preserveAspectRatio="none">
+              {/* Pool bottom-center (x = 50) -> Sales Rep top-center (x = 50) */}
+              <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(6, 182, 212, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+              {/* During Opportunities center (x = 83.3) -> Pool bottom-center (x = 50) */}
+              <path d="M 83.3 0 C 83.3 20, 50 20, 50 40" stroke="rgba(6, 182, 212, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+
+              {/* Flow particles */}
+              <circle r="2.5" fill="#06b6d4" filter="drop-shadow(0 0 3px #06b6d4)">
+                <animateMotion dur="2s" repeatCount="indefinite" path="M 50 0 L 50 40" />
+              </circle>
+              <circle r="2.5" fill="#06b6d4" filter="drop-shadow(0 0 3px #06b6d4)">
+                <animateMotion dur="2.2s" repeatCount="indefinite" path="M 83.3 0 C 83.3 20, 50 20, 50 40" />
+              </circle>
+            </svg>
+          </div>
+
+          {/* ================= ROW 3 ================= */}
+          {/* Row 3 - Left: Empty */}
+          <div className="col-span-4"></div>
+
+          {/* Row 3 - Center: Sales Rep Card */}
+          <div className="col-span-4 flex flex-col items-center">
+            <div 
+              className="px-8 py-4 rounded-2xl border border-emerald-500/20 bg-[#0c0c0c] flex items-center gap-3 text-right w-full justify-center max-w-sm"
+            >
+              <div className="p-2.5 rounded-xl bg-emerald-950/40 text-emerald-400 border border-emerald-500/20">
+                <Users className="w-5 h-5" />
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed mb-4">
-                لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
-              </p>
-              
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-[10px] text-slate-400 font-bold">
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                  <span>استشارات لتحديد القطاع وصناع القرار</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                  <span>تدريب موظف المبيعات على الرد والتحويل</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                  <span>قيادة خطة 90 يوم ومؤشرات الأداء</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                  <span>متابعة أسبوعية لحركة الفرص والأنشطة</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                  <span>تطوير مستمر للرسائل والقنوات</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                  <span>أتمتة للمتابعة وتنظيم الخطوات</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                  <span>ذكاء اصطناعي للتحليل والتخصيص</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                  <span>فرص مباشرة من كادر منافسات</span>
-                </div>
+              <div>
+                <h3 className="text-sm font-black text-white">موظف مبيعات العميل</h3>
+                <p className="text-[10px] text-slate-400 mt-0.5 font-bold">لا يبدأ من الصفر… يبدأ من فرص أجهز.</p>
               </div>
             </div>
-
           </div>
+
+          {/* Row 3 - Right: After Opportunities Card */}
+          <div className="col-span-4 h-full flex flex-col justify-between">
+            <motion.div 
+              whileHover={{ scale: 1.01 }}
+              className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative h-full flex flex-col justify-between min-h-[150px]"
+            >
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
+                    <Sparkles className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-black text-white">بعد الفرص</h3>
+                </div>
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
+                  نحلل ما حدث بعد كل حركة: أين تعثرت الفرصة؟ كيف نطور الرسالة؟ وكيف نرفع التحويل في الأسبوع التالي؟
+                </p>
+                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
+                  <span>• تحليل الأداء والتعثر</span>
+                  <span>• تطوير الرسائل والاعتراضات</span>
+                  <span>• تدريب وتحسين أسبوعي</span>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
+                التطوير: تحليل وتحسين وتطوير بعد الحركة
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ================= CONNECTOR 3 ================= */}
+          <div className="col-span-12 my-1 relative z-0">
+            <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 40" fill="none" preserveAspectRatio="none">
+              {/* Sales Rep (x = 50) -> Pipeline (x = 50) */}
+              <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(16, 185, 129, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+              {/* After Opportunities (x = 83.3) -> Pipeline top-center (feedback loop) */}
+              <path d="M 83.3 0 C 83.3 20, 50 20, 50 40" stroke="rgba(6, 182, 212, 0.2)" strokeWidth="1.5" strokeDasharray="4 4" />
+
+              {/* Flow particles */}
+              <circle r="2.5" fill="#10b981" filter="drop-shadow(0 0 3px #10b981)">
+                <animateMotion dur="1.8s" repeatCount="indefinite" path="M 50 0 L 50 40" />
+              </circle>
+            </svg>
+          </div>
+
+          {/* ================= ROW 4 ================= */}
+          {/* Row 4 - Left: Empty */}
+          <div className="col-span-4"></div>
+
+          {/* Row 4 - Center: Pipeline Steps (Horizontal Row) */}
+          <div className="col-span-4 flex justify-center items-center gap-2 w-full max-w-lg mx-auto z-10">
+            {[
+              { label: "فرص جاهزة للتحريك", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
+              { label: "اجتماعات مؤهلة", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
+              { label: "عروض سعر", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
+              { label: "تفاوض", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
+              { label: "صفقات", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
+            ].map((step, idx) => (
+              <React.Fragment key={idx}>
+                <div className={cn(
+                  "flex-1 text-center py-2 px-1.5 rounded-xl border bg-gradient-to-b text-[9.5px] font-black tracking-wide leading-tight",
+                  step.color
+                )}>
+                  {step.label}
+                </div>
+                {idx < 4 && (
+                  <ArrowDown className="w-3.5 h-3.5 text-slate-700 shrink-0 rotate-90" />
+                )}
+              </React.Fragment>
+            ))}
+          </div>
+
+          {/* Row 4 - Right: Empty */}
+          <div className="col-span-4"></div>
+
+          {/* ================= CONNECTOR 4 ================= */}
+          <div className="col-span-12 my-1 relative z-0">
+            <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 30" fill="none" preserveAspectRatio="none">
+              <line x1="50" y1="0" x2="50" y2="30" stroke="rgba(245, 158, 11, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
+              <circle r="2.5" fill="#f59e0b" filter="drop-shadow(0 0 3px #f59e0b)">
+                <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50 0 L 50 30" />
+              </circle>
+            </svg>
+          </div>
+
+          {/* ================= ROW 5 ================= */}
+          {/* Row 5 - Left: Empty */}
+          <div className="col-span-4"></div>
+
+          {/* Row 5 - Center: Target Card */}
+          <div className="col-span-4 flex flex-col items-center z-10">
+            <div 
+              className="px-10 py-5 rounded-2xl border border-slate-800 bg-[#0d0d0d] text-center shadow-[0_0_15px_rgba(245,158,11,0.08)]"
+            >
+              <div className="flex justify-center mb-1">
+                <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <Target className="w-4 h-4" />
+                </div>
+              </div>
+              <div className="text-2xl md:text-3xl font-black text-amber-400 tracking-tight">
+                {PIPELINE_CONFIG.targetAmount}
+              </div>
+              <div className="text-xs text-slate-300 font-extrabold mt-1">
+                {PIPELINE_CONFIG.targetPeriod}
+              </div>
+            </div>
+            <p className="text-[10px] text-slate-500 font-bold mt-3 text-center max-w-xs leading-normal select-none">
+              كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم.
+            </p>
+          </div>
+
+          {/* Row 5 - Right: Empty */}
+          <div className="col-span-4"></div>
 
         </div>
 
-        {/* Mobile / Tablet Layout (Simple Interactive Stepper, no heavy SVG lines) */}
+        {/* Mobile / Tablet Layout (Vertical Stepper accordion flow) */}
         <div className="lg:hidden flex flex-col gap-5 max-w-lg mx-auto">
           
           <div className="bg-slate-950/45 border border-slate-900 rounded-2xl p-5 mb-3 text-right">
             <h3 className="text-base font-black text-white mb-2">مصدران للفرص… ومسار واحد نحو المستهدف</h3>
             <p className="text-xs text-slate-400 leading-relaxed mb-3">
-              مسار قيادة النمو الذكي يفتح محادثات مؤهلة، وكادر منافسات يرصد فرصاً مباشرة من السوق. ثم تلتقي الفرص في حصيلة واحدة، ليبدأ فريقك من فرص أجهز وأقرب للتحويل.
+              نغذي موظف مبيعاتك من مسارين متوازيين: كادر قيادة النمو الذكي يفتح محادثات مؤهلة من خلال النينجا، البيانات، الرسائل، التدريب، والمتابعة. وكادر فرص منافسات المباشرة يرصد فرصاً مباشرة من السوق واحتياجات قائمة. ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
             </p>
             <p className="text-[11px] text-cyan-400 font-bold border-t border-slate-900 pt-3">
               نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى صفقات.
             </p>
           </div>
 
+          {/* Mobile vertical flow cards */}
           <div className="space-y-4">
-            {STEPS_DATA.map((step) => {
-              const isExpanded = expandedMobileStep === step.id;
-              const StepIcon = step.icon;
+            
+            {/* 1. Monafsat Card */}
+            <div className="p-4 rounded-xl border border-emerald-500/20 bg-slate-950/40 text-right">
+              <h3 className="text-xs font-black text-emerald-400 mb-1 flex items-center gap-2">
+                <BriefcaseBusiness className="w-3.5 h-3.5" />
+                كادر فرص منافسات المباشرة
+              </h3>
+              <p className="text-[10px] text-slate-400 leading-normal">
+                يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين.
+              </p>
+              <div className="mt-2 text-[9px] text-emerald-300 font-black">الناتج: فرص مباشرة جاهزة للتحريك</div>
+            </div>
 
-              return (
-                <div 
-                  key={step.id}
-                  className={cn(
-                    "border rounded-2xl overflow-hidden transition-all duration-300 text-right bg-slate-950/20",
-                    isExpanded ? "border-slate-700 bg-slate-950/50" : "border-slate-900 hover:border-slate-800"
-                  )}
-                >
-                  {/* Step Header Row */}
-                  <button
-                    onClick={() => setExpandedMobileStep(isExpanded ? null : step.id)}
-                    className="w-full p-4 flex items-center justify-between text-right gap-4 outline-none"
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className={cn("p-2 rounded-xl border shrink-0", step.accentColor)}>
-                        <StepIcon className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <span className="text-[8px] text-slate-500 font-extrabold">{step.badge}</span>
-                        <h3 className="text-sm font-black text-white leading-tight">{step.title}</h3>
-                      </div>
-                    </div>
-                    
-                    <ChevronDown className={cn(
-                      "w-4 h-4 text-slate-500 transition-transform duration-300 shrink-0",
-                      isExpanded && "rotate-180"
-                    )} />
-                  </button>
+            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
 
-                  {/* Step Body (Expanded) */}
-                  <AnimatePresence initial={false}>
-                    {isExpanded && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
-                        <div className="px-4 pb-5 pt-1 border-t border-slate-900/60 space-y-4">
-                          <p className="text-xs text-slate-300 leading-relaxed font-bold">
-                            {step.description}
-                          </p>
+            {/* 2. Before Opportunities */}
+            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
+              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                قبل الفرص (تجهيز وتفعيل)
+              </h3>
+              <p className="text-[10px] text-slate-400 leading-normal">
+                نجهز السوق قبل أن يصل لمسؤول المبيعات: بيانات، حسابات مستهدفة، صناع قرار، رسائل، وقنوات.
+              </p>
+              <div className="mt-2 text-[9px] text-cyan-300 font-black">الدور: تجهيز ما قبل وصول الفرصة</div>
+            </div>
 
-                          <div className="flex flex-col gap-2">
-                            {step.points.map((pt, pIdx) => (
-                              <div key={pIdx} className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[9.5px] text-slate-400 font-bold text-right leading-relaxed">
-                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 ml-1.5" />
-                                <span>{pt}</span>
-                              </div>
-                            ))}
-                          </div>
+            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
 
-                          <div className="p-3 rounded-xl bg-slate-950/80 border border-slate-900 flex justify-between items-center text-[10px]">
-                            <span className="text-slate-500 font-bold">الناتج:</span>
-                            <span className="font-black text-white">{step.output}</span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              );
-            })}
+            {/* 3. Opportunity Pool */}
+            <div className="p-4 rounded-xl border border-cyan-500/30 bg-[#081822] text-right text-center">
+              <h3 className="text-xs font-black text-white mb-1 flex items-center justify-center gap-2">
+                <Layers className="w-4 h-4 text-cyan-400" />
+                حصيلة الفرص
+              </h3>
+              <p className="text-[10px] text-slate-300 leading-normal font-bold">
+                محادثات مؤهلة + فرص مباشرة
+              </p>
+              <p className="text-[9px] text-slate-500 mt-1">كل الفرص تتجمع هنا قبل أن تصل لمسؤول المبيعات.</p>
+            </div>
+
+            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
+
+            {/* 4. During Opportunities */}
+            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
+              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                أثناء الفرص (دعم وتحريك)
+              </h3>
+              <p className="text-[10px] text-slate-400 leading-normal">
+                ندعم مسؤول المبيعات أثناء تحرك الفرصة: ردود مناسبة، تأهيل، متابعة، وحجز اجتماعات.
+              </p>
+              <div className="mt-2 text-[9px] text-cyan-300 font-black">الدور: دعم وتحريك الفرصة وهي نشطة</div>
+            </div>
+
+            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
+
+            {/* 5. Sales Rep */}
+            <div className="p-4 rounded-xl border border-emerald-500/20 bg-slate-950/40 text-right">
+              <h3 className="text-xs font-black text-emerald-400 mb-1 flex items-center gap-2">
+                <Users className="w-3.5 h-3.5" />
+                موظف مبيعات العميل
+              </h3>
+              <p className="text-[10px] text-slate-400 leading-normal">
+                لا يبدأ من الصفر، بل يستلم فرصاً أجهز مدعومة بالسياق والبيانات والمتابعة.
+              </p>
+            </div>
+
+            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
+
+            {/* 6. After Opportunities */}
+            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
+              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
+                <Sparkles className="w-3.5 h-3.5" />
+                بعد الفرص (تحليل وتطوير)
+              </h3>
+              <p className="text-[10px] text-slate-400 leading-normal">
+                نحلل ما حدث بعد كل حركة: أين تعثرت الفرصة؟ كيف نطور الرسالة؟ وكيف نرفع التحويل؟
+              </p>
+              <div className="mt-2 text-[9px] text-cyan-300 font-black">الدور: تحليل وتحسين وتطوير بعد الحركة</div>
+            </div>
+
+            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
+
+            {/* 7. Target */}
+            <div className="p-5 rounded-xl border border-slate-800 bg-[#0d0d0d] text-center">
+              <div className="text-lg font-black text-amber-400">{PIPELINE_CONFIG.targetAmount}</div>
+              <div className="text-[10px] text-slate-300 font-bold mt-0.5">{PIPELINE_CONFIG.targetPeriod}</div>
+              <p className="text-[9px] text-slate-500 font-bold mt-2">كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم.</p>
+            </div>
+
           </div>
 
-          {/* Mobile Target Card */}
-          <div className="bg-[#16120b] border border-amber-500/20 rounded-2xl p-5 text-center mt-3 shadow-[0_0_15px_rgba(245,158,11,0.05)]">
-            <div className="inline-flex p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 mb-2">
-              <Target className="w-4 h-4" />
-            </div>
-            <div className="text-2xl font-black text-amber-400">
-              {PIPELINE_CONFIG.targetAmount}
-            </div>
-            <div className="text-xs text-slate-300 font-bold mt-1">
-              {PIPELINE_CONFIG.targetPeriod}
-            </div>
-            <p className="text-[10px] text-slate-500 font-bold mt-2 max-w-xs mx-auto leading-normal">
-              {PIPELINE_CONFIG.subText}
-            </p>
-          </div>
+        </div>
 
-          {/* Mobile Growth Leadership Card */}
-          <div className="bg-gradient-to-br from-slate-950/60 to-slate-900/20 border border-slate-900 rounded-2xl p-5 text-right mt-3">
-            <div className="flex items-center gap-2 mb-3">
-              <Award className="w-4 h-4 text-cyan-400 shrink-0" />
-              <h3 className="text-xs font-black text-white">دورنا: قيادة نمو كاملة حول فريقك</h3>
+        {/* Growth Leadership Partner Card (Relocated to full-width footer of this section) */}
+        <div className="mt-16 bg-gradient-to-br from-slate-950/80 to-slate-900/20 border border-slate-900 rounded-3xl p-6 md:p-8 text-right relative overflow-hidden">
+          <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500/40 via-emerald-500/40 to-transparent" />
+          
+          <div className="flex items-center gap-2.5 mb-4 select-none">
+            <Award className="w-5 h-5 text-cyan-400 shrink-0 animate-pulse" />
+            <h3 className="text-lg font-black text-white">دورنا: قيادة نمو كاملة حول فريقك</h3>
+          </div>
+          
+          <p className="text-xs md:text-sm text-slate-400 leading-relaxed mb-6 font-bold max-w-4xl">
+            لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3.5 text-xs text-slate-300 font-bold">
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+              <span>استشارات لتحديد القطاع وصناع القرار</span>
             </div>
-            <p className="text-[10px] text-slate-400 leading-relaxed mb-3">
-              لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
-            </p>
-            <div className="grid grid-cols-1 gap-y-2 text-[9px] text-slate-400 font-bold">
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                <span>استشارات لتحديد القطاع وصناع القرار</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                <span>تدريب موظف المبيعات على الرد والتحويل</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                <span>قيادة خطة 90 يوم ومؤشرات الأداء</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                <span>تطوير مستمر للرسائل وأتمتة للمتابعة</span>
-              </div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                <span>فرص مباشرة من كادر منافسات البيعي</span>
-              </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+              <span>تدريب موظف المبيعات على الرد والتحويل</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+              <span>قيادة خطة 90 يوم ومؤشرات الأداء</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+              <span>متابعة أسبوعية لحركة الفرص والأنشطة</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+              <span>تطوير مستمر للرسائل والقنوات</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+              <span>أتمتة للمتابعة وتنظيم الخطوات</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
+              <span>ذكاء اصطناعي للتحليل والتخصيص</span>
+            </div>
+            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+              <span>فرص مباشرة من كادر منافسات</span>
             </div>
           </div>
-
         </div>
 
       </div>
