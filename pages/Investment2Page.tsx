@@ -718,6 +718,8 @@ const PricingSection2 = () => {
     {
       name: 'شراكة سنوية',
       monthlyPrice: '1,500 ريال',
+      originalPrice: '4,000 ريال',
+      discountBadge: 'وفر 62% شهرياً',
       billing: 'تدفع سنوياً',
       totalPriceText: 'إجمالي 18,000 ريال / سنة',
       icon: BriefcaseBusiness,
@@ -727,6 +729,8 @@ const PricingSection2 = () => {
     {
       name: 'تشغيل 90 يوم',
       monthlyPrice: '3,000 ريال',
+      originalPrice: '4,000 ريال',
+      discountBadge: 'وفر 25% شهرياً',
       billing: 'تدفع ربع سنوي',
       totalPriceText: 'إجمالي 9,000 ريال / 3 شهور',
       icon: ShieldCheck,
@@ -764,9 +768,21 @@ const PricingSection2 = () => {
                 <tier.icon className="w-10 h-10 text-emerald-300 mb-5" />
                 <h3 className="text-2xl font-black text-white mb-3">{tier.name}</h3>
                 <div className="mb-6 text-right">
-                  <div className="text-xl md:text-2xl font-black text-emerald-300">
-                    {tier.monthlyPrice} <span className="text-xs text-slate-400 font-bold">/ شهر</span>
+                  <div className="flex items-baseline justify-start flex-row-reverse gap-2 flex-wrap mb-1">
+                    <div className="text-xl md:text-2xl font-black text-emerald-300">
+                      {tier.monthlyPrice} <span className="text-xs text-slate-400 font-bold">/ شهر</span>
+                    </div>
+                    {tier.originalPrice && (
+                      <span className="text-xs text-slate-500 font-bold">
+                        بدلاً من <span className="line-through">{tier.originalPrice}</span>
+                      </span>
+                    )}
                   </div>
+                  {tier.discountBadge && (
+                    <div className="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black mb-1 select-none">
+                      {tier.discountBadge} (وفر كبير)
+                    </div>
+                  )}
                   <div className="text-[11px] text-slate-400 font-extrabold mt-1">
                     {tier.billing} <span className="text-[10px] text-slate-500">({tier.totalPriceText})</span>
                   </div>
