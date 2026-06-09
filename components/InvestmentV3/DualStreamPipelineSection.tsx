@@ -35,18 +35,52 @@ const PIPELINE_CONFIG = {
 
 const STEPS_DATA: StepDetail[] = [
   {
-    id: 'ninja-stream',
-    title: "كادر قيادة النمو الذكي",
+    id: 'ninja-before',
+    title: "كادر قيادة النمو - ما قبل الفرص",
     badge: "كادر قيادة النمو الذكي",
-    short: "استشارات + تدريب + قيادة + متابعة + تطوير + أتمتة + ذكاء اصطناعي",
-    description: "يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، يطورون الرسائل والقنوات، ويتابعون الأداء حتى تتحول المحادثات إلى فرص مؤهلة.",
+    short: "تحديد الاستراتيجية وتجهيز البيانات وتفعيل القنوات",
+    description: "يقودون خطة الـ 90 يوم ويقومون بتجهيز كامل البنية التحتية والمستهدفين وتفعيل قنوات التواصل قبل إطلاق الوصول المباشر.",
     points: [
-      "تحديد القطاع وصناع القرار",
-      "تجهيز الرسائل والقنوات",
-      "تدريب موظف المبيعات على الرد والتحويل",
-      "متابعة الأداء وتطوير القمع أسبوعياً"
+      "تحديد القطاع والحسابات وصناع القرار المناسبين",
+      "تجهيز البيانات وتصفية القوائم بدقة",
+      "تجهيز وصياغة الرسائل المخصصة وجاذبة للانتباه",
+      "تفعيل قنوات الوصول وإعداد ملفات العمل والمتابعة"
     ],
-    output: "محادثات نشطة + فرص مؤهلة",
+    output: "بنية تحتية وقنوات تواصل جاهزة للتواصل المباشر",
+    icon: Sparkles,
+    accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
+    glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.25)]"
+  },
+  {
+    id: 'ninja-during',
+    title: "كادر قيادة النمو - أثناء الفرص",
+    badge: "كادر قيادة النمو الذكي",
+    short: "إدارة وتأهيل المحادثات والمساعدة في التحويل",
+    description: "إدارة التفاعل اليومي وتوجيه المحادثات النشطة وتجاوز الاعتراضات لمساعدة موظف المبيعات على حجز الاجتماعات.",
+    points: [
+      "إدارة المحادثات النشطة ودعم صياغة الردود المناسبة",
+      "تنظيم المتابعة والفرز الأولي لتأهيل الفرص الواردة",
+      "المساعدة الميدانية لتحويل الاهتمام إلى موعد اجتماع مؤكد",
+      "ترتيب وتنسيق الخطوة التالية المناسبة لتسريع الصفقة"
+    ],
+    output: "محادثات نشطة واجتماعات مؤهلة محجوزة",
+    icon: Sparkles,
+    accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
+    glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.25)]"
+  },
+  {
+    id: 'ninja-after',
+    title: "كادر قيادة النمو - ما بعد الفرص",
+    badge: "كادر قيادة النمو الذكي",
+    short: "تحليل الأداء وتطوير الرسائل وتجاوز الاعتراضات أسبوعياً",
+    description: "مراجعة النتائج وتدريب موظف المبيعات وتطوير سكريبتات الردود ومعالجة أسباب التعثر لرفع نسب التحويل.",
+    points: [
+      "تحليل الأداء العام ومؤشرات الأنشطة أسبوعياً",
+      "مراجعة تفصيلية لأسباب التحويل أو التعثر الميداني",
+      "تطوير مستمر للرسائل ومعالجة الاعتراضات المتكررة",
+      "تدريب وتأهيل مستمر لمسؤول المبيعات لزيادة كفاءة الإغلاق"
+    ],
+    output: "تطوير مستمر للقمع ورفع مهارات موظف مبيعاتك أسبوعياً",
     icon: Sparkles,
     accentColor: "text-cyan-400 border-cyan-500/30 bg-cyan-950/20",
     glowColor: "shadow-[0_0_20px_rgba(6,182,212,0.25)]"
@@ -186,40 +220,54 @@ export const DualStreamPipelineSection = () => {
           <div className="col-span-7 flex flex-col justify-between bg-slate-950/30 border border-slate-900/80 rounded-3xl p-8 relative interactive-diagram-container">
             
             {/* Upper Row: Two Streams */}
-            <div className="grid grid-cols-2 gap-8 relative z-10">
+            <div className="grid grid-cols-2 gap-8 relative z-10 items-stretch">
               
-              {/* Right: Ninja Stream */}
+              {/* Right: Ninja Stream / كادر قيادة النمو الذكي */}
               <div 
-                className={cn(
-                  "p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-right",
-                  activeStepId === 'ninja-stream'
-                    ? "border-cyan-500/50 bg-[#0b131a] shadow-[0_0_15px_rgba(6,182,212,0.15)]"
-                    : "border-slate-800/80 bg-slate-950/60 hover:border-slate-700"
-                )}
-                onMouseEnter={() => handleStepHover('ninja-stream')}
-                onMouseLeave={() => handleStepHover(null)}
-                onClick={() => handleStepClick('ninja-stream')}
+                className="p-4 rounded-2xl border border-slate-900 bg-slate-950/20 text-right flex flex-col justify-between gap-3 h-full"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="p-2.5 rounded-xl bg-cyan-950/40 text-cyan-400 border border-cyan-500/20">
-                    <Sparkles className="w-5 h-5" />
+                <div className="flex items-center gap-2 border-b border-slate-900 pb-2">
+                  <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
+                    <Sparkles className="w-4 h-4" />
                   </div>
-                  {isLocked && activeStepId === 'ninja-stream' && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
-                  )}
+                  <h3 className="text-sm font-black text-white">كادر قيادة النمو الذكي</h3>
                 </div>
-                <h3 className="text-base font-black text-white mb-2">كادر قيادة النمو الذكي</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">يقودون خطة 90 يوم، يشغّلون النينجا، يدربون موظف المبيعات، ويطورون الرسائل والقنوات.</p>
-                <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-cyan-400 font-bold">
-                  <span>محادثات نشطة + فرص مؤهلة</span>
-                  <span className="px-1.5 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">نشط</span>
+
+                <div className="flex flex-col gap-2 flex-1 justify-center">
+                  {[
+                    { id: 'ninja-before', title: "قبل الفرص (تجهيز وتفعيل)", desc: "تحديد القطاع والحسابات، وصناع القرار، وتجهيز الرسائل والقنوات" },
+                    { id: 'ninja-during', title: "أثناء الفرص (إدارة وتأهيل)", desc: "إدارة المحادثات، دعم الردود، وحجز الاجتماعات والتحويل" },
+                    { id: 'ninja-after', title: "بعد الفرص (تحليل وتطوير)", desc: "تحليل الأداء، معالجة الاعتراضات، وتدريب موظفك أسبوعياً" },
+                  ].map((sub) => {
+                    const isSubActive = activeStepId === sub.id;
+                    return (
+                      <div
+                        key={sub.id}
+                        className={cn(
+                          "p-2.5 rounded-xl border text-right transition-all duration-200 cursor-pointer flex-1 flex flex-col justify-center",
+                          isSubActive
+                            ? "border-cyan-500/60 bg-[#0b131a] shadow-[0_0_12px_rgba(6,182,212,0.15)] scale-[1.02]"
+                            : "border-slate-900/60 bg-black/40 hover:border-slate-800"
+                        )}
+                        onMouseEnter={() => handleStepHover(sub.id)}
+                        onMouseLeave={() => handleStepHover(null)}
+                        onClick={() => handleStepClick(sub.id)}
+                      >
+                        <div className="text-[10px] font-black text-cyan-400 flex items-center justify-between">
+                          <span>{sub.title}</span>
+                          {isSubActive && <span className="w-1 h-1 rounded-full bg-cyan-400 animate-ping" />}
+                        </div>
+                        <div className="text-[9px] text-slate-400 mt-0.5 font-bold leading-normal">{sub.desc}</div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
 
               {/* Left: Monafsat Stream */}
               <div 
                 className={cn(
-                  "p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-right relative overflow-hidden",
+                  "p-5 rounded-2xl border transition-all duration-300 cursor-pointer text-right relative overflow-hidden flex flex-col justify-between h-full",
                   activeStepId === 'monafsat-stream'
                     ? "border-emerald-500/50 bg-[#091512] shadow-[0_0_15px_rgba(16,185,129,0.15)]"
                     : "border-slate-800/80 bg-slate-950/60 hover:border-slate-700"
@@ -237,7 +285,7 @@ export const DualStreamPipelineSection = () => {
                   </span>
                 </div>
                 <h3 className="text-base font-black text-white mb-2">كادر فرص منافسات المباشرة</h3>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم أو طلب شراء.</p>
+                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين.</p>
                 <div className="mt-4 pt-3 border-t border-slate-900 flex justify-between items-center text-[10px] text-emerald-400 font-bold">
                   <span>فرص مباشرة جاهزة للتحريك</span>
                   <span className="px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">مباشر</span>
@@ -448,13 +496,14 @@ export const DualStreamPipelineSection = () => {
           <div className="col-span-5 flex flex-col gap-6">
             
             {/* Dynamic Step Detail Box - Collapsible when empty */}
-            <AnimatePresence initial={false}>
+            <AnimatePresence mode="wait">
               {currentStep && (
                 <motion.div
+                  key={currentStep.id}
                   initial={{ height: 0, opacity: 0, scale: 0.95 }}
                   animate={{ height: "auto", opacity: 1, scale: 1 }}
                   exit={{ height: 0, opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.2 }}
                   className="bg-slate-950/45 border border-slate-900 rounded-3xl p-6 backdrop-blur-md flex flex-col justify-between relative overflow-hidden text-right"
                 >
                   {/* Reset Lock instruction when active */}
@@ -485,9 +534,9 @@ export const DualStreamPipelineSection = () => {
                     {/* Detail tags / points */}
                     <div className="flex flex-wrap gap-2 mb-4">
                       {currentStep.points.map((pt, idx) => (
-                        <div key={idx} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-bold">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                          <span>{pt}</span>
+                        <div key={idx} className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-[10px] text-slate-300 font-bold w-full">
+                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 ml-2" />
+                          <span className="text-right leading-relaxed">{pt}</span>
                         </div>
                       ))}
                     </div>
@@ -631,10 +680,10 @@ export const DualStreamPipelineSection = () => {
                             {step.description}
                           </p>
 
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-col gap-2">
                             {step.points.map((pt, pIdx) => (
-                              <div key={pIdx} className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-[9px] text-slate-400 font-bold">
-                                <span className="w-1 h-1 rounded-full bg-cyan-400" />
+                              <div key={pIdx} className="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-900 border border-slate-800 text-[9.5px] text-slate-400 font-bold text-right leading-relaxed">
+                                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0 ml-1.5" />
                                 <span>{pt}</span>
                               </div>
                             ))}
