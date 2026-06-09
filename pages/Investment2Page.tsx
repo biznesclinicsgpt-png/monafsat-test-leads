@@ -25,7 +25,6 @@ import {
 import { StatsRow } from '../components/InvestmentV3/dashboard/StatsRow';
 import { PartnersMarqueeSection } from '../components/InvestmentV3/PartnersMarqueeSection';
 import { OpportunitySourcesSection } from '../components/InvestmentV3/OpportunitySourcesSection';
-import { UseCasesSection } from '../components/InvestmentV3/UseCasesSection';
 import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
 import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
 import { GrowthTriangleSection } from '../components/InvestmentV3/GrowthTriangleSection';
@@ -768,22 +767,27 @@ const PricingSection2 = () => {
                 <tier.icon className="w-10 h-10 text-emerald-300 mb-5" />
                 <h3 className="text-2xl font-black text-white mb-3">{tier.name}</h3>
                 <div className="mb-6 text-right">
-                  <div className="flex items-baseline justify-start flex-row-reverse gap-2 flex-wrap mb-1">
-                    <div className="text-xl md:text-2xl font-black text-emerald-300">
-                      {tier.monthlyPrice} <span className="text-xs text-slate-400 font-bold">/ شهر</span>
-                    </div>
-                    {tier.originalPrice && (
-                      <span className="text-xs text-slate-500 font-bold">
+                  {tier.originalPrice ? (
+                    <div className="flex items-center gap-2 justify-end mb-2 select-none">
+                      {tier.discountBadge && (
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[9px] font-black">
+                          {tier.discountBadge}
+                        </span>
+                      )}
+                      <span className="text-[11px] text-slate-500 font-bold">
                         بدلاً من <span className="line-through">{tier.originalPrice}</span>
                       </span>
-                    )}
-                  </div>
-                  {tier.discountBadge && (
-                    <div className="inline-block px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-[10px] font-black mb-1 select-none">
-                      {tier.discountBadge} (وفر كبير)
                     </div>
+                  ) : (
+                    // Spacer to align card pricing columns vertically
+                    <div className="h-[22px] mb-2 select-none opacity-0 pointer-events-none" />
                   )}
-                  <div className="text-[11px] text-slate-400 font-extrabold mt-1">
+                  
+                  <div className="text-3xl md:text-4xl font-black text-emerald-300 tracking-tight">
+                    {tier.monthlyPrice} <span className="text-xs text-slate-400 font-bold">/ شهر</span>
+                  </div>
+                  
+                  <div className="text-[11px] text-slate-400 font-extrabold mt-2">
                     {tier.billing} <span className="text-[10px] text-slate-500">({tier.totalPriceText})</span>
                   </div>
                 </div>
@@ -1152,10 +1156,6 @@ const Investment2Page = () => {
 
       <div id="opportunity-sources">
         <OpportunitySourcesSection />
-      </div>
-
-      <div id="use-cases">
-        <UseCasesSection />
       </div>
 
       <div id="growth-calculator">
