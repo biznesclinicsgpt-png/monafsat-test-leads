@@ -738,13 +738,13 @@ const SubscriptionValueSection = () => {
           className="text-center mb-14"
         >
           <h2 className="text-3xl md:text-5xl font-black text-white leading-tight max-w-4xl mx-auto mb-6">
-            أين يذهب اشتراكك؟
+            كيف نتعاون معك للوصول إلى المستهدف البيعي؟
           </h2>
           <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
-            اشتراكك الشهري ليس سعر الخدمة كاملة، بل مساهمة تشغيلية لتفعيل منظومة أدوات، قنوات، أتمتة، ووكلاء ذكيين تعمل يوميًا حول فريقك.
+            لا نبدأ معك من اشتراك أداة، بل من مستهدف بيعي واضح.
           </p>
           <p className="text-sm md:text-base text-slate-400 font-bold max-w-3xl mx-auto mt-3">
-            أما قيادة النمو اليومية — من استشارات، تدريب، دعم، متابعة، تطوير، وتحسين — فنربط جزءًا كبيرًا من قيمتها بمشاركة النجاح من المبيعات المحققة.
+            نفعّل حول فريقك منظومة تجمع بين البيانات، القنوات، الأتمتة، الوكلاء الذكيين، وكادر النمو اليومي… ثم نربط جزءًا كبيرًا من قيمتها بمشاركة النجاح من المبيعات المحققة.
           </p>
         </motion.div>
 
