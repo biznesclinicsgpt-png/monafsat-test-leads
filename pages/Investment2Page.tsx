@@ -819,15 +819,14 @@ const PricingSection2 = () => {
 
 const RevenueShareSimpleSection = () => {
   const [hoveredTier, setHoveredTier] = useState<number | null>(null);
-  const [activeTier, setActiveTier] = useState(5);
+  const [activeTier, setActiveTier] = useState(4);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
 
   const revenueTiers = [
-    { percent: '20%', range: 'من ١,٠٠٠ إلى ٤,٩٩٩ ريال', note: 'عقد صغير', insight: 'النسبة الأعلى لأن قيمة العقد أقل.', baseScale: 0.86, percentSize: 'text-2xl' },
-    { percent: '15%', range: 'من ٥,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى', insight: 'تبدأ النسبة تنخفض مع ارتفاع قيمة التعاقد.', baseScale: 0.91, percentSize: 'text-3xl' },
+    { percent: '15%', range: 'من ١,٠٠٠ إلى ٩,٩٩٩ ريال', note: 'قيمة أعلى', insight: 'تبدأ النسبة تنخفض مع ارتفاع قيمة التعاقد.', baseScale: 0.91, percentSize: 'text-3xl' },
     { percent: '10%', range: 'من ١٠,٠٠٠ إلى ٤٩,٩٩٩ ريال', note: 'عقد متوسط', insight: 'توازن أفضل بين حجم العقد ونسبة المشاركة.', baseScale: 0.96, percentSize: 'text-3xl' },
     { percent: '7%', range: 'من ٥٠,٠٠٠ إلى ٢٥٠,٠٠٠ ريال', note: 'عقد أكبر', insight: 'كلما كبر العقد، أصبح العائد عليك أفضل.', baseScale: 1.01, percentSize: 'text-4xl' },
-    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠٠,٠٠٠ ريال', note: 'عقد كبير', insight: 'فرصة أقوى: تعاقد أعلى ونسبة مشاركة أقل.', baseScale: 1.07, percentSize: 'text-4xl' },
+    { percent: '5%', range: 'من ٢٥٠,٠٠٠ إلى ١,٠٠0,٠٠٠ ريال', note: 'عقد كبير', insight: 'فرصة أقوى: تعاقد أعلى ونسبة مشاركة أقل.', baseScale: 1.07, percentSize: 'text-4xl' },
     { percent: '2%', range: 'أكثر من ١,٠٠٠,٠٠0 ريال', note: 'أفضل فرصة', insight: 'أفضل نتيجة: أعلى قيمة عقد مع أقل نسبة مشاركة.', baseScale: 1.15, percentSize: 'text-5xl', featured: true },
   ];
   const activeTierData = revenueTiers[activeTier];
@@ -853,8 +852,8 @@ const RevenueShareSimpleSection = () => {
     setActiveTier((current) => (current <= 0 ? revenueTiers.length - 1 : current - 1));
   };
 
-  const markerPositions = ['92.8%', '78.4%', '62.9%', '46.5%', '29%', '10%'];
-  const progressWidths = ['0%', '14.4%', '29.9%', '46.3%', '63.8%', '82.8%'];
+  const markerPositions = ['92.8%', '72.1%', '51.4%', '30.7%', '10%'];
+  const progressWidths = ['0%', '20.7%', '41.4%', '62.1%', '82.8%'];
   const progressWidth = progressWidths[activeTier];
   const markerLeft = markerPositions[activeTier];
 
@@ -935,7 +934,7 @@ const RevenueShareSimpleSection = () => {
             <span className="absolute inset-0 rounded-full bg-emerald-300/40 animate-ping" />
           </motion.div>
 
-          <div className="hidden md:grid md:grid-cols-[0.88fr_0.94fr_1fr_1.06fr_1.14fr_1.25fr] md:gap-3" dir="rtl">
+          <div className="hidden md:grid md:grid-cols-[0.9fr_1fr_1.1fr_1.2fr_1.3fr] md:gap-3" dir="rtl">
             {revenueTiers.map((tier, idx) => (
               <motion.div
                 key={tier.range}

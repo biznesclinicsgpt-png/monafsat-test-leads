@@ -17,19 +17,10 @@ export const RevenueShareSection = () => {
 
     const revenueTiers = [
         {
-            range: "١,٠٠٠ — ٤,٩٩٩ ريال",
-            percent: "٢٠٪",
-            scale: 1.2,
-            details: "تشغيل أعلى + متابعة مكثفة + مشاريع صغيرة الحجم تتطلب جهداً متكرراً",
-            glow: "shadow-[0_0_20px_rgba(239,68,68,0.3)]",
-            color: "text-red-400",
-            border: "border-red-500/30"
-        },
-        {
-            range: "٥,٠٠٠ — ٩,٩٩٩ ريال",
+            range: "١,٠٠٠ — ٩,٩٩٩ ريال",
             percent: "١٥٪",
             scale: 1.1,
-            details: "تحريك مستمر + تواصل مكثف لضمان تحويل الفرص المتوسطة",
+            details: "تحريك مستمر + تواصل مكثف لضمان تحويل الفرص الصغيرة والمتوسطة",
             glow: "shadow-[0_0_20px_rgba(249,115,22,0.3)]",
             color: "text-orange-400",
             border: "border-orange-500/30"
@@ -192,7 +183,6 @@ export const RevenueShareSection = () => {
                           />
 
                           {/* Data points */}
-                          <circle cx="0" cy="5" r="1.2" fill="#ef4444" /> {/* 20% */}
                           <circle cx="20" cy="11" r="1.2" fill="#f97316" /> {/* 15% */}
                           <circle cx="45" cy="21" r="1.2" fill="#eab308" /> {/* 10% */}
                           <circle cx="70" cy="28" r="1.2" fill="#10b981" /> {/* 7% */}
@@ -202,7 +192,7 @@ export const RevenueShareSection = () => {
                       
                       {/* Axis Labels */}
                       <div className="flex justify-between text-[7.5px] text-slate-500 font-black mt-3" dir="rtl">
-                        <span className="text-right">صفقات صغيرة (١-٥ آلاف)<br/>مشاركة تشغيل (٢٠٪)</span>
+                        <span className="text-right">صفقات صغيرة ومتوسطة (١-١٠ آلاف)<br/>مشاركة تشغيل (١٥٪)</span>
                         <span className="text-center">صفقات متوسطة (١٠-٥٠ ألف)<br/>مشاركة متوازنة (١٠٪)</span>
                         <span className="text-left">صفقات كبرى (+٢٥٠ ألف)<br/>شراكة استراتيجية (٥٪)</span>
                       </div>
