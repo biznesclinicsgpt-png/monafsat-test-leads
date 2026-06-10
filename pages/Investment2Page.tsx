@@ -139,7 +139,7 @@ const SectionHeader = ({
 }: {
   eyebrow?: string;
   title: string;
-  description?: string;
+  description?: React.ReactNode;
 }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
@@ -704,6 +704,116 @@ const TrustStatsIntro = () => (
   </section>
 );
 
+const SubscriptionValueSection = () => {
+  const points = [
+    {
+      title: 'أدوات بيانات وإثراء',
+      description: 'أكثر من 20 أداة لتجهيز البيانات، تحليل الحسابات، إثراء معلومات صناع القرار، وتحسين جودة الاستهداف.',
+      icon: Database,
+    },
+    {
+      title: 'أتمتة ووكلاء ذكيون',
+      description: 'ما يقارب 25 وكيلًا ذكيًا يساعدون في التحليل، التخصيص، المتابعة، التصنيف، وتوجيه الخطوة التالية.',
+      icon: Bot,
+    },
+    {
+      title: 'قنوات وفواتير تشغيل',
+      description: 'تكاليف تشغيل واتساب، ميتا، لينكدإن، البريد، مركز الاتصال، ودقائق المكالمات.',
+      icon: PhoneCall,
+    },
+    {
+      title: 'فريق نمو يومي',
+      description: 'استشارات، تدريب، دعم، تقييم، متابعة، وتطوير مستمر لرفع جودة التحويل داخل فريقك.',
+      icon: Users,
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="subscription-value">
+      <div className="container mx-auto px-4 max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
+        >
+          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight max-w-4xl mx-auto mb-6">
+            أين يذهب اشتراكك؟
+          </h2>
+          <p className="text-base md:text-lg text-slate-300 max-w-3xl mx-auto leading-relaxed">
+            اشتراكك الشهري ليس سعر الخدمة كاملة، بل مساهمة تشغيلية لتفعيل منظومة أدوات، قنوات، أتمتة، ووكلاء ذكيين تعمل يوميًا حول فريقك.
+          </p>
+          <p className="text-sm md:text-base text-slate-400 font-bold max-w-3xl mx-auto mt-3">
+            أما قيادة النمو اليومية — من استشارات، تدريب، دعم، متابعة، تطوير، وتحسين — فنربط جزءًا كبيرًا من قيمتها بمشاركة النجاح من المبيعات المحققة.
+          </p>
+        </motion.div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {points.map((point, idx) => {
+            const Icon = point.icon;
+            return (
+              <motion.div
+                key={point.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.08, duration: 0.5 }}
+                className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/50 hover:shadow-[0_0_25px_rgba(16,185,129,0.08)] transition-all duration-300 flex flex-col justify-between"
+              >
+                <div>
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 flex items-center justify-center mb-5">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="text-lg font-black text-white mb-3">{point.title}</h3>
+                  <p className="text-sm text-slate-400 font-bold leading-relaxed">{point.description}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Comparison section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="max-w-3xl mx-auto rounded-3xl bg-slate-950/40 border border-slate-900 p-6 md:p-8 mb-10"
+        >
+          <div className="grid md:grid-cols-2 gap-6 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-slate-800">
+            <div className="pb-6 md:pb-0 md:pl-6 text-right">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-black mb-3">
+                <span>الاشتراك الشهري</span>
+              </div>
+              <p className="text-sm text-slate-300 font-bold leading-relaxed">
+                يغطي جزءًا من أدوات التشغيل، القنوات، الأتمتة، والوكلاء الذكيين.
+              </p>
+            </div>
+            <div className="pt-6 md:pt-0 md:pr-6 text-right">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-black mb-3">
+                <span>مشاركة النجاح</span>
+              </div>
+              <p className="text-sm text-slate-300 font-bold leading-relaxed">
+                تغطي القيمة الأكبر من قيادة النمو، التطوير، المتابعة، ودعم التحويل عند تحقق المبيعات.
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <p className="text-base md:text-lg font-black text-emerald-300">
+            الاشتراك يفعّل المنظومة… والقيمة الأكبر نربطها بنتائج المبيعات.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
 const PricingSection2 = () => {
   const tiers = [
     {
@@ -741,9 +851,18 @@ const PricingSection2 = () => {
     <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="pricing">
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
-          eyebrow="خطة التشغيل"
-          title="خطط التشغيل وبناء القنوات: من 90 يومًا إلى شراكة سنوية كاملة"
-          description="أنت لا تدفع مقابل أداة فقط. أنت تدفع لتجهيز البيانات، تشغيل القنوات، تدريب فريقك، ومتابعة الأداء. اختر الخطة الأنسب لمؤسستك لبدء التشغيل والتحويل الفعلي."
+          eyebrow="خطط الشراكة"
+          title="اختر خطة الشراكة لتحقيق مستهدفك البيعي"
+          description={
+            <>
+              <span className="block mb-2">
+                نحدد معك هدف 90 يوم، ثم نشغّل حول فريقك البيانات، القنوات، الأتمتة، كادر النمو، وفرص منافسات المباشرة… حتى تتحول الفرص إلى اجتماعات، عروض، تفاوض، وصفقات.
+              </span>
+              <span className="block text-emerald-400 font-extrabold mt-2">
+                ليست باقات أدوات… بل خطط تشغيل ونمو مرتبطة بنتيجة بيعية واضحة.
+              </span>
+            </>
+          }
         />
         <div className="grid md:grid-cols-3 gap-6">
           {tiers.map((tier, idx) => (
@@ -1173,6 +1292,10 @@ const Investment2Page = () => {
 
       <div id="future">
         <FutureSection />
+      </div>
+
+      <div id="subscription-value">
+        <SubscriptionValueSection />
       </div>
 
       <div id="pricing">
