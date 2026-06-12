@@ -77,6 +77,14 @@ export const DualStreamPipelineSection = () => {
           {/* SVG Connector Overlay Behind Columns */}
           <div className="absolute inset-0 pointer-events-none z-0">
             <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
+              {/* Funnel Outline Shape in the Background */}
+              <path 
+                d="M 40 18 Q 50 18 50 18 Q 50 18 60 18 L 56 75 Q 50 75 50 75 Q 50 75 44 75 Z" 
+                fill="rgba(6, 182, 212, 0.01)" 
+                stroke="rgba(6, 182, 212, 0.08)" 
+                strokeWidth="1.5"
+              />
+              
               {/* Connector lines from Right (Support Cards) to Center (Funnel stages) */}
               {/* 1. Before Opportunities -> Outcome of Opportunities (x=68 to x=58) */}
               <path 
@@ -502,34 +510,34 @@ export const DualStreamPipelineSection = () => {
 
           {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT) ================= */}
           <div className="col-span-4 flex flex-col justify-start z-10 border-r border-slate-900/40 pr-6">
-            <div className="sticky top-10">
+            <div className="sticky top-10 flex flex-col h-full justify-between">
               
-              <div className="flex items-center gap-2 mb-4">
-                <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
-                  <Users className="w-4 h-4" />
+              <div>
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
+                    <Users className="w-4 h-4" />
+                  </div>
+                  <h3 className="text-sm font-black text-white">مسؤول مبيعات العميل</h3>
                 </div>
-                <h3 className="text-sm font-black text-white">مسؤول مبيعات العميل</h3>
-              </div>
 
-              {/* Saudi Business Professional - High Quality Illustration */}
-              <div className="relative w-full max-w-[280px] mx-auto h-[320px] mb-6 flex items-end justify-center">
-                {/* Circular neon backdrop glow */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] rounded-full bg-gradient-to-br from-cyan-500/20 via-cyan-950/40 to-transparent border border-cyan-500/10 blur-sm z-0" />
-                
-                {/* Standing illustration */}
-                <img 
-                  src="/saudi_sales_rep.png" 
-                  alt="مسؤول مبيعات العميل" 
-                  className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_20px_rgba(6,182,212,0.3)] select-none"
-                />
-              </div>
-
-              {/* Descriptions & Labels */}
-              <div className="bg-slate-950/60 p-4 rounded-2xl border border-slate-900 shadow-md">
-                <p className="text-xs text-slate-300 leading-relaxed font-bold">
+                <p className="text-xs md:text-sm text-slate-400 font-bold leading-relaxed mb-6">
                   يبدأ من فرص أجهز، مدعومة بالبيانات والسياق، ويتحرك بها نحو الاجتماعات والعروض والصفقات.
                 </p>
               </div>
+
+              {/* Saudi Business Professional - Transparent Illustration standing tall next to funnel */}
+              <div className="relative w-full max-w-[280px] mx-auto h-[460px] flex items-end justify-center overflow-visible select-none">
+                {/* Circular neon backdrop halo glow (moved up to chest level) */}
+                <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-gradient-to-br from-cyan-500/15 via-cyan-950/30 to-transparent border border-cyan-500/5 blur-sm z-0" />
+                
+                {/* Standing illustration - transparent background, direct integration into site */}
+                <img 
+                  src="/saudi_sales_rep.png" 
+                  alt="مسؤول مبيعات العميل" 
+                  className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_25px_rgba(6,182,212,0.25)] select-none pointer-events-none"
+                />
+              </div>
+
             </div>
           </div>
 
