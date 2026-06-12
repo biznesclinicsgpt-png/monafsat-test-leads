@@ -3,13 +3,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Target, 
   Users, 
-  BriefcaseBusiness, 
   Sparkles, 
   Layers, 
   ArrowDown, 
   Award, 
   Activity,
-  MessageSquare,
   ChevronDown,
   ChevronUp,
   Filter,
@@ -23,7 +21,7 @@ import {
 import { cn } from '../../lib/utils';
 
 const PIPELINE_CONFIG = {
-  targetAmount: "المستهدف البيعي خلال 90 يوم",
+  targetAmount: "المستهدف البيعي",
   subText: "كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم."
 };
 
@@ -67,7 +65,7 @@ export const DualStreamPipelineSection = () => {
         </div>
 
         {/* Title above funnel */}
-        <div className="text-center mb-8 hidden lg:block select-none">
+        <div className="text-center mb-12 hidden lg:block select-none">
           <h3 className="text-lg font-black text-slate-300">هذا القمع يعمل لصالح مسؤول المبيعات</h3>
         </div>
 
@@ -79,14 +77,6 @@ export const DualStreamPipelineSection = () => {
           {/* SVG Connector Overlay Behind Columns */}
           <div className="absolute inset-0 pointer-events-none z-0">
             <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
-              {/* Funnel Outline Shape in the Background */}
-              <path 
-                d="M 40 18 Q 50 18 50 18 Q 50 18 60 18 L 56 75 Q 50 75 50 75 Q 50 75 44 75 Z" 
-                fill="rgba(6, 182, 212, 0.01)" 
-                stroke="rgba(6, 182, 212, 0.08)" 
-                strokeWidth="1.5"
-              />
-              
               {/* Connector lines from Right (Support Cards) to Center (Funnel stages) */}
               {/* 1. Before Opportunities -> Outcome of Opportunities (x=68 to x=58) */}
               <path 
@@ -132,7 +122,7 @@ export const DualStreamPipelineSection = () => {
                 <animateMotion dur="3s" repeatCount="indefinite" path="M 68 76 L 54 76" />
               </circle>
               
-              {/* Connector from Monafsat node (top left) into funnel top (x=44 to x=48) */}
+              {/* Connector from Monafsat node (top left) into funnel top (x=43 to x=49) */}
               <path 
                 d="M 43 14 C 47 14, 47 18, 49 18" 
                 stroke="rgba(16, 185, 129, 0.25)" 
@@ -145,8 +135,8 @@ export const DualStreamPipelineSection = () => {
             </svg>
           </div>
 
-          {/* ================= COLUMN 1: SUPPORT CARDS (RIGHT - Renders Right-most in RTL) ================= */}
-          <div className="col-span-4 flex flex-col gap-6 justify-between z-10 border-l border-slate-900/40 pl-6">
+          {/* ================= COLUMN 1: SUPPORT CARDS (RIGHT) ================= */}
+          <div className="col-span-4 flex flex-col gap-6 justify-start z-10 border-l border-slate-900/40 pl-6">
             
             <div className="flex items-center gap-2 mb-2 select-none">
               <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
@@ -310,7 +300,7 @@ export const DualStreamPipelineSection = () => {
 
           </div>
 
-          {/* ================= COLUMN 2: THE FUNNEL (CENTER - Renders Middle in RTL) ================= */}
+          {/* ================= COLUMN 2: THE 3D FUNNEL (CENTER) ================= */}
           <div className="col-span-4 flex flex-col items-center justify-start z-10 px-2">
             
             {/* Top Left Monafsat node */}
@@ -334,126 +324,156 @@ export const DualStreamPipelineSection = () => {
             </div>
 
             {/* Funnel Container Box */}
-            <div className="w-full flex flex-col gap-2 relative">
+            <div className="relative w-full h-[450px] select-none">
               
-              {/* Funnel Stage 1: حصيلة الفرص */}
-              <div className="w-full flex justify-center">
-                <div 
-                  className={cn(
-                    "w-full max-w-[280px] py-3.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
-                    hoveredSection === 'before'
-                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] scale-[1.03]"
-                      : "border-cyan-500/20"
-                  )}
-                  onMouseEnter={() => setHoveredSection('before')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <span className="text-xs font-black text-white">حصيلة الفرص</span>
-                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
-                    <Filter className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              {/* 3D Funnel SVG Drawing (Curved perspective cone) */}
+              <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" viewBox="0 0 400 460" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  {/* Glowing vertical gradient for the glass funnel faces */}
+                  <linearGradient id="funnel-grad-active" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.03" />
+                  </linearGradient>
+                  <linearGradient id="funnel-grad-inactive" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#1e293b" stopOpacity="0.1" />
+                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.01" />
+                  </linearGradient>
+                  <linearGradient id="funnel-emerald-active" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.25" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.03" />
+                  </linearGradient>
+
+                  <radialGradient id="rim-glow-cyan" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+
+                {/* --- SEGMENT 1: حصيلة الفرص --- */}
+                {/* Inside top rim ellipse */}
+                <ellipse cx="200" cy="40" rx="160" ry="28" fill="url(#rim-glow-cyan)" fillOpacity="0.1" stroke={hoveredSection === 'before' ? "#06b6d4" : "rgba(6, 182, 212, 0.25)"} strokeWidth={hoveredSection === 'before' ? 2 : 1.2} />
+                {/* Front face frustum */}
+                <path 
+                  d="M 40 40 A 160 28 0 0 0 360 40 L 335 100 A 135 24 0 0 1 65 100 Z" 
+                  fill={hoveredSection === 'before' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'before' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                  strokeWidth="1"
+                />
+
+                {/* --- SEGMENT 2: فرص جاهزة للتحريك --- */}
+                <ellipse cx="200" cy="100" rx="135" ry="24" fill="none" stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.2)"} strokeWidth={hoveredSection === 'during' ? 1.5 : 1} />
+                <path 
+                  d="M 65 100 A 135 24 0 0 0 335 100 L 312 160 A 112 20 0 0 1 88 160 Z" 
+                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                  strokeWidth="1"
+                />
+
+                {/* --- SEGMENT 3: اجتماعات مؤهلة --- */}
+                <ellipse cx="200" cy="160" rx="112" ry="20" fill="none" stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.2)"} strokeWidth={hoveredSection === 'during' ? 1.5 : 1} />
+                <path 
+                  d="M 88 160 A 112 20 0 0 0 312 160 L 292 220 A 92 16 0 0 1 108 220 Z" 
+                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                  strokeWidth="1"
+                />
+
+                {/* --- SEGMENT 4: عروض سعر --- */}
+                <ellipse cx="200" cy="220" rx="92" ry="16" fill="none" stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.2)"} strokeWidth={hoveredSection === 'during' ? 1.5 : 1} />
+                <path 
+                  d="M 108 220 A 92 16 0 0 0 292 220 L 275 280 A 75 13 0 0 1 125 280 Z" 
+                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                  strokeWidth="1"
+                />
+
+                {/* --- SEGMENT 5: تفاوض --- */}
+                <ellipse cx="200" cy="280" rx="75" ry="13" fill="none" stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.2)"} strokeWidth={hoveredSection === 'after' ? 1.5 : 1} />
+                <path 
+                  d="M 125 280 A 75 13 0 0 0 275 280 L 260 340 A 60 10 0 0 1 140 340 Z" 
+                  fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.15)"} 
+                  strokeWidth="1"
+                />
+
+                {/* --- SEGMENT 6: صفقات --- */}
+                <ellipse cx="200" cy="340" rx="60" ry="10" fill="none" stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.2)"} strokeWidth={hoveredSection === 'after' ? 1.5 : 1} />
+                <path 
+                  d="M 140 340 A 60 10 0 0 0 260 340 L 248 400 A 48 8 0 0 1 152 400 Z" 
+                  fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.15)"} 
+                  strokeWidth="1"
+                />
+                
+                {/* Bottom opening ellipse */}
+                <ellipse cx="200" cy="400" rx="48" ry="8" fill="none" stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.25)"} strokeWidth={1} />
+              </svg>
+
+              {/* Absolute HTML Overlays for Text & Icons inside Funnel segments */}
+              {/* 1. حصيلة الفرص */}
+              <div 
+                className="absolute top-[52px] left-1/2 -translate-x-1/2 w-[220px] h-[36px] flex items-center justify-between pointer-events-none text-right px-3 cursor-default"
+                onMouseEnter={() => setHoveredSection('before')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <Filter className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-[11px] font-black text-white select-none">حصيلة الفرص</span>
               </div>
 
-              {/* Funnel Stage 2: فرص جاهزة للتحريك */}
-              <div className="w-full flex justify-center">
-                <div 
-                  className={cn(
-                    "w-[90%] max-w-[252px] py-3 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
-                    hoveredSection === 'during'
-                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] scale-[1.03]"
-                      : "border-cyan-500/20"
-                  )}
-                  onMouseEnter={() => setHoveredSection('during')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <span className="text-xs font-black text-cyan-200">فرص جاهزة للتحريك</span>
-                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
-                    <Target className="w-3 h-3" />
-                  </div>
-                </div>
+              {/* 2. فرص جاهزة للتحريك */}
+              <div 
+                className="absolute top-[112px] left-1/2 -translate-x-1/2 w-[180px] h-[36px] flex items-center justify-between pointer-events-none text-right px-3 cursor-default"
+                onMouseEnter={() => setHoveredSection('during')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <Target className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-[11px] font-black text-cyan-200 select-none">فرص جاهزة للتحريك</span>
               </div>
 
-              {/* Funnel Stage 3: اجتماعات مؤهلة */}
-              <div className="w-full flex justify-center">
-                <div 
-                  className={cn(
-                    "w-[80%] max-w-[224px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
-                    hoveredSection === 'during'
-                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] scale-[1.03]"
-                      : "border-cyan-500/20"
-                  )}
-                  onMouseEnter={() => setHoveredSection('during')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <span className="text-xs font-black text-cyan-200">اجتماعات مؤهلة</span>
-                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
-                    <Users className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              {/* 3. اجتماعات مؤهلة */}
+              <div 
+                className="absolute top-[172px] left-1/2 -translate-x-1/2 w-[150px] h-[36px] flex items-center justify-between pointer-events-none text-right px-2 cursor-default"
+                onMouseEnter={() => setHoveredSection('during')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <Users className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-[11px] font-black text-cyan-200 select-none">اجتماعات مؤهلة</span>
               </div>
 
-              {/* Funnel Stage 4: عروض سعر */}
-              <div className="w-full flex justify-center">
-                <div 
-                  className={cn(
-                    "w-[70%] max-w-[196px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
-                    hoveredSection === 'during'
-                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] scale-[1.03]"
-                      : "border-cyan-500/20"
-                  )}
-                  onMouseEnter={() => setHoveredSection('during')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <span className="text-xs font-black text-cyan-200">عروض سعر</span>
-                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
-                    <FileText className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              {/* 4. عروض سعر */}
+              <div 
+                className="absolute top-[232px] left-1/2 -translate-x-1/2 w-[120px] h-[36px] flex items-center justify-between pointer-events-none text-right px-2 cursor-default"
+                onMouseEnter={() => setHoveredSection('during')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <FileText className="w-4 h-4 text-cyan-400 shrink-0" />
+                <span className="text-[11px] font-black text-cyan-200 select-none">عروض سعر</span>
               </div>
 
-              {/* Funnel Stage 5: تفاوض */}
-              <div className="w-full flex justify-center">
-                <div 
-                  className={cn(
-                    "w-[60%] max-w-[168px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#051411] cursor-default",
-                    hoveredSection === 'after'
-                      ? "border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] scale-[1.03]"
-                      : "border-emerald-500/20"
-                  )}
-                  onMouseEnter={() => setHoveredSection('after')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <span className="text-xs font-black text-emerald-200">تفاوض</span>
-                  <div className="p-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400">
-                    <Handshake className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              {/* 5. تفاوض */}
+              <div 
+                className="absolute top-[292px] left-1/2 -translate-x-1/2 w-[100px] h-[36px] flex items-center justify-between pointer-events-none text-right px-2 cursor-default"
+                onMouseEnter={() => setHoveredSection('after')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <Handshake className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-black text-emerald-200 select-none">تفاوض</span>
               </div>
 
-              {/* Funnel Stage 6: صفقات */}
-              <div className="w-full flex justify-center">
-                <div 
-                  className={cn(
-                    "w-[50%] max-w-[140px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#051411] cursor-default",
-                    hoveredSection === 'after'
-                      ? "border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] scale-[1.03]"
-                      : "border-emerald-500/20"
-                  )}
-                  onMouseEnter={() => setHoveredSection('after')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <span className="text-xs font-black text-emerald-200">صفقات</span>
-                  <div className="p-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400">
-                    <CheckCircle className="w-3.5 h-3.5" />
-                  </div>
-                </div>
+              {/* 6. صفقات */}
+              <div 
+                className="absolute top-[352px] left-1/2 -translate-x-1/2 w-[85px] h-[36px] flex items-center justify-between pointer-events-none text-right px-1 cursor-default"
+                onMouseEnter={() => setHoveredSection('after')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="text-[11px] font-black text-emerald-200 select-none">صفقات</span>
               </div>
 
             </div>
 
             {/* Bottom Target Card */}
-            <div className="w-full flex flex-col items-center mt-6 z-10">
+            <div className="w-full flex flex-col items-center mt-3 z-10">
               <div 
                 className={cn(
                   "px-8 py-3.5 rounded-2xl border text-center transition-all duration-300 w-full max-w-[280px] bg-[#0d0d0d] flex items-center justify-center gap-3.5",
@@ -468,7 +488,7 @@ export const DualStreamPipelineSection = () => {
                   <Target className="w-4 h-4" />
                 </div>
                 <div className="text-right">
-                  <div className="text-[9.5px] text-slate-400 font-extrabold leading-none">
+                  <div className="text-[10px] text-slate-400 font-extrabold leading-none">
                     {PIPELINE_CONFIG.targetAmount}
                   </div>
                   <div className="text-sm md:text-base font-black text-amber-400 tracking-tight leading-normal mt-0.5">
@@ -480,7 +500,7 @@ export const DualStreamPipelineSection = () => {
 
           </div>
 
-          {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT - Renders Left-most in RTL) ================= */}
+          {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT) ================= */}
           <div className="col-span-4 flex flex-col justify-start z-10 border-r border-slate-900/40 pr-6">
             <div className="sticky top-10">
               
@@ -491,65 +511,17 @@ export const DualStreamPipelineSection = () => {
                 <h3 className="text-sm font-black text-white">مسؤول مبيعات العميل</h3>
               </div>
 
-              {/* Saudi Business Professional Silhouette Vector Illustration */}
-              <div className="w-full max-w-[200px] mx-auto mb-6 bg-gradient-to-b from-slate-950/80 to-slate-900/10 rounded-3xl p-3 border border-slate-900 relative overflow-hidden group shadow-lg">
-                <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
+              {/* Saudi Business Professional - High Quality Illustration */}
+              <div className="relative w-full max-w-[280px] mx-auto h-[320px] mb-6 flex items-end justify-center">
+                {/* Circular neon backdrop glow */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[220px] rounded-full bg-gradient-to-br from-cyan-500/20 via-cyan-950/40 to-transparent border border-cyan-500/10 blur-sm z-0" />
                 
-                {/* SVG Silhouette */}
-                <svg viewBox="0 0 200 280" className="w-full h-auto drop-shadow-[0_0_15px_rgba(6,182,212,0.15)]" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Background radial glow */}
-                  <circle cx="100" cy="110" r="70" fill="url(#avatar-glow-new)" opacity="0.35" />
-                  
-                  {/* Agal */}
-                  <ellipse cx="100" cy="38" rx="26" ry="5.5" fill="#1e293b" stroke="#06b6d4" strokeWidth="2.5" />
-                  <ellipse cx="100" cy="35" rx="28" ry="6.5" fill="#0f172a" stroke="#10b981" strokeWidth="1" />
-                  
-                  {/* Ghutra drape */}
-                  <path d="M 100 25 C 72 25, 64 55, 62 105 C 60 150, 68 190, 70 220 L 85 230 C 95 230, 100 220, 100 220 C 100 220, 105 230, 115 230 L 130 220 C 132 190, 140 150, 138 105 C 136 55, 128 25, 100 25 Z" fill="url(#ghutra-grad-new)" stroke="#06b6d4" strokeWidth="1.2" />
-                  
-                  {/* Face outline */}
-                  <path d="M 100 45 C 83 45, 83 80, 100 90 C 117 90, 117 80, 100 45 Z" fill="url(#face-grad-new)" />
-                  
-                  {/* Inner Ghutra opening fold */}
-                  <path d="M 86 45 C 82 58, 82 85, 100 98 C 118 85, 118 58, 114 45" stroke="#334155" strokeWidth="1.2" fill="none" />
-                  
-                  {/* Thobe collar & shoulders */}
-                  <path d="M 72 200 L 60 260 L 140 260 L 128 200 C 120 175, 115 170, 100 170 C 85 170, 80 175, 72 200 Z" fill="url(#thobe-grad-new)" stroke="#10b981" strokeWidth="1.2" />
-                  
-                  {/* Collar details */}
-                  <path d="M 91 170 L 100 185 L 109 170" stroke="#06b6d4" strokeWidth="1.5" fill="none" />
-
-                  {/* Tablet representation (holding a glowing device) */}
-                  <path d="M 80 215 L 120 215 L 125 245 L 75 245 Z" fill="#0f172a" stroke="#06b6d4" strokeWidth="1.5" />
-                  <path d="M 83 218 L 117 218 L 121 242 L 79 242 Z" fill="#020617" />
-                  <line x1="88" y1="222" x2="112" y2="222" stroke="rgba(6,182,212,0.5)" strokeWidth="1" />
-                  <line x1="88" y1="226" x2="104" y2="226" stroke="rgba(6,182,212,0.3)" strokeWidth="1" />
-                  
-                  {/* Hands holding tablet */}
-                  <path d="M 72 235 C 75 235, 77 240, 75 243" stroke="#e2e8f0" strokeWidth="1.5" fill="none" />
-                  <path d="M 128 235 C 125 235, 123 240, 125 243" stroke="#e2e8f0" strokeWidth="1.5" fill="none" />
-
-                  <defs>
-                    <linearGradient id="ghutra-grad-new" x1="100" y1="25" x2="100" y2="230" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#f8fafc" />
-                      <stop offset="60%" stopColor="#e2e8f0" />
-                      <stop offset="100%" stopColor="#94a3b8" />
-                    </linearGradient>
-                    <linearGradient id="face-grad-new" x1="100" y1="45" x2="100" y2="90" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#1e293b" />
-                      <stop offset="100%" stopColor="#0f172a" />
-                    </linearGradient>
-                    <linearGradient id="thobe-grad-new" x1="100" y1="170" x2="100" y2="260" gradientUnits="userSpaceOnUse">
-                      <stop offset="0%" stopColor="#0f172a" />
-                      <stop offset="50%" stopColor="#1e293b" />
-                      <stop offset="100%" stopColor="#0f172a" />
-                    </linearGradient>
-                    <radialGradient id="avatar-glow-new" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.45" />
-                      <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-                    </radialGradient>
-                  </defs>
-                </svg>
+                {/* Standing illustration */}
+                <img 
+                  src="/saudi_sales_rep.png" 
+                  alt="مسؤول مبيعات العميل" 
+                  className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_20px_rgba(6,182,212,0.3)] select-none"
+                />
               </div>
 
               {/* Descriptions & Labels */}
@@ -571,14 +543,12 @@ export const DualStreamPipelineSection = () => {
           {/* 1. Client's Sales Representative (Top mobile) */}
           <div className="p-4 rounded-2xl border border-slate-900 bg-slate-950/40 flex items-center gap-4">
             {/* Small Saudi avatar */}
-            <div className="w-14 h-14 bg-slate-950 rounded-xl border border-slate-800 shrink-0 p-1 flex items-center justify-center">
-              <svg viewBox="0 0 200 280" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="100" cy="110" r="70" fill="#06b6d4" opacity="0.1" />
-                <ellipse cx="100" cy="38" rx="26" ry="5.5" fill="#1e293b" stroke="#06b6d4" strokeWidth="2.5" />
-                <path d="M 100 25 C 72 25, 64 55, 62 105 C 60 150, 68 190, 70 220 L 85 230 C 95 230, 100 220, 100 220 C 100 220, 105 230, 115 230 L 130 220 C 132 190, 140 150, 138 105 C 136 55, 128 25, 100 25 Z" fill="#e2e8f0" stroke="#06b6d4" strokeWidth="1" />
-                <path d="M 100 45 C 83 45, 83 80, 100 90 C 117 90, 117 80, 100 45 Z" fill="#0f172a" />
-                <path d="M 72 200 L 60 260 L 140 260 L 128 200 C 120 175, 115 170, 100 170 C 85 170, 80 175, 72 200 Z" fill="#1e293b" stroke="#10b981" strokeWidth="1" />
-              </svg>
+            <div className="w-14 h-14 bg-slate-950 rounded-xl border border-slate-800 shrink-0 overflow-hidden">
+              <img 
+                src="/saudi_sales_rep.png" 
+                alt="مسؤول مبيعات العميل" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h3 className="text-xs font-black text-white">مسؤول مبيعات العميل</h3>
@@ -649,8 +619,7 @@ export const DualStreamPipelineSection = () => {
 
           {/* 5. Target Card (Mobile) */}
           <div className="p-4 rounded-xl border border-slate-800 bg-[#0d0d0d] text-center">
-            <div className="text-sm font-black text-amber-400">{PIPELINE_CONFIG.targetAmount}</div>
-            <div className="text-[9px] text-slate-300 font-bold mt-0.5">خلال 90 يوم</div>
+            <div className="text-sm font-black text-amber-400">خلال 90 يوم</div>
           </div>
 
           {/* 6. Support Accordions (Mobile Bottom) */}
@@ -770,9 +739,61 @@ export const DualStreamPipelineSection = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* ==================== FOOTER CARD ======================= */}
+        {/* ==================== FOOTER GRID ======================= */}
         {/* ======================================================== */}
-        <div className="mt-16 bg-gradient-to-br from-slate-950/80 to-slate-900/20 border border-slate-900 rounded-3xl p-6 md:p-8 text-right relative overflow-hidden">
+        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-right border-t border-slate-900 pt-8" dir="rtl">
+          
+          {/* Item 1 */}
+          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-black text-white">تقنية ذكية</h4>
+              <p className="text-[10px] text-slate-400 font-bold mt-0.5">ذكاء اصطناعي وبيانات موثوقة</p>
+            </div>
+          </div>
+          
+          {/* Item 2 */}
+          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
+              {/* Palm tree SVG */}
+              <svg viewBox="0 0 24 24" className="w-5 h-5 text-cyan-400 fill-none stroke-current" strokeWidth="2">
+                <path d="M12 22V12M12 12c-2-2-5-1-6-3M12 12c2-2 5-1 6-3M12 12c0-3-2-6-5-7M12 12c0-3 2-6 5-7" />
+              </svg>
+            </div>
+            <div>
+              <h4 className="text-xs font-black text-white">للسوق السعودي</h4>
+              <p className="text-[10px] text-slate-400 font-bold mt-0.5">مصمم للسوق المحلي</p>
+            </div>
+          </div>
+
+          {/* Item 3 */}
+          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
+              <TrendingUp className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-black text-white">نتائج حقيقية</h4>
+              <p className="text-[10px] text-slate-400 font-bold mt-0.5">تنعكس على الإيرادات</p>
+            </div>
+          </div>
+
+          {/* Item 4 */}
+          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
+              <Handshake className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-xs font-black text-white">تنمية أعمالك B2B</h4>
+              <p className="text-[10px] text-slate-400 font-bold mt-0.5">بفرص ذات جودة أعلى</p>
+            </div>
+          </div>
+
+        </div>
+
+        {/* Bottom original role banner card */}
+        <div className="mt-10 bg-gradient-to-br from-slate-950/80 to-slate-900/20 border border-slate-900 rounded-3xl p-6 md:p-8 text-right relative overflow-hidden">
           <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500/40 via-emerald-500/40 to-transparent" />
           
           <div className="flex items-center gap-2.5 mb-4 select-none">
@@ -781,43 +802,8 @@ export const DualStreamPipelineSection = () => {
           </div>
           
           <p className="text-xs md:text-sm text-slate-400 leading-relaxed mb-6 font-bold max-w-4xl">
-            لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء اصطناعي، وفرص منافسات المباشرة.
+            لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
           </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3.5 text-xs text-slate-300 font-bold">
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-              <span>استشارات لتحديد القطاع وصناع القرار</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-              <span>تدريب موظف المبيعات على الرد والتحويل</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-              <span>قيادة خطة 90 يوم ومؤشرات الأداء</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-              <span>متابعة أسبوعية لحركة الفرص والأنشطة</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-              <span>تطوير مستمر للرسائل والقنوات</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-              <span>أتمتة للمتابعة وتنظيم الخطوات</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shrink-0" />
-              <span>ذكاء اصطناعي للتحليل والتخصيص</span>
-            </div>
-            <div className="flex items-center gap-2 bg-slate-950/40 p-2.5 rounded-xl border border-slate-900">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
-              <span>فرص مباشرة من كادر منافسات</span>
-            </div>
-          </div>
         </div>
 
       </div>
