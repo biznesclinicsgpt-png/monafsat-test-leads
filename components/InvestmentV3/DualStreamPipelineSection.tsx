@@ -74,7 +74,7 @@ export const DualStreamPipelineSection = () => {
             <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
               {/* Line from Sales Rep (Left) to top of Funnel */}
               <path 
-                d="M 24 40 Q 32 25, 44 12" 
+                d="M 38 40 Q 42 25, 46 12" 
                 stroke="rgba(6, 182, 212, 0.12)" 
                 strokeWidth="0.8"
                 className="transition-all duration-300"
@@ -82,24 +82,24 @@ export const DualStreamPipelineSection = () => {
               
               {/* Line from Monafsat Badge (Top Center) to Funnel Rim */}
               <path 
-                d="M 50 0 L 50 7" 
+                d="M 62.5 0 L 62.5 7" 
                 stroke="rgba(16, 185, 129, 0.15)" 
                 strokeWidth="0.8"
               />
 
               {/* Lines from Nodes (Right) to Funnel stages */}
               <path 
-                d="M 78 12 L 75 12" 
+                d="M 83 12 L 79.7 12" 
                 stroke="rgba(6, 182, 212, 0.12)" 
                 strokeWidth="0.8"
               />
               <path 
-                d="M 78 35 L 70 35" 
+                d="M 83 35 L 74.3 35" 
                 stroke="rgba(6, 182, 212, 0.12)" 
                 strokeWidth="0.8"
               />
               <path 
-                d="M 78 66 L 64.5 66" 
+                d="M 83 66 L 70.2 66" 
                 stroke="rgba(16, 185, 129, 0.12)" 
                 strokeWidth="0.8"
               />
@@ -107,7 +107,7 @@ export const DualStreamPipelineSection = () => {
           </div>
 
           {/* ================= COLUMN 1: SUPPORT NODES (RIGHT) ================= */}
-          <div className="col-span-3 flex flex-col justify-start z-10 relative pt-12">
+          <div className="col-span-2 flex flex-col justify-start z-10 relative pt-12">
             <div className="flex flex-col justify-between h-[380px] relative">
               
               {/* Node 1: Before Opportunities */}
@@ -430,11 +430,11 @@ export const DualStreamPipelineSection = () => {
           </div>
 
           {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT) ================= */}
-          <div className="col-span-4 flex flex-col justify-center items-center z-10 pl-4 relative select-none">
+          <div className="col-span-5 flex flex-col justify-center items-start z-10 pl-4 relative select-none">
             {/* Soft ambient back glow for the person */}
-            <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full bg-cyan-500/[0.04] blur-[60px] pointer-events-none" />
+            <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full bg-cyan-500/[0.04] blur-[80px] pointer-events-none" />
             
-            <div className="relative w-full max-w-[290px] h-[500px] flex items-end justify-center overflow-visible select-none">
+            <div className="relative w-full max-w-[370px] h-[570px] flex items-end justify-center overflow-visible select-none lg:-mr-12">
               <img 
                 src="/saudi_sales_rep.png" 
                 alt="مسؤول مبيعات العميل" 
