@@ -114,9 +114,10 @@ export const DualStreamPipelineSection = () => {
               {/* Connecting line from Businessman on the left (x=32) to Funnel (x=42) */}
               <path 
                 d="M 32 48 L 42 48" 
-                stroke="rgba(6, 182, 212, 0.15)" 
-                strokeWidth="1" 
-                strokeDasharray="3 3"
+                stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.25)"} 
+                strokeWidth={hoveredSection === 'during' ? 1.8 : 1.2} 
+                strokeDasharray="4 4"
+                className="transition-all duration-300"
               />
 
               {/* Flow particles from Support Cards into Funnel */}
@@ -128,6 +129,9 @@ export const DualStreamPipelineSection = () => {
               </circle>
               <circle r="2" fill="#06b6d4" filter="drop-shadow(0 0 2px #06b6d4)">
                 <animateMotion dur="3s" repeatCount="indefinite" path="M 68 76 L 54 76" />
+              </circle>
+              <circle r="2" fill="#06b6d4" filter="drop-shadow(0 0 2px #06b6d4)">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M 32 48 L 42 48" />
               </circle>
               
               {/* Connector from Monafsat node (top left) into funnel top (x=43 to x=49) */}
@@ -509,8 +513,8 @@ export const DualStreamPipelineSection = () => {
           </div>
 
           {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT) ================= */}
-          <div className="col-span-4 flex flex-col justify-start z-10 border-r border-slate-900/40 pr-6">
-            <div className="sticky top-10 flex flex-col h-full justify-between">
+          <div className="col-span-4 flex flex-col justify-start z-10 pr-6">
+            <div className="sticky top-10 flex flex-col h-[580px] justify-between">
               
               <div>
                 <div className="flex items-center gap-2 mb-3">
@@ -526,7 +530,7 @@ export const DualStreamPipelineSection = () => {
               </div>
 
               {/* Saudi Business Professional - Transparent Illustration standing tall next to funnel */}
-              <div className="relative w-full max-w-[280px] mx-auto h-[460px] flex items-end justify-center overflow-visible select-none">
+              <div className="relative w-full max-w-[340px] mx-auto h-[460px] flex items-end justify-center overflow-visible select-none">
                 {/* Circular neon backdrop halo glow (moved up to chest level) */}
                 <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-gradient-to-br from-cyan-500/15 via-cyan-950/30 to-transparent border border-cyan-500/5 blur-sm z-0" />
                 
