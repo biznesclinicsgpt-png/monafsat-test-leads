@@ -125,8 +125,6 @@ export const DualStreamPipelineSection = () => {
                   <Target className="w-3.5 h-3.5" />
                   <span className="text-[11px] font-black">قبل الفرص</span>
                 </div>
-                
-                {/* Hover Popover */}
                 <AnimatePresence>
                   {hoveredSection === 'before' && (
                     <motion.div
@@ -134,7 +132,7 @@ export const DualStreamPipelineSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-full mr-3 top-1/2 -translate-y-1/2 w-[220px] p-3 rounded-xl border border-cyan-500/20 bg-[#050a10]/98 backdrop-blur-md shadow-[0_8px_32px_rgba(6,182,212,0.12)] z-40 text-right pointer-events-none"
+                      className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-[220px] p-3 rounded-xl border border-cyan-500/20 bg-[#050a10]/98 backdrop-blur-md shadow-[0_8px_32px_rgba(6,182,212,0.12)] z-40 text-right pointer-events-none"
                     >
                       <h4 className="text-[10px] font-black text-cyan-400 mb-0.5">قبل الفرص</h4>
                       <h5 className="text-[11px] font-black text-white mb-1.5 leading-normal">تجهيز السوق والبيانات والاستهداف</h5>
@@ -182,7 +180,7 @@ export const DualStreamPipelineSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-full mr-3 top-1/2 -translate-y-1/2 w-[220px] p-3 rounded-xl border border-cyan-500/20 bg-[#050a10]/98 backdrop-blur-md shadow-[0_8px_32px_rgba(6,182,212,0.12)] z-40 text-right pointer-events-none"
+                      className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-[220px] p-3 rounded-xl border border-cyan-500/20 bg-[#050a10]/98 backdrop-blur-md shadow-[0_8px_32px_rgba(6,182,212,0.12)] z-40 text-right pointer-events-none"
                     >
                       <h4 className="text-[10px] font-black text-cyan-400 mb-0.5">أثناء الفرص</h4>
                       <h5 className="text-[11px] font-black text-white mb-1.5 leading-normal">دعم التحريك والمتابعة والتحويل</h5>
@@ -230,7 +228,7 @@ export const DualStreamPipelineSection = () => {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
                       transition={{ duration: 0.15 }}
-                      className="absolute right-full mr-3 top-1/2 -translate-y-1/2 w-[220px] p-3 rounded-xl border border-emerald-500/20 bg-[#020805]/98 backdrop-blur-md shadow-[0_8px_32px_rgba(16,185,129,0.12)] z-40 text-right pointer-events-none"
+                      className="absolute left-full ml-3 top-1/2 -translate-y-1/2 w-[220px] p-3 rounded-xl border border-emerald-500/20 bg-[#020805]/98 backdrop-blur-md shadow-[0_8px_32px_rgba(16,185,129,0.12)] z-40 text-right pointer-events-none"
                     >
                       <h4 className="text-[10px] font-black text-emerald-400 mb-0.5">بعد الفرص</h4>
                       <h5 className="text-[11px] font-black text-white mb-1.5 leading-normal">تحليل الأداء والتحسين المستمر</h5>
@@ -353,7 +351,7 @@ export const DualStreamPipelineSection = () => {
                 
                 {/* Connector line down to target */}
                 <path 
-                  d="M 230 439 L 230 452" 
+                  d="M 230 439 L 230 465" 
                   stroke="rgba(245, 158, 11, 0.3)" 
                   strokeWidth="1.2"
                   strokeDasharray="2 2"
@@ -427,32 +425,6 @@ export const DualStreamPipelineSection = () => {
                 <span className="text-[11px] font-black text-emerald-100 select-none">صفقات</span>
               </div>
 
-              {/* Bottom Target Card (Connected to funnel bottom) */}
-              <div className="absolute top-[455px] left-1/2 -translate-x-1/2 w-full max-w-[240px] z-20">
-                <div 
-                  className={cn(
-                    "px-5 py-3 rounded-xl border text-center transition-all duration-300 bg-[#0a0a0d] flex items-center justify-center gap-3",
-                    hoveredSection === 'after'
-                      ? "border-amber-400 bg-[#141008] shadow-[0_0_15px_rgba(245,158,11,0.2)] scale-[1.02]"
-                      : "border-slate-800"
-                  )}
-                  onMouseEnter={() => setHoveredSection('after')}
-                  onMouseLeave={() => setHoveredSection(null)}
-                >
-                  <div className="p-1 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                    <Target className="w-4 h-4" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-[9px] text-slate-400 font-extrabold leading-none">
-                      المستهدف البيعي
-                    </div>
-                    <div className="text-xs md:text-sm font-black text-amber-400 tracking-tight leading-normal mt-0.5">
-                      1,000,000 ريال خلال 90 يوم
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
 
           </div>
@@ -471,6 +443,38 @@ export const DualStreamPipelineSection = () => {
             </div>
           </div>
 
+        </div>
+
+        {/* Wide Target Banner (Desktop only) */}
+        <div className="hidden lg:block mt-16 max-w-5xl mx-auto z-20 relative">
+          <div 
+            className={cn(
+              "px-8 py-6 rounded-2xl border text-center transition-all duration-300 bg-slate-950/60 backdrop-blur-sm flex items-center justify-between gap-6",
+              hoveredSection === 'after'
+                ? "border-amber-500/40 bg-[#141008]/80 shadow-[0_0_25px_rgba(245,158,11,0.15)] scale-[1.01]"
+                : "border-slate-900 bg-slate-950/20"
+            )}
+            onMouseEnter={() => setHoveredSection('after')}
+            onMouseLeave={() => setHoveredSection(null)}
+          >
+            <div className="flex items-center gap-4 text-right">
+              <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                <Target className="w-6 h-6 animate-pulse" />
+              </div>
+              <div>
+                <h4 className="text-sm font-black text-white">المستهدف البيعي لفريق مبيعاتك</h4>
+                <p className="text-xs text-slate-400 font-bold mt-1 max-w-xl leading-relaxed">
+                  كل فرصة تتحرك داخل هذا القمع تساهم بشكل مباشر وملموس في تقريب فريقك من تحقيق هدف المليون ريال.
+                </p>
+              </div>
+            </div>
+            
+            <div className="text-left shrink-0">
+              <div className="text-3xl md:text-5xl font-black text-amber-400 tracking-tight select-none">
+                1,000,000 ريال <span className="text-lg md:text-2xl font-black text-amber-500/70">خلال 90 يوم</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* ======================================================== */}
