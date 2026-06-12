@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Target, 
   Users, 
@@ -9,20 +9,42 @@ import {
   ArrowDown, 
   Award, 
   Activity,
-  MessageSquare
+  MessageSquare,
+  ChevronDown,
+  ChevronUp,
+  Filter,
+  CheckCircle,
+  FileText,
+  Handshake,
+  TrendingUp,
+  RefreshCw,
+  ClipboardList
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 const PIPELINE_CONFIG = {
-  targetAmount: "1,000,000 ريال",
-  targetPeriod: "خلال 90 يوم",
+  targetAmount: "المستهدف البيعي خلال 90 يوم",
   subText: "كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم."
 };
 
 export const DualStreamPipelineSection = () => {
+  // Synchronized hover section state ('before' | 'during' | 'after' | null)
+  const [hoveredSection, setHoveredSection] = React.useState<'before' | 'during' | 'after' | null>(null);
+  
+  // Mobile accordion active state
+  const [activeMobileSection, setActiveMobileSection] = React.useState<string | null>(null);
+
+  const toggleMobileSection = (section: string) => {
+    if (activeMobileSection === section) {
+      setActiveMobileSection(null);
+    } else {
+      setActiveMobileSection(section);
+    }
+  };
+
   return (
     <section 
-      className="py-20 bg-[#060606] border-t border-slate-900/60 relative overflow-hidden" 
+      className="py-20 bg-[#04080F] border-t border-slate-900/60 relative overflow-hidden" 
       id="dual-stream-pipeline"
     >
       {/* Background radial glow */}
@@ -44,516 +66,712 @@ export const DualStreamPipelineSection = () => {
           </p>
         </div>
 
-        {/* Desktop Layout (Full-width 3-Column Diagram) */}
-        <div className="hidden lg:grid grid-cols-12 gap-y-2 gap-x-8 items-center relative">
+        {/* Title above funnel */}
+        <div className="text-center mb-8 hidden lg:block select-none">
+          <h3 className="text-lg font-black text-slate-300">هذا القمع يعمل لصالح مسؤول المبيعات</h3>
+        </div>
+
+        {/* ======================================================== */}
+        {/* ================= DESKTOP LAYOUT (RTL) ================= */}
+        {/* ======================================================== */}
+        <div className="hidden lg:grid grid-cols-12 gap-8 items-stretch relative text-right" dir="rtl">
           
-          {/* ================= ROW 1 ================= */}
-          {/* Absolute SVG for horizontal connectors inside Row 1 */}
-          <div className="absolute inset-0 pointer-events-none z-0 hidden lg:block">
+          {/* SVG Connector Overlay Behind Columns */}
+          <div className="absolute inset-0 pointer-events-none z-0">
             <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
-              <defs>
-                <marker id="arrow-cyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#06b6d4" />
-                </marker>
-                <marker id="arrow-emerald" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#10b981" />
-                </marker>
-              </defs>
-              {/* Arrow from Right (Growth Before) [x = 69] to Center (Sales Rep) [x = 63.5] */}
-              <path d="M 69 68 L 63.5 68" stroke="rgba(6, 182, 212, 0.45)" strokeWidth="1.5" strokeDasharray="3 3" markerEnd="url(#arrow-cyan)" />
-              {/* Arrow from Left (Monafsat) [x = 31] to Center (Sales Rep) [x = 36.5] */}
-              <path d="M 31 68 L 36.5 68" stroke="rgba(16, 185, 129, 0.45)" strokeWidth="1.5" strokeDasharray="3 3" markerEnd="url(#arrow-emerald)" />
+              {/* Funnel Outline Shape in the Background */}
+              <path 
+                d="M 40 18 Q 50 18 50 18 Q 50 18 60 18 L 56 75 Q 50 75 50 75 Q 50 75 44 75 Z" 
+                fill="rgba(6, 182, 212, 0.01)" 
+                stroke="rgba(6, 182, 212, 0.08)" 
+                strokeWidth="1.5"
+              />
               
-              {/* Flow particles for Row 1 horizontal arrows */}
+              {/* Connector lines from Right (Support Cards) to Center (Funnel stages) */}
+              {/* 1. Before Opportunities -> Outcome of Opportunities (x=68 to x=58) */}
+              <path 
+                d="M 68 22 L 58 22" 
+                stroke={hoveredSection === 'before' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                strokeWidth={hoveredSection === 'before' ? 2 : 1}
+                strokeDasharray="4 4" 
+                className="transition-all duration-300"
+              />
+              {/* 2. During Opportunities -> Middle stages/Meetings (x=68 to x=56) */}
+              <path 
+                d="M 68 50 L 56 50" 
+                stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                strokeWidth={hoveredSection === 'during' ? 2 : 1}
+                strokeDasharray="4 4" 
+                className="transition-all duration-300"
+              />
+              {/* 3. After Opportunities -> Deals (x=68 to x=54) */}
+              <path 
+                d="M 68 76 L 54 76" 
+                stroke={hoveredSection === 'after' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} 
+                strokeWidth={hoveredSection === 'after' ? 2 : 1}
+                strokeDasharray="4 4" 
+                className="transition-all duration-300"
+              />
+
+              {/* Connecting line from Businessman on the left (x=32) to Funnel (x=42) */}
+              <path 
+                d="M 32 48 L 42 48" 
+                stroke="rgba(6, 182, 212, 0.15)" 
+                strokeWidth="1" 
+                strokeDasharray="3 3"
+              />
+
+              {/* Flow particles from Support Cards into Funnel */}
               <circle r="2" fill="#06b6d4" filter="drop-shadow(0 0 2px #06b6d4)">
-                <animateMotion dur="2.2s" repeatCount="indefinite" path="M 69 68 L 63.5 68" />
+                <animateMotion dur="3s" repeatCount="indefinite" path="M 68 22 L 58 22" />
               </circle>
-              <circle r="2" fill="#10b981" filter="drop-shadow(0 0 2px #10b981)">
-                <animateMotion dur="2.2s" repeatCount="indefinite" path="M 31 68 L 36.5 68" />
+              <circle r="2" fill="#06b6d4" filter="drop-shadow(0 0 2px #06b6d4)">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M 68 50 L 56 50" />
+              </circle>
+              <circle r="2" fill="#06b6d4" filter="drop-shadow(0 0 2px #06b6d4)">
+                <animateMotion dur="3s" repeatCount="indefinite" path="M 68 76 L 54 76" />
+              </circle>
+              
+              {/* Connector from Monafsat node (top left) into funnel top (x=44 to x=48) */}
+              <path 
+                d="M 43 14 C 47 14, 47 18, 49 18" 
+                stroke="rgba(16, 185, 129, 0.25)" 
+                strokeWidth="1.2"
+                strokeDasharray="3 3"
+              />
+              <circle r="1.8" fill="#10b981">
+                <animateMotion dur="2.5s" repeatCount="indefinite" path="M 43 14 C 47 14, 47 18, 49 18" />
               </circle>
             </svg>
           </div>
 
-          {/* Row 1 - Right Column: Before Opportunities (Growth Leadership Stream) */}
-          <div className="col-span-4 h-full flex flex-col justify-between">
-            {/* Growth Leadership Header Label */}
-            <div className="flex items-center gap-2 border-b border-slate-900 pb-2 mb-4 select-none">
+          {/* ================= COLUMN 1: SUPPORT CARDS (RIGHT - Renders Right-most in RTL) ================= */}
+          <div className="col-span-4 flex flex-col gap-6 justify-between z-10 border-l border-slate-900/40 pl-6">
+            
+            <div className="flex items-center gap-2 mb-2 select-none">
               <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
-                <Sparkles className="w-4 h-4" />
+                <Users className="w-4 h-4" />
               </div>
               <h3 className="text-sm font-black text-white">كادر فريق النمو الذكي</h3>
             </div>
-            
-            <motion.div 
-              whileHover={{ scale: 1.01 }}
-              className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative flex flex-col justify-between min-h-[170px]"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <h3 className="text-sm font-black text-white">كادر فريق النمو الذكي</h3>
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
-                  نجهز السوق قبل أن يصل لمسؤول المبيعات: بيانات، حسابات مستهدفة، صناع قرار، رسائل، قنوات، وملفات متابعة.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
-                  <span>• تجهيز البيانات والملفات</span>
-                  <span>• تحديد الحسابات وصناع القرار</span>
-                  <span>• تجهيز الرسائل والقنوات</span>
-                </div>
-              </div>
-              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
-                المحرك: تجهيز ما قبل وصول الفرصة
-              </div>
-            </motion.div>
-          </div>
 
-          {/* Row 1 - Center: Client's Sales Representative (Main Beneficiary) */}
-          <div className="col-span-4 h-full flex flex-col justify-between">
-            {/* Visual alignment spacer matching the right column header */}
-            <div className="h-[28px] mb-4 select-none opacity-0 pointer-events-none">محاذاة</div>
-            
-            <motion.div 
-              whileHover={{ scale: 1.01 }}
-              className="p-5 rounded-2xl border border-emerald-500/20 bg-slate-950/40 text-right hover:border-emerald-500/40 transition-all duration-300 shadow-lg relative flex flex-col justify-between min-h-[170px]"
+            {/* 1. Before Opportunities */}
+            <div 
+              className={cn(
+                "p-5 rounded-2xl border transition-all duration-300 flex-1 flex flex-col justify-center cursor-default",
+                hoveredSection === 'before'
+                  ? "border-cyan-500/50 bg-[#07131a]/80 shadow-lg"
+                  : "border-slate-900 bg-slate-950/40"
+              )}
+              onMouseEnter={() => setHoveredSection('before')}
+              onMouseLeave={() => setHoveredSection(null)}
             >
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="p-1.5 rounded-lg bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 shrink-0">
-                    <Users className="w-4 h-4" />
+              <div className="flex items-center justify-between mb-2 select-none">
+                <div className="flex items-center gap-2">
+                  <div className="p-1 rounded bg-cyan-500/10 text-cyan-400">
+                    <Target className="w-3.5 h-3.5" />
                   </div>
-                  <h3 className="text-sm font-black text-white">موظف مبيعات العميل</h3>
+                  <span className="text-[10px] font-black tracking-wider text-cyan-400">
+                    قبل الفرص
+                  </span>
                 </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
-                  لا يبدأ من الصفر، بل يستلم فرصاً جاهزة ومؤهلة مدعومة بكافة البيانات وسياق المحادثات لبدء الإغلاق فوراً.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
-                  <span>• التركيز على الإغلاق والصفقات</span>
-                  <span>• استلام بيانات وسياق الفرص</span>
-                  <span>• توفير وقت البحث والتنقيب</span>
-                </div>
+                <ChevronDown className={cn("w-3.5 h-3.5 text-slate-600 transition-transform duration-300", hoveredSection === 'before' && "rotate-180")} />
               </div>
-              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-emerald-400 font-black">
-                المستفيد الأساسي: يقود المحادثات نحو صفقات
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Row 1 - Left Column: Monafsat Card */}
-          <div className="col-span-4 h-full flex flex-col justify-between">
-            {/* Monafsat Header Label */}
-            <div className="flex items-center gap-2 border-b border-slate-900 pb-2 mb-4 select-none">
-              <div className="p-1.5 rounded-lg bg-emerald-950/40 text-emerald-400 border border-emerald-500/20 shrink-0">
-                <BriefcaseBusiness className="w-4 h-4" />
-              </div>
-              <h3 className="text-sm font-black text-white">كادر فرص منافسات المباشرة</h3>
-            </div>
-            
-            <motion.div 
-              whileHover={{ scale: 1.01 }}
-              className="p-5 rounded-2xl border border-emerald-500/20 bg-slate-950/40 text-right hover:border-emerald-500/40 transition-all duration-300 shadow-lg relative flex flex-col justify-between min-h-[170px]"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <h3 className="text-sm font-black text-white">كادر فرص منافسات المباشرة</h3>
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
-                  يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين داخل القطاعات المستهدفة.
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/5 border border-emerald-500/20 text-emerald-400">فرص مباشرة من السوق</span>
-                  <span>• رصد احتياج وطلبات شراء</span>
-                  <span>• تأهيل وتمرير للفرص</span>
-                </div>
-              </div>
-              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-emerald-400 font-black">
-                الناتج: فرص مباشرة جاهزة للتحريك
-              </div>
-            </motion.div>
-          </div>
-
-          {/* ================= CONNECTOR 1 ================= */}
-          <div className="col-span-12 my-1 relative z-0">
-            <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 40" fill="none" preserveAspectRatio="none">
-              {/* Center Branch (Sales Rep [x = 50] -> Positive Conversations [x = 50]) */}
-              <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(16, 185, 129, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
-              {/* Left Branch (Monafsat [x = 16.6] -> Monafsat bypass [x = 16.6]) */}
-              <line x1="16.6" y1="0" x2="16.6" y2="40" stroke="rgba(16, 185, 129, 0.25)" strokeWidth="1.2" strokeDasharray="4 4" />
-              {/* Right Branch (Growth Staff [x = 83.3] -> During Opportunities [x = 83.3]) */}
-              <line x1="83.3" y1="0" x2="83.3" y2="40" stroke="rgba(6, 182, 212, 0.3)" strokeWidth="1.2" strokeDasharray="4 4" />
+              <h3 className="text-xs font-black text-white mb-2">تجهيز السوق والبيانات والاستهداف</h3>
               
-              {/* Flow particles */}
-              <circle r="2.5" fill="#10b981" filter="drop-shadow(0 0 3px #10b981)">
-                <animateMotion dur="2s" repeatCount="indefinite" path="M 50 0 L 50 40" />
-              </circle>
-              <circle r="2" fill="#10b981" opacity="0.6" filter="drop-shadow(0 0 3px #10b981)">
-                <animateMotion dur="2.5s" repeatCount="indefinite" path="M 16.6 0 L 16.6 40" />
-              </circle>
-              <circle r="2" fill="#06b6d4" opacity="0.6" filter="drop-shadow(0 0 3px #06b6d4)">
-                <animateMotion dur="2.5s" repeatCount="indefinite" path="M 83.3 0 L 83.3 40" />
-              </circle>
-            </svg>
+              {/* Expandable Bullet details */}
+              <AnimatePresence initial={false}>
+                {(hoveredSection === 'before') ? (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-bold border-t border-slate-900/60 pt-2.5 mt-2">
+                      تجهيز البيانات، تحديد الحسابات وصناع القرار، إعداد الرسائل والقنوات.
+                    </p>
+                    <ul className="space-y-1 mt-2 text-[9px] text-slate-500 font-bold">
+                      <li>• تجهيز البيانات والملفات الخاصة بالحسابات المستهدفة</li>
+                      <li>• تحديد الحسابات وصناع القرار وصناع التأثير</li>
+                      <li>• تجهيز الرسائل المخصصة وقنوات التواصل الفعالة</li>
+                    </ul>
+                  </motion.div>
+                ) : (
+                  <p className="text-[10px] text-slate-500 font-bold leading-relaxed">
+                    تجهيز البيانات، تحديد الحسابات وصناع القرار، إعداد الرسائل والقنوات...
+                  </p>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* 2. During Opportunities */}
+            <div 
+              className={cn(
+                "p-5 rounded-2xl border transition-all duration-300 flex-1 flex flex-col justify-center cursor-default",
+                hoveredSection === 'during'
+                  ? "border-cyan-500/50 bg-[#07131a]/80 shadow-lg"
+                  : "border-slate-900 bg-slate-950/40"
+              )}
+              onMouseEnter={() => setHoveredSection('during')}
+              onMouseLeave={() => setHoveredSection(null)}
+            >
+              <div className="flex items-center justify-between mb-2 select-none">
+                <div className="flex items-center gap-2">
+                  <div className="p-1 rounded bg-cyan-500/10 text-cyan-400">
+                    <TrendingUp className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-[10px] font-black tracking-wider text-cyan-400">
+                    أثناء الفرص
+                  </span>
+                </div>
+                <ChevronDown className={cn("w-3.5 h-3.5 text-slate-600 transition-transform duration-300", hoveredSection === 'during' && "rotate-180")} />
+              </div>
+              <h3 className="text-xs font-black text-white mb-2">دعم التحريك والمتابعة والتحويل</h3>
+
+              {/* Expandable Bullet details */}
+              <AnimatePresence initial={false}>
+                {(hoveredSection === 'during') ? (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-bold border-t border-slate-900/60 pt-2.5 mt-2">
+                      دعم الردود، تأهيل الفرص النشطة، توجيه الخطوة التالية.
+                    </p>
+                    <ul className="space-y-1 mt-2 text-[9px] text-slate-500 font-bold">
+                      <li>• فتح قنوات تواصل دافئة وتفاعل مستمر لبناء الاهتمام</li>
+                      <li>• دعم الردود والمحادثات لضمان أعلى نسبة استجابة</li>
+                      <li>• تأهيل وتوجيه الخطوة التالية لبناء الزخم البيعي</li>
+                    </ul>
+                  </motion.div>
+                ) : (
+                  <p className="text-[10px] text-slate-500 font-bold leading-relaxed">
+                    دعم الردود، تأهيل الفرص النشطة، توجيه الخطوة التالية...
+                  </p>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* 3. After Opportunities */}
+            <div 
+              className={cn(
+                "p-5 rounded-2xl border transition-all duration-300 flex-1 flex flex-col justify-center cursor-default",
+                hoveredSection === 'after'
+                  ? "border-cyan-500/50 bg-[#07131a]/80 shadow-lg"
+                  : "border-slate-900 bg-slate-950/40"
+              )}
+              onMouseEnter={() => setHoveredSection('after')}
+              onMouseLeave={() => setHoveredSection(null)}
+            >
+              <div className="flex items-center justify-between mb-2 select-none">
+                <div className="flex items-center gap-2">
+                  <div className="p-1 rounded bg-cyan-500/10 text-cyan-400">
+                    <RefreshCw className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-[10px] font-black tracking-wider text-cyan-400">
+                    بعد الفرص
+                  </span>
+                </div>
+                <ChevronDown className={cn("w-3.5 h-3.5 text-slate-600 transition-transform duration-300", hoveredSection === 'after' && "rotate-180")} />
+              </div>
+              <h3 className="text-xs font-black text-white mb-2">تحليل الأداء والتحسين المستمر</h3>
+
+              {/* Expandable Bullet details */}
+              <AnimatePresence initial={false}>
+                {(hoveredSection === 'after') ? (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="overflow-hidden"
+                  >
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-bold border-t border-slate-900/60 pt-2.5 mt-2">
+                      تحليل الأداء، تطوير الرسائل والاعتراضات، تدريب وتحسين أسبوعي.
+                    </p>
+                    <ul className="space-y-1 mt-2 text-[9px] text-slate-500 font-bold">
+                      <li>• تحليل الأداء والوقوف على أسباب تعثر الصفقات</li>
+                      <li>• تطوير الرسائل والتعامل مع الاعتراضات الشائعة</li>
+                      <li>• تدريب وتحسين مستمر لأداء الفريق بشكل أسبوعي</li>
+                    </ul>
+                  </motion.div>
+                ) : (
+                  <p className="text-[10px] text-slate-500 font-bold leading-relaxed">
+                    تحليل الأداء، تطوير الرسائل والاعتراضات، تدريب وتحسين أسبوعي...
+                  </p>
+                )}
+              </AnimatePresence>
+            </div>
+
           </div>
 
-          {/* ================= ROW 2 ================= */}
-          <div className="col-span-12 grid grid-cols-12 gap-x-8 items-center relative">
-            {/* Absolute SVG for horizontal connectors inside Row 2 */}
-            <div className="absolute inset-0 pointer-events-none z-0 hidden lg:block">
-              <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
-                {/* Arrow from Right (Growth During) [x = 69] to Center (Positive Conversations) [x = 63.5] */}
-                <path d="M 69 50 L 63.5 50" stroke="rgba(6, 182, 212, 0.45)" strokeWidth="1.5" strokeDasharray="3 3" markerEnd="url(#arrow-cyan)" />
+          {/* ================= COLUMN 2: THE FUNNEL (CENTER - Renders Middle in RTL) ================= */}
+          <div className="col-span-4 flex flex-col items-center justify-start z-10 px-2">
+            
+            {/* Top Left Monafsat node */}
+            <div className="w-full flex justify-start pl-8 mb-4">
+              <div 
+                className={cn(
+                  "px-3.5 py-2 rounded-xl border flex items-center gap-2 transition-all duration-300",
+                  hoveredSection === 'before' 
+                    ? "border-emerald-500/50 bg-emerald-950/20 shadow-[0_0_12px_rgba(16,185,129,0.15)] scale-[1.02]" 
+                    : "border-slate-900 bg-slate-950/40"
+                )}
+                onMouseEnter={() => setHoveredSection('before')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <ClipboardList className="w-4 h-4 text-emerald-400" />
+                <div className="text-right">
+                  <h4 className="text-[10px] font-black text-white leading-tight">كادر فرص</h4>
+                  <span className="text-[9px] text-slate-400 font-extrabold leading-none">المنافسات المباشرة</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Funnel Container Box */}
+            <div className="w-full flex flex-col gap-2 relative">
+              
+              {/* Funnel Stage 1: حصيلة الفرص */}
+              <div className="w-full flex justify-center">
+                <div 
+                  className={cn(
+                    "w-full max-w-[280px] py-3.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
+                    hoveredSection === 'before'
+                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.25)] scale-[1.03]"
+                      : "border-cyan-500/20"
+                  )}
+                  onMouseEnter={() => setHoveredSection('before')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span className="text-xs font-black text-white">حصيلة الفرص</span>
+                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                    <Filter className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Funnel Stage 2: فرص جاهزة للتحريك */}
+              <div className="w-full flex justify-center">
+                <div 
+                  className={cn(
+                    "w-[90%] max-w-[252px] py-3 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
+                    hoveredSection === 'during'
+                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] scale-[1.03]"
+                      : "border-cyan-500/20"
+                  )}
+                  onMouseEnter={() => setHoveredSection('during')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span className="text-xs font-black text-cyan-200">فرص جاهزة للتحريك</span>
+                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                    <Target className="w-3 h-3" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Funnel Stage 3: اجتماعات مؤهلة */}
+              <div className="w-full flex justify-center">
+                <div 
+                  className={cn(
+                    "w-[80%] max-w-[224px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
+                    hoveredSection === 'during'
+                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] scale-[1.03]"
+                      : "border-cyan-500/20"
+                  )}
+                  onMouseEnter={() => setHoveredSection('during')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span className="text-xs font-black text-cyan-200">اجتماعات مؤهلة</span>
+                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                    <Users className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Funnel Stage 4: عروض سعر */}
+              <div className="w-full flex justify-center">
+                <div 
+                  className={cn(
+                    "w-[70%] max-w-[196px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#07131a] cursor-default",
+                    hoveredSection === 'during'
+                      ? "border-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.2)] scale-[1.03]"
+                      : "border-cyan-500/20"
+                  )}
+                  onMouseEnter={() => setHoveredSection('during')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span className="text-xs font-black text-cyan-200">عروض سعر</span>
+                  <div className="p-1 rounded-full bg-cyan-950/60 border border-cyan-500/30 text-cyan-400">
+                    <FileText className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Funnel Stage 5: تفاوض */}
+              <div className="w-full flex justify-center">
+                <div 
+                  className={cn(
+                    "w-[60%] max-w-[168px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#051411] cursor-default",
+                    hoveredSection === 'after'
+                      ? "border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] scale-[1.03]"
+                      : "border-emerald-500/20"
+                  )}
+                  onMouseEnter={() => setHoveredSection('after')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span className="text-xs font-black text-emerald-200">تفاوض</span>
+                  <div className="p-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400">
+                    <Handshake className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* Funnel Stage 6: صفقات */}
+              <div className="w-full flex justify-center">
+                <div 
+                  className={cn(
+                    "w-[50%] max-w-[140px] py-2.5 px-4 rounded-xl border flex items-center justify-between transition-all duration-300 bg-[#051411] cursor-default",
+                    hoveredSection === 'after'
+                      ? "border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)] scale-[1.03]"
+                      : "border-emerald-500/20"
+                  )}
+                  onMouseEnter={() => setHoveredSection('after')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <span className="text-xs font-black text-emerald-200">صفقات</span>
+                  <div className="p-1 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-emerald-400">
+                    <CheckCircle className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Bottom Target Card */}
+            <div className="w-full flex flex-col items-center mt-6 z-10">
+              <div 
+                className={cn(
+                  "px-8 py-3.5 rounded-2xl border text-center transition-all duration-300 w-full max-w-[280px] bg-[#0d0d0d] flex items-center justify-center gap-3.5",
+                  hoveredSection === 'after'
+                    ? "border-amber-400 bg-[#141008] shadow-[0_0_20px_rgba(245,158,11,0.25)] scale-[1.02]"
+                    : "border-slate-800"
+                )}
+                onMouseEnter={() => setHoveredSection('after')}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                <div className="p-1.5 rounded-lg bg-amber-500/15 text-amber-400 border border-amber-500/20">
+                  <Target className="w-4 h-4" />
+                </div>
+                <div className="text-right">
+                  <div className="text-[9.5px] text-slate-400 font-extrabold leading-none">
+                    {PIPELINE_CONFIG.targetAmount}
+                  </div>
+                  <div className="text-sm md:text-base font-black text-amber-400 tracking-tight leading-normal mt-0.5">
+                    خلال 90 يوم
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT - Renders Left-most in RTL) ================= */}
+          <div className="col-span-4 flex flex-col justify-start z-10 border-r border-slate-900/40 pr-6">
+            <div className="sticky top-10">
+              
+              <div className="flex items-center gap-2 mb-4">
+                <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
+                  <Users className="w-4 h-4" />
+                </div>
+                <h3 className="text-sm font-black text-white">مسؤول مبيعات العميل</h3>
+              </div>
+
+              {/* Saudi Business Professional Silhouette Vector Illustration */}
+              <div className="w-full max-w-[200px] mx-auto mb-6 bg-gradient-to-b from-slate-950/80 to-slate-900/10 rounded-3xl p-3 border border-slate-900 relative overflow-hidden group shadow-lg">
+                <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" />
                 
-                {/* Flow particles */}
-                <circle r="2" fill="#06b6d4" filter="drop-shadow(0 0 2px #06b6d4)">
-                  <animateMotion dur="2.2s" repeatCount="indefinite" path="M 69 50 L 63.5 50" />
-                </circle>
+                {/* SVG Silhouette */}
+                <svg viewBox="0 0 200 280" className="w-full h-auto drop-shadow-[0_0_15px_rgba(6,182,212,0.15)]" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Background radial glow */}
+                  <circle cx="100" cy="110" r="70" fill="url(#avatar-glow-new)" opacity="0.35" />
+                  
+                  {/* Agal */}
+                  <ellipse cx="100" cy="38" rx="26" ry="5.5" fill="#1e293b" stroke="#06b6d4" strokeWidth="2.5" />
+                  <ellipse cx="100" cy="35" rx="28" ry="6.5" fill="#0f172a" stroke="#10b981" strokeWidth="1" />
+                  
+                  {/* Ghutra drape */}
+                  <path d="M 100 25 C 72 25, 64 55, 62 105 C 60 150, 68 190, 70 220 L 85 230 C 95 230, 100 220, 100 220 C 100 220, 105 230, 115 230 L 130 220 C 132 190, 140 150, 138 105 C 136 55, 128 25, 100 25 Z" fill="url(#ghutra-grad-new)" stroke="#06b6d4" strokeWidth="1.2" />
+                  
+                  {/* Face outline */}
+                  <path d="M 100 45 C 83 45, 83 80, 100 90 C 117 90, 117 80, 100 45 Z" fill="url(#face-grad-new)" />
+                  
+                  {/* Inner Ghutra opening fold */}
+                  <path d="M 86 45 C 82 58, 82 85, 100 98 C 118 85, 118 58, 114 45" stroke="#334155" strokeWidth="1.2" fill="none" />
+                  
+                  {/* Thobe collar & shoulders */}
+                  <path d="M 72 200 L 60 260 L 140 260 L 128 200 C 120 175, 115 170, 100 170 C 85 170, 80 175, 72 200 Z" fill="url(#thobe-grad-new)" stroke="#10b981" strokeWidth="1.2" />
+                  
+                  {/* Collar details */}
+                  <path d="M 91 170 L 100 185 L 109 170" stroke="#06b6d4" strokeWidth="1.5" fill="none" />
+
+                  {/* Tablet representation (holding a glowing device) */}
+                  <path d="M 80 215 L 120 215 L 125 245 L 75 245 Z" fill="#0f172a" stroke="#06b6d4" strokeWidth="1.5" />
+                  <path d="M 83 218 L 117 218 L 121 242 L 79 242 Z" fill="#020617" />
+                  <line x1="88" y1="222" x2="112" y2="222" stroke="rgba(6,182,212,0.5)" strokeWidth="1" />
+                  <line x1="88" y1="226" x2="104" y2="226" stroke="rgba(6,182,212,0.3)" strokeWidth="1" />
+                  
+                  {/* Hands holding tablet */}
+                  <path d="M 72 235 C 75 235, 77 240, 75 243" stroke="#e2e8f0" strokeWidth="1.5" fill="none" />
+                  <path d="M 128 235 C 125 235, 123 240, 125 243" stroke="#e2e8f0" strokeWidth="1.5" fill="none" />
+
+                  <defs>
+                    <linearGradient id="ghutra-grad-new" x1="100" y1="25" x2="100" y2="230" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#f8fafc" />
+                      <stop offset="60%" stopColor="#e2e8f0" />
+                      <stop offset="100%" stopColor="#94a3b8" />
+                    </linearGradient>
+                    <linearGradient id="face-grad-new" x1="100" y1="45" x2="100" y2="90" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#1e293b" />
+                      <stop offset="100%" stopColor="#0f172a" />
+                    </linearGradient>
+                    <linearGradient id="thobe-grad-new" x1="100" y1="170" x2="100" y2="260" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#0f172a" />
+                      <stop offset="50%" stopColor="#1e293b" />
+                      <stop offset="100%" stopColor="#0f172a" />
+                    </linearGradient>
+                    <radialGradient id="avatar-glow-new" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.45" />
+                      <stop offset="100%" stopColor="#000000" stopOpacity="0" />
+                    </radialGradient>
+                  </defs>
+                </svg>
+              </div>
+
+              {/* Descriptions & Labels */}
+              <div className="bg-slate-950/60 p-4 rounded-2xl border border-slate-900 shadow-md">
+                <p className="text-xs text-slate-300 leading-relaxed font-bold">
+                  يبدأ من فرص أجهز، مدعومة بالبيانات والسياق، ويتحرك بها نحو الاجتماعات والعروض والصفقات.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {/* ======================================================== */}
+        {/* ================= MOBILE LAYOUT (RTL) ================== */}
+        {/* ======================================================== */}
+        <div className="lg:hidden flex flex-col gap-6 max-w-md mx-auto text-right" dir="rtl">
+          
+          {/* 1. Client's Sales Representative (Top mobile) */}
+          <div className="p-4 rounded-2xl border border-slate-900 bg-slate-950/40 flex items-center gap-4">
+            {/* Small Saudi avatar */}
+            <div className="w-14 h-14 bg-slate-950 rounded-xl border border-slate-800 shrink-0 p-1 flex items-center justify-center">
+              <svg viewBox="0 0 200 280" className="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="110" r="70" fill="#06b6d4" opacity="0.1" />
+                <ellipse cx="100" cy="38" rx="26" ry="5.5" fill="#1e293b" stroke="#06b6d4" strokeWidth="2.5" />
+                <path d="M 100 25 C 72 25, 64 55, 62 105 C 60 150, 68 190, 70 220 L 85 230 C 95 230, 100 220, 100 220 C 100 220, 105 230, 115 230 L 130 220 C 132 190, 140 150, 138 105 C 136 55, 128 25, 100 25 Z" fill="#e2e8f0" stroke="#06b6d4" strokeWidth="1" />
+                <path d="M 100 45 C 83 45, 83 80, 100 90 C 117 90, 117 80, 100 45 Z" fill="#0f172a" />
+                <path d="M 72 200 L 60 260 L 140 260 L 128 200 C 120 175, 115 170, 100 170 C 85 170, 80 175, 72 200 Z" fill="#1e293b" stroke="#10b981" strokeWidth="1" />
               </svg>
             </div>
-
-            {/* Row 2 - Right: During Opportunities Card */}
-            <div className="col-span-4 h-full flex flex-col justify-between">
-              <motion.div 
-                whileHover={{ scale: 1.01 }}
-                className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative h-full flex flex-col justify-between min-h-[150px]"
-              >
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <h3 className="text-sm font-black text-white">أثناء الفرص</h3>
-                  </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
-                    ندعم مسؤول المبيعات أثناء تحرك الفرصة: ردود مناسبة، تأهيل، متابعة، وتحويل الاهتمام إلى اجتماع.
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
-                    <span>• دعم الردود والمحادثات</span>
-                    <span>• تأهيل الفرص النشطة</span>
-                    <span>• توجيه الخطوة التالية</span>
-                  </div>
-                </div>
-                <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
-                  الدعم: دعم وتحريك الفرصة وهي نشطة
-                </div>
-              </motion.div>
+            <div>
+              <h3 className="text-xs font-black text-white">مسؤول مبيعات العميل</h3>
+              <p className="text-[10px] text-slate-400 font-bold leading-relaxed mt-0.5">
+                يبدأ من فرص أجهز، مدعومة بالبيانات والسياق، ويتحرك بها نحو الصفقات.
+              </p>
             </div>
+          </div>
 
-            {/* Row 2 - Center: Positive Conversations Card */}
-            <div className="col-span-4 h-full flex flex-col justify-between">
-              <motion.div 
-                whileHover={{ scale: 1.01 }}
-                className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative flex flex-col justify-between min-h-[150px] h-full"
-              >
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="p-1.5 rounded-lg bg-cyan-950/40 text-cyan-400 border border-cyan-500/20 shrink-0">
-                      <MessageSquare className="w-4 h-4" />
-                    </div>
-                    <h3 className="text-sm font-black text-white">المحادثات الإيجابية مع عملاء محتملين</h3>
-                  </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
-                    فتح قنوات تواصل دافئة وتفاعل مستمر لبناء الاهتمام وتسهيل تحويل الحسابات المستهدفة إلى فرصة حقيقية.
-                  </p>
-                  <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
-                    <span className="px-2 py-0.5 rounded bg-cyan-500/5 border border-cyan-500/20 text-cyan-400 font-black">خاص بكادر النمو الذكي</span>
-                    <span>• بناء الاهتمام والتفاعل</span>
-                    <span>• تنظيم ومتابعة التواصل</span>
-                  </div>
-                </div>
-                <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
-                  المرحلة: تنشيط الحسابات وصناعة الاهتمام البيعي
-                </div>
-              </motion.div>
+          {/* 2. Sources Node (Mobile stacked layout) */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="p-3 rounded-xl border border-slate-900 bg-slate-950/40 text-center">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-400 mx-auto mb-1" />
+              <h4 className="text-[10px] font-black text-white">كادر فريق النمو الذكي</h4>
+              <span className="text-[8.5px] text-slate-500 font-bold block mt-0.5">محادثات مؤهلة</span>
             </div>
-
-            {/* Row 2 - Left: Empty Spacer */}
-            <div className="col-span-4 h-full"></div>
-          </div>
-
-          {/* ================= CONNECTOR 2 ================= */}
-          <div className="col-span-12 my-1 relative z-0">
-            <svg className="w-full h-12 overflow-visible" viewBox="0 0 100 40" fill="none" preserveAspectRatio="none">
-              {/* Center Branch (Positive Conversations [x = 50] -> Opportunity Pool [x = 50]) */}
-              <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(6, 182, 212, 0.4)" strokeWidth="1.5" strokeDasharray="4 4" />
-              {/* Left Branch (Monafsat bypass [x = 16.6] -> Opportunity Pool [x = 50]) */}
-              <path d="M 16.6 0 C 16.6 20, 50 20, 50 40" stroke="rgba(16, 185, 129, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
-              {/* Right Branch (During Opportunities [x = 83.3] -> After Opportunities [x = 83.3]) */}
-              <line x1="83.3" y1="0" x2="83.3" y2="40" stroke="rgba(6, 182, 212, 0.3)" strokeWidth="1.2" strokeDasharray="4 4" />
-              
-              {/* Flow particles */}
-              <circle r="2.5" fill="#06b6d4" filter="drop-shadow(0 0 3px #06b6d4)">
-                <animateMotion dur="2s" repeatCount="indefinite" path="M 50 0 L 50 40" />
-              </circle>
-              <circle r="2.5" fill="#10b981" filter="drop-shadow(0 0 3px #10b981)">
-                <animateMotion dur="2.4s" repeatCount="indefinite" path="M 16.6 0 C 16.6 20, 50 20, 50 40" />
-              </circle>
-              <circle r="2" fill="#06b6d4" opacity="0.6" filter="drop-shadow(0 0 3px #06b6d4)">
-                <animateMotion dur="2.5s" repeatCount="indefinite" path="M 83.3 0 L 83.3 40" />
-              </circle>
-            </svg>
-          </div>
-
-          {/* ================= ROW 3 ================= */}
-          {/* Row 3 - Right: After Opportunities Card */}
-          <div className="col-span-4 h-full flex flex-col justify-between">
-            <motion.div 
-              whileHover={{ scale: 1.01 }}
-              className="p-5 rounded-2xl border border-cyan-500/20 bg-slate-950/40 text-right hover:border-cyan-500/40 transition-all duration-300 shadow-lg relative h-full flex flex-col justify-between min-h-[150px]"
-            >
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  <h3 className="text-sm font-black text-white">بعد الفرص</h3>
-                </div>
-                <p className="text-[11px] text-slate-400 leading-relaxed font-bold">
-                  نحلل ما حدث بعد كل حركة: أين تعثرت الفرصة؟ كيف نطور الرسالة؟ وكيف نرفع التحويل في الأسبوع التالي؟
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2 text-[9px] text-slate-400 font-extrabold">
-                  <span>• تحليل الأداء والتعثر</span>
-                  <span>• تطوير الرسائل والاعتراضات</span>
-                  <span>• تدريب وتحسين أسبوعي</span>
-                </div>
-              </div>
-              <div className="mt-3 pt-3 border-t border-slate-900 text-[10px] text-cyan-400 font-black">
-                التطوير: تحليل وتحسين وتطوير بعد الحركة
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Row 3 - Center: Opportunity Pool Card */}
-          <div className="col-span-4 flex flex-col items-center">
-            <span className="text-[10px] text-cyan-400 font-black mb-1.5 select-none tracking-wider px-2 py-0.5 bg-cyan-500/5 border border-cyan-500/15 rounded-md">
-              نقطة التلاقي
-            </span>
-            <div 
-              className="px-10 py-5 rounded-3xl border border-cyan-500/30 bg-[#081822] shadow-[0_0_20px_rgba(6,182,212,0.25)] flex items-center gap-3.5 text-right w-full justify-center max-w-sm"
-            >
-              <div className="p-2.5 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 text-cyan-300 border border-cyan-500/20">
-                <Layers className="w-5.5 h-5.5" />
-              </div>
-              <div>
-                <h3 className="text-base font-black text-white">حصيلة الفرص</h3>
-                <p className="text-[10.5px] text-slate-400 mt-0.5 font-bold">محادثات مؤهلة + فرص مباشرة</p>
-              </div>
+            <div className="p-3 rounded-xl border border-slate-900 bg-slate-950/40 text-center">
+              <ClipboardList className="w-3.5 h-3.5 text-emerald-400 mx-auto mb-1" />
+              <h4 className="text-[10px] font-black text-white">كادر فرص منافسات</h4>
+              <span className="text-[8.5px] text-slate-500 font-bold block mt-0.5">فرص مباشرة</span>
             </div>
-            <p className="text-[10px] text-slate-500 font-extrabold mt-2 text-center select-none">
-              تتلاقى هنا محادثات النمو الذكي وفرص منافسات المباشرة.
-            </p>
           </div>
 
-          {/* Row 3 - Left: Empty Spacer */}
-          <div className="col-span-4 h-full"></div>
-
-          {/* ================= CONNECTOR 3 ================= */}
-          <div className="col-span-12 my-1 relative z-0">
-            <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 40" fill="none" preserveAspectRatio="none">
-              {/* Pool (x = 50) -> Pipeline (x = 50) */}
-              <line x1="50" y1="0" x2="50" y2="40" stroke="rgba(6, 182, 212, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
-              {/* After Opportunities [x = 83.3] -> Pipeline top-center (feedback loop) */}
-              <path d="M 83.3 0 C 83.3 20, 50 20, 50 40" stroke="rgba(6, 182, 212, 0.2)" strokeWidth="1.5" strokeDasharray="4 4" strokeOpacity="0.6" />
-
-              {/* Flow particles */}
-              <circle r="2.5" fill="#06b6d4" filter="drop-shadow(0 0 3px #06b6d4)">
-                <animateMotion dur="1.8s" repeatCount="indefinite" path="M 50 0 L 50 40" />
-              </circle>
-              <circle r="2" fill="#06b6d4" opacity="0.5" filter="drop-shadow(0 0 2px #06b6d4)">
-                <animateMotion dur="3s" repeatCount="indefinite" path="M 83.3 0 C 83.3 20, 50 20, 50 40" />
-              </circle>
-            </svg>
+          {/* Arrow */}
+          <div className="flex justify-center -my-2">
+            <ArrowDown className="w-4 h-4 text-slate-800" />
           </div>
 
-          {/* ================= ROW 4 ================= */}
-          {/* Row 4 - Right: Empty */}
-          <div className="col-span-4"></div>
+          {/* 3. Central Meeting Point */}
+          <div className="p-4 rounded-xl border border-cyan-500/20 bg-[#07131a] text-center">
+            <h3 className="text-xs font-black text-white mb-0.5 flex items-center justify-center gap-1.5">
+              <Layers className="w-4 h-4 text-cyan-400" />
+              حصيلة الفرص
+            </h3>
+            <p className="text-[9.5px] text-slate-300 font-extrabold">محادثات مؤهلة + فرص مباشرة</p>
+          </div>
 
-          {/* Row 4 - Center: Pipeline Steps (Horizontal Row) */}
-          <div className="col-span-4 flex justify-center items-center gap-2 w-full max-w-lg mx-auto z-10">
+          {/* Arrow */}
+          <div className="flex justify-center -my-2">
+            <ArrowDown className="w-4 h-4 text-slate-800" />
+          </div>
+
+          {/* 4. Vertical Stepper */}
+          <div className="space-y-3 relative before:absolute before:right-6 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-900/60 z-0">
             {[
-              { label: "فرص جاهزة للتحريك", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
-              { label: "اجتماعات مؤهلة", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
-              { label: "عروض سعر", color: "from-cyan-500/10 to-cyan-500/5 text-cyan-300 border-cyan-500/20" },
-              { label: "تفاوض", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
-              { label: "صفقات", color: "from-emerald-500/10 to-emerald-500/5 text-emerald-300 border-emerald-500/20" },
-            ].map((step, idx) => (
-              <React.Fragment key={idx}>
-                <div className={cn(
-                  "flex-1 text-center py-2 px-1.5 rounded-xl border bg-gradient-to-b text-[9.5px] font-black tracking-wide leading-tight",
-                  step.color
-                )}>
-                  {step.label}
+              { id: "m-ready", label: "فرص جاهزة للتحريك", color: "border-cyan-500/10 text-cyan-200" },
+              { id: "m-meetings", label: "اجتماعات مؤهلة", color: "border-cyan-500/10 text-cyan-200" },
+              { id: "m-offers", label: "عروض سعر", color: "border-cyan-500/10 text-cyan-200" },
+              { id: "m-negotiate", label: "تفاوض", color: "border-emerald-500/10 text-emerald-200" },
+              { id: "m-deals", label: "صفقات", color: "border-emerald-500/10 text-emerald-200" }
+            ].map((stage, idx) => (
+              <div key={stage.id} className="flex items-center gap-4 relative z-10 pr-2">
+                {/* Bullet node */}
+                <div className="w-8 h-8 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center text-[10px] font-black text-slate-400 shrink-0">
+                  {idx + 1}
                 </div>
-                {idx < 4 && (
-                  <ArrowDown className="w-3.5 h-3.5 text-slate-700 shrink-0 rotate-90" />
-                )}
-              </React.Fragment>
+                <div className={cn("flex-1 py-2.5 px-4 rounded-xl border bg-gradient-to-b from-slate-950/60 to-slate-950/20 text-xs font-black", stage.color)}>
+                  {stage.label}
+                </div>
+              </div>
             ))}
           </div>
 
-          {/* Row 4 - Left: Empty */}
-          <div className="col-span-4"></div>
-
-          {/* ================= CONNECTOR 4 ================= */}
-          <div className="col-span-12 my-1 relative z-0">
-            <svg className="w-full h-8 overflow-visible" viewBox="0 0 100 30" fill="none" preserveAspectRatio="none">
-              <line x1="50" y1="0" x2="50" y2="30" stroke="rgba(245, 158, 11, 0.35)" strokeWidth="1.5" strokeDasharray="4 4" />
-              <circle r="2.5" fill="#f59e0b" filter="drop-shadow(0 0 3px #f59e0b)">
-                <animateMotion dur="1.5s" repeatCount="indefinite" path="M 50 0 L 50 30" />
-              </circle>
-            </svg>
+          {/* Arrow */}
+          <div className="flex justify-center -my-2">
+            <ArrowDown className="w-4 h-4 text-slate-800" />
           </div>
 
-          {/* ================= ROW 5 ================= */}
-          {/* Row 5 - Left: Empty */}
-          <div className="col-span-4"></div>
-
-          {/* Row 5 - Center: Target Card */}
-          <div className="col-span-4 flex flex-col items-center z-10">
-            <div 
-              className="px-10 py-5 rounded-2xl border border-slate-800 bg-[#0d0d0d] text-center shadow-[0_0_15px_rgba(245,158,11,0.08)]"
-            >
-              <div className="flex justify-center mb-1">
-                <div className="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                  <Target className="w-4 h-4" />
-                </div>
-              </div>
-              <div className="text-2xl md:text-3xl font-black text-amber-400 tracking-tight">
-                {PIPELINE_CONFIG.targetAmount}
-              </div>
-              <div className="text-xs text-slate-300 font-extrabold mt-1">
-                {PIPELINE_CONFIG.targetPeriod}
-              </div>
-            </div>
-            <p className="text-[10px] text-slate-500 font-bold mt-3 text-center max-w-xs leading-normal select-none">
-              كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم.
-            </p>
+          {/* 5. Target Card (Mobile) */}
+          <div className="p-4 rounded-xl border border-slate-800 bg-[#0d0d0d] text-center">
+            <div className="text-sm font-black text-amber-400">{PIPELINE_CONFIG.targetAmount}</div>
+            <div className="text-[9px] text-slate-300 font-bold mt-0.5">خلال 90 يوم</div>
           </div>
 
-          {/* Row 5 - Right: Empty */}
-          <div className="col-span-4"></div>
-
-        </div>
-
-        {/* Mobile / Tablet Layout (Vertical Stepper accordion flow) */}
-        <div className="lg:hidden flex flex-col gap-5 max-w-lg mx-auto">
-          
-          <div className="bg-slate-950/45 border border-slate-900 rounded-2xl p-5 mb-3 text-right">
-            <h3 className="text-base font-black text-white mb-2">مصدران للفرص… ومسار واحد نحو المستهدف</h3>
-            <p className="text-xs text-slate-400 leading-relaxed mb-3">
-              نغذي موظف مبيعاتك من مسارين متوازيين: كادر فريق النمو الذكي يفتح محادثات مؤهلة من خلال البيانات، الرسائل، والمتابعة. وكادر فرص منافسات المباشرة يرصد فرصاً مباشرة من السوق واحتياجات قائمة. ثم تلتقي هذه الفرص في حصيلة واحدة، ليبدأ فريق مبيعاتك من فرص أجهز وأقرب للتحويل.
-            </p>
-            <p className="text-[11px] text-cyan-400 font-bold border-t border-slate-900 pt-3">
-              نحن لا نزيد العبء على موظف المبيعات… نحن نزيد حصيلة الفرص التي تصل إليه، ثم نساعده على تحويلها إلى صفقات.
-            </p>
-          </div>
-
-          {/* Mobile vertical flow cards */}
-          <div className="space-y-4">
+          {/* 6. Support Accordions (Mobile Bottom) */}
+          <div className="space-y-2.5 border-t border-slate-900 pt-5 mt-2">
+            <h4 className="text-xs font-black text-slate-300 mb-2">بطاقات الدعم والتطوير:</h4>
             
-            {/* 1. Monafsat Card */}
-            <div className="p-4 rounded-xl border border-emerald-500/20 bg-slate-950/40 text-right">
-              <h3 className="text-xs font-black text-emerald-400 mb-1 flex items-center gap-2">
-                <BriefcaseBusiness className="w-3.5 h-3.5" />
-                كادر فرص منافسات المباشرة
-              </h3>
-              <p className="text-[10px] text-slate-400 leading-normal">
-                يرصد فرصاً من السوق السعودي لدى شركات وجهات لديها احتياج قائم، طلب شراء، أو تبحث عن موردين.
-              </p>
-              <div className="mt-2 text-[9px] text-emerald-300 font-black">الناتج: فرص مباشرة جاهزة للتحريك</div>
+            {/* Accordion 1: Before */}
+            <div className="border border-slate-900 rounded-xl overflow-hidden bg-slate-950/40">
+              <button 
+                onClick={() => toggleMobileSection('before')}
+                className="w-full p-4 flex items-center justify-between text-right"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-[8.5px] font-black tracking-wider text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded">
+                    قبل الفرص
+                  </span>
+                  <span className="text-xs font-black text-white">كادر فريق النمو الذكي</span>
+                </div>
+                {activeMobileSection === 'before' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+              </button>
+              
+              <AnimatePresence initial={false}>
+                {activeMobileSection === 'before' && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="px-4 pb-4 pt-1 text-[10.5px] text-slate-400 font-bold border-t border-slate-900/60 leading-relaxed">
+                      <p className="mb-2 text-slate-300">تجهيز البيانات، تحديد الحسابات وصناع القرار، إعداد الرسائل والقنوات.</p>
+                      <ul className="space-y-1 mt-2 text-[9.5px]">
+                        <li>• تجهيز البيانات والملفات الخاصة بالحسابات المستهدفة</li>
+                        <li>• تحديد الحسابات وصناع القرار وصناع التأثير</li>
+                        <li>• تجهيز الرسائل المخصصة وقنوات التواصل الفعالة</li>
+                      </ul>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
+            {/* Accordion 2: During */}
+            <div className="border border-slate-900 rounded-xl overflow-hidden bg-slate-950/40">
+              <button 
+                onClick={() => toggleMobileSection('during')}
+                className="w-full p-4 flex items-center justify-between text-right"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-[8.5px] font-black tracking-wider text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded">
+                    أثناء الفرص
+                  </span>
+                  <span className="text-xs font-black text-white">أثناء الفرص</span>
+                </div>
+                {activeMobileSection === 'during' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+              </button>
 
-            {/* 2. Smart Growth Team Staff */}
-            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
-              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                كادر فريق النمو الذكي
-              </h3>
-              <p className="text-[10px] text-slate-400 leading-normal">
-                نجهز السوق قبل أن يصل لمسؤول المبيعات: بيانات، حسابات مستهدفة، صناع قرار، رسائل، وقنوات.
-              </p>
-              <div className="mt-2 text-[9px] text-cyan-300 font-black">الدور: تجهيز ما قبل وصول الفرصة</div>
+              <AnimatePresence initial={false}>
+                {activeMobileSection === 'during' && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="px-4 pb-4 pt-1 text-[10.5px] text-slate-400 font-bold border-t border-slate-900/60 leading-relaxed">
+                      <p className="mb-2 text-slate-300">دعم الردود، تأهيل الفرص النشطة، توجيه الخطوة التالية.</p>
+                      <ul className="space-y-1 mt-2 text-[9.5px]">
+                        <li>• فتح قنوات تواصل دافئة وتفاعل مستمر لبناء الاهتمام</li>
+                        <li>• دعم الردود والمحادثات لضمان أعلى نسبة استجابة</li>
+                        <li>• تأهيل وتوجيه الخطوة التالية لبناء الزخم البيعي</li>
+                      </ul>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
+            {/* Accordion 3: After */}
+            <div className="border border-slate-900 rounded-xl overflow-hidden bg-slate-950/40">
+              <button 
+                onClick={() => toggleMobileSection('after')}
+                className="w-full p-4 flex items-center justify-between text-right"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-[8.5px] font-black tracking-wider text-cyan-400 bg-cyan-500/10 px-1.5 py-0.5 rounded">
+                    بعد الفرص
+                  </span>
+                  <span className="text-xs font-black text-white">بعد الفرص</span>
+                </div>
+                {activeMobileSection === 'after' ? <ChevronUp className="w-4 h-4 text-slate-400" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
+              </button>
 
-            {/* 3. Client's Sales Rep */}
-            <div className="p-4 rounded-xl border border-emerald-500/20 bg-slate-950/40 text-right">
-              <h3 className="text-xs font-black text-emerald-400 mb-1 flex items-center gap-2">
-                <Users className="w-3.5 h-3.5" />
-                موظف مبيعات العميل
-              </h3>
-              <p className="text-[10px] text-slate-400 leading-normal">
-                لا يبدأ من الصفر، بل يستلم فرصاً جاهزة ومؤهلة مدعومة بكافة البيانات وسياق المحادثات لبدء الإغلاق فوراً.
-              </p>
-              <div className="mt-2 text-[9px] text-emerald-300 font-black">الدور: التركيز على الإغلاق والصفقات</div>
-            </div>
-
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
-
-            {/* 4. Positive Conversations */}
-            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
-              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
-                <MessageSquare className="w-3.5 h-3.5" />
-                المحادثات الإيجابية مع عملاء محتملين
-              </h3>
-              <p className="text-[10px] text-slate-400 leading-normal">
-                فتح قنوات تواصل دافئة وتفاعل مستمر لبناء الاهتمام وتسهيل تحويل الحسابات المستهدفة إلى فرصة حقيقية. (خاص بكادر النمو الذكي).
-              </p>
-              <div className="mt-2 text-[9px] text-cyan-300 font-black">المرحلة: تنشيط الحسابات وصناعة الاهتمام</div>
-            </div>
-
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
-
-            {/* 5. Opportunity Pool */}
-            <div className="p-4 rounded-xl border border-cyan-500/30 bg-[#081822] text-right text-center">
-              <h3 className="text-xs font-black text-white mb-1 flex items-center justify-center gap-2">
-                <Layers className="w-4 h-4 text-cyan-400" />
-                حصيلة الفرص
-              </h3>
-              <p className="text-[10px] text-slate-300 leading-normal font-bold">
-                محادثات مؤهلة + فرص مباشرة
-              </p>
-              <p className="text-[9px] text-slate-500 mt-1">تتلاقى هنا محادثات النمو الذكي وفرص منافسات المباشرة.</p>
-            </div>
-
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
-
-            {/* 6. During Opportunities */}
-            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
-              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                أثناء الفرص (دعم وتحريك)
-              </h3>
-              <p className="text-[10px] text-slate-400 leading-normal">
-                ندعم مسؤول المبيعات أثناء تحرك الفرصة: ردود مناسبة، تأهيل، متابعة، وتحويل الاهتمام إلى اجتماع.
-              </p>
-              <div className="mt-2 text-[9px] text-cyan-300 font-black">الدور: دعم وتحريك الفرصة وهي نشطة</div>
-            </div>
-
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
-
-            {/* 7. After Opportunities */}
-            <div className="p-4 rounded-xl border border-cyan-500/20 bg-slate-950/40 text-right">
-              <h3 className="text-xs font-black text-cyan-400 mb-1 flex items-center gap-2">
-                <Sparkles className="w-3.5 h-3.5" />
-                بعد الفرص (تحليل وتطوير)
-              </h3>
-              <p className="text-[10px] text-slate-400 leading-normal">
-                نحلل ما حدث بعد كل حركة: أين تعثرت الفرصة؟ كيف نطور الرسالة؟ وكيف نرفع التحويل؟
-              </p>
-              <div className="mt-2 text-[9px] text-cyan-300 font-black">الدور: تحليل وتحسين وتطوير بعد الحركة</div>
-            </div>
-
-            <div className="flex justify-center"><ArrowDown className="w-4 h-4 text-slate-700" /></div>
-
-            {/* 8. Target */}
-            <div className="p-5 rounded-xl border border-slate-800 bg-[#0d0d0d] text-center">
-              <div className="text-lg font-black text-amber-400">{PIPELINE_CONFIG.targetAmount}</div>
-              <div className="text-[10px] text-slate-300 font-bold mt-0.5">{PIPELINE_CONFIG.targetPeriod}</div>
-              <p className="text-[9px] text-slate-500 font-bold mt-2">كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم.</p>
+              <AnimatePresence initial={false}>
+                {activeMobileSection === 'after' && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="px-4 pb-4 pt-1 text-[10.5px] text-slate-400 font-bold border-t border-slate-900/60 leading-relaxed">
+                      <p className="mb-2 text-slate-300">تحليل الأداء، تطوير الرسائل والاعتراضات، تدريب وتحسين أسبوعي.</p>
+                      <ul className="space-y-1 mt-2 text-[9.5px]">
+                        <li>• تحليل الأداء والوقوف على أسباب تعثر الصفقات</li>
+                        <li>• تطوير الرسائل والتعامل مع الاعتراضات الشائعة</li>
+                        <li>• تدريب وتحسين مستمر لأداء الفريق بشكل أسبوعي</li>
+                      </ul>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
 
           </div>
 
         </div>
 
-        {/* Growth Leadership Partner Card (Relocated to full-width footer of this section) */}
+        {/* ======================================================== */}
+        {/* ==================== FOOTER CARD ======================= */}
+        {/* ======================================================== */}
         <div className="mt-16 bg-gradient-to-br from-slate-950/80 to-slate-900/20 border border-slate-900 rounded-3xl p-6 md:p-8 text-right relative overflow-hidden">
           <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500/40 via-emerald-500/40 to-transparent" />
           
@@ -563,7 +781,7 @@ export const DualStreamPipelineSection = () => {
           </div>
           
           <p className="text-xs md:text-sm text-slate-400 leading-relaxed mb-6 font-bold max-w-4xl">
-            لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
+            لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء اصطناعي، وفرص منافسات المباشرة.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-3.5 text-xs text-slate-300 font-bold">
