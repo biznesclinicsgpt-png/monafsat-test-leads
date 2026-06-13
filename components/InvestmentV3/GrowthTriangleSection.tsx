@@ -340,7 +340,10 @@ const ClientSalesInteractiveTriangle = () => {
                                     <motion.button
                                         key={node.id}
                                         type="button"
-                                        className="absolute z-20 -translate-x-1/2 -translate-y-1/2 text-center outline-none"
+                                        className={cn(
+                                            'absolute z-20 -translate-x-1/2 -translate-y-1/2 text-center outline-none',
+                                            isCenter ? 'h-24 w-24 md:h-32 md:w-32' : 'h-16 w-16 md:h-20 md:w-20'
+                                        )}
                                         style={position}
                                         initial={{ opacity: 0, scale: 0.7 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
@@ -366,7 +369,7 @@ const ClientSalesInteractiveTriangle = () => {
                                                 scale: { duration: 0.2 },
                                             }}
                                             className={cn(
-                                                'mx-auto flex items-center justify-center rounded-full border bg-slate-950/95 text-white transition-all duration-300',
+                                                'flex h-full w-full items-center justify-center rounded-full border bg-slate-950/95 text-white transition-all duration-300',
                                                 isCenter ? 'h-24 w-24 md:h-32 md:w-32' : 'h-16 w-16 md:h-20 md:w-20',
                                                 activeNode ? `${palette.border} ${palette.bg} ${palette.shadow}` : 'border-slate-800/80 shadow-[0_0_18px_rgba(15,23,42,0.6)]'
                                             )}
@@ -377,14 +380,15 @@ const ClientSalesInteractiveTriangle = () => {
                                         </motion.div>
                                         <span
                                             className={cn(
-                                                'mt-3 block whitespace-nowrap text-[11px] font-extrabold md:text-sm',
+                                                'pointer-events-none absolute left-1/2 block -translate-x-1/2 whitespace-nowrap text-[11px] font-extrabold md:text-sm',
+                                                'top-full mt-3',
                                                 activeNode ? palette.text : 'text-slate-300'
                                             )}
                                         >
                                             {node.title}
                                         </span>
                                         {isCenter && (
-                                            <span className="mt-1 block whitespace-nowrap text-[10px] font-bold text-slate-500 md:text-xs">
+                                            <span className="pointer-events-none absolute left-1/2 top-[calc(100%+2.25rem)] block -translate-x-1/2 whitespace-nowrap text-[10px] font-bold text-slate-500 md:text-xs">
                                                 محادثات ← اجتماعات ← عروض ← صفقات
                                             </span>
                                         )}
