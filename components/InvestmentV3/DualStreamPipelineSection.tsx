@@ -64,67 +64,78 @@ export const DualStreamPipelineSection = () => {
           </p>
         </div>
 
-        {/* ======================================================== */}
-        {/* ================= DESKTOP LAYOUT (RTL) ================= */}
-        {/* ======================================================== */}
-        <div className="hidden lg:grid grid-cols-12 gap-6 items-stretch relative text-right z-10" dir="rtl">
+          <div className="hidden lg:grid grid-cols-12 gap-6 items-center relative text-right z-10" dir="rtl">
           
           {/* SVG Connector Overlay Behind Columns */}
           <div className="absolute inset-0 pointer-events-none z-0">
             <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
-              {/* Line from Sales Rep (Left) to top of Funnel */}
+              {/* Soft glow behind the connector path */}
               <path 
-                d="M 38 40 Q 42 25, 46 12" 
-                stroke="rgba(6, 182, 212, 0.12)" 
-                strokeWidth="0.8"
+                d="M 32 40 C 35 26, 37 18, 38 12" 
+                stroke="rgba(6, 182, 212, 0.04)" 
+                strokeWidth="2.2"
                 className="transition-all duration-300"
               />
-              
-              {/* Line from Monafsat Badge (Top Center) to Funnel Rim */}
+              {/* Ultra-soft dotted line from Sales Rep (Left) to top of Funnel */}
               <path 
-                d="M 62.5 0 L 62.5 7" 
-                stroke="rgba(16, 185, 129, 0.15)" 
+                d="M 32 40 C 35 26, 37 18, 38 12" 
+                stroke="rgba(6, 182, 212, 0.12)" 
+                strokeWidth="0.6"
+                strokeDasharray="1.5 2.5"
+                className="transition-all duration-300 animate-pulse"
+              />
+              
+              {/* Dotted Line from Monafsat Badge (Top Center) to Funnel Rim */}
+              <path 
+                d="M 58.3 0 L 58.3 7" 
+                stroke="rgba(16, 185, 129, 0.2)" 
                 strokeWidth="0.8"
+                strokeDasharray="3 3"
               />
 
-              {/* Lines from Nodes (Right) to Funnel stages */}
+              {/* Dotted Lines from Nodes (Right) to Funnel stages */}
               <path 
-                d="M 83 12 L 79.7 12" 
-                stroke="rgba(6, 182, 212, 0.12)" 
-                strokeWidth="0.8"
+                d="M 76 12 L 75 12" 
+                stroke="rgba(6, 182, 212, 0.22)" 
+                strokeWidth="0.6"
+                strokeDasharray="1.5 1.5"
               />
               <path 
-                d="M 83 35 L 74.3 35" 
-                stroke="rgba(6, 182, 212, 0.12)" 
-                strokeWidth="0.8"
+                d="M 76 35 L 70.5 35" 
+                stroke="rgba(6, 182, 212, 0.22)" 
+                strokeWidth="0.6"
+                strokeDasharray="1.5 1.5"
               />
               <path 
-                d="M 83 66 L 70.2 66" 
-                stroke="rgba(16, 185, 129, 0.12)" 
-                strokeWidth="0.8"
+                d="M 76 66 L 65.5 66" 
+                stroke="rgba(16, 185, 129, 0.22)" 
+                strokeWidth="0.6"
+                strokeDasharray="1.5 1.5"
               />
             </svg>
           </div>
 
           {/* ================= COLUMN 1: SUPPORT NODES (RIGHT) ================= */}
-          <div className="col-span-2 flex flex-col justify-start z-10 relative pt-12">
+          <div className="col-span-2 flex flex-col justify-start z-10 relative pt-12 lg:-ml-24 transition-all duration-300">
             <div className="flex flex-col justify-between h-[380px] relative">
               
               {/* Node 1: Before Opportunities */}
               <div className="relative flex items-center justify-end">
                 <div 
                   className={cn(
-                    "px-3 py-1.5 rounded-full border cursor-pointer flex items-center gap-2 transition-all duration-300 select-none z-30",
+                    "px-2 py-1 rounded-full border cursor-pointer flex items-center gap-1 transition-all duration-300 select-none z-30",
                     hoveredSection === 'before'
-                      ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.1)]"
+                      ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
                   onMouseEnter={() => setHoveredSection('before')}
                   onMouseLeave={() => setHoveredSection(null)}
                 >
-                  <Target className="w-3.5 h-3.5" />
-                  <span className="text-[11px] font-black">قبل الفرص</span>
+                  <Target className="w-2.5 h-2.5" />
+                  <span className="text-[9px] font-black">قبل الفرص</span>
                 </div>
+                
+                {/* Hover Popover */}
                 <AnimatePresence>
                   {hoveredSection === 'before' && (
                     <motion.div
@@ -160,16 +171,16 @@ export const DualStreamPipelineSection = () => {
               <div className="relative flex items-center justify-end">
                 <div 
                   className={cn(
-                    "px-3 py-1.5 rounded-full border cursor-pointer flex items-center gap-2 transition-all duration-300 select-none z-30",
+                    "px-2 py-1 rounded-full border cursor-pointer flex items-center gap-1 transition-all duration-300 select-none z-30",
                     hoveredSection === 'during'
-                      ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-400 shadow-[0_0_12px_rgba(6,182,212,0.1)]"
+                      ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
                   onMouseEnter={() => setHoveredSection('during')}
                   onMouseLeave={() => setHoveredSection(null)}
                 >
-                  <TrendingUp className="w-3.5 h-3.5" />
-                  <span className="text-[11px] font-black">أثناء الفرص</span>
+                  <TrendingUp className="w-2.5 h-2.5" />
+                  <span className="text-[9px] font-black">أثناء الفرص</span>
                 </div>
                 
                 {/* Hover Popover */}
@@ -208,16 +219,16 @@ export const DualStreamPipelineSection = () => {
               <div className="relative flex items-center justify-end">
                 <div 
                   className={cn(
-                    "px-3 py-1.5 rounded-full border cursor-pointer flex items-center gap-2 transition-all duration-300 select-none z-30",
+                    "px-2 py-1 rounded-full border cursor-pointer flex items-center gap-1 transition-all duration-300 select-none z-30",
                     hoveredSection === 'after'
-                      ? "border-emerald-500/40 bg-emerald-950/20 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.1)]"
+                      ? "border-emerald-500/40 bg-emerald-950/20 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.1)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
                   onMouseEnter={() => setHoveredSection('after')}
                   onMouseLeave={() => setHoveredSection(null)}
                 >
-                  <RefreshCw className="w-3.5 h-3.5" />
-                  <span className="text-[11px] font-black">بعد الفرص</span>
+                  <RefreshCw className="w-2.5 h-2.5" />
+                  <span className="text-[9px] font-black">بعد الفرص</span>
                 </div>
                 
                 {/* Hover Popover */}
@@ -256,10 +267,10 @@ export const DualStreamPipelineSection = () => {
           </div>
 
           {/* ================= COLUMN 2: THE ENLARGED FUNNEL (CENTER) ================= */}
-          <div className="col-span-5 flex flex-col items-center justify-start z-10 px-1 relative">
+          <div className="col-span-6 flex flex-col items-center justify-start z-10 px-1 relative">
             
             {/* Top Monafsat node as a source */}
-            <div className="absolute top-[-25px] left-1/2 -translate-x-1/2 z-20">
+            <div className="absolute top-[-25px] left-[58.3%] -translate-x-1/2 z-20">
               <div className="px-3 py-1 rounded-full border border-emerald-500/20 bg-slate-950/90 flex items-center gap-1.5 shadow-sm text-center">
                 <ClipboardList className="w-3 h-3 text-emerald-400 shrink-0" />
                 <span className="text-[10px] font-black text-white whitespace-nowrap">كادر فرص منافسات المباشرة</span>
@@ -273,86 +284,90 @@ export const DualStreamPipelineSection = () => {
               <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" viewBox="0 0 460 530" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   {/* Glowing vertical gradient for the glass funnel faces */}
+                  <linearGradient id="funnel-top-active" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.45" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.12" />
+                  </linearGradient>
                   <linearGradient id="funnel-grad-active" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.22" />
-                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.02" />
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.08" />
                   </linearGradient>
                   <linearGradient id="funnel-grad-inactive" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#1e293b" stopOpacity="0.08" />
-                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.01" />
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.08" />
+                    <stop offset="100%" stopColor="#0f172a" stopOpacity="0.02" />
                   </linearGradient>
                   <linearGradient id="funnel-emerald-active" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.22" />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.02" />
+                    <stop offset="0%" stopColor="#10b981" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0.08" />
                   </linearGradient>
 
                   <radialGradient id="rim-glow-cyan" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.25" />
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.4" />
                     <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
                   </radialGradient>
                 </defs>
 
                 {/* --- SEGMENT 1: حصيلة الفرص --- */}
-                <ellipse cx="230" cy="40" rx="190" ry="32" fill="url(#rim-glow-cyan)" fillOpacity="0.1" stroke={hoveredSection === 'before' ? "#06b6d4" : "rgba(6, 182, 212, 0.2)"} strokeWidth={hoveredSection === 'before' ? 1.8 : 1.2} />
+                <ellipse cx="230" cy="40" rx="190" ry="32" fill="url(#rim-glow-cyan)" fillOpacity="0.15" stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.42)"} strokeWidth={hoveredSection === 'before' ? 2.2 : 1.5} />
                 <path 
                   d="M 40 40 A 190 32 0 0 0 420 40 L 390 105 A 160 27 0 0 1 70 105 Z" 
-                  fill={hoveredSection === 'before' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'before' ? "#06b6d4" : "rgba(6, 182, 212, 0.12)"} 
-                  strokeWidth="1.2"
+                  fill={hoveredSection === 'before' ? "url(#funnel-top-active)" : "url(#funnel-grad-inactive)"} 
+                  stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.32)"} 
+                  strokeWidth="1.5"
                 />
 
                 {/* --- SEGMENT 2: فرص جاهزة للتحريك --- */}
-                <ellipse cx="230" cy="105" rx="160" ry="27" fill="none" stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} strokeWidth={hoveredSection === 'during' ? 1.5 : 1} />
+                <ellipse cx="230" cy="105" rx="160" ry="27" fill="none" stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} />
                 <path 
                   d="M 70 105 A 160 27 0 0 0 390 105 L 360 170 A 130 22 0 0 1 100 170 Z" 
                   fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.12)"} 
-                  strokeWidth="1.2"
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.22)"} 
+                  strokeWidth="1.3"
                 />
 
                 {/* --- SEGMENT 3: اجتماعات مؤهلة --- */}
-                <ellipse cx="230" cy="170" rx="130" ry="22" fill="none" stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} strokeWidth={hoveredSection === 'during' ? 1.5 : 1} />
+                <ellipse cx="230" cy="170" rx="130" ry="22" fill="none" stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} />
                 <path 
                   d="M 100 170 A 130 22 0 0 0 360 170 L 335 235 A 105 18 0 0 1 125 235 Z" 
                   fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.12)"} 
-                  strokeWidth="1.2"
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.22)"} 
+                  strokeWidth="1.3"
                 />
 
                 {/* --- SEGMENT 4: عروض سعر --- */}
-                <ellipse cx="230" cy="235" rx="105" ry="18" fill="none" stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.15)"} strokeWidth={hoveredSection === 'during' ? 1.5 : 1} />
+                <ellipse cx="230" cy="235" rx="105" ry="18" fill="none" stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} />
                 <path 
                   d="M 125 235 A 105 18 0 0 0 335 235 L 315 300 A 85 15 0 0 1 145 300 Z" 
                   fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'during' ? "#06b6d4" : "rgba(6, 182, 212, 0.12)"} 
-                  strokeWidth="1.2"
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.22)"} 
+                  strokeWidth="1.3"
                 />
 
                 {/* --- SEGMENT 5: تفاوض --- */}
-                <ellipse cx="230" cy="300" rx="85" ry="15" fill="none" stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.15)"} strokeWidth={hoveredSection === 'after' ? 1.5 : 1} />
+                <ellipse cx="230" cy="300" rx="85" ry="15" fill="none" stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} strokeWidth={hoveredSection === 'after' ? 1.8 : 1.3} />
                 <path 
                   d="M 145 300 A 85 15 0 0 0 315 300 L 298 365 A 68 12 0 0 1 162 365 Z" 
                   fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.12)"} 
-                  strokeWidth="1.2"
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.22)"} 
+                  strokeWidth="1.3"
                 />
 
                 {/* --- SEGMENT 6: صفقات --- */}
-                <ellipse cx="230" cy="365" rx="68" ry="12" fill="none" stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.15)"} strokeWidth={hoveredSection === 'after' ? 1.5 : 1} />
+                <ellipse cx="230" cy="365" rx="68" ry="12" fill="none" stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} strokeWidth={hoveredSection === 'after' ? 1.8 : 1.3} />
                 <path 
                   d="M 162 365 A 68 12 0 0 0 298 365 L 282 430 A 52 9 0 0 1 178 430 Z" 
                   fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.12)"} 
-                  strokeWidth="1.2"
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.22)"} 
+                  strokeWidth="1.3"
                 />
                 
                 {/* Bottom opening ellipse */}
-                <ellipse cx="230" cy="430" rx="52" ry="9" fill="none" stroke={hoveredSection === 'after' ? "#10b981" : "rgba(16, 185, 129, 0.2)"} strokeWidth={1} />
+                <ellipse cx="230" cy="430" rx="52" ry="9" fill="none" stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} strokeWidth={1} />
                 
                 {/* Connector line down to target */}
                 <path 
-                  d="M 230 439 L 230 465" 
-                  stroke="rgba(245, 158, 11, 0.3)" 
+                  d="M 230 439 L 230 452" 
+                  stroke="rgba(245, 158, 11, 0.35)" 
                   strokeWidth="1.2"
                   strokeDasharray="2 2"
                 />
@@ -361,18 +376,18 @@ export const DualStreamPipelineSection = () => {
               {/* Absolute HTML Overlays for Text & Icons inside Funnel segments */}
               {/* 1. حصيلة الفرص (نقطة التلاقي) */}
               <div 
-                className="absolute top-[48px] left-1/2 -translate-x-1/2 w-[280px] h-[50px] flex flex-col items-center justify-center text-center cursor-default z-20 pointer-events-auto"
+                className="absolute top-[44px] left-1/2 -translate-x-1/2 w-[280px] h-[55px] flex flex-col items-center justify-center text-center cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('before')}
                 onMouseLeave={() => setHoveredSection(null)}
               >
-                <div className="text-[9px] font-black text-cyan-400 bg-cyan-950/80 px-2 py-0.5 rounded-full border border-cyan-500/20 mb-0.5 select-none uppercase tracking-widest">
+                <div className="text-[9.5px] font-black text-cyan-300 bg-cyan-950/80 px-2.5 py-0.5 rounded-full border border-cyan-500/25 mb-1.5 select-none uppercase tracking-widest shadow-[0_0_12px_rgba(6,182,212,0.15)] animate-pulse">
                   نقطة التلاقي
                 </div>
                 <div className="flex items-center gap-1.5 justify-center">
-                  <Filter className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                  <span className="text-[12px] font-black text-white select-none">حصيلة الفرص</span>
+                  <Filter className="w-4 h-4 text-cyan-400 shrink-0" />
+                  <span className="text-[15.5px] md:text-[16.5px] font-black text-white select-none tracking-wide drop-shadow-[0_2px_10px_rgba(6,182,212,0.3)]">حصيلة الفرص</span>
                 </div>
-                <span className="text-[9px] font-bold text-slate-400 select-none mt-0.5">محادثات مؤهلة + فرص مباشرة</span>
+                <span className="text-[10px] font-bold text-slate-200 select-none mt-0.5">محادثات مؤهلة + فرص مباشرة</span>
               </div>
 
               {/* 2. فرص جاهزة للتحريك */}
@@ -382,7 +397,7 @@ export const DualStreamPipelineSection = () => {
                 onMouseLeave={() => setHoveredSection(null)}
               >
                 <Target className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                <span className="text-[12px] font-black text-cyan-100 select-none">فرص جاهزة للتحريك</span>
+                <span className="text-[14px] font-black text-cyan-100 select-none">فرص جاهزة للتحريك</span>
               </div>
 
               {/* 3. اجتماعات مؤهلة */}
@@ -392,7 +407,7 @@ export const DualStreamPipelineSection = () => {
                 onMouseLeave={() => setHoveredSection(null)}
               >
                 <Users className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                <span className="text-[11px] font-black text-cyan-100 select-none">اجتماعات مؤهلة</span>
+                <span className="text-[13.5px] font-black text-cyan-100 select-none">اجتماعات مؤهلة</span>
               </div>
 
               {/* 4. عروض سعر */}
@@ -402,7 +417,7 @@ export const DualStreamPipelineSection = () => {
                 onMouseLeave={() => setHoveredSection(null)}
               >
                 <FileText className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                <span className="text-[11px] font-black text-cyan-100 select-none">عروض سعر</span>
+                <span className="text-[13.5px] font-black text-cyan-100 select-none">عروض سعر</span>
               </div>
 
               {/* 5. تفاوض */}
@@ -412,7 +427,7 @@ export const DualStreamPipelineSection = () => {
                 onMouseLeave={() => setHoveredSection(null)}
               >
                 <Handshake className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span className="text-[11px] font-black text-emerald-100 select-none">تفاوض</span>
+                <span className="text-[13.5px] font-black text-emerald-100 select-none">تفاوض</span>
               </div>
 
               {/* 6. صفقات */}
@@ -422,7 +437,33 @@ export const DualStreamPipelineSection = () => {
                 onMouseLeave={() => setHoveredSection(null)}
               >
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                <span className="text-[11px] font-black text-emerald-100 select-none">صفقات</span>
+                <span className="text-[13.5px] font-black text-emerald-100 select-none">صفقات</span>
+              </div>
+
+              {/* Bottom Target Card (Connected to funnel bottom) */}
+              <div className="absolute top-[452px] left-1/2 -translate-x-1/2 w-full max-w-[220px] z-20">
+                <div 
+                  className={cn(
+                    "px-3 py-2 rounded-xl border text-center transition-all duration-300 bg-[#07070a]/95 backdrop-blur-sm flex items-center justify-center gap-2",
+                    hoveredSection === 'after'
+                      ? "border-amber-500/40 bg-[#141008]/85 shadow-[0_0_12px_rgba(245,158,11,0.12)] scale-[1.01]"
+                      : "border-slate-900 bg-slate-950/60"
+                  )}
+                  onMouseEnter={() => setHoveredSection('after')}
+                  onMouseLeave={() => setHoveredSection(null)}
+                >
+                  <div className="p-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+                    <Target className="w-3.5 h-3.5" />
+                  </div>
+                  <div className="text-right">
+                    <div className="text-[8.5px] text-slate-400 font-extrabold leading-none uppercase tracking-wider">
+                      المستهدف خلال 90 يوم
+                    </div>
+                    <div className="text-xs font-black text-amber-400 leading-normal mt-0.5">
+                      1,000,000 ريال
+                    </div>
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -430,51 +471,22 @@ export const DualStreamPipelineSection = () => {
           </div>
 
           {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT) ================= */}
-          <div className="col-span-5 flex flex-col justify-center items-start z-10 pl-4 relative select-none">
-            {/* Soft ambient back glow for the person */}
-            <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] h-[340px] rounded-full bg-cyan-500/[0.04] blur-[80px] pointer-events-none" />
+          <div className="col-span-4 flex flex-col justify-center items-start z-10 pl-4 relative select-none">
+            {/* Soft ambient back glows for the person */}
+            <div className="absolute top-[50%] left-[55%] -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] rounded-full bg-cyan-500/[0.06] blur-[90px] pointer-events-none" />
+            <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[240px] h-[240px] rounded-full bg-cyan-400/[0.04] blur-[65px] pointer-events-none" />
             
-            <div className="relative w-full max-w-[370px] h-[570px] flex items-end justify-center overflow-visible select-none lg:-mr-12">
+            <div className="relative w-full max-w-[360px] h-[520px] flex items-center justify-center overflow-hidden select-none lg:-mr-28 transition-all duration-300">
               <img 
                 src="/saudi_sales_rep.png" 
                 alt="مسؤول مبيعات العميل" 
-                className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(6,182,212,0.1)] select-none pointer-events-none"
+                className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_20px_rgba(6,182,212,0.12)] select-none pointer-events-none"
               />
+              {/* Soft bottom fade to merge the cutout organically with the background */}
+              <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[#04080F] via-[#04080F]/50 to-transparent z-20 pointer-events-none" />
             </div>
           </div>
 
-        </div>
-
-        {/* Wide Target Banner (Desktop only) */}
-        <div className="hidden lg:block mt-16 max-w-5xl mx-auto z-20 relative">
-          <div 
-            className={cn(
-              "px-8 py-6 rounded-2xl border text-center transition-all duration-300 bg-slate-950/60 backdrop-blur-sm flex items-center justify-between gap-6",
-              hoveredSection === 'after'
-                ? "border-amber-500/40 bg-[#141008]/80 shadow-[0_0_25px_rgba(245,158,11,0.15)] scale-[1.01]"
-                : "border-slate-900 bg-slate-950/20"
-            )}
-            onMouseEnter={() => setHoveredSection('after')}
-            onMouseLeave={() => setHoveredSection(null)}
-          >
-            <div className="flex items-center gap-4 text-right">
-              <div className="p-3 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
-                <Target className="w-6 h-6 animate-pulse" />
-              </div>
-              <div>
-                <h4 className="text-sm font-black text-white">المستهدف البيعي لفريق مبيعاتك</h4>
-                <p className="text-xs text-slate-400 font-bold mt-1 max-w-xl leading-relaxed">
-                  كل فرصة تتحرك داخل هذا القمع تساهم بشكل مباشر وملموس في تقريب فريقك من تحقيق هدف المليون ريال.
-                </p>
-              </div>
-            </div>
-            
-            <div className="text-left shrink-0">
-              <div className="text-3xl md:text-5xl font-black text-amber-400 tracking-tight select-none">
-                1,000,000 ريال <span className="text-lg md:text-2xl font-black text-amber-500/70">خلال 90 يوم</span>
-              </div>
-            </div>
-          </div>
         </div>
 
         {/* ======================================================== */}
@@ -553,14 +565,16 @@ export const DualStreamPipelineSection = () => {
           </div>
 
           {/* 5. Target Card (Mobile) */}
-          <div className="p-4 rounded-xl border border-amber-500/20 bg-[#141008] text-center flex items-center justify-center gap-3">
-            <Award className="w-5 h-5 text-amber-400" />
+          <div className="px-4 py-3 rounded-xl border border-amber-500/20 bg-[#141008]/80 text-center flex items-center justify-center gap-2.5 max-w-[240px] mx-auto">
+            <div className="p-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
+              <Target className="w-3.5 h-3.5" />
+            </div>
             <div className="text-right">
-              <div className="text-[10px] text-slate-400 font-extrabold leading-none">
-                المستهدف البيعي
+              <div className="text-[9px] text-slate-400 font-extrabold leading-none uppercase tracking-wider">
+                المستهدف خلال 90 يوم
               </div>
-              <div className="text-sm font-black text-amber-400 mt-1">
-                1,000,000 ريال خلال 90 يوم
+              <div className="text-xs font-black text-amber-400 leading-normal mt-0.5">
+                1,000,000 ريال
               </div>
             </div>
           </div>
