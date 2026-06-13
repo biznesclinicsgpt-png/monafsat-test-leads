@@ -217,22 +217,65 @@ const SectionHeader = ({
   </motion.div>
 );
 
+
+const SaudiUnderline = () => {
+  const shouldReduce = useReducedMotion();
+  
+  return (
+    <span className="relative inline-block">
+      <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-l from-emerald-300 via-cyan-300 to-emerald-250">
+        السوق السعودي
+      </span>
+      {/* Right-to-left sweep underline */}
+      <motion.span
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{
+          delay: shouldReduce ? 0 : 0.8,
+          duration: 0.8,
+          ease: [0.16, 1, 0.3, 1]
+        }}
+        style={{ originX: 1 }}
+        className="absolute bottom-1.5 right-0 left-0 h-[3px] bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 rounded-full z-0 overflow-hidden"
+      >
+        {!shouldReduce && (
+          <motion.span
+            animate={{ x: ['100%', '-100%'] }}
+            transition={{
+              repeat: Infinity,
+              repeatDelay: 5,
+              duration: 1.8,
+              ease: 'easeInOut',
+              delay: 2
+            }}
+            className="absolute inset-y-0 right-0 bg-gradient-to-r from-transparent via-white/70 to-transparent w-1/2"
+          />
+        )}
+      </motion.span>
+    </span>
+  );
+};
+
 const HeroSection2 = () => {
   const { shouldReduce, container, item } = useSharedMotion();
 
   return (
-    <section className="relative min-h-[86vh] bg-[#050505] overflow-hidden flex items-center py-20 border-b border-slate-900/70">
+    <motion.section
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      className="relative min-h-[86vh] bg-[#050505] overflow-hidden flex items-center py-20 border-b border-slate-900/70">
       {/* Background Grid & Glowing circles */}
       <div className="absolute inset-0 opacity-25">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415533_1px,transparent_1px),linear-gradient(to_bottom,#33415533_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,#000_60%,transparent_100%)] pointer-events-none" />
         
         <motion.div 
           animate={shouldReduce ? {} : {
-            scale: [1, 1.06, 1],
-            opacity: [0.2, 0.3, 0.2]
+            scale: [1, 1.03, 1],
+            opacity: [0.18, 0.25, 0.18]
           }}
           transition={{
-            duration: 9,
+            duration: 14,
             repeat: Infinity,
             ease: "easeInOut"
           }}
@@ -241,63 +284,107 @@ const HeroSection2 = () => {
         
         <motion.div 
           animate={shouldReduce ? {} : {
-            scale: [1, 1.05, 1],
-            opacity: [0.2, 0.28, 0.2]
+            scale: [1, 1.02, 1],
+            opacity: [0.18, 0.23, 0.18]
           }}
           transition={{
-            duration: 11,
+            duration: 16,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 1.5
+            delay: 2
           }}
           className="absolute bottom-0 right-10 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none" 
         />
       </div>
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        <motion.div 
-          variants={container}
-          initial="hidden"
-          animate="visible"
-          className="max-w-5xl mx-auto text-center"
-        >
+        <div className="max-w-5xl mx-auto text-center">
           <motion.h1
-            variants={item}
             className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight max-w-5xl"
           >
-            نساعد فريق مبيعاتك يبيع أكثر
-            <span className="block text-transparent bg-clip-text bg-gradient-to-l from-emerald-300 via-cyan-300 to-white mt-3">
-              في السوق السعودي خلال 90 يوم
-            </span>
+            <motion.span
+              initial={{ opacity: 0, y: shouldReduce ? 0 : 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+              className="block"
+            >
+              نساعد فريق مبيعاتك يبيع أكثر
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: shouldReduce ? 0 : 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut', delay: 0.35 }}
+              className="block text-white mt-3"
+            >
+              في <SaudiUnderline /> خلال 90 يوم
+            </motion.span>
           </motion.h1>
 
           <motion.p
-            variants={item}
+            initial={{ opacity: 0, y: shouldReduce ? 0 : 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.9 }}
             className="text-base md:text-xl text-slate-300 leading-relaxed mt-7 max-w-4xl mx-auto"
           >
             نحدد القطاع، نصل لصناع القرار، نفتح المحادثات، ثم نساعد فريقك على تحويلها إلى اجتماعات، عروض، وصفقات.
           </motion.p>
 
           <motion.div
-            variants={item}
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: {
+                transition: {
+                  staggerChildren: shouldReduce ? 0.02 : 0.1,
+                  delayChildren: shouldReduce ? 0.05 : 1.3
+                }
+              }
+            }}
             className="flex flex-col sm:flex-row gap-4 mt-9 justify-center"
           >
-            <button
+            <motion.button
+              variants={{
+                hidden: { opacity: 0, y: shouldReduce ? 0 : 10 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={shouldReduce ? {} : {
+                y: -3,
+                boxShadow: "0 10px 25px rgba(52,211,153,0.35)",
+              }}
+              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
               onClick={() => scrollToSection('growth-calculator')}
-              className="px-7 py-4 rounded-2xl bg-emerald-400 text-slate-950 font-black hover:bg-emerald-300 transition-colors shadow-[0_0_30px_rgba(52,211,153,0.22)]"
+              className="relative px-7 py-4 rounded-2xl bg-emerald-400 text-slate-950 font-black hover:bg-emerald-300 transition-colors"
             >
+              {!shouldReduce && (
+                <motion.span
+                  animate={{ opacity: [0.25, 0.5, 0.25] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 rounded-2xl bg-emerald-400/25 blur-md pointer-events-none -z-10"
+                />
+              )}
               احسب مستهدفك خلال 90 يوم
-            </button>
-            <button
-              onClick={() => scrollToSection('pricing')}
-              className="px-7 py-4 rounded-2xl bg-slate-950/70 border border-slate-800 text-white font-black hover:border-cyan-500/50 hover:text-cyan-200 transition-colors"
+            </motion.button>
+            <motion.button
+              variants={{
+                hidden: { opacity: 0, y: shouldReduce ? 0 : 10 },
+                visible: { opacity: 1, y: 0 }
+              }}
+              whileHover={shouldReduce ? {} : {
+                y: -3,
+                borderColor: "rgba(6,182,212,0.6)",
+                color: "#cffafe",
+              }}
+              transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+              onClick={() => scrollToSection('execution-timeline')}
+              className="px-7 py-4 rounded-2xl bg-transparent border border-slate-700 text-slate-300 font-black hover:border-cyan-500/50 transition-all"
             >
-              ابدأ بتجربة قطاع واحد
-            </button>
+              كيف نعمل؟
+            </motion.button>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

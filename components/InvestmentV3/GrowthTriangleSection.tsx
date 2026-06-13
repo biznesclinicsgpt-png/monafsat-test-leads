@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from 'react';
+import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { GlowOrb } from './GlowOrb';
 import { 
     Users, 
@@ -48,11 +48,11 @@ const colorClasses = {
         stroke: '#22d3ee',
     },
     violet: {
-        text: 'text-violet-300',
-        border: 'border-violet-500/45',
-        bg: 'bg-violet-500/10',
-        shadow: 'shadow-[0_0_36px_rgba(139,92,246,0.22)]',
-        stroke: '#a78bfa',
+        text: 'text-teal-300',
+        border: 'border-teal-500/45',
+        bg: 'bg-teal-500/10',
+        shadow: 'shadow-[0_0_36px_rgba(20,184,166,0.22)]',
+        stroke: '#2dd4bf',
     },
     blue: {
         text: 'text-blue-300',
@@ -206,6 +206,8 @@ const ClientSalesInteractiveTriangle = () => {
     const allItems = [...nodes, ...edges];
     const [activeId, setActiveId] = useState('sales');
     const [mobileMode, setMobileMode] = useState<'nodes' | 'edges'>('nodes');
+    const svgRef = useRef<SVGSVGElement>(null);
+    const svgInView = useInView(svgRef, { once: true, amount: 0.3 });
     const active = allItems.find((item) => item.id === activeId) ?? nodes[0];
 
     const isNodeActive = (id: string) => active.id === id || active.connected?.includes(id);
@@ -232,7 +234,7 @@ const ClientSalesInteractiveTriangle = () => {
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-[14%] right-[12%] h-[420px] w-[420px] rounded-full bg-emerald-500/[0.045] blur-[120px]" />
                 <div className="absolute bottom-[12%] left-[10%] h-[460px] w-[460px] rounded-full bg-cyan-500/[0.04] blur-[130px]" />
-                <div className="absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/[0.025] blur-[150px]" />
+                <div className="absolute left-1/2 top-1/2 h-[560px] w-[560px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-teal-500/[0.025] blur-[150px]" />
             </div>
 
             <div className="container relative z-10 mx-auto max-w-7xl px-4">
@@ -264,10 +266,10 @@ const ClientSalesInteractiveTriangle = () => {
                         className="relative mx-auto w-full max-w-4xl"
                     >
                         <div className="relative mx-auto aspect-[1.28/1] min-h-[420px] rounded-[28px] border border-slate-900/80 bg-slate-950/25 p-4 shadow-[0_24px_90px_rgba(0,0,0,0.35)] md:min-h-[560px]">
-                            <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+                            <svg ref={svgRef} className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
                                 <defs>
                                     <linearGradient id="client-triangle-main" x1="10%" y1="10%" x2="90%" y2="90%">
-                                        <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.72" />
+                                        <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.72" />
                                         <stop offset="48%" stopColor="#22d3ee" stopOpacity="0.62" />
                                         <stop offset="100%" stopColor="#34d399" stopOpacity="0.70" />
                                     </linearGradient>
@@ -299,8 +301,17 @@ const ClientSalesInteractiveTriangle = () => {
                                                     filter: activeEdge ? 'url(#client-triangle-glow)' : 'none',
                                                     opacity: activeEdge ? 1 : relatedNode ? 0.72 : 0.35,
                                                 }}
-                                                animate={activeEdge ? { strokeDashoffset: -42 } : { strokeDashoffset: 0 }}
-                                                transition={{ repeat: activeEdge ? Infinity : 0, duration: 3.2, ease: 'linear' }}
+                                                initial={{ pathLength: 0 }}
+                                                animate={svgInView
+                                                    ? activeEdge
+                                                        ? { pathLength: 1, strokeDashoffset: -42 }
+                                                        : { pathLength: 1, strokeDashoffset: 0 }
+                                                    : { pathLength: 0 }
+                                                }
+                                                transition={svgInView && activeEdge
+                                                    ? { pathLength: { duration: 0.9, ease: 'easeOut' }, strokeDashoffset: { repeat: Infinity, duration: 3.2, ease: 'linear' } }
+                                                    : { pathLength: { duration: 1.0, delay: 0.15, ease: 'easeOut' } }
+                                                }
                                                 strokeDasharray={activeEdge ? '6 7' : 'none'}
                                             />
                                             <path
@@ -326,21 +337,31 @@ const ClientSalesInteractiveTriangle = () => {
                                 const palette = colorClasses[node.color];
                                 const isCenter = node.id === 'sales';
                                 return (
-                                    <button
+                                    <motion.button
                                         key={node.id}
                                         type="button"
                                         className="absolute z-20 -translate-x-1/2 -translate-y-1/2 text-center outline-none"
                                         style={position}
+                                        initial={{ opacity: 0, scale: 0.7 }}
+                                        whileInView={{ opacity: 1, scale: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.45, delay: isCenter ? 0.1 : 0.35, ease: [0.16,1,0.3,1] }}
                                         onMouseEnter={() => setActiveId(node.id)}
                                         onFocus={() => setActiveId(node.id)}
                                         onClick={() => setActiveId(node.id)}
                                     >
                                         <motion.div
-                                            animate={{
+                                            animate={isCenter ? {
+                                                y: active.id === node.id ? -4 : [0, -3, 0],
+                                                scale: activeNode ? 1.06 : [1, 1.025, 1],
+                                            } : {
                                                 y: active.id === node.id ? -4 : [0, -5, 0],
                                                 scale: activeNode ? 1.05 : 1,
                                             }}
-                                            transition={{
+                                            transition={isCenter ? {
+                                                y: active.id === node.id ? { duration: 0.2 } : { duration: 5, repeat: Infinity, ease: 'easeInOut' },
+                                                scale: activeNode ? { duration: 0.25 } : { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
+                                            } : {
                                                 y: active.id === node.id ? { duration: 0.2 } : { duration: 4, repeat: Infinity, ease: 'easeInOut' },
                                                 scale: { duration: 0.2 },
                                             }}
@@ -367,7 +388,7 @@ const ClientSalesInteractiveTriangle = () => {
                                                 محادثات ← اجتماعات ← عروض ← صفقات
                                             </span>
                                         )}
-                                    </button>
+                                    </motion.button>
                                 );
                             })}
 
@@ -509,7 +530,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
         {
             title: "تجهيز وتدريب فريقكم",
             desc: "تطوير الأداء ورفع كفاءة مبيعاتكم فوراً.",
-            icon: <Users className="w-4 h-4 text-violet-400" />
+            icon: <Users className="w-4 h-4 text-teal-400" />
         },
         {
             title: "الوصول وتحريك الاهتمام",
@@ -561,7 +582,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
             {/* Background Glows */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute top-[20%] left-[10%] w-[600px] h-[600px] bg-cyan-500/5 blur-[130px] rounded-full" />
-                <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-violet-500/5 blur-[130px] rounded-full" />
+                <div className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-teal-500/5 blur-[130px] rounded-full" />
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-emerald-500/[0.015] blur-[150px] rounded-full" />
             </div>
 
@@ -584,7 +605,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                             {clientSalesCenter ? '3 محركات حول مستهدف واحد' : 'مثلث النمو والمبيعات المتكامل'}
                         </h2>
                         <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed mb-4">
-                            لا نعتمد على الوصول للسوق فقط… بل نبني معكم منظومة متكاملة تجمع بين <span className="text-violet-400 font-bold">تطوير فريقكم البيعي</span>، <span className="text-cyan-400 font-bold">تشغيل السوق وتحريك الفرص</span>، و <span className="text-emerald-400 font-bold">نظام النينجا الذكي</span>.
+                            لا نعتمد على الوصول للسوق فقط… بل نبني معكم منظومة متكاملة تجمع بين <span className="text-teal-400 font-bold">تطوير فريقكم البيعي</span>، <span className="text-cyan-400 font-bold">تشغيل السوق وتحريك الفرص</span>، و <span className="text-emerald-400 font-bold">نظام النينجا الذكي</span>.
                         </p>
                         <div className="inline-block bg-emerald-500/10 border border-emerald-500/25 px-5 py-2.5 rounded-2xl text-base font-extrabold text-emerald-400">
                             النتيجة: فريق أقوى + فرص أكثر + متابعة أذكى + إغلاق أعلى.
@@ -664,22 +685,22 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                             {/* SVG Connecting Glow Lines */}
                             <svg className="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
                                 <defs>
-                                    <linearGradient id="violet-cyan-grad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.7" />
+                                    <linearGradient id="teal-cyan-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" stopColor="#2dd4bf" stopOpacity="0.7" />
                                         <stop offset="100%" stopColor="#06b6d4" stopOpacity="0.7" />
                                     </linearGradient>
                                     <linearGradient id="cyan-blue-grad" x1="0%" y1="0%" x2="100%" y2="0%">
                                         <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.7" />
                                         <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.7" />
                                     </linearGradient>
-                                    <linearGradient id="blue-violet-grad" x1="100%" y1="100%" x2="0%" y2="0%">
+                                    <linearGradient id="blue-teal-grad" x1="100%" y1="100%" x2="0%" y2="0%">
                                         <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.7" />
-                                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.7" />
+                                        <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0.7" />
                                     </linearGradient>
                                     
-                                    <linearGradient id="emerald-violet-grad" x1="0%" y1="100%" x2="0%" y2="0%">
+                                    <linearGradient id="emerald-teal-grad" x1="0%" y1="100%" x2="0%" y2="0%">
                                         <stop offset="0%" stopColor="#10b981" stopOpacity="0.7" />
-                                        <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.7" />
+                                        <stop offset="100%" stopColor="#2dd4bf" stopOpacity="0.7" />
                                     </linearGradient>
                                     <linearGradient id="emerald-cyan-grad" x1="100%" y1="0%" x2="0%" y2="100%">
                                         <stop offset="0%" stopColor="#10b981" stopOpacity="0.7" />
@@ -690,7 +711,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                         <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.7" />
                                     </linearGradient>
                                     
-                                    <filter id="glow-violet" x="-20%" y="-20%" width="140%" height="140%">
+                                    <filter id="glow-teal" x="-20%" y="-20%" width="140%" height="140%">
                                         <feGaussianBlur stdDeviation="5" result="blur" />
                                         <feComposite in="SourceGraphic" in2="blur" operator="over" />
                                     </filter>
@@ -718,7 +739,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                 {/* Top to Left */}
                                 <motion.path
                                     d="M 50 14 L 26 74"
-                                    stroke="url(#violet-cyan-grad)"
+                                    stroke="url(#teal-cyan-grad)"
                                     strokeWidth={activeNode === 'coaching' || activeNode === 'access' ? "3" : "1.5"}
                                     fill="none"
                                     animate={activeNode === 'coaching' || activeNode === 'access' ? { strokeDashoffset: -50 } : { strokeDashoffset: 0 }}
@@ -746,14 +767,14 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                 {/* Right to Top */}
                                 <motion.path
                                     d="M 74 74 L 50 14"
-                                    stroke="url(#blue-violet-grad)"
+                                    stroke="url(#blue-teal-grad)"
                                     strokeWidth={activeNode === 'sales' || activeNode === 'coaching' ? "3" : "1.5"}
                                     fill="none"
                                     animate={activeNode === 'sales' || activeNode === 'coaching' ? { strokeDashoffset: -50 } : { strokeDashoffset: 0 }}
                                     transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
                                     style={{ 
                                         strokeDasharray: activeNode === 'sales' || activeNode === 'coaching' ? "6 8" : "none",
-                                        filter: activeNode === 'sales' || activeNode === 'coaching' ? 'url(#glow-violet)' : 'none',
+                                        filter: activeNode === 'sales' || activeNode === 'coaching' ? 'url(#glow-teal)' : 'none',
                                         opacity: activeNode === null || activeNode === 'sales' || activeNode === 'coaching' ? 1 : 0.2
                                     }}
                                 />
@@ -761,11 +782,11 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                 {/* Inner Spokes connecting to center */}
                                 <motion.path
                                     d="M 50 52 L 50 14"
-                                    stroke="url(#emerald-violet-grad)"
+                                    stroke="url(#emerald-teal-grad)"
                                     strokeWidth={activeNode === 'ninja' || activeNode === 'coaching' ? "2.5" : "1"}
                                     fill="none"
                                     style={{ 
-                                        filter: activeNode === 'ninja' || activeNode === 'coaching' ? 'url(#glow-emerald)' : 'none',
+                                        filter: activeNode === 'ninja' || activeNode === 'coaching' ? 'url(#glow-teal)' : 'none',
                                         opacity: activeNode === null || activeNode === 'ninja' || activeNode === 'coaching' ? 1 : 0.15
                                     }}
                                 />
@@ -775,7 +796,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                     strokeWidth={activeNode === 'ninja' || activeNode === 'access' ? "2.5" : "1"}
                                     fill="none"
                                     style={{ 
-                                        filter: activeNode === 'ninja' || activeNode === 'access' ? 'url(#glow-emerald)' : 'none',
+                                        filter: activeNode === 'ninja' || activeNode === 'access' ? 'url(#glow-teal)' : 'none',
                                         opacity: activeNode === null || activeNode === 'ninja' || activeNode === 'access' ? 1 : 0.15
                                     }}
                                 />
@@ -785,7 +806,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                     strokeWidth={activeNode === 'ninja' || activeNode === 'sales' ? "2.5" : "1"}
                                     fill="none"
                                     style={{ 
-                                        filter: activeNode === 'ninja' || activeNode === 'sales' ? 'url(#glow-emerald)' : 'none',
+                                        filter: activeNode === 'ninja' || activeNode === 'sales' ? 'url(#glow-teal)' : 'none',
                                         opacity: activeNode === null || activeNode === 'ninja' || activeNode === 'sales' ? 1 : 0.15
                                     }}
                                 />
@@ -824,15 +845,15 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                 }}
                             >
                                 <div className="absolute -top-10 left-1/2 whitespace-nowrap text-center" style={{ transform: 'translateX(-50%)' }}>
-                                    <span className="block text-xs font-bold text-violet-400">الفريق الاستشاري والقيادي</span>
+                                    <span className="block text-xs font-bold text-teal-400">الفريق الاستشاري والقيادي</span>
                                 </div>
                                 <div className={cn(
-                                    "w-16 h-16 rounded-full flex items-center justify-center border bg-[#090710]/95 cursor-pointer transition-all duration-300 shadow-[0_0_20px_rgba(139,92,246,0.1)]",
+                                    "w-16 h-16 rounded-full flex items-center justify-center border bg-[#060b0b]/95 cursor-pointer transition-all duration-300 shadow-[0_0_20px_rgba(20,184,166,0.1)]",
                                     activeNode === 'coaching' 
-                                        ? "border-violet-500 shadow-[0_0_25px_rgba(139,92,246,0.35)] scale-105" 
-                                        : "border-violet-500/30 hover:border-violet-500/70"
+                                        ? "border-teal-500 shadow-[0_0_25px_rgba(20,184,166,0.35)] scale-105" 
+                                        : "border-teal-500/30 hover:border-teal-500/70"
                                 )}>
-                                    <Users className="w-6 h-6 text-violet-400" />
+                                    <Users className="w-6 h-6 text-teal-400" />
                                 </div>
                             </motion.div>
 
@@ -947,25 +968,25 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                                         animate={{ opacity: 1, scale: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.95, y: 5 }}
                                         transition={{ duration: 0.2 }}
-                                        className="absolute top-[8%] left-[60%] w-[25%] max-w-[200px] p-3.5 rounded-xl bg-slate-950/95 border border-violet-500/40 shadow-[0_0_20px_rgba(139,92,246,0.25)] backdrop-blur-md z-50 text-right cursor-default"
+                                        className="absolute top-[8%] left-[60%] w-[25%] max-w-[200px] p-3.5 rounded-xl bg-slate-950/95 border border-teal-500/40 shadow-[0_0_20px_rgba(20,184,166,0.25)] backdrop-blur-md z-50 text-right cursor-default"
                                         onMouseEnter={() => setActiveNode('coaching')}
                                         onMouseLeave={() => setActiveNode(null)}
                                     >
                                         <h4 className="text-[10px] font-bold text-white mb-2 flex items-center gap-1">
-                                            <span className="w-1 h-1 rounded-full bg-violet-400" />
+                                            <span className="w-1 h-1 rounded-full bg-teal-400" />
                                             تطوير وقيادة المبيعات
                                         </h4>
                                         <ul className="space-y-1.5 text-[9px] leading-tight">
                                             <li className="flex items-start gap-1">
-                                                <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
+                                                <Check className="w-2.5 h-2.5 text-teal-400 shrink-0 mt-0.5" />
                                                 <span>تدريب وتطوير فريقكم البيعي</span>
                                             </li>
                                             <li className="flex items-start gap-1">
-                                                <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
+                                                <Check className="w-2.5 h-2.5 text-teal-400 shrink-0 mt-0.5" />
                                                 <span>بناء آليات المتابعة وتجاوز العقبات</span>
                                             </li>
                                             <li className="flex items-start gap-1">
-                                                <Check className="w-2.5 h-2.5 text-violet-400 shrink-0 mt-0.5" />
+                                                <Check className="w-2.5 h-2.5 text-teal-400 shrink-0 mt-0.5" />
                                                 <span>متابعة وتقييم مستمر للأداء</span>
                                             </li>
                                         </ul>
@@ -1146,23 +1167,23 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                             </div>
 
                             {/* 3. الفريق الاستشاري والقيادي */}
-                            <div className="bg-[#090710]/90 border border-violet-500/25 p-5 rounded-2xl relative overflow-hidden">
-                                <div className="absolute top-4 left-4 w-8 h-8 rounded-lg bg-violet-500/10 flex items-center justify-center border border-violet-500/25">
-                                    <Users className="w-4 h-4 text-violet-400" />
+                            <div className="bg-[#060b0b]/90 border border-teal-500/25 p-5 rounded-2xl relative overflow-hidden">
+                                <div className="absolute top-4 left-4 w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center border border-teal-500/25">
+                                    <Users className="w-4 h-4 text-teal-400" />
                                 </div>
-                                <h3 className="text-sm font-bold text-violet-400 mb-1">الفريق الاستشاري والقيادي</h3>
+                                <h3 className="text-sm font-bold text-teal-400 mb-1">الفريق الاستشاري والقيادي</h3>
                                 <p className="text-[10px] text-slate-400 mb-4 font-medium">تطوير وقيادة المبيعات</p>
                                 <ul className="grid grid-cols-1 gap-2 text-xs text-slate-300">
                                     <li className="flex items-center gap-2">
-                                        <Check className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                                        <Check className="w-3.5 h-3.5 text-teal-400 shrink-0" />
                                         <span>تدريب وتطوير فريقكم البيعي</span>
                                     </li>
                                     <li className="flex items-center gap-2">
-                                        <Check className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                                        <Check className="w-3.5 h-3.5 text-teal-400 shrink-0" />
                                         <span>بناء آليات المتابعة وتجاوز العقبات</span>
                                     </li>
                                     <li className="flex items-center gap-2">
-                                        <Check className="w-3.5 h-3.5 text-violet-400 shrink-0" />
+                                        <Check className="w-3.5 h-3.5 text-teal-400 shrink-0" />
                                         <span>متابعة وتقييم مستمر للأداء</span>
                                     </li>
                                 </ul>
@@ -1252,7 +1273,7 @@ export const GrowthTriangleSection = ({ clientSalesCenter = false }: { clientSal
                     className="mt-20 max-w-4xl mx-auto text-center"
                 >
                     <div className="relative p-6 md:p-8 rounded-3xl bg-slate-950/30 border border-slate-900/80 overflow-hidden animate-pulse-slow">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.015] via-transparent to-violet-500/[0.015]" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.015] via-transparent to-teal-500/[0.015]" />
                         <h3 className="text-lg md:text-xl font-extrabold text-slate-200 leading-relaxed max-w-3xl mx-auto">
                             "لا نوفر لكم فرصًا فقط… بل نساعدكم على بناء فريق مبيعات أقوى قادر على تحويل الفرص إلى نمو حقيقي ومستدام."
                         </h3>
