@@ -281,7 +281,7 @@ const ChallengesSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-[#050505] border-t border-slate-900/60 relative overflow-hidden">
+    <section className="pt-20 pb-36 bg-[#050505] border-t border-slate-900/60 relative overflow-visible">
       {/* Background decorations */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
       
@@ -293,7 +293,7 @@ const ChallengesSection = () => {
         />
 
         {/* Desktop Layout (md and up) */}
-        <div className="hidden md:block relative min-h-[280px] mb-12">
+        <div className="hidden md:block relative min-h-[280px] mb-28">
           {/* SVG Connecting Line */}
           <svg className="absolute inset-x-0 top-[60px] w-full h-[60px] pointer-events-none z-0" fill="none" viewBox="0 0 1000 60" preserveAspectRatio="none">
             <defs>
@@ -382,8 +382,11 @@ const ChallengesSection = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-[102%] left-1/2 -translate-x-1/2 w-[340px] lg:w-[360px] mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-50 text-right pointer-events-auto before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4"
-                        style={{ borderColor: stage.color === 'teal' ? '#14b8a640' : stage.color === 'cyan' ? '#06b6d440' : '#10b98140' }}
+                        className={cn(
+                          "absolute top-[102%] w-[340px] lg:w-[360px] mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-50 text-right pointer-events-auto before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4",
+                          idx === 0 ? "right-0 origin-top-right" : idx === 2 ? "left-0 origin-top-left" : "left-1/2 -translate-x-1/2 origin-top"
+                        )}
+                        style={{ borderColor: stage.color === 'teal' ? '#14b8a650' : stage.color === 'cyan' ? '#06b6d450' : '#10b98150' }}
                       >
                         {/* Glow effect at popover top */}
                         <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
