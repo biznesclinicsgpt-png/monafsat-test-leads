@@ -330,14 +330,30 @@ export const OperationalFormulaSection = () => {
 	                  className={cn(
 	                    "relative rounded-3xl border p-7 backdrop-blur-md h-[240px] flex flex-col justify-start select-none cursor-pointer overflow-hidden transition-all duration-300",
 	                    isHovered
-	                      ? "border-cyan-500/40 bg-slate-950/85 shadow-[0_0_35px_rgba(6,182,212,0.15)] z-20"
+	                      ? "border-transparent bg-slate-950/20 shadow-[0_0_35px_rgba(6,182,212,0.15)] z-20"
 	                      : hoveredIdx !== null && Math.abs(hoveredIdx - idx) > 1
 	                      ? "border-slate-800/40 bg-slate-950/40 opacity-55 z-10"
 	                      : "border-slate-800 bg-slate-950/60 z-10"
 	                  )}
 	                >
+                    {/* Rotating border glow on hover */}
+                    {isHovered && !shouldReduce && (
+                      <>
+                        <div className="absolute -inset-[1px] rounded-3xl overflow-hidden pointer-events-none z-0">
+                          <div 
+                            className="absolute w-[150%] h-[150%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-[spin_8s_linear_infinite]"
+                            style={{
+                              background: `conic-gradient(from 0deg, transparent 0deg, #06b6d4 180deg, transparent 360deg)`
+                            }}
+                          />
+                        </div>
+                        {/* Inner solid background overlay */}
+                        <div className="absolute inset-[1.5px] rounded-[23px] bg-slate-950/95 z-10 pointer-events-none" />
+                      </>
+                    )}
+
                   {/* Default Content view */}
-                  <div className={cn("flex flex-col h-full transition-opacity duration-300", isHovered ? "opacity-0 pointer-events-none" : "opacity-100")}>
+                  <div className={cn("flex flex-col h-full transition-opacity duration-300 relative z-20", isHovered ? "opacity-0 pointer-events-none" : "opacity-100")}>
 	                    <motion.div animate={{ scale: shouldReduce ? 1 : isHovered ? 1.06 : 1 }} transition={{ duration: 0.18 }} className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex items-center justify-center mb-4 transition-transform duration-300">
 	                      <Icon className="w-5 h-5" />
 	                    </motion.div>
@@ -358,7 +374,7 @@ export const OperationalFormulaSection = () => {
 	                        animate={{ opacity: 1, y: 0, scale: 1 }}
 	                        exit={{ opacity: 0, y: shouldReduce ? 0 : 6, scale: shouldReduce ? 1 : 0.99 }}
 	                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-	                        className="absolute inset-0 p-7 flex flex-col justify-start bg-slate-950/95 z-10"
+	                        className="absolute inset-0 p-7 flex flex-col justify-start bg-slate-950/95 z-20"
 	                      >
 	                        <h4 className="text-sm font-black text-cyan-300 mb-4 pb-2 border-b border-slate-900/80">{card.title}</h4>
 	                        <ul className="space-y-2 text-right">

@@ -793,6 +793,7 @@ const ChallengesSection = () => {
 type TimelineBucket = 'inputs' | 'process' | 'outputs' | 'outcomes';
 
 const ExecutionTimelineSection = () => {
+  const [hoveredStage, setHoveredStage] = useState<number | null>(null);
   const [activeStage, setActiveStage] = useState(0);
   const [activeBucket, setActiveBucket] = useState<TimelineBucket>('inputs');
   const { shouldReduce, reveal, container, item } = useSharedMotion();
@@ -880,46 +881,72 @@ const ExecutionTimelineSection = () => {
             variants={container}
             className="lg:col-span-5 grid gap-4"
           >
-            {stages.map((stage, idx) => (
+            {stages.map((stage, idx) => {
+              const isStageActive = activeStage === idx;
+              const isStageHovered = hoveredStage === idx;
+              const stageColors = ['#14b8a6', '#06b6d4', '#10b981', '#3b82f6'];
+              const stageColor = stageColors[idx] || '#10b981';
+
+              return (
 	              <motion.button
 	                key={stage.title}
 	                variants={item}
 	                whileHover={shouldReduce ? {} : { y: -2, transition: { duration: 0.18 } }}
+	                onMouseEnter={() => setHoveredStage(idx)}
+	                onMouseLeave={() => setHoveredStage(null)}
 	                onClick={() => {
 	                  setActiveStage(idx);
 	                  setActiveBucket('inputs');
 	                }}
 	                className={cn(
 	                  'relative overflow-hidden text-right rounded-3xl border p-5 transition-colors duration-300',
-	                  activeStage === idx
-	                    ? 'bg-emerald-500/10 border-emerald-400/50 shadow-[0_0_28px_rgba(16,185,129,0.12)]'
-	                    : 'bg-slate-950/55 border-slate-800 hover:border-slate-700'
+	                  isStageActive
+	                    ? (isStageHovered ? 'border-transparent bg-slate-950/20 shadow-[0_0_28px_rgba(16,185,129,0.12)]' : 'bg-emerald-500/10 border-emerald-400/50 shadow-[0_0_28px_rgba(16,185,129,0.12)]')
+	                    : (isStageHovered ? 'border-transparent bg-slate-950/20' : 'bg-slate-950/55 border-slate-800 hover:border-slate-700')
 	                )}
 	              >
-	                {activeStage === idx && (
+	                {isStageActive && (
 	                  <motion.div
 	                    layoutId="execution-stage-active"
 	                    className="absolute inset-0 rounded-3xl border border-emerald-300/35 bg-emerald-500/[0.045] shadow-[inset_0_1px_0_rgba(110,231,183,0.18),0_0_32px_rgba(16,185,129,0.10)]"
 	                    transition={shouldReduce ? { duration: 0 } : { type: 'spring', stiffness: 260, damping: 32 }}
 	                  />
 	                )}
-	                <div className="flex items-start gap-4">
+
+                    {/* Rotating border glow on hover */}
+                    {isStageHovered && !shouldReduce && (
+                      <>
+                        <div className="absolute -inset-[1px] rounded-3xl overflow-hidden pointer-events-none z-0">
+                          <div 
+                            className="absolute w-[150%] h-[150%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-[spin_8s_linear_infinite]"
+                            style={{
+                              background: `conic-gradient(from 0deg, transparent 0deg, ${stageColor} 180deg, transparent 360deg)`
+                            }}
+                          />
+                        </div>
+                        {/* Inner solid background overlay */}
+                        <div className="absolute inset-[1.5px] rounded-[23px] bg-slate-950/95 z-10 pointer-events-none" />
+                      </>
+                    )}
+
+	                <div className="flex items-start gap-4 relative z-20">
 	                  <div
 	                    className={cn(
 	                      'relative z-10 w-11 h-11 rounded-2xl border flex items-center justify-center font-black shrink-0 transition-colors duration-300',
-	                      activeStage === idx ? 'bg-emerald-400 text-slate-950 border-emerald-300 shadow-[0_0_18px_rgba(52,211,153,0.18)]' : 'bg-slate-900 text-slate-400 border-slate-800'
+	                      isStageActive ? 'bg-emerald-400 text-slate-950 border-emerald-300 shadow-[0_0_18px_rgba(52,211,153,0.18)]' : 'bg-slate-900 text-slate-400 border-slate-800'
 	                    )}
 	                  >
 	                    {idx + 1}
 	                  </div>
 	                  <div className="relative z-10">
 	                    <div className="text-xs font-black text-cyan-300 mb-1">{stage.shortPeriod}</div>
-                    <h3 className="text-lg md:text-xl font-black text-white mb-2">{stage.title}</h3>
-                    <p className="text-sm text-slate-400 leading-relaxed">{stage.summary}</p>
+                      <h3 className="text-lg md:text-xl font-black text-white mb-2">{stage.title}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed">{stage.summary}</p>
+                    </div>
                   </div>
-                </div>
-              </motion.button>
-            ))}
+	              </motion.button>
+              );
+            })}
           </motion.div>
 
 	          <motion.div
