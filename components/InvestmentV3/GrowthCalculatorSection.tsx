@@ -11,17 +11,17 @@ const toArabicNumerals = (num: number | string): string => {
 const useLocalMotion = () => {
   const shouldReduce = useReducedMotion();
   const reveal = {
-    hidden: { 
-      opacity: 0, 
-      y: shouldReduce ? 0 : 25, 
-      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    hidden: {
+      opacity: 0,
+      y: shouldReduce ? 0 : 25,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       filter: 'none',
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.16, 1, 0.3, 1]
       }
     }
@@ -36,16 +36,16 @@ const useLocalMotion = () => {
     }
   };
   const item = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: shouldReduce ? 0 : 15,
       filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       filter: 'none',
-      transition: { 
+      transition: {
         duration: 0.5,
         ease: [0.16, 1, 0.3, 1]
       }
@@ -57,13 +57,13 @@ const useLocalMotion = () => {
 export const GrowthCalculatorSection = () => {
     const { shouldReduce, reveal, container, item } = useLocalMotion();
     const shouldReduceMotion = shouldReduce;
-    
+
     // Inputs state
     const [sector, setSector] = useState<string>('مقاولات');
     const [targetRevenue, setTargetRevenue] = useState<number>(1000000);
     const [avgDealValue, setAvgDealValue] = useState<number>(100000);
     const [region, setRegion] = useState<string>('السعودية بالكامل');
-    
+
     // UI states
     const [isCalculated, setIsCalculated] = useState<boolean>(true);
     const [activeScenario, setActiveScenario] = useState<'conservative' | 'realistic' | 'accelerated'>('realistic');
@@ -105,7 +105,7 @@ export const GrowthCalculatorSection = () => {
                 localStorage.setItem('manafeth_sector', 'مقاولات');
                 localStorage.setItem('manafeth_region', 'السعودية بالكامل');
             }
-            
+
             // Dispatch initial update event
             setTimeout(() => {
                 window.dispatchEvent(new Event('manafeth_calculator_update'));
@@ -161,13 +161,13 @@ export const GrowthCalculatorSection = () => {
         return Object.entries(scenarios).map(([key, config]) => {
             // Proposals required (Deals / Close Rate)
             const proposals = Math.ceil(deals / config.closeRate);
-            
+
             // Meetings required (Proposals / 0.75)
             const meetings = Math.ceil(proposals / 0.75);
-            
+
             // Conversations required (Meetings / ConvToMeetingRate)
             const conversations = Math.ceil(meetings / config.convToMeetingRate);
-            
+
             // Target prospects outreach list (Conversations / OpenRate)
             const targetOutreach = Math.ceil(conversations / config.openRate);
 
@@ -196,7 +196,7 @@ export const GrowthCalculatorSection = () => {
 
     const handleCalculate = (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         if (avgDealValue > targetRevenue) {
             setErrorMsg("تنبيه: متوسط قيمة الصفقة لا يمكن أن يكون أكبر من الهدف البيعي الإجمالي.");
             setIsCalculated(false);
@@ -211,7 +211,7 @@ export const GrowthCalculatorSection = () => {
         localStorage.setItem('manafeth_avg_deal_value', avgDealValue.toString());
         localStorage.setItem('manafeth_sector', sector);
         localStorage.setItem('manafeth_region', region);
-        
+
         // Dispatch custom event to notify live dashboard panel
         window.dispatchEvent(new Event('manafeth_calculator_update'));
     };
@@ -227,7 +227,7 @@ export const GrowthCalculatorSection = () => {
             </div>
 
             <div className="container mx-auto px-4 max-w-7xl relative z-10">
-                
+
                 {/* Header */}
                 <div className="text-center mb-16">
                     <motion.div
@@ -251,7 +251,7 @@ export const GrowthCalculatorSection = () => {
 
                 {/* Grid Layout: Inputs Left, Results Right */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    
+
                     {/* INPUT FORM (4 cols) */}
                     <div className="lg:col-span-4 bg-slate-950/40 border border-slate-900/60 p-6 md:p-8 rounded-3xl backdrop-blur-sm">
                         <h3 className="text-base font-bold text-white mb-6 border-b border-slate-900 pb-3 flex items-center gap-2">
@@ -263,7 +263,7 @@ export const GrowthCalculatorSection = () => {
                             {/* 1. Sector Target */}
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-400">القطاع المستهدف</label>
-                                <select 
+                                <select
                                     value={sector}
                                     onChange={(e) => {
                                         const val = e.target.value;
@@ -281,7 +281,7 @@ export const GrowthCalculatorSection = () => {
                             {/* 2. Target Revenue */}
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-400">الهدف البيعي خلال الربع الأول (ريال)</label>
-                                <input 
+                                <input
                                     type="number"
                                     min="1000"
                                     step="1000"
@@ -299,7 +299,7 @@ export const GrowthCalculatorSection = () => {
                             {/* 3. Avg Deal Value */}
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-400">متوسط قيمة الصفقة الواحدة (ريال)</label>
-                                <input 
+                                <input
                                     type="number"
                                     min="100"
                                     step="100"
@@ -317,7 +317,7 @@ export const GrowthCalculatorSection = () => {
                             {/* 4. Target Region */}
                             <div className="space-y-2">
                                 <label className="block text-xs font-bold text-slate-400">المنطقة المستهدفة بالمملكة</label>
-                                <select 
+                                <select
                                     value={region}
                                     onChange={(e) => {
                                         const val = e.target.value;
@@ -353,7 +353,7 @@ export const GrowthCalculatorSection = () => {
                     <div className="lg:col-span-8 flex flex-col justify-stretch h-full">
                         <AnimatePresence mode="wait">
                             {isCalculated && results ? (
-                                <motion.div 
+                                <motion.div
                                     initial={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: 15 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={shouldReduceMotion ? { opacity: 1 } : { opacity: 0, y: -15 }}
@@ -396,7 +396,7 @@ export const GrowthCalculatorSection = () => {
 
                                     {/* Active Scenario Card + Funnel Split Grid */}
                                     {results.filter(r => r.id === activeScenario).map((scen) => (
-                                        <div 
+                                        <div
                                             key={scen.id}
                                             className={cn(
                                                 "border p-6 md:p-8 rounded-3xl flex flex-col md:flex-row gap-6 justify-between items-center relative overflow-hidden backdrop-blur-sm transition-all duration-300",
@@ -489,12 +489,18 @@ export const GrowthCalculatorSection = () => {
                                                         {/* Flowing particles down the center of the funnel */}
                                                         {!shouldReduceMotion && (
                                                             <>
-                                                                <motion.circle cx="50" r="1.5" fill={activeScenario === 'conservative' ? '#94a3b8' : activeScenario === 'realistic' ? '#22d3ee' : '#34d399'} animate={{ cy: [10, 92], opacity: [0, 1, 1, 0] }} transition={{ duration: activeScenario === 'conservative' ? 5 : activeScenario === 'realistic' ? 3 : 1.5, repeat: Infinity, ease: "linear" }} />
-                                                                <motion.circle cx="50" r="1" fill={activeScenario === 'conservative' ? '#94a3b8' : activeScenario === 'realistic' ? '#22d3ee' : '#34d399'} animate={{ cy: [30, 92], opacity: [0, 1, 1, 0] }} transition={{ duration: activeScenario === 'conservative' ? 5 : activeScenario === 'realistic' ? 3 : 1.5, repeat: Infinity, ease: "linear", delay: activeScenario === 'conservative' ? 2.5 : activeScenario === 'realistic' ? 1.5 : 0.75 }} />
+                                                                <circle cx="50" cy="10" r="1.5" fill={activeScenario === 'conservative' ? '#94a3b8' : activeScenario === 'realistic' ? '#22d3ee' : '#34d399'}>
+                                                                    <animate attributeName="cy" values="10;92" dur={activeScenario === 'conservative' ? '5s' : activeScenario === 'realistic' ? '3s' : '1.5s'} repeatCount="indefinite" />
+                                                                    <animate attributeName="opacity" values="0;1;1;0" dur={activeScenario === 'conservative' ? '5s' : activeScenario === 'realistic' ? '3s' : '1.5s'} repeatCount="indefinite" />
+                                                                </circle>
+                                                                <circle cx="50" cy="30" r="1" fill={activeScenario === 'conservative' ? '#94a3b8' : activeScenario === 'realistic' ? '#22d3ee' : '#34d399'}>
+                                                                    <animate attributeName="cy" values="30;92" dur={activeScenario === 'conservative' ? '5s' : activeScenario === 'realistic' ? '3s' : '1.5s'} begin={activeScenario === 'conservative' ? '2.5s' : activeScenario === 'realistic' ? '1.5s' : '0.75s'} repeatCount="indefinite" />
+                                                                    <animate attributeName="opacity" values="0;1;1;0" dur={activeScenario === 'conservative' ? '5s' : activeScenario === 'realistic' ? '3s' : '1.5s'} begin={activeScenario === 'conservative' ? '2.5s' : activeScenario === 'realistic' ? '1.5s' : '0.75s'} repeatCount="indefinite" />
+                                                                </circle>
                                                             </>
                                                         )}
                                                     </svg>
-                                                    
+
                                                     {/* Funnel Labels overlaid on left/right */}
                                                     <div className="absolute top-[12%] right-[5%] text-[7px] font-black text-slate-500">الجهات المستهدفة</div>
                                                     <div className="absolute top-[28%] right-[7%] text-[7px] font-black text-slate-500">محادثات نشطة</div>
@@ -514,7 +520,7 @@ export const GrowthCalculatorSection = () => {
                                                 const maxDeals = Math.max(...results.map(r => r.metrics.deals));
                                                 const percentage = (scen.metrics.deals / maxDeals) * 100;
                                                 const isCurrent = scen.id === activeScenario;
-                                                
+
                                                 return (
                                                     <div key={scen.id} className="space-y-1.5 cursor-pointer" onClick={() => setActiveScenario(scen.id as any)}>
                                                         <div className="flex justify-between text-[10px] font-bold">
@@ -526,7 +532,7 @@ export const GrowthCalculatorSection = () => {
                                                             </span>
                                                         </div>
                                                         <div className="w-full h-2 bg-slate-900 border border-slate-900/60 rounded-full overflow-hidden">
-                                                            <motion.div 
+                                                            <motion.div
                                                                 initial={{ width: 0 }}
                                                                 animate={{ width: `${percentage}%` }}
                                                                 transition={{ duration: 0.6 }}
@@ -541,15 +547,15 @@ export const GrowthCalculatorSection = () => {
                                             })}
                                         </div>
                                     </div>
-                                    
+
                                     {/* Overall Info bar explaining mathematical rates in Arabic digits */}
                                     <div className="bg-slate-950/20 border border-slate-900/80 p-4 rounded-2xl text-right text-[9.5px] text-slate-400 leading-relaxed flex items-start gap-3">
                                         <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                                         <div>
                                             <span className="block font-bold text-white mb-0.5">المعادلات والافتراضات المثبتة خلف الحساب:</span>
-                                            معدل إغلاق صفقات عروض الأسعار (Close Rate): المحافظ ٢٠٪، الواقعي ٢٥٪، المتسارع ٣٠٪. | 
-                                            معدل تحويل الاجتماعات لعروض أسعار هو ٧٥٪. | 
-                                            معدل تحويل المحادثات لاجتماعات: المحافظ ٥٪، الواقعي ٧٪، المتسارع ١٠٪. | 
+                                            معدل إغلاق صفقات عروض الأسعار (Close Rate): المحافظ ٢٠٪، الواقعي ٢٥٪، المتسارع ٣٠٪. |
+                                            معدل تحويل الاجتماعات لعروض أسعار هو ٧٥٪. |
+                                            معدل تحويل المحادثات لاجتماعات: المحافظ ٥٪، الواقعي ٧٪، المتسارع ١٠٪. |
                                             معدل فتح المحادثة من الجهات المستهدفة: المحافظ ٢٥٪، الواقعي ٢٨٪، المتسارع ٣٠٪.
                                         </div>
                                     </div>

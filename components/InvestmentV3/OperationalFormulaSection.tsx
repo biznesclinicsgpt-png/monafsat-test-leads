@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { 
-  Bot, 
-  UserRoundCheck, 
-  Target, 
-  PhoneCall, 
-  Globe, 
-  Sparkles, 
-  FileText, 
-  MessagesSquare, 
-  LineChart, 
-  CheckCircle2, 
+import {
+  Bot,
+  UserRoundCheck,
+  Target,
+  PhoneCall,
+  Globe,
+  Sparkles,
+  FileText,
+  MessagesSquare,
+  LineChart,
+  CheckCircle2,
   ArrowLeft,
-  ChevronDown, 
+  ChevronDown,
   ChevronUp,
   Activity
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 
 export const OperationalFormulaSection = () => {
-  const shouldReduce = useReducedMotion();
-  const [activeMobileIdx, setActiveMobileIdx] = useState<number | null>(null);
-  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
+	  const shouldReduce = useReducedMotion();
+	  const [activeMobileIdx, setActiveMobileIdx] = useState<number | null>(null);
+	  const [hoveredIdx, setHoveredIdx] = useState<number | null>(null);
 
   const toggleMobileSection = (idx: number) => {
     if (activeMobileIdx === idx) {
@@ -33,17 +33,17 @@ export const OperationalFormulaSection = () => {
 
   // Shared reveal variants local to this component to avoid circular dependencies
   const reveal = {
-    hidden: { 
-      opacity: 0, 
-      y: shouldReduce ? 0 : 25, 
-      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    hidden: {
+      opacity: 0,
+      y: shouldReduce ? 0 : 25,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       filter: 'none',
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.16, 1, 0.3, 1]
       }
     }
@@ -60,16 +60,16 @@ export const OperationalFormulaSection = () => {
   };
 
   const item = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: shouldReduce ? 0 : 15,
       filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       filter: 'none',
-      transition: { 
+      transition: {
         duration: 0.5,
         ease: [0.16, 1, 0.3, 1]
       }
@@ -196,7 +196,7 @@ export const OperationalFormulaSection = () => {
       </div>
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        
+
         {/* Section Header */}
         <motion.div
           variants={reveal}
@@ -219,61 +219,91 @@ export const OperationalFormulaSection = () => {
 
         {/* 3x3 Grid Parent Container with absolute SVG line network */}
         <div className="relative w-full">
-          
-          {/* SVG Connecting Lines (Desktop only) */}
-          <div className="absolute inset-0 z-0 hidden lg:block pointer-events-none">
-            <svg className="w-full h-full overflow-visible" fill="none">
-              {/* Row 1 Horizontal connector */}
-              <line 
-                x1="10%" y1="16.6%" x2="90%" y2="16.6%" 
-                stroke={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 0 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"} 
-                strokeWidth={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 0 ? "1.5" : "1"}
-                strokeDasharray="4 4"
-                className="transition-all duration-300"
-              />
-              {/* Row 2 Horizontal connector */}
-              <line 
-                x1="10%" y1="50%" x2="90%" y2="50%" 
-                stroke={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 1 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"} 
-                strokeWidth={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 1 ? "1.5" : "1"}
-                strokeDasharray="4 4"
-                className="transition-all duration-300"
-              />
-              {/* Row 3 Horizontal connector */}
-              <line 
-                x1="10%" y1="83.3%" x2="90%" y2="83.3%" 
-                stroke={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 2 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"} 
-                strokeWidth={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 2 ? "1.5" : "1"}
-                strokeDasharray="4 4"
-                className="transition-all duration-300"
-              />
-              
-              {/* Column 1 (Right in RTL, index 2) Vertical connector */}
-              <line 
-                x1="83.3%" y1="10%" x2="83.3%" y2="90%" 
-                stroke={hoveredIdx !== null && (hoveredIdx % 3) === 2 ? "rgba(16, 185, 129, 0.25)" : "rgba(255, 255, 255, 0.04)"} 
-                strokeWidth={hoveredIdx !== null && (hoveredIdx % 3) === 2 ? "1.5" : "1"}
-                strokeDasharray="4 4"
-                className="transition-all duration-300"
-              />
-              {/* Column 2 (Center, index 1) Vertical connector */}
-              <line 
-                x1="50%" y1="10%" x2="50%" y2="90%" 
-                stroke={hoveredIdx !== null && (hoveredIdx % 3) === 1 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"} 
-                strokeWidth={hoveredIdx !== null && (hoveredIdx % 3) === 1 ? "1.5" : "1"}
-                strokeDasharray="4 4"
-                className="transition-all duration-300"
-              />
-              {/* Column 3 (Left in RTL, index 0) Vertical connector */}
-              <line 
-                x1="16.6%" y1="10%" x2="16.6%" y2="90%" 
-                stroke={hoveredIdx !== null && (hoveredIdx % 3) === 0 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"} 
-                strokeWidth={hoveredIdx !== null && (hoveredIdx % 3) === 0 ? "1.5" : "1"}
-                strokeDasharray="4 4"
-                className="transition-all duration-300"
-              />
-            </svg>
-          </div>
+
+	          {/* SVG Connecting Lines (Desktop only) */}
+	          <motion.div
+	            initial={shouldReduce ? { opacity: 0.45 } : { opacity: 0 }}
+	            whileInView={{ opacity: 1 }}
+	            viewport={{ once: true, amount: 0.2 }}
+	            transition={{ duration: 0.5, delay: 0.55 }}
+	            className="absolute inset-0 z-0 hidden lg:block pointer-events-none"
+	          >
+	            <svg className="w-full h-full overflow-visible" fill="none">
+	              {/* Row 1 Horizontal connector */}
+	              <motion.line
+	                x1="10%" y1="16.6%" x2="90%" y2="16.6%"
+	                stroke={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 0 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"}
+	                strokeWidth={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 0 ? "1.5" : "1"}
+	                strokeDasharray="4 4"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.8, delay: 0.65, ease: "easeOut" }}
+	              />
+	              {/* Row 2 Horizontal connector */}
+	              <motion.line
+	                x1="10%" y1="50%" x2="90%" y2="50%"
+	                stroke={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 1 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"}
+	                strokeWidth={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 1 ? "1.5" : "1"}
+	                strokeDasharray="4 4"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.8, delay: 0.75, ease: "easeOut" }}
+	              />
+	              {/* Row 3 Horizontal connector */}
+	              <motion.line
+	                x1="10%" y1="83.3%" x2="90%" y2="83.3%"
+	                stroke={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 2 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"}
+	                strokeWidth={hoveredIdx !== null && Math.floor(hoveredIdx / 3) === 2 ? "1.5" : "1"}
+	                strokeDasharray="4 4"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.8, delay: 0.85, ease: "easeOut" }}
+	              />
+
+	              {/* Column 1 (Right in RTL, index 2) Vertical connector */}
+	              <motion.line
+	                x1="83.3%" y1="10%" x2="83.3%" y2="90%"
+	                stroke={hoveredIdx !== null && (hoveredIdx % 3) === 2 ? "rgba(16, 185, 129, 0.25)" : "rgba(255, 255, 255, 0.04)"}
+	                strokeWidth={hoveredIdx !== null && (hoveredIdx % 3) === 2 ? "1.5" : "1"}
+	                strokeDasharray="4 4"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.8, delay: 0.75, ease: "easeOut" }}
+	              />
+	              {/* Column 2 (Center, index 1) Vertical connector */}
+	              <motion.line
+	                x1="50%" y1="10%" x2="50%" y2="90%"
+	                stroke={hoveredIdx !== null && (hoveredIdx % 3) === 1 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"}
+	                strokeWidth={hoveredIdx !== null && (hoveredIdx % 3) === 1 ? "1.5" : "1"}
+	                strokeDasharray="4 4"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.8, delay: 0.85, ease: "easeOut" }}
+	              />
+	              {/* Column 3 (Left in RTL, index 0) Vertical connector */}
+	              <motion.line
+	                x1="16.6%" y1="10%" x2="16.6%" y2="90%"
+	                stroke={hoveredIdx !== null && (hoveredIdx % 3) === 0 ? "rgba(6, 182, 212, 0.25)" : "rgba(255, 255, 255, 0.04)"}
+	                strokeWidth={hoveredIdx !== null && (hoveredIdx % 3) === 0 ? "1.5" : "1"}
+	                strokeDasharray="4 4"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.8, delay: 0.95, ease: "easeOut" }}
+	              />
+	            </svg>
+	          </motion.div>
 
           {/* Desktop Grid Layout */}
           <motion.div
@@ -288,31 +318,32 @@ export const OperationalFormulaSection = () => {
               const isHovered = hoveredIdx === idx;
 
               return (
-                <motion.div
-                  key={card.title}
-                  variants={item}
-                  onHoverStart={() => setHoveredIdx(idx)}
-                  onHoverEnd={() => setHoveredIdx(null)}
-                  style={{
-                    scale: shouldReduce ? 1 : isHovered ? 1.02 : 1
-                  }}
-                  className={cn(
-                    "relative rounded-3xl border p-7 backdrop-blur-md h-[240px] flex flex-col justify-start select-none cursor-pointer overflow-hidden transition-all duration-300",
-                    isHovered 
-                      ? "border-cyan-500/40 bg-slate-950/85 shadow-[0_0_35px_rgba(6,182,212,0.15)] z-20"
-                      : hoveredIdx !== null 
-                      ? "border-slate-800/40 bg-slate-950/40 opacity-50 z-10" 
-                      : "border-slate-800 bg-slate-950/60 z-10"
-                  )}
-                >
+	                <motion.div
+	                  key={card.title}
+	                  initial={{ opacity: 0, y: shouldReduce ? 0 : 18, filter: shouldReduce ? 'none' : 'blur(4px)' }}
+	                  whileInView={{ opacity: 1, y: 0, filter: 'none' }}
+	                  viewport={{ once: true, amount: 0.1 }}
+	                  transition={{ duration: 0.42, delay: shouldReduce ? 0 : Math.floor(idx / 3) * 0.14 + (idx % 3) * 0.045, ease: [0.16, 1, 0.3, 1] }}
+	                  whileHover={shouldReduce ? {} : { y: -4, scale: 1.01, transition: { type: 'spring', stiffness: 260, damping: 30 } }}
+	                  onHoverStart={() => setHoveredIdx(idx)}
+	                  onHoverEnd={() => setHoveredIdx(null)}
+	                  className={cn(
+	                    "relative rounded-3xl border p-7 backdrop-blur-md h-[240px] flex flex-col justify-start select-none cursor-pointer overflow-hidden transition-all duration-300",
+	                    isHovered
+	                      ? "border-cyan-500/40 bg-slate-950/85 shadow-[0_0_35px_rgba(6,182,212,0.15)] z-20"
+	                      : hoveredIdx !== null && Math.abs(hoveredIdx - idx) > 1
+	                      ? "border-slate-800/40 bg-slate-950/40 opacity-55 z-10"
+	                      : "border-slate-800 bg-slate-950/60 z-10"
+	                  )}
+	                >
                   {/* Default Content view */}
                   <div className={cn("flex flex-col h-full transition-opacity duration-300", isHovered ? "opacity-0 pointer-events-none" : "opacity-100")}>
-                    <div className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex items-center justify-center mb-4 transition-transform duration-300">
-                      <Icon className="w-5 h-5" />
-                    </div>
+	                    <motion.div animate={{ scale: shouldReduce ? 1 : isHovered ? 1.06 : 1 }} transition={{ duration: 0.18 }} className="w-11 h-11 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex items-center justify-center mb-4 transition-transform duration-300">
+	                      <Icon className="w-5 h-5" />
+	                    </motion.div>
                     <h3 className="text-lg font-black text-white mb-2">{card.title}</h3>
                     <p className="text-xs text-slate-400 font-bold leading-relaxed">{card.short}</p>
-                    
+
                     <div className="mt-auto flex items-center gap-1.5 text-[9px] font-black text-cyan-500/60">
                       <span>ضع المؤشر للتفاصيل</span>
                       <ArrowLeft className="w-2.5 h-2.5 -rotate-90" />
@@ -320,18 +351,34 @@ export const OperationalFormulaSection = () => {
                   </div>
 
                   {/* Hover Details view */}
-                  <div className={cn("absolute inset-0 p-7 flex flex-col justify-start bg-slate-950/95 transition-opacity duration-300 z-10", isHovered ? "opacity-100" : "opacity-0 pointer-events-none")}>
-                    <h4 className="text-sm font-black text-cyan-300 mb-4 pb-2 border-b border-slate-900/80">{card.title}</h4>
-                    <ul className="space-y-2 text-right">
-                      {card.details.map((detail, dIdx) => (
-                        <li key={dIdx} className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed font-bold">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 mt-0.5 shrink-0" />
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
+	                  <AnimatePresence>
+	                    {isHovered && (
+	                      <motion.div
+	                        initial={{ opacity: 0, y: shouldReduce ? 0 : 8, scale: shouldReduce ? 1 : 0.98 }}
+	                        animate={{ opacity: 1, y: 0, scale: 1 }}
+	                        exit={{ opacity: 0, y: shouldReduce ? 0 : 6, scale: shouldReduce ? 1 : 0.99 }}
+	                        transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+	                        className="absolute inset-0 p-7 flex flex-col justify-start bg-slate-950/95 z-10"
+	                      >
+	                        <h4 className="text-sm font-black text-cyan-300 mb-4 pb-2 border-b border-slate-900/80">{card.title}</h4>
+	                        <ul className="space-y-2 text-right">
+	                          {card.details.map((detail, dIdx) => (
+	                            <motion.li
+	                              key={dIdx}
+	                              initial={{ opacity: 0, y: shouldReduce ? 0 : 4 }}
+	                              animate={{ opacity: 1, y: 0 }}
+	                              transition={{ duration: 0.18, delay: shouldReduce ? 0 : dIdx * 0.025 }}
+	                              className="flex items-start gap-2 text-xs text-slate-300 leading-relaxed font-bold"
+	                            >
+	                              <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400 mt-0.5 shrink-0" />
+	                              <span>{detail}</span>
+	                            </motion.li>
+	                          ))}
+	                        </ul>
+	                      </motion.div>
+	                    )}
+	                  </AnimatePresence>
+	                </motion.div>
               );
             })}
           </motion.div>

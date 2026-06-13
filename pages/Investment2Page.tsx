@@ -53,17 +53,17 @@ export const useSharedMotion = () => {
 
   // Standardized reveal animation variant
   const reveal = {
-    hidden: { 
-      opacity: 0, 
-      y: shouldReduce ? 0 : 25, 
-      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    hidden: {
+      opacity: 0,
+      y: shouldReduce ? 0 : 25,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       filter: 'none',
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.16, 1, 0.3, 1] // Custom easeOutExpo
       }
     }
@@ -82,16 +82,16 @@ export const useSharedMotion = () => {
 
   // Standardized stagger item variant
   const item = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: shouldReduce ? 0 : 15,
       filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       filter: 'none',
-      transition: { 
+      transition: {
         duration: 0.5,
         ease: [0.16, 1, 0.3, 1]
       }
@@ -220,7 +220,7 @@ const SectionHeader = ({
 
 const SaudiUnderline = () => {
   const shouldReduce = useReducedMotion();
-  
+
   return (
     <span className="relative inline-block">
       <span className="relative z-10 text-transparent bg-clip-text bg-gradient-to-l from-emerald-300 via-cyan-300 to-emerald-250">
@@ -268,8 +268,8 @@ const HeroSection2 = () => {
       {/* Background Grid & Glowing circles */}
       <div className="absolute inset-0 opacity-25">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415533_1px,transparent_1px),linear-gradient(to_bottom,#33415533_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,#000_60%,transparent_100%)] pointer-events-none" />
-        
-        <motion.div 
+
+        <motion.div
           animate={shouldReduce ? {} : {
             scale: [1, 1.03, 1],
             opacity: [0.18, 0.25, 0.18]
@@ -279,10 +279,10 @@ const HeroSection2 = () => {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-          className="absolute top-1/4 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px] pointer-events-none" 
+          className="absolute top-1/4 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px] pointer-events-none"
         />
-        
-        <motion.div 
+
+        <motion.div
           animate={shouldReduce ? {} : {
             scale: [1, 1.02, 1],
             opacity: [0.18, 0.23, 0.18]
@@ -293,7 +293,7 @@ const HeroSection2 = () => {
             ease: "easeInOut",
             delay: 2
           }}
-          className="absolute bottom-0 right-10 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none" 
+          className="absolute bottom-0 right-10 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none"
         />
       </div>
 
@@ -459,7 +459,7 @@ const ChallengesSection = () => {
   ];
 
   return (
-    <motion.section 
+    <motion.section
       variants={reveal}
       initial="hidden"
       whileInView="visible"
@@ -468,7 +468,7 @@ const ChallengesSection = () => {
     >
       {/* Background decorations */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
-      
+
       <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <SectionHeader
           eyebrow="رحلة التحديات والحلول"
@@ -489,10 +489,10 @@ const ChallengesSection = () => {
             </defs>
             {/* Glowing background path blur */}
             {!shouldReduce && (
-              <motion.path 
-                d="M 180 30 C 340 5, 660 55, 820 30" 
-                stroke="url(#connecting-grad)" 
-                strokeWidth="4" 
+              <motion.path
+                d="M 180 30 C 340 5, 660 55, 820 30"
+                stroke="url(#connecting-grad)"
+                strokeWidth="4"
                 strokeLinecap="round"
                 opacity="0.2"
                 animate={{ opacity: [0.1, 0.35, 0.1] }}
@@ -501,18 +501,18 @@ const ChallengesSection = () => {
               />
             )}
             {/* Foreground drawing path with linear flow dash animation */}
-            <motion.path 
-              d="M 180 30 C 340 5, 660 55, 820 30" 
-              stroke="url(#connecting-grad)" 
-              strokeWidth="1.5" 
+            <motion.path
+              d="M 180 30 C 340 5, 660 55, 820 30"
+              stroke="url(#connecting-grad)"
+              strokeWidth="1.5"
               strokeDasharray="6 6"
               initial={{ pathLength: shouldReduce ? 1 : 0, strokeDashoffset: 0 }}
               whileInView={{ pathLength: 1 }}
               animate={shouldReduce ? {} : { strokeDashoffset: [0, -24] }}
               viewport={{ once: true }}
               transition={
-                shouldReduce 
-                  ? { duration: 0 } 
+                shouldReduce
+                  ? { duration: 0 }
                   : {
                       pathLength: { duration: 1.2, ease: "easeInOut", delay: 0.6 },
                       strokeDashoffset: { duration: 4, repeat: Infinity, ease: "linear" }
@@ -521,16 +521,16 @@ const ChallengesSection = () => {
             />
           </svg>
 
-          <motion.div 
+          <motion.div
             variants={container}
             className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10"
           >
             {stages.map((stage, idx) => {
               const IconComponent = stage.icon;
               const isHovered = hoveredCard === idx;
-              
+
               return (
-                <motion.div 
+                <motion.div
                   key={stage.title}
                   variants={item}
                   className="relative group"
@@ -543,16 +543,16 @@ const ChallengesSection = () => {
                     transition={springTransition}
                     className={cn(
                       "border rounded-3xl p-7 text-right relative z-20 cursor-pointer h-full transition-all duration-300",
-                      isHovered 
-                        ? "border-transparent bg-transparent" 
+                      isHovered
+                        ? "border-transparent bg-transparent"
                         : "border-slate-800/80 bg-slate-950/40"
                     )}
                   >
                     {/* Shared Layout Active Highlight Pill */}
                     {isHovered && (
-                      <motion.div 
-                        layoutId="challenges-shared-highlight" 
-                        className="absolute inset-0 rounded-3xl bg-slate-950 border border-slate-700 shadow-2xl -z-10" 
+                      <motion.div
+                        layoutId="challenges-shared-highlight"
+                        className="absolute inset-0 rounded-3xl bg-slate-950 border border-slate-700 shadow-2xl -z-10"
                         style={{
                           boxShadow: `0 10px 30px -10px ${stage.glowColor}`
                         }}
@@ -567,14 +567,14 @@ const ChallengesSection = () => {
                         transition={springTransition}
                         className={cn(
                           'w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300',
-                          isHovered 
-                            ? 'bg-slate-900/90 border-slate-750 text-cyan-300 shadow-lg' 
+                          isHovered
+                            ? 'bg-slate-900/90 border-slate-750 text-cyan-300 shadow-lg'
                             : 'bg-slate-950 border-slate-900 text-slate-400'
                         )}
                       >
                         <IconComponent className="w-5 h-5" />
                       </motion.div>
-                      
+
                       {/* Pulse Indicator */}
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] text-slate-500 font-bold group-hover:text-cyan-300 transition-colors">عرض التفاصيل</span>
@@ -609,7 +609,7 @@ const ChallengesSection = () => {
                       >
                         {/* Glow effect at popover top */}
                         <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
-                        
+
                         <div className="mb-4">
                           <span className={cn("text-xs font-black px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800/80 mb-2 inline-block", stage.activeColor)}>
                             {stage.title}
@@ -617,9 +617,9 @@ const ChallengesSection = () => {
                           <h4 className="text-xs font-bold text-slate-400 mb-1">التحدي:</h4>
                           <p className="text-sm text-white font-bold leading-relaxed">{stage.challenge}</p>
                         </div>
-                        
+
                         <div className="h-[1px] bg-slate-900 my-4" />
-                        
+
                         <ul className="space-y-3 mb-5">
                           {stage.points.map((point) => (
                             <li key={point} className="flex items-start gap-2.5 text-right justify-start">
@@ -649,21 +649,21 @@ const ChallengesSection = () => {
             {stages.map((stage, idx) => {
               const IconComponent = stage.icon;
               const isActive = activeMobileTab === idx;
-              
+
               return (
                 <button
                   key={stage.title}
                   onClick={() => setActiveMobileTab(idx)}
                   className={cn(
                     "flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all duration-300 relative overflow-hidden",
-                    isActive 
+                    isActive
                       ? "border-transparent bg-transparent"
                       : "bg-slate-950/40 border-slate-900 text-slate-400"
                   )}
                 >
                   {isActive && (
-                    <motion.div 
-                      layoutId="mobile-challenges-active-highlight" 
+                    <motion.div
+                      layoutId="mobile-challenges-active-highlight"
                       className="absolute inset-0 rounded-2xl bg-slate-900 border border-slate-800 shadow-[0_0_15px_rgba(6,182,212,0.1)] -z-10"
                       transition={springTransition}
                     />
@@ -682,13 +682,13 @@ const ChallengesSection = () => {
           {/* Details Area */}
           <div className="bg-slate-950/75 border border-slate-900 rounded-3xl p-5 text-right relative overflow-hidden shadow-xl">
             {/* Glow inside details */}
-            <div 
+            <div
               className="absolute top-0 right-0 w-32 h-32 opacity-20 pointer-events-none"
               style={{
                 background: `radial-gradient(circle at 100% 0%, ${stages[activeMobileTab].glowColor}, transparent 70%)`
               }}
             />
-            
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeMobileTab}
@@ -735,11 +735,11 @@ const ChallengesSection = () => {
           className="mt-12 bg-slate-950/40 border border-slate-900/80 rounded-3xl p-6 md:p-8 text-center max-w-4xl mx-auto shadow-lg relative"
         >
           <div className="absolute inset-0 rounded-3xl bg-cyan-500/5 blur-sm opacity-50 pointer-events-none" />
-          
+
           <p className="text-sm md:text-base text-slate-300 font-bold leading-relaxed mb-6 max-w-2xl mx-auto">
             لا نكتفي بجلب الفرص فقط؛ نجهز ما قبلها، ندعم فريقك أثناء تحريكها، ونحلل ما بعدها حتى يتحسن القمع أسبوعيًا.
           </p>
-          
+
           <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-xs font-black relative z-10">
             <div className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-teal-300 flex items-center gap-1.5 shadow-sm">
               <ClipboardList className="w-3.5 h-3.5" />
@@ -773,6 +773,9 @@ const ExecutionTimelineSection = () => {
   const [activeStage, setActiveStage] = useState(0);
   const [activeBucket, setActiveBucket] = useState<TimelineBucket>('inputs');
   const { shouldReduce, reveal, container, item } = useSharedMotion();
+  const contentTransition = shouldReduce
+    ? { duration: 0.18 }
+    : { duration: 0.28, ease: [0.16, 1, 0.3, 1] };
 
   const bucketMeta: Record<TimelineBucket, { label: string; question: string; icon: React.ElementType }> = {
     inputs: { label: 'المدخلات', question: 'ما الذي نحتاجه منك؟', icon: ClipboardList },
@@ -828,52 +831,66 @@ const ExecutionTimelineSection = () => {
   const CurrentIcon = bucketMeta[activeBucket].icon;
 
   return (
-    <motion.section 
-      variants={reveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      className="py-16 bg-[#080808] border-t border-slate-900/60"
-    >
-      <div className="container mx-auto px-4 max-w-7xl">
-        <SectionHeader
-          eyebrow="المدخلات ← التنفيذ ← المخرجات ← النتائج"
-          title="كيف ننفذ خطة 90 يوم عمليًا؟"
-          description="لا نبدأ بإرسال رسائل عشوائية. نبدأ من هدفك البيعي، ثم نبني خطة تشغيل أسبوعية تجمع بين البيانات، الذكاء الاصطناعي، فريقك، وكادر منافسات الموازي."
-        />
+	    <motion.section
+	      variants={container}
+	      initial="hidden"
+	      whileInView="visible"
+	      viewport={{ once: true, amount: 0.15 }}
+	      className="py-16 bg-[#080808] border-t border-slate-900/60"
+	    >
+	      <div className="container mx-auto px-4 max-w-7xl">
+	        <div className="text-center mb-14">
+	          <motion.div variants={item} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 mb-4 select-none">
+	            <Activity className="w-3.5 h-3.5" />
+	            <span className="text-[10px] font-bold">المدخلات ← التنفيذ ← المخرجات ← النتائج</span>
+	          </motion.div>
+	          <motion.h2 variants={item} className="text-3xl md:text-5xl font-black text-white mb-5 leading-tight">
+	            كيف ننفذ خطة 90 يوم عمليًا؟
+	          </motion.h2>
+	          <motion.p variants={item} className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
+	            لا نبدأ بإرسال رسائل عشوائية. نبدأ من هدفك البيعي، ثم نبني خطة تشغيل أسبوعية تجمع بين البيانات، الذكاء الاصطناعي، فريقك، وكادر منافسات الموازي.
+	          </motion.p>
+	        </div>
 
-        <div className="grid lg:grid-cols-12 gap-6 items-start">
-          <motion.div 
+	        <div className="grid lg:grid-cols-12 gap-6 items-start">
+          <motion.div
             variants={container}
             className="lg:col-span-5 grid gap-4"
           >
             {stages.map((stage, idx) => (
-              <motion.button
-                key={stage.title}
-                variants={item}
-                whileHover={shouldReduce ? {} : { y: -3, transition: { duration: 0.2 } }}
-                onClick={() => {
-                  setActiveStage(idx);
-                  setActiveBucket('inputs');
-                }}
-                className={cn(
-                  'text-right rounded-3xl border p-5 transition-all duration-300',
-                  activeStage === idx
-                    ? 'bg-emerald-500/10 border-emerald-400/50 shadow-[0_0_28px_rgba(16,185,129,0.12)]'
-                    : 'bg-slate-950/55 border-slate-800 hover:border-slate-700'
-                )}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className={cn(
-                      'w-11 h-11 rounded-2xl border flex items-center justify-center font-black shrink-0',
-                      activeStage === idx ? 'bg-emerald-400 text-slate-950 border-emerald-300' : 'bg-slate-900 text-slate-400 border-slate-800'
-                    )}
-                  >
-                    {idx + 1}
-                  </div>
-                  <div>
-                    <div className="text-xs font-black text-cyan-300 mb-1">{stage.shortPeriod}</div>
+	              <motion.button
+	                key={stage.title}
+	                variants={item}
+	                whileHover={shouldReduce ? {} : { y: -2, transition: { duration: 0.18 } }}
+	                onClick={() => {
+	                  setActiveStage(idx);
+	                  setActiveBucket('inputs');
+	                }}
+	                className={cn(
+	                  'relative overflow-hidden text-right rounded-3xl border p-5 transition-colors duration-300',
+	                  activeStage === idx
+	                    ? 'bg-emerald-500/10 border-emerald-400/50 shadow-[0_0_28px_rgba(16,185,129,0.12)]'
+	                    : 'bg-slate-950/55 border-slate-800 hover:border-slate-700'
+	                )}
+	              >
+	                {activeStage === idx && (
+	                  <motion.div
+	                    layoutId="execution-stage-active"
+	                    className="absolute inset-0 rounded-3xl border border-emerald-300/35 bg-emerald-500/[0.045] shadow-[inset_0_1px_0_rgba(110,231,183,0.18),0_0_32px_rgba(16,185,129,0.10)]"
+	                    transition={shouldReduce ? { duration: 0 } : { type: 'spring', stiffness: 260, damping: 32 }}
+	                  />
+	                )}
+	                <div className="flex items-start gap-4">
+	                  <div
+	                    className={cn(
+	                      'relative z-10 w-11 h-11 rounded-2xl border flex items-center justify-center font-black shrink-0 transition-colors duration-300',
+	                      activeStage === idx ? 'bg-emerald-400 text-slate-950 border-emerald-300 shadow-[0_0_18px_rgba(52,211,153,0.18)]' : 'bg-slate-900 text-slate-400 border-slate-800'
+	                    )}
+	                  >
+	                    {idx + 1}
+	                  </div>
+	                  <div className="relative z-10">
+	                    <div className="text-xs font-black text-cyan-300 mb-1">{stage.shortPeriod}</div>
                     <h3 className="text-lg md:text-xl font-black text-white mb-2">{stage.title}</h3>
                     <p className="text-sm text-slate-400 leading-relaxed">{stage.summary}</p>
                   </div>
@@ -882,37 +899,52 @@ const ExecutionTimelineSection = () => {
             ))}
           </motion.div>
 
-          <motion.div
-            key={`${activeStage}-${activeBucket}`}
-            initial={{ opacity: 0, y: shouldReduce ? 0 : 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8"
-          >
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7 pb-5 border-b border-slate-800">
-              <div>
-                <div className="text-xs font-black text-emerald-300 mb-2">{currentStage.period}</div>
-                <h3 className="text-2xl md:text-3xl font-black text-white">{currentStage.title}</h3>
-              </div>
-              <div className="grid grid-cols-2 sm:flex gap-2">
-                {(Object.keys(bucketMeta) as TimelineBucket[]).map((bucket) => (
-                  <button
-                    key={bucket}
-                    onClick={() => setActiveBucket(bucket)}
-                    className={cn(
-                      'px-3 py-2 rounded-xl text-xs font-black border transition-colors',
-                      activeBucket === bucket
-                        ? 'bg-cyan-400 text-slate-950 border-cyan-300'
-                        : 'bg-black/35 text-slate-400 border-slate-800 hover:text-white'
-                    )}
-                  >
-                    {bucketMeta[bucket].label}
-                  </button>
-                ))}
-              </div>
-            </div>
+	          <motion.div
+	            variants={item}
+	            className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8"
+	          >
+	            <AnimatePresence mode="wait">
+	              <motion.div
+	                key={activeStage}
+	                initial={{ opacity: 0, x: shouldReduce ? 0 : -8 }}
+	                animate={{ opacity: 1, x: 0 }}
+	                exit={{ opacity: 0, x: shouldReduce ? 0 : 8 }}
+	                transition={contentTransition}
+	              >
+	                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7 pb-5 border-b border-slate-800">
+	                  <div>
+	                    <div className="text-xs font-black text-emerald-300 mb-2">{currentStage.period}</div>
+	                    <h3 className="text-2xl md:text-3xl font-black text-white">{currentStage.title}</h3>
+	                  </div>
+	                  <div className="grid grid-cols-2 sm:flex gap-2">
+	                {(Object.keys(bucketMeta) as TimelineBucket[]).map((bucket) => (
+	                  <motion.button
+	                    key={bucket}
+	                    onClick={() => setActiveBucket(bucket)}
+	                    className={cn(
+	                      'relative overflow-hidden px-3 py-2 rounded-xl text-xs font-black border transition-colors',
+	                      activeBucket === bucket
+	                        ? 'text-slate-950 border-cyan-300'
+	                        : 'bg-black/35 text-slate-400 border-slate-800 hover:text-white'
+	                    )}
+	                    whileHover={shouldReduce ? {} : { y: -2 }}
+	                  >
+	                    {activeBucket === bucket && (
+	                      <motion.span
+	                        layoutId="execution-bucket-pill"
+	                        className="absolute inset-0 rounded-xl bg-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.16)]"
+	                        transition={shouldReduce ? { duration: 0 } : { type: 'spring', stiffness: 300, damping: 34 }}
+	                      />
+	                    )}
+	                    <span className="relative z-10">{bucketMeta[bucket].label}</span>
+	                  </motion.button>
+	                ))}
+	                  </div>
+	                </div>
+	              </motion.div>
+	            </AnimatePresence>
 
-            <div className="rounded-2xl bg-black/30 border border-slate-900 p-5">
+	            <div className="rounded-2xl bg-black/30 border border-slate-900 p-5">
               <div className="flex items-center gap-3 mb-5">
                 <div className="w-10 h-10 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex items-center justify-center">
                   <CurrentIcon className="w-5 h-5" />
@@ -922,22 +954,37 @@ const ExecutionTimelineSection = () => {
                   <div className="text-white font-black">{bucketMeta[activeBucket].question}</div>
                 </div>
               </div>
-              <div className="grid sm:grid-cols-2 gap-3">
-                {currentStage[activeBucket].map((item) => (
-                  <div key={item} className="rounded-xl bg-slate-950/80 border border-slate-800 px-4 py-3 flex items-start gap-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-300 mt-1 shrink-0" />
-                    <span className="text-sm text-slate-300 font-bold leading-relaxed">{item}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+	              <AnimatePresence mode="wait">
+	                <motion.div
+	                  key={`${activeStage}-${activeBucket}`}
+	                  initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                  animate={{ opacity: 1, y: 0 }}
+	                  exit={{ opacity: 0, y: shouldReduce ? 0 : -8 }}
+	                  transition={contentTransition}
+	                  className="grid sm:grid-cols-2 gap-3"
+	                >
+	                  {currentStage[activeBucket].map((entry, idx) => (
+	                    <motion.div
+	                      key={entry}
+	                      initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                      animate={{ opacity: 1, y: 0 }}
+	                      transition={{ duration: 0.22, delay: shouldReduce ? 0 : idx * 0.035 }}
+	                      className="group rounded-xl bg-slate-950/80 border border-slate-800 px-4 py-3 flex items-start gap-3 transition-colors duration-200 hover:border-cyan-500/25"
+	                    >
+	                      <CheckCircle2 className="w-4 h-4 text-emerald-300 mt-1 shrink-0 transition-transform duration-200 group-hover:scale-110" />
+	                      <span className="text-sm text-slate-300 font-bold leading-relaxed">{entry}</span>
+	                    </motion.div>
+	                  ))}
+	                </motion.div>
+	              </AnimatePresence>
+	            </div>
 
-            <div className="mt-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-5 py-4">
-              <p className="text-emerald-100 font-black leading-relaxed">
-                بنهاية 90 يوم، لا تحصل فقط على تقرير... بل تحصل على قناة مبيعات قابلة للتكرار والتحسين.
-              </p>
-            </div>
-          </motion.div>
+	            <motion.div variants={item} className="mt-6 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-5 py-4 shadow-[0_0_30px_rgba(16,185,129,0.06)]">
+	              <p className="text-emerald-100 font-black leading-relaxed">
+	                بنهاية 90 يوم، لا تحصل فقط على تقرير... بل تحصل على قناة مبيعات قابلة للتكرار والتحسين.
+	              </p>
+	            </motion.div>
+	          </motion.div>
         </div>
       </div>
     </motion.section>
@@ -950,7 +997,7 @@ const DailySalesSystemSection = () => {
   const { shouldReduce, reveal, container, item } = useSharedMotion();
 
   return (
-    <motion.section 
+    <motion.section
       variants={reveal}
       initial="hidden"
       whileInView="visible"
@@ -984,7 +1031,7 @@ const DailySalesSystemSection = () => {
               </div>
             </div>
 
-            <motion.div 
+            <motion.div
               variants={container}
               className="grid sm:grid-cols-2 gap-4"
             >
@@ -994,8 +1041,8 @@ const DailySalesSystemSection = () => {
                 ['سبب الملاءمة', 'نشاط الشركة وحجمها مناسب للخدمة', Target],
                 ['الخطوة التالية', 'إرسال الرسالة ثم متابعة بعد 48 ساعة', CalendarCheck],
               ].map(([label, value, Icon]) => (
-                <motion.div 
-                  key={label as string} 
+                <motion.div
+                  key={label as string}
                   variants={item}
                   whileHover={shouldReduce ? {} : { scale: 1.02 }}
                   className="rounded-2xl bg-black/30 border border-slate-900 p-4 transition-all duration-300"
@@ -1027,8 +1074,8 @@ const DailySalesSystemSection = () => {
               ['نص المكالمة', 'افتتاحية المكالمة، سؤال التأهيل، وطريقة طلب الاجتماع بدون إطالة.', PhoneCall],
               ['خطوة المتابعة', 'تذكير تلقائي بعد 48 ساعة، ثم نقل الحالة حسب الرد أو عدم الرد.', RefreshCw],
             ].map(([title, text, Icon]) => (
-              <motion.div 
-                key={title as string} 
+              <motion.div
+                key={title as string}
                 variants={item}
                 whileHover={shouldReduce ? {} : { y: -4, boxShadow: '0 8px 25px rgba(16,185,129,0.06)' }}
                 className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 transition-all duration-300"
@@ -1076,7 +1123,7 @@ const WeeklyReviewSection = () => {
   ];
 
   return (
-    <motion.section 
+    <motion.section
       variants={reveal}
       initial="hidden"
       whileInView="visible"
@@ -1089,7 +1136,7 @@ const WeeklyReviewSection = () => {
           title="كل أسبوع نفتح غرفة تحكم المبيعات"
           description="لا نكتفي بسؤال: كم اجتماعًا تم حجزه؟ نراجع ماذا حدث، أين توقف القمع، لماذا توقف، وما الذي سنغيره في الأسبوع القادم."
         />
-        <motion.div 
+        <motion.div
           variants={container}
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
         >
@@ -1116,9 +1163,9 @@ const WeeklyReviewSection = () => {
             </motion.div>
           ))}
         </motion.div>
-        
+
         <div className="mt-6 bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8">
-          <motion.div 
+          <motion.div
             variants={container}
             initial="hidden"
             whileInView="visible"
@@ -1126,8 +1173,8 @@ const WeeklyReviewSection = () => {
             className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3"
           >
             {['الاجتباطات المحجوزة', 'الاجتماعات المؤهلة', 'عروض السعر', 'الصفقات ونقاط التعطل'].map((metric) => (
-              <motion.div 
-                key={metric} 
+              <motion.div
+                key={metric}
                 variants={item}
                 whileHover={shouldReduce ? {} : { scale: 1.03 }}
                 className="rounded-xl bg-black/35 border border-slate-900 px-4 py-3 text-center transition-all duration-200"
@@ -1146,7 +1193,7 @@ const TrustStatsIntro = () => {
   const { reveal } = useSharedMotion();
 
   return (
-    <motion.section 
+    <motion.section
       variants={reveal}
       initial="hidden"
       whileInView="visible"
@@ -1385,11 +1432,11 @@ const PricingSection2 = () => {
                     // Spacer to align card pricing columns vertically
                     <div className="h-[22px] mb-2 select-none opacity-0 pointer-events-none" />
                   )}
-                  
+
                   <div className="text-3xl md:text-4xl font-black text-emerald-300 tracking-tight">
                     {tier.monthlyPrice} <span className="text-xs text-slate-400 font-bold">/ شهر</span>
                   </div>
-                  
+
                   <div className="text-[11px] text-slate-400 font-extrabold mt-2">
                     {tier.billing} <span className="text-[10px] text-slate-500">({tier.totalPriceText})</span>
                   </div>
@@ -1450,7 +1497,7 @@ const RevenueShareSimpleSection = () => {
     setIsAutoPlay(false);
     setActiveTier((current) => (current >= revenueTiers.length - 1 ? 0 : current + 1));
   };
-  
+
   const goToPreviousTier = () => {
     setIsAutoPlay(false);
     setActiveTier((current) => (current <= 0 ? revenueTiers.length - 1 : current - 1));

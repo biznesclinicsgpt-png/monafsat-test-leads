@@ -1,12 +1,12 @@
 import React from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { 
-  Target, 
-  Users, 
-  Sparkles, 
-  Layers, 
-  ArrowDown, 
-  Award, 
+import {
+  Target,
+  Users,
+  Sparkles,
+  Layers,
+  ArrowDown,
+  Award,
   Activity,
   ChevronDown,
   ChevronUp,
@@ -28,17 +28,17 @@ const PIPELINE_CONFIG = {
 const useLocalMotion = () => {
   const shouldReduce = useReducedMotion();
   const reveal = {
-    hidden: { 
-      opacity: 0, 
-      y: shouldReduce ? 0 : 25, 
-      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    hidden: {
+      opacity: 0,
+      y: shouldReduce ? 0 : 25,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
+    visible: {
+      opacity: 1,
+      y: 0,
       filter: 'none',
-      transition: { 
-        duration: 0.6, 
+      transition: {
+        duration: 0.6,
         ease: [0.16, 1, 0.3, 1]
       }
     }
@@ -53,16 +53,16 @@ const useLocalMotion = () => {
     }
   };
   const item = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       y: shouldReduce ? 0 : 15,
       filter: shouldReduce ? 'none' : 'blur(4px)'
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       filter: 'none',
-      transition: { 
+      transition: {
         duration: 0.5,
         ease: [0.16, 1, 0.3, 1]
       }
@@ -101,7 +101,7 @@ export const DualStreamPipelineSection = () => {
       }
     };
   }, []);
-  
+
   // Mobile accordion active state
   const [activeMobileSection, setActiveMobileSection] = React.useState<string | null>(null);
 
@@ -114,15 +114,19 @@ export const DualStreamPipelineSection = () => {
   };
 
   return (
-    <section 
-      className="py-20 bg-[#04080F] border-t border-slate-900/60 relative overflow-hidden" 
-      id="dual-stream-pipeline"
-    >
+	    <motion.section
+	      initial="hidden"
+	      whileInView="visible"
+	      viewport={{ once: true, amount: 0.12 }}
+	      variants={container}
+	      className="py-20 bg-[#04080F] border-t border-slate-900/60 relative overflow-hidden"
+	      id="dual-stream-pipeline"
+	    >
       {/* Background radial glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-950/5 rounded-full blur-[140px] pointer-events-none select-none" />
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
-        
+
         {/* Section Header */}
         <motion.div
           variants={reveal}
@@ -143,77 +147,106 @@ export const DualStreamPipelineSection = () => {
           </p>
         </motion.div>
 
-          <div className="hidden lg:grid grid-cols-12 gap-6 items-center relative text-right z-10" dir="rtl">
-          
+	          <motion.div variants={container} className="hidden lg:grid grid-cols-12 gap-6 items-center relative text-right z-10" dir="rtl">
+
           {/* SVG Connector Overlay Behind Columns */}
-          <div className="absolute inset-0 pointer-events-none z-0">
-            <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
+	          <motion.div variants={item} className="absolute inset-0 pointer-events-none z-0">
+	            <svg className="w-full h-full overflow-visible" viewBox="0 0 100 100" fill="none" preserveAspectRatio="none">
               {/* Soft glow behind the connector path */}
-              <path 
-                d="M 32 40 C 35 26, 37 18, 38 12" 
-                stroke="rgba(6, 182, 212, 0.04)" 
-                strokeWidth="2.2"
-                className="transition-all duration-300"
-              />
+	              <motion.path
+	                d="M 32 40 C 35 26, 37 18, 38 12"
+	                stroke="rgba(6, 182, 212, 0.04)"
+	                strokeWidth="2.2"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.9, delay: 0.35, ease: "easeOut" }}
+	              />
               {/* Ultra-soft dotted line from Sales Rep (Left) to top of Funnel */}
-              <path 
-                d="M 32 40 C 35 26, 37 18, 38 12" 
-                stroke="rgba(6, 182, 212, 0.08)" 
-                strokeWidth="0.5"
-                strokeDasharray="2 3"
-                className="transition-all duration-300"
-              />
-              
+	              <motion.path
+	                d="M 32 40 C 35 26, 37 18, 38 12"
+	                stroke="rgba(6, 182, 212, 0.08)"
+	                strokeWidth="0.5"
+	                strokeDasharray="2 3"
+	                className="transition-all duration-300"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.9, delay: 0.45, ease: "easeOut" }}
+	              />
+
               {/* Dotted Line from Monafsat Badge (Right of Center) to Funnel Rim */}
-              <path 
-                d="M 72 0 C 69 3, 67 5, 65.5 7.5" 
-                stroke="rgba(16, 185, 129, 0.22)" 
-                strokeWidth="0.8"
-                strokeDasharray="3 3"
-              />
-              
+	              <motion.path
+	                d="M 72 0 C 69 3, 67 5, 65.5 7.5"
+	                stroke="rgba(16, 185, 129, 0.22)"
+	                strokeWidth="0.8"
+	                strokeDasharray="3 3"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.7, delay: 0.6, ease: "easeOut" }}
+	              />
+
               {/* Dotted Lines from Nodes (Right) to Funnel stages */}
-              <path 
-                d="M 70 12 L 68 12" 
-                stroke="rgba(6, 182, 212, 0.22)" 
+	              <motion.path
+	                d="M 70 12 L 68 12"
+                stroke="rgba(6, 182, 212, 0.22)"
                 strokeWidth="0.6"
-                strokeDasharray="1.5 1.5"
-              />
-              <path 
-                d="M 70 35 L 66 35" 
-                stroke="rgba(6, 182, 212, 0.22)" 
+	                strokeDasharray="1.5 1.5"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.45, delay: 0.75, ease: "easeOut" }}
+	              />
+	              <motion.path
+	                d="M 70 35 L 66 35"
+                stroke="rgba(6, 182, 212, 0.22)"
                 strokeWidth="0.6"
-                strokeDasharray="1.5 1.5"
-              />
-              <path 
-                d="M 70 66 L 62.5 66" 
-                stroke="rgba(16, 185, 129, 0.22)" 
+	                strokeDasharray="1.5 1.5"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.45, delay: 0.85, ease: "easeOut" }}
+	              />
+	              <motion.path
+	                d="M 70 66 L 62.5 66"
+                stroke="rgba(16, 185, 129, 0.22)"
                 strokeWidth="0.6"
-                strokeDasharray="1.5 1.5"
-              />
-            </svg>
-          </div>
+	                strokeDasharray="1.5 1.5"
+	                initial={{ pathLength: shouldReduce ? 1 : 0 }}
+	                whileInView={{ pathLength: 1 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.45, delay: 0.95, ease: "easeOut" }}
+	              />
+	            </svg>
+	          </motion.div>
 
           {/* ================= COLUMN 1: SUPPORT NODES (RIGHT) ================= */}
-          <div className="col-span-2 flex flex-col justify-start z-10 relative pt-12 lg:-ml-35 transition-all duration-300">
+	          <motion.div variants={item} className="col-span-2 flex flex-col justify-start z-10 relative pt-12 lg:-ml-35 transition-all duration-300">
             <div className="flex flex-col justify-between h-[380px] relative">
-              
+
               {/* Node 1: Before Opportunities */}
               <div className="relative flex items-center justify-end">
-                <div 
-                  className={cn(
+	                <motion.div
+	                  layout
+	                  className={cn(
                     "px-2.5 py-1.5 rounded-full border cursor-pointer flex items-center gap-1 transition-all duration-300 select-none z-30",
                     hoveredSection === 'before'
                       ? "border-cyan-400 bg-cyan-950/30 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.15)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
                   onMouseEnter={() => handleMouseEnter('before')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <Target className="w-2.5 h-2.5 text-cyan-400" />
+	                  onMouseLeave={handleMouseLeave}
+	                  whileHover={shouldReduce ? {} : { y: -1 }}
+	                >
+	                  {hoveredSection === 'before' && (
+	                    <motion.span layoutId="pipeline-node-glow" className="absolute inset-0 rounded-full bg-cyan-400/10" transition={shouldReduce ? { duration: 0 } : { type: 'spring', stiffness: 280, damping: 32 }} />
+	                  )}
+	                  <Target className="w-2.5 h-2.5 text-cyan-400" />
                   <span className="text-[9px] font-black">قبل الفرص</span>
-                </div>
-                
+	                </motion.div>
+
                 {/* Hover Popover */}
                 <AnimatePresence>
                   {hoveredSection === 'before' && (
@@ -250,7 +283,8 @@ export const DualStreamPipelineSection = () => {
 
               {/* Node 2: During Opportunities */}
               <div className="relative flex items-center justify-end">
-                <div 
+	                <motion.div
+	                  layout
                   className={cn(
                     "px-2.5 py-1.5 rounded-full border cursor-pointer flex items-center gap-1 transition-all duration-300 select-none z-30",
                     hoveredSection === 'during'
@@ -258,12 +292,16 @@ export const DualStreamPipelineSection = () => {
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
                   onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <TrendingUp className="w-2.5 h-2.5 text-cyan-400" />
+	                  onMouseLeave={handleMouseLeave}
+	                  whileHover={shouldReduce ? {} : { y: -1 }}
+	                >
+	                  {hoveredSection === 'during' && (
+	                    <motion.span layoutId="pipeline-node-glow" className="absolute inset-0 rounded-full bg-cyan-400/10" transition={shouldReduce ? { duration: 0 } : { type: 'spring', stiffness: 280, damping: 32 }} />
+	                  )}
+	                  <TrendingUp className="w-2.5 h-2.5 text-cyan-400" />
                   <span className="text-[9px] font-black">أثناء الفرص</span>
-                </div>
-                
+	                </motion.div>
+
                 {/* Hover Popover */}
                 <AnimatePresence>
                   {hoveredSection === 'during' && (
@@ -300,7 +338,8 @@ export const DualStreamPipelineSection = () => {
 
               {/* Node 3: After Opportunities */}
               <div className="relative flex items-center justify-end">
-                <div 
+	                <motion.div
+	                  layout
                   className={cn(
                     "px-2.5 py-1.5 rounded-full border cursor-pointer flex items-center gap-1 transition-all duration-300 select-none z-30",
                     hoveredSection === 'after'
@@ -308,12 +347,16 @@ export const DualStreamPipelineSection = () => {
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
                   onMouseEnter={() => handleMouseEnter('after')}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <RefreshCw className="w-2.5 h-2.5 text-emerald-400" />
+	                  onMouseLeave={handleMouseLeave}
+	                  whileHover={shouldReduce ? {} : { y: -1 }}
+	                >
+	                  {hoveredSection === 'after' && (
+	                    <motion.span layoutId="pipeline-node-glow" className="absolute inset-0 rounded-full bg-emerald-400/10" transition={shouldReduce ? { duration: 0 } : { type: 'spring', stiffness: 280, damping: 32 }} />
+	                  )}
+	                  <RefreshCw className="w-2.5 h-2.5 text-emerald-400" />
                   <span className="text-[9px] font-black">بعد الفرص</span>
-                </div>
-                
+	                </motion.div>
+
                 {/* Hover Popover */}
                 <AnimatePresence>
                   {hoveredSection === 'after' && (
@@ -346,30 +389,34 @@ export const DualStreamPipelineSection = () => {
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+	              </div>
 
-            </div>
-          </div>
+	            </div>
+	          </motion.div>
 
           {/* ================= COLUMN 2: THE ENLARGED FUNNEL (CENTER) ================= */}
-          <div className="col-span-6 flex flex-col items-center justify-start z-10 px-1 relative">
-            
+	          <motion.div variants={item} className="col-span-6 flex flex-col items-center justify-start z-10 px-1 relative">
+
             {/* Top Monafsat node as a source (Positioned to the right of funnel center) */}
-            <div className="absolute top-[-22px] left-[72%] -translate-x-1/2 z-20">
+	            <motion.div variants={item} className="absolute top-[-22px] left-[72%] -translate-x-1/2 z-20">
               <div className="px-2 py-0.5 rounded-full border border-emerald-500/20 bg-[#030906]/98 flex items-center gap-1 shadow-sm text-center transition-all duration-300 hover:border-emerald-500/40 select-none">
                 <ClipboardList className="w-2.5 h-2.5 text-emerald-400 shrink-0" />
                 <span className="text-[8.5px] font-black text-emerald-100 whitespace-nowrap">كادر فرص منافسات المباشرة</span>
-              </div>
-            </div>
+	              </div>
+	            </motion.div>
 
             {/* Funnel Container Box */}
-            <div 
-              className="relative w-full h-[520px] select-none"
+	            <motion.div
+	              initial={{ opacity: 0, scale: shouldReduce ? 1 : 0.985 }}
+	              whileInView={{ opacity: 1, scale: 1 }}
+	              viewport={{ once: true, amount: 0.25 }}
+	              transition={{ duration: 0.55, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+	              className="relative w-full h-[520px] select-none"
               onMouseLeave={handleMouseLeave}
             >
-              
+
               {/* 3D Funnel SVG Drawing (Enlarged by 30%) */}
-              <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" viewBox="0 0 460 530" fill="none" xmlns="http://www.w3.org/2000/svg">
+	              <motion.svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" viewBox="0 0 460 530" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   {/* Glowing vertical gradient for the glass funnel faces */}
                   <linearGradient id="funnel-top-active" x1="0" y1="0" x2="0" y2="1">
@@ -400,208 +447,303 @@ export const DualStreamPipelineSection = () => {
                 </defs>
 
                 {/* --- SEGMENT 1: حصيلة الفرص --- */}
-                <ellipse 
-                  cx="230" cy="40" rx="190" ry="32" 
-                  fill="url(#rim-glow-cyan)" fillOpacity="0.25" 
-                  stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.65)"} 
+	                <motion.ellipse
+                  cx="230" cy="40" rx="190" ry="32"
+                  fill="url(#rim-glow-cyan)" fillOpacity="0.25"
+                  stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.65)"}
                   strokeWidth={hoveredSection === 'before' ? 3.5 : 2.5}
                   className="pointer-events-auto cursor-pointer"
                   onMouseEnter={() => handleMouseEnter('before')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <path 
-                  d="M 40 40 A 190 32 0 0 0 420 40 L 390 105 A 160 27 0 0 1 70 105 Z" 
-                  fill={hoveredSection === 'before' ? "url(#funnel-top-active)" : "url(#funnel-top-inactive)"} 
-                  stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.5)"} 
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.75, delay: 0.32, ease: "easeOut" }}
+	                />
+	                <motion.path
+                  d="M 40 40 A 190 32 0 0 0 420 40 L 390 105 A 160 27 0 0 1 70 105 Z"
+                  fill={hoveredSection === 'before' ? "url(#funnel-top-active)" : "url(#funnel-top-inactive)"}
+                  stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.5)"}
                   strokeWidth={hoveredSection === 'before' ? 2.5 : 2.0}
                   className="pointer-events-auto cursor-pointer"
                   onMouseEnter={() => handleMouseEnter('before')}
-                  onMouseLeave={handleMouseLeave}
-                />
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.75, delay: 0.38, ease: "easeOut" }}
+	                />
 
                 {/* --- SEGMENT 2: فرص جاهزة للتحريك --- */}
-                <ellipse 
-                  cx="230" cy="105" rx="160" ry="27" 
-                  fill="none" 
-                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.45)"} 
-                  strokeWidth={hoveredSection === 'during' ? 2.8 : 2.0} 
+	                <motion.ellipse
+                  cx="230" cy="105" rx="160" ry="27"
+                  fill="none"
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.45)"}
+                  strokeWidth={hoveredSection === 'during' ? 2.8 : 2.0}
                   className="pointer-events-auto cursor-pointer"
                   onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <path 
-                  d="M 70 105 A 160 27 0 0 0 390 105 L 360 170 A 130 22 0 0 1 100 170 Z" 
-                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.35)"} 
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.65, delay: 0.48, ease: "easeOut" }}
+	                />
+	                <motion.path
+                  d="M 70 105 A 160 27 0 0 0 390 105 L 360 170 A 130 22 0 0 1 100 170 Z"
+                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"}
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.35)"}
                   strokeWidth="2.0"
                   className="pointer-events-auto cursor-pointer"
                   onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                />
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.65, delay: 0.54, ease: "easeOut" }}
+	                />
 
                 {/* --- SEGMENT 3: اجتماعات مؤهلة --- */}
-                <ellipse 
-                  cx="230" cy="170" rx="130" ry="22" 
-                  fill="none" 
-                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.45)"} 
-                  strokeWidth={hoveredSection === 'during' ? 2.8 : 2.0} 
+	                <motion.ellipse
+                  cx="230" cy="170" rx="130" ry="22"
+                  fill="none"
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.45)"}
+                  strokeWidth={hoveredSection === 'during' ? 2.8 : 2.0}
                   className="pointer-events-auto cursor-pointer"
                   onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <path 
-                  d="M 100 170 A 130 22 0 0 0 360 170 L 335 235 A 105 18 0 0 1 125 235 Z" 
-                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.35)"} 
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+	                />
+	                <motion.path
+                  d="M 100 170 A 130 22 0 0 0 360 170 L 335 235 A 105 18 0 0 1 125 235 Z"
+                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"}
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.35)"}
                   strokeWidth="2.0"
                   className="pointer-events-auto cursor-pointer"
                   onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                />
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.6, delay: 0.66, ease: "easeOut" }}
+	                />
 
                 {/* --- SEGMENT 4: عروض سعر --- */}
-                <ellipse 
-                  cx="230" cy="235" rx="105" ry="18" 
-                  fill="none" 
-                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.45)"} 
-                  strokeWidth={hoveredSection === 'during' ? 2.8 : 2.0} 
-                  className="pointer-events-auto cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <path 
-                  d="M 125 235 A 105 18 0 0 0 335 235 L 315 300 A 85 15 0 0 1 145 300 Z" 
-                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.35)"} 
+	                <motion.ellipse
+	                  cx="230" cy="235" rx="105" ry="18"
+                  fill="none"
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.45)"}
+                  strokeWidth={hoveredSection === 'during' ? 2.8 : 2.0}
+	                  className="pointer-events-auto cursor-pointer"
+	                  onMouseEnter={() => handleMouseEnter('during')}
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.55, delay: 0.72, ease: "easeOut" }}
+	                />
+	                <motion.path
+	                  d="M 125 235 A 105 18 0 0 0 335 235 L 315 300 A 85 15 0 0 1 145 300 Z"
+                  fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"}
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.35)"}
                   strokeWidth="2.0"
-                  className="pointer-events-auto cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter('during')}
-                  onMouseLeave={handleMouseLeave}
-                />
+	                  className="pointer-events-auto cursor-pointer"
+	                  onMouseEnter={() => handleMouseEnter('during')}
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.55, delay: 0.78, ease: "easeOut" }}
+	                />
 
                 {/* --- SEGMENT 5: تفاوض --- */}
-                <ellipse 
-                  cx="230" cy="300" rx="85" ry="15" 
-                  fill="none" 
-                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.45)"} 
-                  strokeWidth={hoveredSection === 'after' ? 2.8 : 2.0} 
-                  className="pointer-events-auto cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter('after')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <path 
-                  d="M 145 300 A 85 15 0 0 0 315 300 L 298 365 A 68 12 0 0 1 162 365 Z" 
-                  fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.35)"} 
+	                <motion.ellipse
+	                  cx="230" cy="300" rx="85" ry="15"
+                  fill="none"
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.45)"}
+                  strokeWidth={hoveredSection === 'after' ? 2.8 : 2.0}
+	                  className="pointer-events-auto cursor-pointer"
+	                  onMouseEnter={() => handleMouseEnter('after')}
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.5, delay: 0.84, ease: "easeOut" }}
+	                />
+	                <motion.path
+	                  d="M 145 300 A 85 15 0 0 0 315 300 L 298 365 A 68 12 0 0 1 162 365 Z"
+                  fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"}
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.35)"}
                   strokeWidth="2.0"
-                  className="pointer-events-auto cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter('after')}
-                  onMouseLeave={handleMouseLeave}
-                />
+	                  className="pointer-events-auto cursor-pointer"
+	                  onMouseEnter={() => handleMouseEnter('after')}
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.5, delay: 0.9, ease: "easeOut" }}
+	                />
 
                 {/* --- SEGMENT 6: صفقات --- */}
-                <ellipse 
-                  cx="230" cy="365" rx="68" ry="12" 
-                  fill="none" 
-                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.45)"} 
-                  strokeWidth={hoveredSection === 'after' ? 2.8 : 2.0} 
-                  className="pointer-events-auto cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter('after')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                <path 
-                  d="M 162 365 A 68 12 0 0 0 298 365 L 282 430 A 52 9 0 0 1 178 430 Z" 
-                  fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
-                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.35)"} 
+	                <motion.ellipse
+	                  cx="230" cy="365" rx="68" ry="12"
+                  fill="none"
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.45)"}
+                  strokeWidth={hoveredSection === 'after' ? 2.8 : 2.0}
+	                  className="pointer-events-auto cursor-pointer"
+	                  onMouseEnter={() => handleMouseEnter('after')}
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.45, delay: 0.96, ease: "easeOut" }}
+	                />
+	                <motion.path
+	                  d="M 162 365 A 68 12 0 0 0 298 365 L 282 430 A 52 9 0 0 1 178 430 Z"
+                  fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"}
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.35)"}
                   strokeWidth="2.0"
-                  className="pointer-events-auto cursor-pointer"
-                  onMouseEnter={() => handleMouseEnter('after')}
-                  onMouseLeave={handleMouseLeave}
-                />
-                
-                {/* Bottom opening ellipse */}
-                <ellipse cx="230" cy="430" rx="52" ry="9" fill="none" stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} strokeWidth={1} />
-                
+	                  className="pointer-events-auto cursor-pointer"
+	                  onMouseEnter={() => handleMouseEnter('after')}
+	                  onMouseLeave={handleMouseLeave}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.45, delay: 1.02, ease: "easeOut" }}
+	                />
+
+	                {/* Bottom opening ellipse */}
+	                <motion.ellipse
+	                  cx="230"
+	                  cy="430"
+	                  rx="52"
+	                  ry="9"
+	                  fill="none"
+	                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"}
+	                  strokeWidth={1}
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.4, delay: 1.08, ease: "easeOut" }}
+	                />
+
                 {/* Connector line down to target */}
-                <path 
-                  d="M 230 439 L 230 452" 
-                  stroke="rgba(245, 158, 11, 0.35)" 
-                  strokeWidth="1.2"
-                  strokeDasharray="2 2"
-                />
-              </svg>
+	                <motion.path
+	                  d="M 230 439 L 230 452"
+                  stroke="rgba(245, 158, 11, 0.35)"
+	                  strokeWidth="1.2"
+	                  strokeDasharray="2 2"
+	                  initial={{ pathLength: shouldReduce ? 1 : 0, opacity: shouldReduce ? 1 : 0 }}
+	                  whileInView={{ pathLength: 1, opacity: 1 }}
+	                  viewport={{ once: true }}
+	                  transition={{ duration: 0.35, delay: 1.12, ease: "easeOut" }}
+	                />
+              </motion.svg>
 
               {/* Absolute HTML Overlays for Text & Icons inside Funnel segments */}
               {/* 1. حصيلة الفرص (نقطة التلاقي) */}
-              <div 
-                className="absolute top-[44px] left-1/2 -translate-x-1/2 w-[280px] h-[55px] flex flex-col items-center justify-center text-center cursor-default z-20 pointer-events-auto"
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.32, delay: 0.95 }}
+	                className="absolute top-[44px] left-1/2 -translate-x-1/2 w-[280px] h-[55px] flex flex-col items-center justify-center text-center cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => handleMouseEnter('before')}
                 onMouseLeave={handleMouseLeave}
-              >
-                <div className="text-[9.5px] font-black text-cyan-300 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/35 mb-1.5 select-none uppercase tracking-widest shadow-[0_0_12px_rgba(6,182,212,0.15)]">
-                  نقطة التلاقي
-                </div>
-                <div className="flex items-center gap-1.5 justify-center">
-                  <Filter className="w-5 h-5 text-cyan-300 shrink-0 filter drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
-                  <span className="text-[18px] md:text-[20px] font-black text-white select-none tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] filter drop-shadow-[0_0_12px_rgba(6,182,212,0.5)]">حصيلة الفرص</span>
-                </div>
-                <span className="text-[11px] font-extrabold text-slate-200 select-none mt-0.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">محادثات مؤهلة + فرص مباشرة</span>
-              </div>
+	              >
+	                <div className="text-[9.5px] font-black text-cyan-300 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/35 mb-1.5 select-none uppercase tracking-widest shadow-[0_0_12px_rgba(6,182,212,0.15)]">
+	                  نقطة التلاقي
+	                </div>
+	                <div className="flex items-center gap-1.5 justify-center">
+	                  <Filter className="w-5 h-5 text-cyan-300 shrink-0 filter drop-shadow-[0_0_8px_rgba(6,182,212,0.6)]" />
+	                  <span className="text-[18px] md:text-[20px] font-black text-white select-none tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] filter drop-shadow-[0_0_12px_rgba(6,182,212,0.5)]">حصيلة الفرص</span>
+	                </div>
+	                <span className="text-[11px] font-extrabold text-slate-200 select-none mt-0.5 drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">محادثات مؤهلة + فرص مباشرة</span>
+	              </motion.div>
 
               {/* 2. فرص جاهزة للتحريك */}
-              <div 
-                className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[200px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.28, delay: 1.02 }}
+	                className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[200px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => handleMouseEnter('during')}
                 onMouseLeave={handleMouseLeave}
               >
                 <Target className="w-4.5 h-4.5 text-cyan-400 shrink-0 filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                 <span className="text-[16px] font-black text-white select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">فرص جاهزة للتحريك</span>
-              </div>
+	              </motion.div>
 
               {/* 3. اجتماعات مؤهلة */}
-              <div 
-                className="absolute top-[185px] left-1/2 -translate-x-1/2 w-[160px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.28, delay: 1.08 }}
+	                className="absolute top-[185px] left-1/2 -translate-x-1/2 w-[160px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => handleMouseEnter('during')}
                 onMouseLeave={handleMouseLeave}
               >
                 <Users className="w-4.5 h-4.5 text-cyan-400 shrink-0 filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                 <span className="text-[15.5px] font-black text-white select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">اجتماعات مؤهلة</span>
-              </div>
+	              </motion.div>
 
               {/* 4. عروض سعر */}
-              <div 
-                className="absolute top-[250px] left-1/2 -translate-x-1/2 w-[130px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.28, delay: 1.14 }}
+	                className="absolute top-[250px] left-1/2 -translate-x-1/2 w-[130px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => handleMouseEnter('during')}
                 onMouseLeave={handleMouseLeave}
               >
                 <FileText className="w-4.5 h-4.5 text-cyan-400 shrink-0 filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                 <span className="text-[15.5px] font-black text-white select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">عروض سعر</span>
-              </div>
+	              </motion.div>
 
               {/* 5. تفاوض */}
-              <div 
-                className="absolute top-[315px] left-1/2 -translate-x-1/2 w-[110px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.28, delay: 1.2 }}
+	                className="absolute top-[315px] left-1/2 -translate-x-1/2 w-[110px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => handleMouseEnter('after')}
                 onMouseLeave={handleMouseLeave}
               >
                 <Handshake className="w-4.5 h-4.5 text-emerald-400 shrink-0 filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                 <span className="text-[15.5px] font-black text-emerald-50 select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">تفاوض</span>
-              </div>
+	              </motion.div>
 
               {/* 6. صفقات */}
-              <div 
-                className="absolute top-[380px] left-1/2 -translate-x-1/2 w-[90px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 8 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.28, delay: 1.26 }}
+	                className="absolute top-[380px] left-1/2 -translate-x-1/2 w-[90px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => handleMouseEnter('after')}
                 onMouseLeave={handleMouseLeave}
               >
                 <CheckCircle className="w-4.5 h-4.5 text-emerald-400 shrink-0 filter drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]" />
                 <span className="text-[15.5px] font-black text-emerald-50 select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">صفقات</span>
-              </div>
+	              </motion.div>
 
               {/* Bottom Target Card (Connected to funnel bottom) */}
-              <div className="absolute top-[452px] left-1/2 -translate-x-1/2 w-full max-w-[220px] z-20">
-                <div 
-                  className={cn(
+	              <motion.div
+	                initial={{ opacity: 0, y: shouldReduce ? 0 : 10 }}
+	                whileInView={{ opacity: 1, y: 0 }}
+	                viewport={{ once: true }}
+	                transition={{ duration: 0.3, delay: 1.34 }}
+	                className="absolute top-[452px] left-1/2 -translate-x-1/2 w-full max-w-[220px] z-20"
+	              >
+	                <motion.div
+	                  whileHover={shouldReduce ? {} : { y: -2 }}
+	                  className={cn(
                     "px-3 py-2 rounded-xl border text-center transition-all duration-300 bg-[#07070a]/95 backdrop-blur-sm flex items-center justify-center gap-2",
                     hoveredSection === 'after'
                       ? "border-amber-500/40 bg-[#141008]/85 shadow-[0_0_12px_rgba(245,158,11,0.12)] scale-[1.01]"
@@ -609,7 +751,7 @@ export const DualStreamPipelineSection = () => {
                   )}
                   onMouseEnter={() => handleMouseEnter('after')}
                   onMouseLeave={handleMouseLeave}
-                >
+	                >
                   <div className="p-1 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 shrink-0">
                     <Target className="w-3.5 h-3.5" />
                   </div>
@@ -617,47 +759,53 @@ export const DualStreamPipelineSection = () => {
                     <div className="text-[8.5px] text-slate-400 font-extrabold leading-none uppercase tracking-wider">
                       المستهدف خلال 90 يوم
                     </div>
-                    <div className="text-xs font-black text-amber-400 leading-normal mt-0.5">
-                      1,000,000 ريال
-                    </div>
-                  </div>
-                </div>
-              </div>
+	                    <div className="text-xs font-black text-amber-400 leading-normal mt-0.5">
+	                      1,000,000 ريال
+	                    </div>
+	                  </div>
+	                </motion.div>
+	              </motion.div>
 
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
           {/* ================= COLUMN 3: CLIENT'S SALES REPRESENTATIVE (LEFT) ================= */}
-          <div className="col-span-4 flex flex-col justify-center items-center z-10 pl-4 relative select-none">
+	          <motion.div
+	            variants={{
+	              hidden: { opacity: 0, x: shouldReduce ? 0 : -18 },
+	              visible: { opacity: 1, x: 0, transition: { duration: 0.55, delay: 0.2, ease: [0.16, 1, 0.3, 1] } },
+	            }}
+	            className="col-span-4 flex flex-col justify-center items-center z-10 pl-4 relative select-none"
+	          >
             {/* Soft ambient back glows for the person (dim Cyan/Teal, very soft) */}
             <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] rounded-full bg-cyan-500/[0.12] blur-[120px] pointer-events-none" />
             <div className="absolute top-[48%] left-[52%] -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] rounded-full bg-teal-500/[0.06] blur-[80px] pointer-events-none" />
-            
-            <div className="relative w-full max-w-[360px] h-[520px] flex items-center justify-center select-none lg:-mr-32 transition-all duration-300">
-              <img 
-                src="/saudi_sales_rep.png" 
-                alt="مسؤول مبيعات العميل" 
-                className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_40px_rgba(6,182,212,0.06)] select-none pointer-events-none"
-              />
-              {/* Soft bottom fade to merge the cutout organically with the background */}
-              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#04080F] via-[#04080F]/90 via-[#04080F]/30 to-transparent z-20 pointer-events-none" />
-            </div>
-          </div>
 
-        </div>
+            <div className="relative w-full max-w-[360px] h-[520px] flex items-center justify-center select-none lg:-mr-32 transition-all duration-300">
+              <img
+                src="/saudi_sales_rep.png"
+                alt="مسؤول مبيعات العميل"
+                className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_40px_rgba(6,182,212,0.06)] select-none pointer-events-none"
+	              />
+	              {/* Soft bottom fade to merge the cutout organically with the background */}
+	              <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#04080F] via-[#04080F]/90 via-[#04080F]/30 to-transparent z-20 pointer-events-none" />
+	            </div>
+	          </motion.div>
+
+        </motion.div>
 
         {/* ======================================================== */}
         {/* ================= MOBILE LAYOUT (RTL) ================== */}
         {/* ======================================================== */}
         <div className="lg:hidden flex flex-col gap-6 max-w-md mx-auto text-right z-10 relative" dir="rtl">
-          
+
           {/* 1. Saudi Sales Representative cutout (Top mobile) */}
           <div className="relative w-full max-w-[200px] mx-auto h-[280px] flex items-end justify-center select-none overflow-visible mb-2">
             <div className="absolute top-[40%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] rounded-full bg-cyan-500/[0.03] blur-[40px] pointer-events-none" />
-            <img 
-              src="/saudi_sales_rep.png" 
-              alt="مسؤول مبيعات العميل" 
+            <img
+              src="/saudi_sales_rep.png"
+              alt="مسؤول مبيعات العميل"
               className="w-full h-full object-contain relative z-10 select-none pointer-events-none"
             />
           </div>
@@ -741,9 +889,9 @@ export const DualStreamPipelineSection = () => {
           <div className="space-y-3 border-t border-slate-900 pt-6 mt-4">
             <h4 className="text-[11px] font-black text-slate-500 mb-3 select-none">مراحل دعم النمو:</h4>
             {[
-              { 
-                id: "before", 
-                label: "قبل الفرص", 
+              {
+                id: "before",
+                label: "قبل الفرص",
                 sub: "تجهيز السوق والبيانات والاستهداف",
                 icon: Target,
                 color: "border-cyan-500/20 text-cyan-300 bg-[#060b12]/60",
@@ -753,9 +901,9 @@ export const DualStreamPipelineSection = () => {
                   "تجهيز الرسائل المخصصة وقنوات التواصل الفعالة"
                 ]
               },
-              { 
-                id: "during", 
-                label: "أثناء الفرص", 
+              {
+                id: "during",
+                label: "أثناء الفرص",
                 sub: "دعم التحريك والمتابعة والتحويل",
                 icon: TrendingUp,
                 color: "border-cyan-500/20 text-cyan-300 bg-[#060b12]/60",
@@ -765,9 +913,9 @@ export const DualStreamPipelineSection = () => {
                   "تأهيل وتوجيه الخطوة التالية لبناء الزخم البيعي"
                 ]
               },
-              { 
-                id: "after", 
-                label: "بعد الفرص", 
+              {
+                id: "after",
+                label: "بعد الفرص",
                 sub: "تحليل الأداء والتحسين المستمر",
                 icon: RefreshCw,
                 color: "border-emerald-500/20 text-emerald-300 bg-[#030d09]/60",
@@ -832,22 +980,29 @@ export const DualStreamPipelineSection = () => {
         {/* ======================================================== */}
         {/* ==================== FOOTER GRID ======================= */}
         {/* ======================================================== */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-right border-t border-slate-900 pt-8" dir="rtl">
-          
-          {/* Item 1 */}
-          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
-            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
-              <Sparkles className="w-5 h-5" />
-            </div>
+	        <motion.div
+	          variants={container}
+	          initial="hidden"
+	          whileInView="visible"
+	          viewport={{ once: true, amount: 0.2 }}
+	          className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-right border-t border-slate-900 pt-8"
+	          dir="rtl"
+	        >
+
+	          {/* Item 1 */}
+	          <motion.div variants={item} whileHover={shouldReduce ? {} : { y: -2 }} className="group flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+	            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
+	              <Sparkles className="w-5 h-5" />
+	            </div>
             <div>
               <h4 className="text-xs font-black text-white">تقنية ذكية</h4>
               <p className="text-[10px] text-slate-400 font-bold mt-0.5">ذكاء اصطناعي وبيانات موثوقة</p>
             </div>
-          </div>
-          
-          {/* Item 2 */}
-          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
-            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
+	          </motion.div>
+
+	          {/* Item 2 */}
+	          <motion.div variants={item} whileHover={shouldReduce ? {} : { y: -2 }} className="group flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+	            <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
               {/* Palm tree SVG */}
               <svg viewBox="0 0 24 24" className="w-5 h-5 text-cyan-400 fill-none stroke-current" strokeWidth="2">
                 <path d="M12 22V12M12 12c-2-2-5-1-6-3M12 12c2-2 5-1 6-3M12 12c0-3-2-6-5-7M12 12c0-3 2-6 5-7" />
@@ -857,10 +1012,10 @@ export const DualStreamPipelineSection = () => {
               <h4 className="text-xs font-black text-white">للسوق السعودي</h4>
               <p className="text-[10px] text-slate-400 font-bold mt-0.5">مصمم للسوق المحلي</p>
             </div>
-          </div>
+	          </motion.div>
 
-          {/* Item 3 */}
-          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+	          {/* Item 3 */}
+	          <motion.div variants={item} whileHover={shouldReduce ? {} : { y: -2 }} className="group flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
             <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
               <TrendingUp className="w-5 h-5" />
             </div>
@@ -868,10 +1023,10 @@ export const DualStreamPipelineSection = () => {
               <h4 className="text-xs font-black text-white">نتائج حقيقية</h4>
               <p className="text-[10px] text-slate-400 font-bold mt-0.5">تنعكس على الإيرادات</p>
             </div>
-          </div>
+	          </motion.div>
 
-          {/* Item 4 */}
-          <div className="flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
+	          {/* Item 4 */}
+	          <motion.div variants={item} whileHover={shouldReduce ? {} : { y: -2 }} className="group flex items-center gap-3 bg-slate-950/40 p-4 rounded-2xl border border-slate-900/60 hover:border-cyan-500/20 transition-all duration-300 select-none">
             <div className="p-2.5 rounded-xl bg-cyan-950/50 text-cyan-400 border border-cyan-500/20 shrink-0">
               <Handshake className="w-5 h-5" />
             </div>
@@ -879,25 +1034,25 @@ export const DualStreamPipelineSection = () => {
               <h4 className="text-xs font-black text-white">تنمية أعمالك B2B</h4>
               <p className="text-[10px] text-slate-400 font-bold mt-0.5">بفرص ذات جودة أعلى</p>
             </div>
-          </div>
+	          </motion.div>
 
-        </div>
+	        </motion.div>
 
         {/* Bottom original role banner card */}
-        <div className="mt-10 bg-gradient-to-br from-slate-950/80 to-slate-900/20 border border-slate-900 rounded-3xl p-6 md:p-8 text-right relative overflow-hidden">
-          <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500/40 via-emerald-500/40 to-transparent" />
-          
-          <div className="flex items-center gap-2.5 mb-4 select-none">
-            <Award className="w-5 h-5 text-cyan-400 shrink-0 animate-pulse" />
+	        <motion.div variants={item} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="mt-10 bg-gradient-to-br from-slate-950/80 to-slate-900/20 border border-slate-900 rounded-3xl p-6 md:p-8 text-right relative overflow-hidden">
+	          <div className="absolute top-0 right-0 left-0 h-0.5 bg-gradient-to-r from-cyan-500/40 via-emerald-500/40 to-transparent" />
+
+	          <div className="flex items-center gap-2.5 mb-4 select-none">
+	            <Award className="w-5 h-5 text-cyan-400 shrink-0" />
             <h3 className="text-lg font-black text-white">دورنا: قيادة نمو كاملة حول فريقك</h3>
-          </div>
-          
+	        </div>
+
           <p className="text-xs md:text-sm text-slate-400 leading-relaxed mb-6 font-bold max-w-4xl">
             لسنا شركة تدريب فقط، ولا بيع عملاء محتملين فقط، ولا حجز اجتماعات فقط. نحن نبني ونقود منظومة تشغيل تجمع بين الاستشارات، التدريب، القيادة، المتابعة، التطوير، الأتمتة، الذكاء الاصطناعي، وفرص منافسات المباشرة.
           </p>
-        </div>
+        </motion.div>
 
       </div>
-    </section>
+    </motion.section>
   );
 };

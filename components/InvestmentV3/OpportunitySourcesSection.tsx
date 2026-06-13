@@ -6,7 +6,7 @@ import { cn } from '../../lib/utils';
 
 const SourceLogo = ({ src, alt, isHovered }: { src: string; alt: string; isHovered: boolean }) => {
   const [error, setError] = useState(false);
-  
+
   if (error || !src) {
     return (
       <div className="w-full h-full flex items-center justify-center bg-cyan-500/5 text-cyan-400">
@@ -16,9 +16,9 @@ const SourceLogo = ({ src, alt, isHovered }: { src: string; alt: string; isHover
   }
 
   return (
-    <img 
-      src={src} 
-      alt={alt} 
+    <img
+      src={src}
+      alt={alt}
       className={cn(
         "w-full h-full object-contain transition-all duration-300",
         isHovered ? "scale-105 opacity-100" : "opacity-90"
@@ -41,7 +41,7 @@ export const OpportunitySourcesSection = () => {
 
   return (
     <div className="py-24 bg-[#0A0A0A] relative overflow-hidden border-t border-slate-900/60" id="opportunity-sources">
-      
+
       {/* Background SVG Flow Rails (Desktop only) */}
       <div className="absolute inset-0 pointer-events-none hidden lg:block select-none z-0">
         <svg className="w-full h-full" viewBox="0 0 1000 600" fill="none" preserveAspectRatio="none">
@@ -54,21 +54,21 @@ export const OpportunitySourcesSection = () => {
           </defs>
 
           {/* Central Horizontal Flow Line (RTL Flow: Right to Left) */}
-          <path 
-            d="M 900 300 L 100 300" 
-            stroke="url(#source-rail-grad)" 
-            strokeWidth="1.5" 
-            strokeDasharray="4 4" 
+          <path
+            d="M 900 300 L 100 300"
+            stroke="url(#source-rail-grad)"
+            strokeWidth="1.5"
+            strokeDasharray="4 4"
           />
 
           {/* Flow Particles moving along the main pipeline */}
-          <motion.circle cx="0" cy="0" r="2" fill="#22d3ee" style={{ filter: "drop-shadow(0 0 4px #22d3ee)" }}>
+          <circle cx="0" cy="0" r="2" fill="#22d3ee" style={{ filter: "drop-shadow(0 0 4px #22d3ee)" }}>
             <animateMotion dur="4s" repeatCount="indefinite" path="M 900 300 L 100 300" />
-          </motion.circle>
-          
-          <motion.circle cx="0" cy="0" r="2" fill="#10b981" style={{ filter: "drop-shadow(0 0 4px #10b981)" }}>
+          </circle>
+
+          <circle cx="0" cy="0" r="2" fill="#10b981" style={{ filter: "drop-shadow(0 0 4px #10b981)" }}>
             <animateMotion dur="4s" repeatCount="indefinite" begin="2s" path="M 900 300 L 100 300" />
-          </motion.circle>
+          </circle>
 
           {/* Vertical branches to columns */}
           <line x1="800" y1="200" x2="800" y2="400" stroke="rgba(255,255,255,0.03)" strokeWidth="1" />
@@ -101,7 +101,7 @@ export const OpportunitySourcesSection = () => {
       `}} />
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10 text-right">
-        
+
         {/* Header */}
         <div className="text-center mb-16">
           <motion.div
@@ -125,14 +125,14 @@ export const OpportunitySourcesSection = () => {
 
         {/* Structured Network Grid container */}
         <div className="relative">
-          
+
           {/* Vertical & Horizontal Network Circuit Lines */}
           <div className="absolute inset-0 pointer-events-none hidden lg:block z-0">
             {/* Column Dividers */}
             <div className="absolute left-1/4 top-4 bottom-4 w-[1px] bg-slate-900/60" />
             <div className="absolute left-2/4 top-4 bottom-4 w-[1px] bg-slate-900/60" />
             <div className="absolute left-3/4 top-4 bottom-4 w-[1px] bg-slate-900/60" />
-            
+
             {/* Horizontal flow line crossing the grid */}
             <div className="absolute left-4 right-4 top-1/2 -translate-y-1/2 h-[1px] bg-gradient-to-r from-transparent via-slate-900 to-transparent" />
 
@@ -146,7 +146,7 @@ export const OpportunitySourcesSection = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             {categories.map((cat, colIdx) => {
               const catSources = opportunitySources.filter(s => s.type === cat.id);
-              
+
               return (
                 <motion.div
                   key={cat.id}
@@ -177,8 +177,8 @@ export const OpportunitySourcesSection = () => {
                             onMouseLeave={() => setHoveredNode(null)}
                             className={cn(
                               "relative p-3 rounded-xl border transition-all duration-300 cursor-pointer flex items-center justify-between text-right gap-3",
-                              isHovered 
-                                ? "border-cyan-500/50 bg-[#0B0F19] shadow-[0_0_15px_rgba(6,182,212,0.15)]" 
+                              isHovered
+                                ? "border-cyan-500/50 bg-[#0B0F19] shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                                 : "border-slate-900/60 bg-black/40 hover:border-slate-800"
                             )}
                           >
@@ -187,7 +187,7 @@ export const OpportunitySourcesSection = () => {
                               <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center p-1.5 shrink-0 overflow-hidden transition-colors duration-300" style={{ backdropFilter: 'blur(4px)' }}>
                                 <SourceLogo src={source.logoSrc} alt={source.name} isHovered={isHovered} />
                               </div>
-                              
+
                               {/* Label representing source name and sub-type */}
                               <div className="flex flex-col min-w-0 text-right">
                                 <span className="text-[10px] md:text-xs font-black text-white whitespace-normal transition-colors leading-tight">

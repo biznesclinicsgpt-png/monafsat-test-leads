@@ -77,12 +77,12 @@ export const SmartPortfolioSection = () => {
                         transition={{ duration: 1.8, ease: "easeOut" }}
                     />
                     {/* Particle flow on path */}
-                    <motion.circle
+                    <circle
                         cx="0" cy="0" r="2" fill="#60a5fa"
                         style={{ filter: "drop-shadow(0 0 4px #60a5fa)" }}
                     >
                         <animateMotion dur="3.5s" repeatCount="indefinite" path="M 250 0 C 250 80, 500 40, 500 160" />
-                    </motion.circle>
+                    </circle>
                 </svg>
             </div>
 
@@ -99,7 +99,7 @@ export const SmartPortfolioSection = () => {
                     >
                         {/* Inner glass reflection */}
                         <div className="absolute inset-0 bg-gradient-to-b from-blue-500/5 to-transparent rounded-3xl pointer-events-none" />
-                        
+
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-6">
                             <Zap className="w-5 h-5" />
                             <span className="font-semibold text-sm">مسار بديل</span>
@@ -359,7 +359,7 @@ export const SmartPortfolioSection = () => {
                                                 </div>
                                             </div>
 
-                                            <button 
+                                            <button
                                                 onClick={() => {
                                                     scrollToSection('final-cta');
                                                     if (window.history.pushState) {
@@ -369,8 +369,8 @@ export const SmartPortfolioSection = () => {
                                                 }}
                                                 className={cn(
                                                     "w-full mt-8 py-4 rounded-xl font-bold text-sm transition-all duration-300 cursor-pointer",
-                                                    pkg.recommended || isQuarterly 
-                                                        ? 'bg-blue-600 text-white hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)]' 
+                                                    pkg.recommended || isQuarterly
+                                                        ? 'bg-blue-600 text-white hover:bg-blue-500 shadow-[0_0_20px_rgba(37,99,235,0.3)]'
                                                         : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                                                 )}
                                             >

@@ -6,7 +6,7 @@ import { GlowOrb } from './GlowOrb';
 export const FinalCtaSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -41,7 +41,7 @@ export const FinalCtaSection = () => {
     const rect = containerRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
-    
+
     // Coordinates relative to center of the container
     const x = e.clientX - rect.left - width / 2;
     const y = e.clientY - rect.top - height / 2;
@@ -57,13 +57,13 @@ export const FinalCtaSection = () => {
   };
 
   return (
-    <div 
+    <div
       ref={containerRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className="py-40 bg-black relative overflow-hidden flex flex-col justify-center items-center border-t border-slate-900/60 min-h-[750px]"
     >
-      
+
       {/* Convergence SVG paths (Desktop only) */}
       <div className="absolute inset-0 pointer-events-none hidden md:block select-none z-0">
         <svg className="w-full h-full" viewBox="0 0 1000 800" fill="none" preserveAspectRatio="none">
@@ -78,7 +78,7 @@ export const FinalCtaSection = () => {
               <stop offset="100%" stopColor="#10b981" stopOpacity="0.2" />
             </linearGradient>
           </defs>
-          
+
           {/* Main path from top-right (Pricing / Revenue Share) to center (500, 400) */}
           <motion.path
             d="M 750 0 C 750 250, 500 200, 500 400"
@@ -90,12 +90,12 @@ export const FinalCtaSection = () => {
             transition={{ duration: 2.2, ease: "easeOut" }}
           />
           {/* Animated particle for main path */}
-          <motion.circle
+          <circle
             cx="0" cy="0" r="3" fill="#10b981"
             style={{ filter: "drop-shadow(0 0 5px #10b981)" }}
           >
             <animateMotion dur="2.8s" repeatCount="indefinite" path="M 750 0 C 750 250, 500 200, 500 400" />
-          </motion.circle>
+          </circle>
 
           {/* Alternative dashed blue path from top-left (SmartPortfolio) to center (500, 400) */}
           <motion.path
@@ -109,12 +109,12 @@ export const FinalCtaSection = () => {
             transition={{ duration: 2.2, ease: "easeOut", delay: 0.3 }}
           />
           {/* Animated particle for alternative path */}
-          <motion.circle
+          <circle
             cx="0" cy="0" r="2" fill="#3b82f6"
             style={{ filter: "drop-shadow(0 0 4px #3b82f6)" }}
           >
             <animateMotion dur="4s" repeatCount="indefinite" path="M 250 0 C 250 250, 500 200, 500 400" />
-          </motion.circle>
+          </circle>
         </svg>
       </div>
 
@@ -143,7 +143,7 @@ export const FinalCtaSection = () => {
       </div>
 
       {/* Parallax Concentric GlowOrb behind the text/CTA */}
-      <motion.div 
+      <motion.div
         style={{ x: orbX, y: orbY }}
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 pointer-events-none opacity-80"
       >
@@ -151,7 +151,7 @@ export const FinalCtaSection = () => {
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10 text-center max-w-4xl">
-        
+
         <motion.div
           initial={{ opacity: 0, scale: 0.92 }}
           whileInView={{ opacity: 1, scale: 1 }}
@@ -187,7 +187,7 @@ export const FinalCtaSection = () => {
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-emerald-300 opacity-0 group-hover:opacity-100 transition-opacity z-0" />
-              
+
               {/* Sparkle effect on hover */}
               {!isMobile && (
                 <Sparkles className="absolute top-2 left-4 w-4 h-4 opacity-0 group-hover:opacity-100 group-hover:animate-ping text-white z-10" />

@@ -66,7 +66,7 @@ export const PricingSection = () => {
   return (
     <div className="py-32 bg-[#050505] relative overflow-hidden border-t border-slate-900/60" id="pricing">
       <div className="container mx-auto px-4 max-w-6xl relative z-10 text-right">
-        
+
         {/* Header */}
         <div className="text-center mb-16">
           <motion.div
@@ -99,20 +99,20 @@ export const PricingSection = () => {
             {/* The single input path coming from top-center */}
             <path d="M 100 0 L 100 12" stroke="#10b981" strokeWidth="2.5" strokeLinecap="round" />
             <circle cx="100" cy="12" r="2.5" fill="#10b981" />
-            
+
             {/* The main thick, glowing bifurcation branch going to the right (RTL: package cards side) */}
             <path d="M 100 12 C 100 24, 150 20, 150 40" stroke="url(#main-bifur-grad)" strokeWidth="3" strokeLinecap="round" />
             {/* Animated particle on main branch */}
-            <motion.circle cx="0" cy="0" r="1.5" fill="#a855f7" style={{ filter: "drop-shadow(0 0 4px #a855f7)" }}>
+            <circle cx="0" cy="0" r="1.5" fill="#a855f7" style={{ filter: "drop-shadow(0 0 4px #a855f7)" }}>
               <animateMotion dur="2.5s" repeatCount="indefinite" path="M 100 12 C 100 24, 150 20, 150 40" />
-            </motion.circle>
+            </circle>
 
             {/* The alternative lighter bifurcation branch going to the left (credits portfolio side) */}
             <path d="M 100 12 C 100 24, 50 20, 50 40" stroke="url(#sub-bifur-grad)" strokeWidth="1" strokeDasharray="3 3" strokeLinecap="round" />
             {/* Animated particle on alternative branch (slower and dimmer) */}
-            <motion.circle cx="0" cy="0" r="1" fill="#3b82f6" opacity="0.6">
+            <circle cx="0" cy="0" r="1" fill="#3b82f6" opacity="0.6">
               <animateMotion dur="4s" repeatCount="indefinite" path="M 100 12 C 100 24, 50 20, 50 40" />
-            </motion.circle>
+            </circle>
 
             {/* Labels */}
             <text x="156" y="34" fill="#a855f7" className="text-[6.5px] font-black text-right" style={{ direction: 'rtl' }}>المسار الرئيسي: باقات التشغيل الكامل</text>
@@ -157,7 +157,7 @@ export const PricingSection = () => {
                 )}
 
                 <div className={cn("p-8 flex-grow flex flex-col justify-between", (tier.isPopular || tier.isPremium) ? "pt-12" : "")}>
-                  
+
                   <div>
                     <div className="flex items-center gap-4 mb-6">
                       <div className={cn(
@@ -196,7 +196,7 @@ export const PricingSection = () => {
                     </div>
                   </div>
 
-                  <button 
+                  <button
                     onClick={() => scrollToSection('growth-calculator')}
                     className={cn(
                       "mt-10 w-full py-3.5 rounded-xl font-black text-xs transition-all duration-300",
