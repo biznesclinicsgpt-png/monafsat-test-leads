@@ -34,8 +34,7 @@ import { OpportunitySourcesSection } from '../components/InvestmentV3/Opportunit
 import { GrowthCalculatorSection } from '../components/InvestmentV3/GrowthCalculatorSection';
 import { MonafsatNetworkSection } from '../components/InvestmentV3/MonafsatNetworkSection';
 import { GrowthTriangleSection } from '../components/InvestmentV3/GrowthTriangleSection';
-import { SmartDashboardSection } from '../components/InvestmentV3/SmartDashboardSection';
-import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
+
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { DualStreamPipelineSection } from '../components/InvestmentV3/DualStreamPipelineSection';
@@ -1594,8 +1593,7 @@ const Investment2Page = () => {
         .investment2-page #use-cases > div,
         .investment2-page #growth-calculator > div,
         .investment2-page #radar-system > div,
-        .investment2-page #dashboard-cmd > div,
-        .investment2-page #human-team > div,
+
         .investment2-page #future > div,
         .investment2-page #operational-formula > div,
         .investment2-page #smart-portfolio > div {
@@ -1660,12 +1658,7 @@ const Investment2Page = () => {
       <div id="radar-system">
         <MonafsatNetworkSection />
       </div>
-      <div id="dashboard-cmd">
-        <SmartDashboardSection simple />
-      </div>
-      <div id="human-team">
-        <HumanTeamSection />
-      </div>
+
 
       <div id="future">
         <FutureSection />
