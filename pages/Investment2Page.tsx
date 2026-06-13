@@ -21,6 +21,12 @@ import {
   TrendingDown,
   UserRoundCheck,
   Users,
+  Globe,
+  Sparkles,
+  MessagesSquare,
+  HelpCircle,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { StatsRow } from '../components/InvestmentV3/dashboard/StatsRow';
 import { PartnersMarqueeSection } from '../components/InvestmentV3/PartnersMarqueeSection';
@@ -33,6 +39,7 @@ import { HumanTeamSection } from '../components/InvestmentV3/HumanTeamSection';
 import { FutureSection } from '../components/InvestmentV3/FutureSection';
 import { SmartPortfolioSection } from '../components/InvestmentV3/SmartPortfolioSection';
 import { DualStreamPipelineSection } from '../components/InvestmentV3/DualStreamPipelineSection';
+import { OperationalFormulaSection } from '../components/InvestmentV3/OperationalFormulaSection';
 import { cn } from '../lib/utils';
 
 const scrollToSection = (id: string) => {
@@ -1718,6 +1725,7 @@ const Investment2Page = () => {
         .investment2-page #dashboard-cmd > div,
         .investment2-page #human-team > div,
         .investment2-page #future > div,
+        .investment2-page #operational-formula > div,
         .investment2-page #smart-portfolio > div {
           padding-top: 4.5rem !important;
           padding-bottom: 4.5rem !important;
@@ -1753,6 +1761,9 @@ const Investment2Page = () => {
       </div>
       <div id="focused-targeting">
         <FocusedTargetingSection />
+      </div>
+      <div id="operational-formula">
+        <OperationalFormulaSection />
       </div>
       <div id="pipeline-stream">
         <DualStreamPipelineSection />
