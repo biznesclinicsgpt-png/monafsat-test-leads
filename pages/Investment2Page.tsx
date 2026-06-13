@@ -306,6 +306,8 @@ const ChallengesSection = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const { shouldReduce, reveal, container, item } = useSharedMotion();
 
+  const springTransition = { type: 'spring', stiffness: 220, damping: 26 };
+
   const stages = [
     {
       title: 'قبل الفرص',
@@ -398,15 +400,37 @@ const ChallengesSection = () => {
                 <stop offset="100%" stopColor="#10b981" stopOpacity="0.25" />
               </linearGradient>
             </defs>
+            {/* Glowing background path blur */}
+            {!shouldReduce && (
+              <motion.path 
+                d="M 180 30 C 340 5, 660 55, 820 30" 
+                stroke="url(#connecting-grad)" 
+                strokeWidth="4" 
+                strokeLinecap="round"
+                opacity="0.2"
+                animate={{ opacity: [0.1, 0.35, 0.1] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                style={{ filter: "blur(2.5px)" }}
+              />
+            )}
+            {/* Foreground drawing path with linear flow dash animation */}
             <motion.path 
               d="M 180 30 C 340 5, 660 55, 820 30" 
               stroke="url(#connecting-grad)" 
               strokeWidth="1.5" 
-              strokeDasharray="5 5"
-              initial={{ pathLength: shouldReduce ? 1 : 0 }}
+              strokeDasharray="6 6"
+              initial={{ pathLength: shouldReduce ? 1 : 0, strokeDashoffset: 0 }}
               whileInView={{ pathLength: 1 }}
+              animate={shouldReduce ? {} : { strokeDashoffset: [0, -24] }}
               viewport={{ once: true }}
-              transition={shouldReduce ? { duration: 0 } : { duration: 1.5, ease: "easeInOut", delay: 0.4 }}
+              transition={
+                shouldReduce 
+                  ? { duration: 0 } 
+                  : {
+                      pathLength: { duration: 1.2, ease: "easeInOut", delay: 0.6 },
+                      strokeDashoffset: { duration: 4, repeat: Infinity, ease: "linear" }
+                    }
+              }
             />
           </svg>
 
@@ -427,37 +451,42 @@ const ChallengesSection = () => {
                   onMouseLeave={() => setHoveredCard(null)}
                 >
                   {/* Card wrapper */}
-                  <div
+                  <motion.div
+                    animate={shouldReduce ? {} : { y: isHovered ? -4 : 0 }}
+                    transition={springTransition}
                     className={cn(
-                      "bg-slate-950/55 border rounded-3xl p-7 text-right transition-all duration-300 relative z-20 cursor-pointer h-full",
+                      "border rounded-3xl p-7 text-right relative z-20 cursor-pointer h-full transition-all duration-300",
                       isHovered 
-                        ? "border-slate-700 shadow-2xl scale-[1.02]" 
+                        ? "border-transparent bg-transparent" 
                         : "border-slate-800/80 bg-slate-950/40"
                     )}
-                    style={{
-                      boxShadow: isHovered ? `0 10px 30px -10px ${stage.glowColor}` : 'none'
-                    }}
                   >
-                    {/* Glowing effect inside card */}
-                    <div 
-                      className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                      style={{
-                        background: `radial-gradient(circle at 50% 10%, ${stage.glowColor}, transparent 60%)`
-                      }}
-                    />
+                    {/* Shared Layout Active Highlight Pill */}
+                    {isHovered && (
+                      <motion.div 
+                        layoutId="challenges-shared-highlight" 
+                        className="absolute inset-0 rounded-3xl bg-slate-950 border border-slate-700 shadow-2xl -z-10" 
+                        style={{
+                          boxShadow: `0 10px 30px -10px ${stage.glowColor}`
+                        }}
+                        transition={springTransition}
+                      />
+                    )}
 
                     {/* Header Row (Icon + Indicator) */}
                     <div className="flex items-center justify-between mb-6 relative z-10">
-                      <div
+                      <motion.div
+                        animate={{ scale: isHovered ? 1.08 : 1 }}
+                        transition={springTransition}
                         className={cn(
                           'w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300',
                           isHovered 
-                            ? 'bg-slate-900/90 border-slate-750 text-cyan-300 scale-110 shadow-lg' 
+                            ? 'bg-slate-900/90 border-slate-750 text-cyan-300 shadow-lg' 
                             : 'bg-slate-950 border-slate-900 text-slate-400'
                         )}
                       >
                         <IconComponent className="w-5 h-5" />
-                      </div>
+                      </motion.div>
                       
                       {/* Pulse Indicator */}
                       <div className="flex items-center gap-2">
@@ -475,16 +504,16 @@ const ChallengesSection = () => {
                     <p className="text-sm text-slate-400 leading-relaxed font-medium">
                       {stage.shortSummary}
                     </p>
-                  </div>
+                  </motion.div>
 
                   {/* Popover */}
                   <AnimatePresence>
                     {isHovered && (
                       <motion.div
-                        initial={{ opacity: 0, y: shouldReduce ? 0 : 10, scale: 0.95 }}
+                        initial={{ opacity: 0, y: shouldReduce ? 0 : 12, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: shouldReduce ? 0 : 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
+                        exit={{ opacity: 0, y: shouldReduce ? 0 : 12, scale: 0.98 }}
+                        transition={springTransition}
                         className={cn(
                           "absolute top-[102%] w-[340px] lg:w-[360px] mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-50 text-right pointer-events-auto before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4",
                           idx === 0 ? "right-0 origin-top-right" : idx === 2 ? "left-0 origin-top-left" : "left-1/2 -translate-x-1/2 origin-top"
@@ -529,7 +558,7 @@ const ChallengesSection = () => {
         {/* Mobile Layout (less than md) */}
         <div className="md:hidden mb-12">
           {/* Tab selector pills */}
-          <div className="grid grid-cols-3 gap-2 mb-4">
+          <div className="grid grid-cols-3 gap-2 mb-4 relative z-10">
             {stages.map((stage, idx) => {
               const IconComponent = stage.icon;
               const isActive = activeMobileTab === idx;
@@ -539,16 +568,23 @@ const ChallengesSection = () => {
                   key={stage.title}
                   onClick={() => setActiveMobileTab(idx)}
                   className={cn(
-                    "flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all duration-300",
+                    "flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all duration-300 relative overflow-hidden",
                     isActive 
-                      ? stage.activeBorder
+                      ? "border-transparent bg-transparent"
                       : "bg-slate-950/40 border-slate-900 text-slate-400"
                   )}
                 >
-                  <div className={cn("w-9 h-9 rounded-xl border flex items-center justify-center mb-1.5", isActive ? "bg-slate-900/90 text-cyan-300 border-slate-800" : "bg-slate-950 text-slate-500 border-slate-900")}>
+                  {isActive && (
+                    <motion.div 
+                      layoutId="mobile-challenges-active-highlight" 
+                      className="absolute inset-0 rounded-2xl bg-slate-900 border border-slate-800 shadow-[0_0_15px_rgba(6,182,212,0.1)] -z-10"
+                      transition={springTransition}
+                    />
+                  )}
+                  <div className={cn("w-9 h-9 rounded-xl border flex items-center justify-center mb-1.5 transition-colors duration-300", isActive ? "bg-slate-950 text-cyan-300 border-slate-800/60" : "bg-slate-950 text-slate-500 border-slate-900")}>
                     <IconComponent className="w-4 h-4" />
                   </div>
-                  <span className={cn("text-xs font-black", isActive ? "text-white" : "text-slate-400")}>
+                  <span className={cn("text-xs font-black transition-colors duration-300", isActive ? "text-white" : "text-slate-400")}>
                     {stage.title}
                   </span>
                 </button>
