@@ -8,8 +8,55 @@ const toArabicNumerals = (num: number | string): string => {
     return String(num).replace(/[0-9]/g, (w) => arabicDigits[+w]);
 };
 
+const useLocalMotion = () => {
+  const shouldReduce = useReducedMotion();
+  const reveal = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 25, 
+      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'none',
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduce ? 0.02 : 0.06,
+        delayChildren: shouldReduce ? 0.01 : 0.1
+      }
+    }
+  };
+  const item = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 15,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      filter: 'none',
+      transition: { 
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  return { shouldReduce, reveal, container, item };
+};
+
 export const GrowthCalculatorSection = () => {
-    const shouldReduceMotion = useReducedMotion();
+    const { shouldReduce, reveal, container, item } = useLocalMotion();
+    const shouldReduceMotion = shouldReduce;
     
     // Inputs state
     const [sector, setSector] = useState<string>('مقاولات');
@@ -184,10 +231,10 @@ export const GrowthCalculatorSection = () => {
                 {/* Header */}
                 <div className="text-center mb-16">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
+                        variants={reveal}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.15 }}
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-white mb-6 backdrop-blur-sm">
                             <Calculator className="w-4 h-4 text-emerald-400" />

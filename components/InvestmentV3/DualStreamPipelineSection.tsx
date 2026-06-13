@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { 
   Target, 
   Users, 
@@ -25,7 +25,54 @@ const PIPELINE_CONFIG = {
   subText: "كل فرصة تتحرك داخل القمع تقرب فريقك من هذا الرقم."
 };
 
+const useLocalMotion = () => {
+  const shouldReduce = useReducedMotion();
+  const reveal = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 25, 
+      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'none',
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduce ? 0.02 : 0.06,
+        delayChildren: shouldReduce ? 0.01 : 0.1
+      }
+    }
+  };
+  const item = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 15,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      filter: 'none',
+      transition: { 
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  return { shouldReduce, reveal, container, item };
+};
+
 export const DualStreamPipelineSection = () => {
+  const { shouldReduce, reveal, container, item } = useLocalMotion();
   // Synchronized hover section state ('before' | 'during' | 'after' | null)
   const [hoveredSection, setHoveredSection] = React.useState<'before' | 'during' | 'after' | null>(null);
   const hoverTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
@@ -77,7 +124,13 @@ export const DualStreamPipelineSection = () => {
       <div className="container mx-auto px-4 max-w-6xl relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="text-center mb-16"
+        >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 mb-4 select-none">
             <Activity className="w-3.5 h-3.5" />
             <span className="text-[10px] font-bold">تكامل منظومة المبيعات</span>
@@ -88,7 +141,7 @@ export const DualStreamPipelineSection = () => {
           <p className="text-base md:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
             مسار قيادة النمو الذي يفتح محادثات مؤهلة، وكادر منافسات يرصد فرصاً مباشرة من السوق، ثم تلتقي الفرص في حصيلة واحدة ليبدأ فريقك من فرص أجهز وأقرب للتحويل.
           </p>
-        </div>
+        </motion.div>
 
           <div className="hidden lg:grid grid-cols-12 gap-6 items-center relative text-right z-10" dir="rtl">
           

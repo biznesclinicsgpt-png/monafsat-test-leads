@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowLeft, BarChart3, CalendarCheck, Cpu, Database, Filter, Flame, MessageSquareText, Search, Send, TrendingUp, UserRoundCheck } from 'lucide-react';
 import { WhyAgentsBlock } from './dashboard/WhyAgentsBlock';
 import { BeforeAfterToggle } from './dashboard/BeforeAfterToggle';
@@ -7,7 +7,54 @@ import { AgentOrbitGrid } from './dashboard/AgentOrbitGrid';
 import { MonafsatBridge } from './dashboard/MonafsatBridge';
 import { DashboardCTA } from './dashboard/DashboardCTA';
 
+const useLocalMotion = () => {
+  const shouldReduce = useReducedMotion();
+  const reveal = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 25, 
+      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'none',
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduce ? 0.02 : 0.06,
+        delayChildren: shouldReduce ? 0.01 : 0.1
+      }
+    }
+  };
+  const item = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 15,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      filter: 'none',
+      transition: { 
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  return { shouldReduce, reveal, container, item };
+};
+
 const SimpleAutomationEngineSection = () => {
+    const { shouldReduce, reveal, container, item } = useLocalMotion();
     const capabilities = [
         {
             title: 'تحليل السوق والقطاعات',
@@ -62,10 +109,10 @@ const SimpleAutomationEngineSection = () => {
             <div className="container mx-auto px-4 max-w-7xl relative z-10">
                 <div className="text-center mb-14">
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
+                        variants={reveal}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.15 }}
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 mb-6 backdrop-blur-sm">
                             <Cpu className="w-4 h-4" />
@@ -80,15 +127,19 @@ const SimpleAutomationEngineSection = () => {
                     </motion.div>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-                    {capabilities.map((capability, idx) => (
+                <motion.div
+                    variants={container}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10"
+                >
+                    {capabilities.map((capability) => (
                         <motion.div
                             key={capability.title}
-                            initial={{ opacity: 0, y: 18 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.05 }}
-                            className="bg-slate-950/65 border border-slate-800 rounded-3xl p-6 text-right hover:border-emerald-500/30 transition-colors"
+                            variants={item}
+                            whileHover={shouldReduce ? {} : { y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
+                            className="bg-slate-950/65 border border-slate-800 rounded-3xl p-6 text-right hover:border-emerald-500/30 hover:shadow-[0_0_25px_rgba(16,185,129,0.06)] transition-all duration-300 flex flex-col justify-between"
                         >
                             <div className="w-12 h-12 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 flex items-center justify-center mb-5">
                                 <capability.icon className="w-6 h-6" />
@@ -97,7 +148,7 @@ const SimpleAutomationEngineSection = () => {
                             <p className="text-sm text-slate-400 leading-relaxed font-bold">{capability.desc}</p>
                         </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
                 <div className="bg-slate-950/70 border border-slate-800 rounded-3xl p-5 md:p-7 mb-10">
                     <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-3">
@@ -116,9 +167,13 @@ const SimpleAutomationEngineSection = () => {
 
                 <div className="grid lg:grid-cols-12 gap-6 items-stretch">
                     <motion.div
-                        initial={{ opacity: 0, x: 24 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0, x: shouldReduce ? 0 : 25 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+                        }}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.15 }}
                         className="lg:col-span-5 rounded-3xl bg-emerald-500/10 border border-emerald-500/25 p-6 md:p-8 flex flex-col justify-center"
                     >
                         <h3 className="text-2xl md:text-3xl font-black text-white leading-tight mb-5">
@@ -130,9 +185,13 @@ const SimpleAutomationEngineSection = () => {
                     </motion.div>
 
                     <motion.div
-                        initial={{ opacity: 0, x: -24 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0, x: shouldReduce ? 0 : -25 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+                        }}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.15 }}
                         className="lg:col-span-7 bg-slate-950/80 border border-slate-800 rounded-3xl p-6 md:p-8"
                     >
                         <div className="flex items-center justify-between gap-4 mb-6 pb-5 border-b border-slate-800">

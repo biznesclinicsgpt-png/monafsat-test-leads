@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   ArrowLeft,
   Activity,
@@ -40,6 +40,59 @@ const scrollToSection = (id: string) => {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' });
   }
+};
+
+export const useSharedMotion = () => {
+  const shouldReduce = useReducedMotion();
+
+  // Standardized reveal animation variant
+  const reveal = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 25, 
+      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'none',
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1] // Custom easeOutExpo
+      }
+    }
+  };
+
+  // Standardized stagger container variant
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduce ? 0.02 : 0.06,
+        delayChildren: shouldReduce ? 0.01 : 0.1
+      }
+    }
+  };
+
+  // Standardized stagger item variant
+  const item = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 15,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      filter: 'none',
+      transition: { 
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
+  return { shouldReduce, reveal, container, item };
 };
 
 const ArabicOnlyTextSanitizer = () => {
@@ -158,20 +211,52 @@ const SectionHeader = ({
   </motion.div>
 );
 
-const HeroSection2 = () => (
-  <section className="relative min-h-[86vh] bg-[#050505] overflow-hidden flex items-center py-20 border-b border-slate-900/70">
-    <div className="absolute inset-0 opacity-25">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415533_1px,transparent_1px),linear-gradient(to_bottom,#33415533_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,#000_60%,transparent_100%)]" />
-      <div className="absolute top-1/4 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px]" />
-      <div className="absolute bottom-0 right-10 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px]" />
-    </div>
+const HeroSection2 = () => {
+  const { shouldReduce, container, item } = useSharedMotion();
 
-    <div className="container mx-auto px-4 max-w-6xl relative z-10">
-      <div className="max-w-5xl mx-auto text-center">
+  return (
+    <section className="relative min-h-[86vh] bg-[#050505] overflow-hidden flex items-center py-20 border-b border-slate-900/70">
+      {/* Background Grid & Glowing circles */}
+      <div className="absolute inset-0 opacity-25">
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#33415533_1px,transparent_1px),linear-gradient(to_bottom,#33415533_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_70%_55%_at_50%_20%,#000_60%,transparent_100%)] pointer-events-none" />
+        
+        <motion.div 
+          animate={shouldReduce ? {} : {
+            scale: [1, 1.06, 1],
+            opacity: [0.2, 0.3, 0.2]
+          }}
+          transition={{
+            duration: 9,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className="absolute top-1/4 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-[120px] pointer-events-none" 
+        />
+        
+        <motion.div 
+          animate={shouldReduce ? {} : {
+            scale: [1, 1.05, 1],
+            opacity: [0.2, 0.28, 0.2]
+          }}
+          transition={{
+            duration: 11,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5
+          }}
+          className="absolute bottom-0 right-10 h-[420px] w-[420px] rounded-full bg-cyan-500/10 blur-[120px] pointer-events-none" 
+        />
+      </div>
+
+      <div className="container mx-auto px-4 max-w-6xl relative z-10">
+        <motion.div 
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          className="max-w-5xl mx-auto text-center"
+        >
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
+            variants={item}
             className="text-4xl md:text-6xl lg:text-7xl font-black text-white leading-tight max-w-5xl"
           >
             نساعد فريق مبيعاتك يبيع أكثر
@@ -181,18 +266,14 @@ const HeroSection2 = () => (
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            variants={item}
             className="text-base md:text-xl text-slate-300 leading-relaxed mt-7 max-w-4xl mx-auto"
           >
             نحدد القطاع، نصل لصناع القرار، نفتح المحادثات، ثم نساعد فريقك على تحويلها إلى اجتماعات، عروض، وصفقات.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            variants={item}
             className="flex flex-col sm:flex-row gap-4 mt-9 justify-center"
           >
             <button
@@ -208,14 +289,16 @@ const HeroSection2 = () => (
               ابدأ بتجربة قطاع واحد
             </button>
           </motion.div>
+        </motion.div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 const ChallengesSection = () => {
   const [activeMobileTab, setActiveMobileTab] = useState(0);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
 
   const stages = [
     {
@@ -281,7 +364,13 @@ const ChallengesSection = () => {
   ];
 
   return (
-    <section className="pt-20 pb-36 bg-[#050505] border-t border-slate-900/60 relative overflow-visible">
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="pt-20 pb-36 bg-[#050505] border-t border-slate-900/60 relative overflow-visible"
+    >
       {/* Background decorations */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
       
@@ -303,22 +392,30 @@ const ChallengesSection = () => {
                 <stop offset="100%" stopColor="#10b981" stopOpacity="0.25" />
               </linearGradient>
             </defs>
-            <path 
+            <motion.path 
               d="M 180 30 C 340 5, 660 55, 820 30" 
               stroke="url(#connecting-grad)" 
               strokeWidth="1.5" 
               strokeDasharray="5 5"
+              initial={{ pathLength: shouldReduce ? 1 : 0 }}
+              whileInView={{ pathLength: 1 }}
+              viewport={{ once: true }}
+              transition={shouldReduce ? { duration: 0 } : { duration: 1.5, ease: "easeInOut", delay: 0.4 }}
             />
           </svg>
 
-          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10">
+          <motion.div 
+            variants={container}
+            className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10"
+          >
             {stages.map((stage, idx) => {
               const IconComponent = stage.icon;
               const isHovered = hoveredCard === idx;
               
               return (
-                <div 
+                <motion.div 
                   key={stage.title}
+                  variants={item}
                   className="relative group"
                   onMouseEnter={() => setHoveredCard(idx)}
                   onMouseLeave={() => setHoveredCard(null)}
@@ -378,9 +475,9 @@ const ChallengesSection = () => {
                   <AnimatePresence>
                     {isHovered && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        initial={{ opacity: 0, y: shouldReduce ? 0 : 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        exit={{ opacity: 0, y: shouldReduce ? 0 : 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
                         className={cn(
                           "absolute top-[102%] w-[340px] lg:w-[360px] mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-50 text-right pointer-events-auto before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4",
@@ -417,10 +514,10 @@ const ChallengesSection = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
 
         {/* Mobile Layout (less than md) */}
@@ -466,9 +563,9 @@ const ChallengesSection = () => {
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeMobileTab}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: shouldReduce ? 0 : 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
+                exit={{ opacity: 0, y: shouldReduce ? 0 : -10 }}
                 transition={{ duration: 0.2 }}
               >
                 <div className="mb-4">
@@ -537,7 +634,7 @@ const ChallengesSection = () => {
           </div>
         </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
@@ -546,6 +643,7 @@ type TimelineBucket = 'inputs' | 'process' | 'outputs' | 'outcomes';
 const ExecutionTimelineSection = () => {
   const [activeStage, setActiveStage] = useState(0);
   const [activeBucket, setActiveBucket] = useState<TimelineBucket>('inputs');
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
 
   const bucketMeta: Record<TimelineBucket, { label: string; question: string; icon: React.ElementType }> = {
     inputs: { label: 'المدخلات', question: 'ما الذي نحتاجه منك؟', icon: ClipboardList },
@@ -601,7 +699,13 @@ const ExecutionTimelineSection = () => {
   const CurrentIcon = bucketMeta[activeBucket].icon;
 
   return (
-    <section className="py-16 bg-[#080808] border-t border-slate-900/60">
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="py-16 bg-[#080808] border-t border-slate-900/60"
+    >
       <div className="container mx-auto px-4 max-w-7xl">
         <SectionHeader
           eyebrow="المدخلات ← التنفيذ ← المخرجات ← النتائج"
@@ -610,10 +714,15 @@ const ExecutionTimelineSection = () => {
         />
 
         <div className="grid lg:grid-cols-12 gap-6 items-start">
-          <div className="lg:col-span-5 grid gap-4">
+          <motion.div 
+            variants={container}
+            className="lg:col-span-5 grid gap-4"
+          >
             {stages.map((stage, idx) => (
-              <button
+              <motion.button
                 key={stage.title}
+                variants={item}
+                whileHover={shouldReduce ? {} : { y: -3, transition: { duration: 0.2 } }}
                 onClick={() => {
                   setActiveStage(idx);
                   setActiveBucket('inputs');
@@ -640,14 +749,15 @@ const ExecutionTimelineSection = () => {
                     <p className="text-sm text-slate-400 leading-relaxed">{stage.summary}</p>
                   </div>
                 </div>
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           <motion.div
             key={`${activeStage}-${activeBucket}`}
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: shouldReduce ? 0 : 16 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
             className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8"
           >
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-7 pb-5 border-b border-slate-800">
@@ -701,179 +811,242 @@ const ExecutionTimelineSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
-const OneSalespersonSection = () => (
-  <section className="py-16 bg-[#080808] border-t border-slate-900/60">
-    <div className="container mx-auto px-4 max-w-6xl">
-      <div className="grid lg:grid-cols-12 gap-8 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-5 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-8"
-        >
-          <UserRoundCheck className="w-12 h-12 text-emerald-300 mb-6" />
-          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
-            حتى لو لديك موظف مبيعات واحد فقط... سنبني حوله نظام تشغيل
-          </h2>
-          <p className="text-slate-300 leading-relaxed">
-            نحن لا نحتاج فريقًا كبيرًا. نحتاج شخصًا واحدًا قابلًا للتطوير، ثم نزوده يوميًا بما يحتاجه ليعمل بوضوح: من يستهدف، ماذا يقول، أي قناة يستخدم، متى يتابع، وكيف يحول الرد إلى اجتماع.
-          </p>
-        </motion.div>
-        <div className="lg:col-span-7">
-          <div className="relative bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8 overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12),transparent_48%)] pointer-events-none" />
-            <div className="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-4 items-center">
-              {[
-                ['بيانات جاهزة', Database],
-                ['رسائل جاهزة', MessageSquare],
-                ['قنوات مفعلة', PhoneCall],
-                ['متابعة', CalendarCheck],
-                ['تدريب', Users],
-                ['تقارير', BarChart3],
-              ].map(([item, Icon], idx) => (
-                <motion.div
-                  key={item as string}
-                  initial={{ opacity: 0, y: 18 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05 }}
-                  className="bg-black/35 border border-slate-800 rounded-2xl p-4 text-center min-h-[110px] flex flex-col items-center justify-center"
+const OneSalespersonSection = () => {
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
+
+  return (
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="py-16 bg-[#080808] border-t border-slate-900/60"
+    >
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="grid lg:grid-cols-12 gap-8 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: shouldReduce ? 0 : 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-5 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-8"
+          >
+            <UserRoundCheck className="w-12 h-12 text-emerald-300 mb-6" />
+            <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
+              حتى لو لديك موظف مبيعات واحد فقط... سنبني حوله نظام تشغيل
+            </h2>
+            <p className="text-slate-300 leading-relaxed">
+              نحن لا نحتاج فريقًا كبيرًا. نحتاج شخصًا واحدًا قابلًا للتطوير، ثم نزوده يوميًا بما يحتاجه ليعمل بوضوح: من يستهدف، ماذا يقول، أي قناة يستخدم، متى يتابع، وكيف يحول الرد إلى اجتماع.
+            </p>
+          </motion.div>
+          <div className="lg:col-span-7">
+            <div className="relative bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8 overflow-hidden">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12),transparent_48%)] pointer-events-none" />
+              
+              <motion.div 
+                variants={container}
+                className="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-4 items-center"
+              >
+                {[
+                  ['بيانات جاهزة', Database],
+                  ['رسائل جاهزة', MessageSquare],
+                  ['قنوات مفعلة', PhoneCall],
+                  ['متابعة', CalendarCheck],
+                  ['تدريب', Users],
+                  ['تقارير', BarChart3],
+                ].map(([title, Icon]) => (
+                  <motion.div
+                    key={title as string}
+                    variants={item}
+                    whileHover={shouldReduce ? {} : { y: -5, scale: 1.02, boxShadow: '0 8px 20px rgba(6, 182, 212, 0.1)' }}
+                    className="bg-black/35 border border-slate-800 rounded-2xl p-4 text-center min-h-[110px] flex flex-col items-center justify-center transition-all duration-300"
+                  >
+                    <Icon className="w-6 h-6 text-cyan-300 mb-3" />
+                    <span className="text-slate-200 font-black text-sm">{title as string}</span>
+                  </motion.div>
+                ))}
+              </motion.div>
+
+              <div className="relative z-10 my-5 flex justify-center">
+                <motion.div 
+                  whileHover={shouldReduce ? {} : { scale: 1.05 }}
+                  className="rounded-full bg-emerald-400 text-slate-950 px-6 py-3 font-black border border-emerald-200 shadow-[0_0_30px_rgba(52,211,153,0.25)] cursor-default"
                 >
-                  <Icon className="w-6 h-6 text-cyan-300 mb-3" />
-                  <span className="text-slate-200 font-black text-sm">{item as string}</span>
+                  موظف المبيعات
+                </motion.div>
+              </div>
+
+              <div className="relative z-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex items-center justify-center gap-3">
+                <BriefcaseBusiness className="w-5 h-5 text-emerald-300 shrink-0" />
+                <span className="text-emerald-100 font-black text-sm">فرص مباشرة تدخل القمع بدل انتظار المحاولات العشوائية</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.section>
+  );
+};
+
+const FocusedTargetingSection = () => {
+  const { shouldReduce, reveal } = useSharedMotion();
+
+  return (
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="py-16 bg-[#080808] border-t border-slate-900/60"
+    >
+      <div className="container mx-auto px-4 max-w-6xl">
+        <div className="grid lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-6">
+            <SectionHeader
+              eyebrow="استهداف أدق"
+              title="لا نستهدف الجميع... نستخرج الأقرب للشراء"
+              description="لو منتجك يناسب شريحة محددة فقط، لا نضيع وقت فريقك على آلاف غير مناسبين. نحلل السوق ونستخرج أفضل الحسابات وصناع القرار حسب القطاع، المنطقة، حجم الشركة، الاحتياج، واحتمالية الاستجابة."
+            />
+          </div>
+          <motion.div
+            initial={{ opacity: 0, x: shouldReduce ? 0 : -25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-6 bg-slate-950/75 border border-slate-800 rounded-3xl p-7"
+          >
+            <div className="grid gap-4">
+              <motion.div 
+                whileHover={shouldReduce ? {} : { scale: 1.015, boxShadow: '0 4px 15px rgba(239, 68, 68, 0.05)' }}
+                className="rounded-2xl border border-red-500/20 bg-red-500/5 p-5 transition-all duration-300"
+              >
+                <div className="text-red-300 font-black text-sm mb-2">بدون فلترة</div>
+                <div className="text-4xl font-black text-white font-sans">300,000</div>
+                <div className="text-xs text-slate-500 font-bold mt-1">جهة عامة يصعب تشغيلها بذكاء</div>
+              </motion.div>
+              <ArrowLeft className="w-7 h-7 text-emerald-300 mx-auto -rotate-90 lg:rotate-0" />
+              <motion.div 
+                whileHover={shouldReduce ? {} : { scale: 1.015, boxShadow: '0 4px 15px rgba(16, 185, 129, 0.05)' }}
+                className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 transition-all duration-300"
+              >
+                <div className="text-emerald-300 font-black text-sm mb-2">بعد تحليل الملاءمة</div>
+                <div className="text-4xl font-black text-white font-sans">800 - 2,000</div>
+                <div className="text-xs text-slate-400 font-bold mt-1">حساب مناسب يمكن تحويله إلى محادثات واجتماعات</div>
+              </motion.div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+    </motion.section>
+  );
+};
+
+const DailySalesSystemSection = () => {
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
+
+  return (
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="py-16 bg-[#050505] border-t border-slate-900/60"
+    >
+      <div className="container mx-auto px-4 max-w-6xl">
+        <SectionHeader
+          eyebrow="مخرجات ملموسة"
+          title="ماذا يرى موظفك داخل النظام؟"
+          description="بدل كلمة منظومة بشكل عام، يرى موظفك قائمة تشغيل واضحة: من يتواصل معه، لماذا هو مناسب، ما الرسالة المقترحة، وما الخطوة التالية."
+        />
+        <div className="grid lg:grid-cols-12 gap-6 items-stretch">
+          <motion.div
+            initial={{ opacity: 0, x: shouldReduce ? 0 : 25 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            whileHover={shouldReduce ? {} : { scale: 1.01, boxShadow: '0 8px 30px rgba(6,182,212,0.06)' }}
+            className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8 transition-all duration-300"
+          >
+            <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-slate-800">
+              <div>
+                <div className="text-xs font-black text-cyan-300 mb-2">بطاقة عميل محتمل</div>
+                <h3 className="text-2xl md:text-3xl font-black text-white">شركة مقاولات متوسطة</h3>
+                <p className="text-sm text-slate-500 font-bold mt-1">الرياض | قطاع المقاولات والتشغيل</p>
+              </div>
+              <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 px-4 py-3 text-center">
+                <div className="text-[10px] text-emerald-300 font-black mb-1">درجة الملاءمة</div>
+                <div className="text-xl font-black text-white">عالية</div>
+              </div>
+            </div>
+
+            <motion.div 
+              variants={container}
+              className="grid sm:grid-cols-2 gap-4"
+            >
+              {[
+                ['صانع القرار', 'مدير المشتريات', UserRoundCheck],
+                ['القناة الأنسب', 'واتساب + اتصال', PhoneCall],
+                ['سبب الملاءمة', 'نشاط الشركة وحجمها مناسب للخدمة', Target],
+                ['الخطوة التالية', 'إرسال الرسالة ثم متابعة بعد 48 ساعة', CalendarCheck],
+              ].map(([label, value, Icon]) => (
+                <motion.div 
+                  key={label as string} 
+                  variants={item}
+                  whileHover={shouldReduce ? {} : { scale: 1.02 }}
+                  className="rounded-2xl bg-black/30 border border-slate-900 p-4 transition-all duration-300"
+                >
+                  <Icon className="w-5 h-5 text-cyan-300 mb-3" />
+                  <div className="text-[10px] text-slate-500 font-black mb-1">{label as string}</div>
+                  <div className="text-sm text-white font-black leading-relaxed">{value as string}</div>
                 </motion.div>
               ))}
-            </div>
-            <div className="relative z-10 my-5 flex justify-center">
-              <div className="rounded-full bg-emerald-400 text-slate-950 px-6 py-3 font-black border border-emerald-200 shadow-[0_0_30px_rgba(52,211,153,0.25)]">
-                موظف المبيعات
-              </div>
-            </div>
-            <div className="relative z-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex items-center justify-center gap-3">
-              <BriefcaseBusiness className="w-5 h-5 text-emerald-300 shrink-0" />
-              <span className="text-emerald-100 font-black text-sm">فرص مباشرة تدخل القمع بدل انتظار المحاولات العشوائية</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-);
+            </motion.div>
 
-const FocusedTargetingSection = () => (
-  <section className="py-16 bg-[#080808] border-t border-slate-900/60">
-    <div className="container mx-auto px-4 max-w-6xl">
-      <div className="grid lg:grid-cols-12 gap-8 items-center">
-        <div className="lg:col-span-6">
-          <SectionHeader
-            eyebrow="استهداف أدق"
-            title="لا نستهدف الجميع... نستخرج الأقرب للشراء"
-            description="لو منتجك يناسب شريحة محددة فقط، لا نضيع وقت فريقك على آلاف غير مناسبين. نحلل السوق ونستخرج أفضل الحسابات وصناع القرار حسب القطاع، المنطقة، حجم الشركة، الاحتياج، واحتمالية الاستجابة."
-          />
-        </div>
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-6 bg-slate-950/75 border border-slate-800 rounded-3xl p-7"
-        >
-          <div className="grid gap-4">
-            <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-5">
-              <div className="text-red-300 font-black text-sm mb-2">بدون فلترة</div>
-              <div className="text-4xl font-black text-white font-sans">300,000</div>
-              <div className="text-xs text-slate-500 font-bold mt-1">جهة عامة يصعب تشغيلها بذكاء</div>
+            <div className="mt-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-5">
+              <div className="text-[10px] text-emerald-300 font-black mb-2">الرسالة المقترحة</div>
+              <p className="text-sm text-emerald-50 font-bold leading-relaxed">
+                لاحظنا أن شركتكم تعمل في مشاريع تشغيلية متوسطة داخل الرياض. لدينا تجربة تساعد فرق المبيعات على الوصول لصناع القرار وتحويل الفرص إلى اجتماعات مؤهلة خلال 90 يوم. هل يناسبك اتصال قصير هذا الأسبوع؟
+              </p>
             </div>
-            <ArrowLeft className="w-7 h-7 text-emerald-300 mx-auto -rotate-90 lg:rotate-0" />
-            <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5">
-              <div className="text-emerald-300 font-black text-sm mb-2">بعد تحليل الملاءمة</div>
-              <div className="text-4xl font-black text-white font-sans">800 - 2,000</div>
-              <div className="text-xs text-slate-400 font-bold mt-1">حساب مناسب يمكن تحويله إلى محادثات واجتماعات</div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </div>
-  </section>
-);
+          </motion.div>
 
-const DailySalesSystemSection = () => (
-  <section className="py-16 bg-[#050505] border-t border-slate-900/60">
-    <div className="container mx-auto px-4 max-w-6xl">
-      <SectionHeader
-        eyebrow="مخرجات ملموسة"
-        title="ماذا يرى موظفك داخل النظام؟"
-        description="بدل كلمة منظومة بشكل عام، يرى موظفك قائمة تشغيل واضحة: من يتواصل معه، لماذا هو مناسب، ما الرسالة المقترحة، وما الخطوة التالية."
-      />
-      <div className="grid lg:grid-cols-12 gap-6 items-stretch">
-        <motion.div
-          initial={{ opacity: 0, x: 28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-7 bg-slate-950/75 border border-slate-800 rounded-3xl p-6 md:p-8"
-        >
-          <div className="flex items-start justify-between gap-4 mb-6 pb-5 border-b border-slate-800">
-            <div>
-              <div className="text-xs font-black text-cyan-300 mb-2">بطاقة عميل محتمل</div>
-              <h3 className="text-2xl md:text-3xl font-black text-white">شركة مقاولات متوسطة</h3>
-              <p className="text-sm text-slate-500 font-bold mt-1">الرياض | قطاع المقاولات والتشغيل</p>
-            </div>
-            <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/30 px-4 py-3 text-center">
-              <div className="text-[10px] text-emerald-300 font-black mb-1">درجة الملاءمة</div>
-              <div className="text-xl font-black text-white">عالية</div>
-            </div>
-          </div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="lg:col-span-5 grid gap-4"
+          >
             {[
-              ['صانع القرار', 'مدير المشتريات', UserRoundCheck],
-              ['القناة الأنسب', 'واتساب + اتصال', PhoneCall],
-              ['سبب الملاءمة', 'نشاط الشركة وحجمها مناسب للخدمة', Target],
-              ['الخطوة التالية', 'إرسال الرسالة ثم متابعة بعد 48 ساعة', CalendarCheck],
-            ].map(([label, value, Icon]) => (
-              <div key={label as string} className="rounded-2xl bg-black/30 border border-slate-900 p-4">
-                <Icon className="w-5 h-5 text-cyan-300 mb-3" />
-                <div className="text-[10px] text-slate-500 font-black mb-1">{label as string}</div>
-                <div className="text-sm text-white font-black leading-relaxed">{value as string}</div>
-              </div>
+              ['نص واتساب', 'رسالة قصيرة قابلة للإرسال مباشرة مع تخصيص اسم الشركة والقطاع.', MessageSquare],
+              ['نص المكالمة', 'افتتاحية المكالمة، سؤال التأهيل، وطريقة طلب الاجتماع بدون إطالة.', PhoneCall],
+              ['خطوة المتابعة', 'تذكير تلقائي بعد 48 ساعة، ثم نقل الحالة حسب الرد أو عدم الرد.', RefreshCw],
+            ].map(([title, text, Icon]) => (
+              <motion.div 
+                key={title as string} 
+                variants={item}
+                whileHover={shouldReduce ? {} : { y: -4, boxShadow: '0 8px 25px rgba(16,185,129,0.06)' }}
+                className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 transition-all duration-300"
+              >
+                <Icon className="w-7 h-7 text-emerald-300 mb-4" />
+                <h3 className="text-xl font-black text-white mb-2">{title as string}</h3>
+                <p className="text-sm text-slate-400 font-bold leading-relaxed">{text as string}</p>
+              </motion.div>
             ))}
-          </div>
-
-          <div className="mt-5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-5">
-            <div className="text-[10px] text-emerald-300 font-black mb-2">الرسالة المقترحة</div>
-            <p className="text-sm text-emerald-50 font-bold leading-relaxed">
-              لاحظنا أن شركتكم تعمل في مشاريع تشغيلية متوسطة داخل الرياض. لدينا تجربة تساعد فرق المبيعات على الوصول لصناع القرار وتحويل الفرص إلى اجتماعات مؤهلة خلال 90 يوم. هل يناسبك اتصال قصير هذا الأسبوع؟
-            </p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: -28 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="lg:col-span-5 grid gap-4"
-        >
-          {[
-            ['نص واتساب', 'رسالة قصيرة قابلة للإرسال مباشرة مع تخصيص اسم الشركة والقطاع.', MessageSquare],
-            ['نص المكالمة', 'افتتاحية المكالمة، سؤال التأهيل، وطريقة طلب الاجتماع بدون إطالة.', PhoneCall],
-            ['خطوة المتابعة', 'تذكير تلقائي بعد 48 ساعة، ثم نقل الحالة حسب الرد أو عدم الرد.', RefreshCw],
-          ].map(([title, text, Icon]) => (
-            <div key={title as string} className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6">
-              <Icon className="w-7 h-7 text-emerald-300 mb-4" />
-              <h3 className="text-xl font-black text-white mb-2">{title as string}</h3>
-              <p className="text-sm text-slate-400 font-bold leading-relaxed">{text as string}</p>
-            </div>
-          ))}
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
-    </div>
-  </section>
-);
+    </motion.section>
+  );
+};
 
 const WeeklyReviewSection = () => {
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
+
   const controlRoom = [
     {
       title: 'النشاط',
@@ -902,22 +1075,29 @@ const WeeklyReviewSection = () => {
   ];
 
   return (
-    <section className="py-16 bg-[#080808] border-t border-slate-900/60">
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="py-16 bg-[#080808] border-t border-slate-900/60"
+    >
       <div className="container mx-auto px-4 max-w-6xl">
         <SectionHeader
           eyebrow="تشغيل منضبط"
           title="كل أسبوع نفتح غرفة تحكم المبيعات"
           description="لا نكتفي بسؤال: كم اجتماعًا تم حجزه؟ نراجع ماذا حدث، أين توقف القمع، لماذا توقف، وما الذي سنغيره في الأسبوع القادم."
         />
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {controlRoom.map((block, idx) => (
+        <motion.div 
+          variants={container}
+          className="grid md:grid-cols-2 lg:grid-cols-4 gap-5"
+        >
+          {controlRoom.map((block) => (
             <motion.div
               key={block.title}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.06 }}
-              className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6"
+              variants={item}
+              whileHover={shouldReduce ? {} : { y: -5, scale: 1.02, boxShadow: '0 8px 25px rgba(16,185,129,0.08)' }}
+              className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 transition-all duration-300"
             >
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 flex items-center justify-center mb-5">
                 <block.icon className="w-6 h-6" />
@@ -925,44 +1105,67 @@ const WeeklyReviewSection = () => {
               <div className="text-xs font-black text-cyan-300 mb-1">{block.title}</div>
               <h3 className="text-xl font-black text-white mb-5">{block.label}</h3>
               <div className="space-y-3">
-                {block.items.map((item) => (
-                  <div key={item} className="flex items-center gap-3">
+                {block.items.map((itemVal) => (
+                  <div key={itemVal} className="flex items-center gap-3">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 shrink-0" />
-                    <span className="text-sm text-slate-300 font-bold">{item}</span>
+                    <span className="text-sm text-slate-300 font-bold">{itemVal}</span>
                   </div>
                 ))}
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
+        
         <div className="mt-6 bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {['الاجتماعات المحجوزة', 'الاجتماعات المؤهلة', 'عروض السعر', 'الصفقات ونقاط التعطل'].map((metric) => (
-              <div key={metric} className="rounded-xl bg-black/35 border border-slate-900 px-4 py-3 text-center">
+          <motion.div 
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3"
+          >
+            {['الاجتباطات المحجوزة', 'الاجتماعات المؤهلة', 'عروض السعر', 'الصفقات ونقاط التعطل'].map((metric) => (
+              <motion.div 
+                key={metric} 
+                variants={item}
+                whileHover={shouldReduce ? {} : { scale: 1.03 }}
+                className="rounded-xl bg-black/35 border border-slate-900 px-4 py-3 text-center transition-all duration-200"
+              >
                 <span className="text-xs font-black text-slate-300">{metric}</span>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 
-const TrustStatsIntro = () => (
-  <section className="py-20 bg-[#050505] border-t border-slate-900/60">
-    <div className="container mx-auto px-4 max-w-6xl">
-      <SectionHeader
-        eyebrow="أرقام الثقة"
-        title="منظومة مجربة داخل السوق السعودي"
-        description="هذه الأرقام ليست للتباهي، بل لأنها تساعدنا على اختصار الطريق وتحسين دقة الاستهداف."
-      />
-      <StatsRow />
-    </div>
-  </section>
-);
+const TrustStatsIntro = () => {
+  const { reveal } = useSharedMotion();
+
+  return (
+    <motion.section 
+      variants={reveal}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+      className="py-20 bg-[#050505] border-t border-slate-900/60"
+    >
+      <div className="container mx-auto px-4 max-w-6xl">
+        <SectionHeader
+          eyebrow="أرقام الثقة"
+          title="منظومة مجربة داخل السوق السعودي"
+          description="هذه الأرقام ليست للتباهي، بل لأنها تساعدنا على اختصار الطريق وتحسين دقة الاستهداف."
+        />
+        <StatsRow />
+      </div>
+    </motion.section>
+  );
+};
 
 const SubscriptionValueSection = () => {
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
   const points = [
     {
       title: 'أدوات بيانات وإثراء',
@@ -990,9 +1193,10 @@ const SubscriptionValueSection = () => {
     <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="subscription-value">
       <div className="container mx-auto px-4 max-w-5xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="text-center mb-14"
         >
           <h2 className="text-3xl md:text-5xl font-black text-white leading-tight max-w-4xl mx-auto mb-6">
@@ -1006,16 +1210,20 @@ const SubscriptionValueSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {points.map((point, idx) => {
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
+        >
+          {points.map((point) => {
             const Icon = point.icon;
             return (
               <motion.div
                 key={point.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.08, duration: 0.5 }}
+                variants={item}
+                whileHover={shouldReduce ? {} : { y: -5, transition: { duration: 0.2, ease: "easeOut" } }}
                 className="bg-slate-950/70 border border-slate-800 rounded-3xl p-6 hover:border-emerald-500/50 hover:shadow-[0_0_25px_rgba(16,185,129,0.08)] transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
@@ -1028,13 +1236,14 @@ const SubscriptionValueSection = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Comparison section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="max-w-3xl mx-auto rounded-3xl bg-slate-950/40 border border-slate-900 p-6 md:p-8 mb-10"
         >
           <div className="grid md:grid-cols-2 gap-6 divide-y md:divide-y-0 md:divide-x md:divide-x-reverse divide-slate-800">
@@ -1058,8 +1267,9 @@ const SubscriptionValueSection = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true }}
           className="text-center"
         >
@@ -1073,6 +1283,7 @@ const SubscriptionValueSection = () => {
 };
 
 const PricingSection2 = () => {
+  const { shouldReduce, container, item } = useSharedMotion();
   const tiers = [
     {
       name: 'تجربة شهرية',
@@ -1114,7 +1325,7 @@ const PricingSection2 = () => {
           description={
             <>
               <span className="block mb-2">
-                نحدد معك هدف 90 يوم، ثم نشغّل حول فريقك البيانات، القنوات، الأتمتة، كادر النمو، وفرص منافسات المباشرة… حتى تتحول الفرص إلى اجتماعات، عروض، تفاوض، وصفقات.
+                نحدد معك هدف 90 يوم، ثم نشغّل حول فريقك البيانات, القنوات، الأتمتة، كادر النمو، وفرص منافسات المباشرة… حتى تتحول الفرص إلى اجتماعات، عروض، تفاوض، وصفقات.
               </span>
               <span className="block text-emerald-400 font-extrabold mt-2">
                 ليست باقات أدوات… بل خطط تشغيل ونمو مرتبطة بنتيجة بيعية واضحة.
@@ -1122,16 +1333,30 @@ const PricingSection2 = () => {
             </>
           }
         />
-        <div className="grid md:grid-cols-3 gap-6">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid md:grid-cols-3 gap-6"
+        >
           {tiers.map((tier, idx) => (
             <motion.div
               key={tier.name}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
+              variants={item}
+              whileHover={
+                shouldReduce
+                  ? {}
+                  : {
+                      y: -5,
+                      boxShadow: tier.recommended
+                        ? "0 0 35px rgba(16,185,129,0.25)"
+                        : "0 0 25px rgba(16,185,129,0.08)",
+                      transition: { duration: 0.2, ease: "easeOut" }
+                    }
+              }
               className={cn(
-                'relative rounded-3xl p-7 border bg-slate-950/60',
+                'relative rounded-3xl p-7 border bg-slate-950/60 transition-all duration-300',
                 tier.recommended ? 'border-emerald-500/60 shadow-[0_0_35px_rgba(16,185,129,0.16)]' : 'border-slate-800'
               )}
             >
@@ -1188,13 +1413,14 @@ const PricingSection2 = () => {
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 };
 
 const RevenueShareSimpleSection = () => {
+  const { shouldReduce, reveal, container, item } = useSharedMotion();
   const [hoveredTier, setHoveredTier] = useState<number | null>(null);
   const [activeTier, setActiveTier] = useState(4);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
@@ -1238,8 +1464,9 @@ const RevenueShareSimpleSection = () => {
     <section className="py-20 bg-[#080808] border-t border-slate-900/60 overflow-hidden" id="revenue-share-simple">
       <div className="container mx-auto px-4 max-w-6xl">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
           className="text-center mb-12"
         >
@@ -1298,27 +1525,31 @@ const RevenueShareSimpleSection = () => {
             aria-hidden="true"
             initial={{ width: '0%' }}
             animate={{ width: progressWidth }}
-            transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+            transition={shouldReduce ? { duration: 0.1 } : { type: 'spring', stiffness: 150, damping: 20 }}
             className="absolute right-[7.2%] top-[8.75rem] z-10 hidden h-px max-w-[82.8%] bg-emerald-300 shadow-[0_0_18px_rgba(16,185,129,0.75)] md:block"
           />
           <motion.div
             aria-hidden="true"
             initial={{ left: '90%', opacity: 0, scale: 0.85 }}
             animate={{ left: markerLeft, opacity: 1, scale: activeTier >= 4 ? 1.15 : 1 }}
-            transition={{ type: 'spring', stiffness: 150, damping: 20 }}
+            transition={shouldReduce ? { duration: 0.1 } : { type: 'spring', stiffness: 150, damping: 20 }}
             className="absolute top-[8.47rem] z-20 hidden h-6 w-6 -translate-x-1/2 rounded-full bg-emerald-300 shadow-[0_0_30px_rgba(16,185,129,0.95)] md:block"
           >
-            <span className="absolute inset-0 rounded-full bg-emerald-300/40 animate-ping" />
+            {!shouldReduce && <span className="absolute inset-0 rounded-full bg-emerald-300/40 animate-ping" />}
           </motion.div>
 
-          <div className="hidden md:grid md:grid-cols-[0.9fr_1fr_1.1fr_1.2fr_1.3fr] md:gap-3" dir="rtl">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.15 }}
+            className="hidden md:grid md:grid-cols-[0.9fr_1fr_1.1fr_1.2fr_1.3fr] md:gap-3"
+            dir="rtl"
+          >
             {revenueTiers.map((tier, idx) => (
               <motion.div
                 key={tier.range}
-                initial={{ opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.08 }}
+                variants={item}
                 onHoverStart={() => setHoveredTier(idx)}
                 onHoverEnd={() => setHoveredTier(null)}
                 onClick={() => {
@@ -1326,14 +1557,14 @@ const RevenueShareSimpleSection = () => {
                   setActiveTier(idx);
                 }}
                 style={{
-                  scale: (tier.baseScale || 1.0) * (activeTier === idx ? 1.08 : hoveredTier === idx ? 1.03 : 1)
+                  scale: shouldReduce ? 1 : (tier.baseScale || 1.0) * (activeTier === idx ? 1.08 : hoveredTier === idx ? 1.03 : 1)
                 }}
                 className={cn(
                   'relative pt-9 text-center transition-all duration-300 cursor-pointer',
                   activeTier === idx
-                    ? '-translate-y-3 z-30 opacity-100'
+                    ? cn(shouldReduce ? 'opacity-100 z-30' : '-translate-y-3 z-30 opacity-100')
                     : hoveredTier === idx
-                    ? '-translate-y-1.5 z-20 opacity-95'
+                    ? cn(shouldReduce ? 'opacity-95 z-20' : '-translate-y-1.5 z-20 opacity-95')
                     : tier.featured
                     ? 'z-10 opacity-90'
                     : 'z-10 opacity-70'
@@ -1365,19 +1596,22 @@ const RevenueShareSimpleSection = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div className="md:hidden space-y-3">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="md:hidden space-y-3"
+          >
             {mobileRevenueTiers.map((tier, mobileIdx) => {
               const idx = revenueTiers.indexOf(tier);
 
               return (
               <motion.div
                 key={tier.range}
-                initial={{ opacity: 0, x: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: mobileIdx * 0.06 }}
+                variants={item}
                 onClick={() => {
                   setIsAutoPlay(false);
                   setActiveTier(idx);
@@ -1385,7 +1619,7 @@ const RevenueShareSimpleSection = () => {
                 className={cn(
                   'relative flex items-center justify-between gap-4 rounded-xl border p-4 transition-all duration-300 cursor-pointer',
                   activeTier === idx
-                    ? 'border-emerald-400 bg-emerald-400/15 shadow-[0_0_30px_rgba(16,185,129,0.20)] scale-[1.03] z-10 opacity-100'
+                    ? cn(shouldReduce ? 'border-emerald-400 bg-emerald-400/15 z-10 opacity-100' : 'border-emerald-400 bg-emerald-400/15 shadow-[0_0_30px_rgba(16,185,129,0.20)] scale-[1.03] z-10 opacity-100')
                     : tier.featured
                     ? 'border-emerald-500/40 bg-emerald-500/5 shadow-[0_0_15px_rgba(16,185,129,0.06)] opacity-95'
                     : 'border-slate-800 bg-[#080808]/70 opacity-75'
@@ -1405,13 +1639,13 @@ const RevenueShareSimpleSection = () => {
               </motion.div>
               );
             })}
-          </div>
+          </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={reveal}
+            initial="hidden"
+            whileInView="visible"
             viewport={{ once: true }}
-            transition={{ delay: 0.45 }}
             className="mt-8 text-center text-lg md:text-xl font-black text-white"
           >
             العقود الأكبر هي أفضل فرصتك: تعاقد أعلى ونسبة أقل
@@ -1422,39 +1656,46 @@ const RevenueShareSimpleSection = () => {
   );
 };
 
-const FinalCtaSection2 = () => (
-  <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="final-cta">
-    <div className="container mx-auto px-4 max-w-5xl text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="rounded-3xl bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-slate-950 border border-emerald-500/30 p-8 md:p-12"
-      >
-        <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
-          ابدأ بخطة تشغيل 90 يوم على منتج واحد وقطاع واحد
-        </h2>
-        <p className="text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto mb-8">
-          نحدد المستهدف، نختار القطاع، نجهز البيانات، نشغل القنوات، ندعم موظفك، ونراجع النتائج أسبوعيًا حتى تتحول الفرص إلى اجتماعات وعروض وصفقات.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button
-            onClick={() => scrollToSection('growth-calculator')}
-            className="px-8 py-4 rounded-2xl bg-emerald-400 text-slate-950 font-black hover:bg-emerald-300 transition-colors"
-          >
-            ابدأ بتحديد مستهدفك
-          </button>
-          <button
-            onClick={() => scrollToSection('pricing')}
-            className="px-8 py-4 rounded-2xl bg-slate-950/70 border border-slate-800 text-white font-black hover:border-cyan-500/50 transition-colors"
-          >
-            احجز جلسة تشخيص القطاع
-          </button>
-        </div>
-      </motion.div>
-    </div>
-  </section>
-);
+const FinalCtaSection2 = () => {
+  const { shouldReduce, reveal } = useSharedMotion();
+
+  return (
+    <section className="py-20 bg-[#050505] border-t border-slate-900/60" id="final-cta">
+      <div className="container mx-auto px-4 max-w-5xl text-center">
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="rounded-3xl bg-gradient-to-br from-emerald-500/15 via-cyan-500/10 to-slate-950 border border-emerald-500/30 p-8 md:p-12"
+        >
+          <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
+            ابدأ بخطة تشغيل 90 يوم على منتج واحد وقطاع واحد
+          </h2>
+          <p className="text-lg text-slate-300 leading-relaxed max-w-3xl mx-auto mb-8">
+            نحدد المستهدف، نختار القطاع، نجهز البيانات، نشغل القنوات، ندعم موظفك، ونراجع النتائج أسبوعيًا حتى تتحول الفرص إلى اجتماعات وعروض وصفقات.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <motion.button
+              whileHover={shouldReduce ? {} : { boxShadow: "0 0 25px rgba(16,185,129,0.3)" }}
+              onClick={() => scrollToSection('growth-calculator')}
+              className="px-8 py-4 rounded-2xl bg-emerald-400 text-slate-950 font-black hover:bg-emerald-300 transition-colors"
+            >
+              ابدأ بتحديد مستهدفك
+            </motion.button>
+            <motion.button
+              whileHover={shouldReduce ? {} : { boxShadow: "0 0 25px rgba(6,182,212,0.15)" }}
+              onClick={() => scrollToSection('pricing')}
+              className="px-8 py-4 rounded-2xl bg-slate-950/70 border border-slate-800 text-white font-black hover:border-cyan-500/50 transition-colors"
+            >
+              احجز جلسة تشخيص القطاع
+            </motion.button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
 const Investment2Page = () => {
   return (

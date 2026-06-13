@@ -7,6 +7,23 @@ import { cn } from '../../lib/utils';
 export const PartnersMarqueeSection = () => {
   const shouldReduceMotion = useReducedMotion();
 
+  const reveal = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduceMotion ? 0 : 25, 
+      filter: shouldReduceMotion ? 'none' : 'blur(4px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'none',
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
   // Create three different shuffled or offset arrays to make rows look unique
   const row1 = [...partnersLogos];
   const row2 = [...partnersLogos].reverse();
@@ -139,10 +156,10 @@ export const PartnersMarqueeSection = () => {
 
       <div className="container mx-auto px-4 max-w-6xl relative z-10 text-right mb-16">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="text-center"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 mb-4">

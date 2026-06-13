@@ -1,8 +1,56 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Radar, Bot, Users, Handshake, MapPin, ShieldCheck, Zap } from 'lucide-react';
 
+const useLocalMotion = () => {
+  const shouldReduce = useReducedMotion();
+  const reveal = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 25, 
+      filter: shouldReduce ? 'none' : 'blur(4px)' 
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      filter: 'none',
+      transition: { 
+        duration: 0.6, 
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: shouldReduce ? 0.02 : 0.06,
+        delayChildren: shouldReduce ? 0.01 : 0.1
+      }
+    }
+  };
+  const item = {
+    hidden: { 
+      opacity: 0, 
+      y: shouldReduce ? 0 : 15,
+      filter: shouldReduce ? 'none' : 'blur(4px)'
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      filter: 'none',
+      transition: { 
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+  return { shouldReduce, reveal, container, item };
+};
+
 export const MonafsatNetworkSection = () => {
+    const { shouldReduce, reveal, container, item } = useLocalMotion();
+    const shouldReduceMotion = shouldReduce;
     const radarStages = [
         "مراقبة حركة السوق والمنافسات",
         "رصد الاحتياجات والمشاريع المبكرة",
@@ -29,12 +77,20 @@ export const MonafsatNetworkSection = () => {
                 <div className="absolute inset-48 rounded-full border border-cyan-500/40" />
                 
                 {/* Conic Sweeper Layer */}
-                <motion.div 
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-0 rounded-full"
-                    style={{ background: 'conic-gradient(from 0deg, transparent 60%, rgba(6, 182, 212, 0.35) 100%)' }}
-                />
+                {!shouldReduceMotion && (
+                    <motion.div 
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-0 rounded-full"
+                        style={{ background: 'conic-gradient(from 0deg, transparent 60%, rgba(6, 182, 212, 0.35) 100%)' }}
+                    />
+                )}
+                {shouldReduceMotion && (
+                    <div 
+                        className="absolute inset-0 rounded-full"
+                        style={{ background: 'conic-gradient(from 0deg, transparent 60%, rgba(6, 182, 212, 0.15) 100%)', transform: 'rotate(45deg)' }}
+                    />
+                )}
 
                 {/* Radar target overlay crosshair lines */}
                 <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-cyan-500/20" />
@@ -46,9 +102,13 @@ export const MonafsatNetworkSection = () => {
                     
                     {/* Content Side */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
+                        variants={{
+                            hidden: { opacity: 0, x: shouldReduce ? 0 : 35 },
+                            visible: { opacity: 1, x: 0, transition: { duration: 0.6 } }
+                        }}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.15 }}
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 mb-6">
                             <Radar className="w-5 h-5 animate-pulse" />
@@ -94,10 +154,13 @@ export const MonafsatNetworkSection = () => {
 
                     {/* Animation Side (Radar Interface Graph) */}
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5 }}
+                        variants={{
+                            hidden: { opacity: 0, scale: shouldReduce ? 1 : 0.95 },
+                            visible: { opacity: 1, scale: 1, transition: { duration: 0.6 } }
+                        }}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.15 }}
                         className="relative"
                     >
                         <div className="bg-slate-950/40 border border-slate-900/60 backdrop-blur-md rounded-3xl p-8 relative overflow-hidden">
