@@ -523,7 +523,7 @@ const ChallengesSection = () => {
 
           <motion.div
             variants={container}
-            className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10"
+            className="grid md:grid-cols-3 gap-6 lg:gap-8 items-start relative z-10"
           >
             {stages.map((stage, idx) => {
               const IconComponent = stage.icon;
@@ -533,7 +533,7 @@ const ChallengesSection = () => {
                 <motion.div
                   key={stage.title}
                   variants={item}
-                  className="relative group"
+                  className="relative group flex flex-col"
                   onMouseEnter={() => setHoveredCard(idx)}
                   onMouseLeave={() => setHoveredCard(null)}
                 >
@@ -542,17 +542,35 @@ const ChallengesSection = () => {
                     animate={shouldReduce ? {} : { y: isHovered ? -4 : 0 }}
                     transition={springTransition}
                     className={cn(
-                      "border rounded-3xl p-7 text-right relative z-20 cursor-pointer h-full transition-all duration-300",
+                      "border rounded-3xl p-7 text-right relative z-20 cursor-pointer min-h-[170px] transition-all duration-300 flex flex-col justify-between overflow-hidden",
                       isHovered
-                        ? "border-transparent bg-transparent"
+                        ? "border-transparent bg-slate-950/20"
                         : "border-slate-800/80 bg-slate-950/40"
                     )}
                   >
+                    {/* Rotating border glow on hover */}
+                    {isHovered && !shouldReduce && (
+                      <>
+                        <div className="absolute -inset-[1px] rounded-3xl overflow-hidden pointer-events-none z-0">
+                          <div 
+                            className="absolute w-[150%] h-[150%] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-[spin_8s_linear_infinite]"
+                            style={{
+                              background: `conic-gradient(from 0deg, transparent 0deg, ${
+                                stage.color === 'teal' ? '#14b8a6' : stage.color === 'cyan' ? '#06b6d4' : '#10b981'
+                              } 180deg, transparent 360deg)`
+                            }}
+                          />
+                        </div>
+                        {/* Inner solid background overlay */}
+                        <div className="absolute inset-[1.5px] rounded-[23px] bg-slate-950/95 z-10 pointer-events-none" />
+                      </>
+                    )}
+
                     {/* Shared Layout Active Highlight Pill */}
                     {isHovered && (
                       <motion.div
                         layoutId="challenges-shared-highlight"
-                        className="absolute inset-0 rounded-3xl bg-slate-950 border border-slate-700 shadow-2xl -z-10"
+                        className="absolute inset-0 rounded-3xl bg-transparent shadow-2xl -z-10"
                         style={{
                           boxShadow: `0 10px 30px -10px ${stage.glowColor}`
                         }}
@@ -560,37 +578,42 @@ const ChallengesSection = () => {
                       />
                     )}
 
-                    {/* Header Row (Icon + Indicator) */}
-                    <div className="flex items-center justify-between mb-6 relative z-10">
-                      <motion.div
-                        animate={{ scale: isHovered ? 1.08 : 1 }}
-                        transition={springTransition}
-                        className={cn(
-                          'w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300',
-                          isHovered
-                            ? 'bg-slate-900/90 border-slate-750 text-cyan-300 shadow-lg'
-                            : 'bg-slate-950 border-slate-900 text-slate-400'
-                        )}
-                      >
-                        <IconComponent className="w-5 h-5" />
-                      </motion.div>
+                    {/* Content container wrapped in relative z-20 to display above glow layers */}
+                    <div className="relative z-20 flex flex-col justify-between h-full w-full">
+                      {/* Header Row (Icon + Indicator) */}
+                      <div className="flex items-center justify-between mb-6">
+                        <motion.div
+                          animate={{ scale: isHovered ? 1.08 : 1 }}
+                          transition={springTransition}
+                          className={cn(
+                            'w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300',
+                            isHovered
+                              ? 'bg-slate-900/90 border-slate-750 text-cyan-300 shadow-lg'
+                              : 'bg-slate-950 border-slate-900 text-slate-400'
+                          )}
+                        >
+                          <IconComponent className="w-5 h-5" />
+                        </motion.div>
 
-                      {/* Pulse Indicator */}
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-slate-500 font-bold group-hover:text-cyan-300 transition-colors">عرض التفاصيل</span>
-                        <div className="relative flex h-2 w-2">
-                          <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", stage.dotColor)}></span>
-                          <span className={cn("relative inline-flex rounded-full h-2 w-2", stage.dotColor)}></span>
+                        {/* Pulse Indicator */}
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] text-slate-500 font-bold group-hover:text-cyan-300 transition-colors">عرض التفاصيل</span>
+                          <div className="relative flex h-2 w-2">
+                            <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", stage.dotColor)}></span>
+                            <span className={cn("relative inline-flex rounded-full h-2 w-2", stage.dotColor)}></span>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <h3 className={cn("text-xl font-black mb-3 transition-colors", isHovered ? stage.activeColor : "text-white")}>
-                      {stage.title}
-                    </h3>
-                    <p className="text-sm text-slate-400 leading-relaxed font-medium">
-                      {stage.shortSummary}
-                    </p>
+                      <div>
+                        <h3 className={cn("text-xl font-black mb-3 transition-colors", isHovered ? stage.activeColor : "text-white")}>
+                          {stage.title}
+                        </h3>
+                        <p className="text-sm text-slate-400 leading-relaxed font-medium">
+                          {stage.shortSummary}
+                        </p>
+                      </div>
+                    </div>
                   </motion.div>
 
                   {/* Popover */}
@@ -602,8 +625,8 @@ const ChallengesSection = () => {
                         exit={{ opacity: 0, y: shouldReduce ? 0 : 12, scale: 0.98 }}
                         transition={springTransition}
                         className={cn(
-                          "absolute top-[102%] w-[340px] lg:w-[360px] mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-50 text-right pointer-events-auto before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4",
-                          idx === 0 ? "right-0 origin-top-right" : idx === 2 ? "left-0 origin-top-left" : "left-1/2 -translate-x-1/2 origin-top"
+                          "relative w-full mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-30 text-right pointer-events-auto",
+                          idx === 0 ? "origin-top-right" : idx === 2 ? "origin-top-left" : "origin-top"
                         )}
                         style={{ borderColor: stage.color === 'teal' ? '#14b8a650' : stage.color === 'cyan' ? '#06b6d450' : '#10b98150' }}
                       >
