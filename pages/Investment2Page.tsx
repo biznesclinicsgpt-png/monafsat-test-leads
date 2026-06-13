@@ -213,70 +213,325 @@ const HeroSection2 = () => (
   </section>
 );
 
-const EnginesSection = () => {
-  const engines = [
+const ChallengesSection = () => {
+  const [activeMobileTab, setActiveMobileTab] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
+  const stages = [
     {
-      title: 'كادر تطوير المبيعات',
-      text: 'يدرب، يتابع، يحلل، ويطور أداء فريقك أسبوعيًا عبر الرسائل، المكالمات، الاعتراضات، وتقارير الأداء.',
-      icon: Users,
-      color: 'emerald',
+      title: 'قبل الفرص',
+      shortSummary: 'تجهيز الداتا روم البيعي والاستهداف',
+      challenge: 'الفريق يبدأ من بيانات ناقصة، ورسائل عامة، وعرض غير مخصص.',
+      points: [
+        'العميل المحتمل غير محدد بدقة',
+        'الخدمة غير مصاغة كمنتج خدمي واضح',
+        'صفحات الهبوط والرسائل غير مخصصة لكل صناعة',
+        'ملف الشركة وعرض السعر لا يساعدان على الإغلاق',
+        'لا توجد أفضل قناة أو افتتاحية واضحة'
+      ],
+      result: 'تجهيز أقوى قبل بدء الحركة',
+      icon: ClipboardList,
+      color: 'teal',
+      glowColor: 'rgba(20, 184, 166, 0.15)',
+      activeColor: 'text-teal-400',
+      borderColor: 'border-teal-500/20 hover:border-teal-500/40',
+      activeBorder: 'border-teal-500/40 bg-teal-500/5 shadow-[0_0_15px_rgba(20,184,166,0.15)]',
+      dotColor: 'bg-teal-400'
     },
     {
-      title: 'وكلاء النينجا الذكيين',
-      text: 'يحللون السوق، يجهزون البيانات، يحددون القنوات، يثرون معلومات صناع القرار، ويشغلون المتابعة.',
-      icon: Bot,
+      title: 'أثناء الفرص',
+      shortSummary: 'تحريك المحادثات وتحويل الاهتمام',
+      challenge: 'الاهتمام موجود، لكن التحويل ضعيف والمتابعة غير كافية.',
+      points: [
+        'بطء في الرد والمتابعة',
+        'اعتراضات متكررة بدون تطوير',
+        'غياب سكريبت واضح للمحادثة أو المكالمة',
+        'اجتماعات غير مؤهلة',
+        'ضعف في توجيه الخطوة التالية'
+      ],
+      result: 'تحريك أفضل للفرص ورفع جودة التحويل',
+      icon: MessageSquare,
       color: 'cyan',
+      glowColor: 'rgba(6, 182, 212, 0.15)',
+      activeColor: 'text-cyan-400',
+      borderColor: 'border-cyan-500/20 hover:border-cyan-500/40',
+      activeBorder: 'border-cyan-500/40 bg-cyan-500/5 shadow-[0_0_15px_rgba(6,182,212,0.15)]',
+      dotColor: 'bg-cyan-400'
     },
     {
-      title: 'كادر منافسات الموازي',
-      text: 'يفتح فرصًا مباشرة من نفس القطاع بمدخل مختلف لصالح فريقك، لزيادة سرعة الوصول والردود.',
-      icon: BriefcaseBusiness,
-      color: 'violet',
-    },
+      title: 'بعد الفرص',
+      shortSummary: 'تحليل القمع وتحسين الأداء',
+      challenge: 'لا يتم تحليل ما حدث، فتتكرر نفس الأخطاء ولا يتحسن القمع.',
+      points: [
+        'لا يوجد تحليل لنقاط التعطل',
+        'أسباب الرفض غير موثقة',
+        'الرسائل والعروض لا تتطور',
+        'الاجتماعات غير المؤهلة تستهلك الوقت',
+        'لا توجد دورة تحسين أسبوعية واضحة'
+      ],
+      result: 'تحسين مستمر للأداء وجودة الفرص',
+      icon: RefreshCw,
+      color: 'emerald',
+      glowColor: 'rgba(16, 185, 129, 0.15)',
+      activeColor: 'text-emerald-400',
+      borderColor: 'border-emerald-500/20 hover:border-emerald-500/40',
+      activeBorder: 'border-emerald-500/40 bg-emerald-500/5 shadow-[0_0_15px_rgba(16,185,129,0.15)]',
+      dotColor: 'bg-emerald-400'
+    }
   ];
 
   return (
-    <section className="py-16 bg-[#050505] border-t border-slate-900/60">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <section className="py-20 bg-[#050505] border-t border-slate-900/60 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px] pointer-events-none" />
+      
+      <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <SectionHeader
-          eyebrow="المعادلة البسيطة"
-          title="3 محركات تعمل على نفس مستهدفك البيعي"
-          description="لا نعتمد على قناة واحدة أو أداة واحدة. نربط بين تطوير فريقك، وكلاء ذكاء اصطناعي، وكادر منافسات الموازي لتوليد فرص وتحويلها إلى مبيعات قابلة للقياس."
+          eyebrow="رحلة التحديات والحلول"
+          title="التحدي ليس في الفرص فقط… بل في تحويلها"
+          description="فرق المبيعات لا تتعطل في مرحلة واحدة فقط، بل تواجه تحديات قبل الفرصة، أثناء تحريكها، وبعدها. لذلك نعمل على 3 مراحل مترابطة تحسن القمع البيعي بالكامل."
         />
-        <div className="grid md:grid-cols-3 gap-6">
-          {engines.map((engine, idx) => (
-            <motion.div
-              key={engine.title}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.08 }}
-              className="bg-slate-950/55 border border-slate-800/80 rounded-3xl p-7 text-right hover:border-emerald-500/30 transition-colors"
-            >
-              <div
-                className={cn(
-                  'w-13 h-13 rounded-2xl border flex items-center justify-center mb-6',
-                  engine.color === 'emerald' && 'bg-emerald-500/10 border-emerald-500/25 text-emerald-300',
-                  engine.color === 'cyan' && 'bg-cyan-500/10 border-cyan-500/25 text-cyan-300',
-                  engine.color === 'violet' && 'bg-violet-500/10 border-violet-500/25 text-violet-300'
-                )}
-              >
-                <engine.icon className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-black text-white mb-3">{engine.title}</h3>
-              <p className="text-sm text-slate-400 leading-relaxed">{engine.text}</p>
-            </motion.div>
-          ))}
+
+        {/* Desktop Layout (md and up) */}
+        <div className="hidden md:block relative min-h-[280px] mb-12">
+          {/* SVG Connecting Line */}
+          <svg className="absolute inset-x-0 top-[60px] w-full h-[60px] pointer-events-none z-0" fill="none" viewBox="0 0 1000 60" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="connecting-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#14b8a6" stopOpacity="0.25" />
+                <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.25" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0.25" />
+              </linearGradient>
+            </defs>
+            <path 
+              d="M 180 30 C 340 5, 660 55, 820 30" 
+              stroke="url(#connecting-grad)" 
+              strokeWidth="1.5" 
+              strokeDasharray="5 5"
+            />
+          </svg>
+
+          <div className="grid md:grid-cols-3 gap-6 lg:gap-8 relative z-10">
+            {stages.map((stage, idx) => {
+              const IconComponent = stage.icon;
+              const isHovered = hoveredCard === idx;
+              
+              return (
+                <div 
+                  key={stage.title}
+                  className="relative group"
+                  onMouseEnter={() => setHoveredCard(idx)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  {/* Card wrapper */}
+                  <div
+                    className={cn(
+                      "bg-slate-950/55 border rounded-3xl p-7 text-right transition-all duration-300 relative z-20 cursor-pointer h-full",
+                      isHovered 
+                        ? "border-slate-700 shadow-2xl scale-[1.02]" 
+                        : "border-slate-800/80 bg-slate-950/40"
+                    )}
+                    style={{
+                      boxShadow: isHovered ? `0 10px 30px -10px ${stage.glowColor}` : 'none'
+                    }}
+                  >
+                    {/* Glowing effect inside card */}
+                    <div 
+                      className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        background: `radial-gradient(circle at 50% 10%, ${stage.glowColor}, transparent 60%)`
+                      }}
+                    />
+
+                    {/* Header Row (Icon + Indicator) */}
+                    <div className="flex items-center justify-between mb-6 relative z-10">
+                      <div
+                        className={cn(
+                          'w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300',
+                          isHovered 
+                            ? 'bg-slate-900/90 border-slate-750 text-cyan-300 scale-110 shadow-lg' 
+                            : 'bg-slate-950 border-slate-900 text-slate-400'
+                        )}
+                      >
+                        <IconComponent className="w-5 h-5" />
+                      </div>
+                      
+                      {/* Pulse Indicator */}
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-slate-500 font-bold group-hover:text-cyan-300 transition-colors">عرض التفاصيل</span>
+                        <div className="relative flex h-2 w-2">
+                          <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", stage.dotColor)}></span>
+                          <span className={cn("relative inline-flex rounded-full h-2 w-2", stage.dotColor)}></span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h3 className={cn("text-xl font-black mb-3 transition-colors", isHovered ? stage.activeColor : "text-white")}>
+                      {stage.title}
+                    </h3>
+                    <p className="text-sm text-slate-400 leading-relaxed font-medium">
+                      {stage.shortSummary}
+                    </p>
+                  </div>
+
+                  {/* Popover */}
+                  <AnimatePresence>
+                    {isHovered && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-[102%] left-1/2 -translate-x-1/2 w-[340px] lg:w-[360px] mt-3 bg-slate-950/95 border rounded-2xl p-6 shadow-[0_15px_40px_rgba(0,0,0,0.9),_0_0_20px_rgba(6,182,212,0.15)] backdrop-blur-md z-50 text-right pointer-events-auto before:content-[''] before:absolute before:-top-4 before:left-0 before:right-0 before:h-4"
+                        style={{ borderColor: stage.color === 'teal' ? '#14b8a640' : stage.color === 'cyan' ? '#06b6d440' : '#10b98140' }}
+                      >
+                        {/* Glow effect at popover top */}
+                        <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+                        
+                        <div className="mb-4">
+                          <span className={cn("text-xs font-black px-2.5 py-1 rounded-full bg-slate-900 border border-slate-800/80 mb-2 inline-block", stage.activeColor)}>
+                            {stage.title}
+                          </span>
+                          <h4 className="text-xs font-bold text-slate-400 mb-1">التحدي:</h4>
+                          <p className="text-sm text-white font-bold leading-relaxed">{stage.challenge}</p>
+                        </div>
+                        
+                        <div className="h-[1px] bg-slate-900 my-4" />
+                        
+                        <ul className="space-y-3 mb-5">
+                          {stage.points.map((point) => (
+                            <li key={point} className="flex items-start gap-2.5 text-right justify-start">
+                              <CheckCircle2 className={cn("w-4 h-4 mt-0.5 shrink-0", stage.activeColor)} />
+                              <span className="text-xs text-slate-300 font-bold leading-relaxed">{point}</span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className="bg-slate-900/50 border border-slate-800/60 rounded-xl p-3 text-center">
+                          <span className="text-[10px] text-slate-500 font-black block mb-0.5">الناتج المستهدف</span>
+                          <span className="text-xs text-white font-black">{stage.result}</span>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
         </div>
+
+        {/* Mobile Layout (less than md) */}
+        <div className="md:hidden mb-12">
+          {/* Tab selector pills */}
+          <div className="grid grid-cols-3 gap-2 mb-4">
+            {stages.map((stage, idx) => {
+              const IconComponent = stage.icon;
+              const isActive = activeMobileTab === idx;
+              
+              return (
+                <button
+                  key={stage.title}
+                  onClick={() => setActiveMobileTab(idx)}
+                  className={cn(
+                    "flex flex-col items-center justify-center p-3 rounded-2xl border text-center transition-all duration-300",
+                    isActive 
+                      ? stage.activeBorder
+                      : "bg-slate-950/40 border-slate-900 text-slate-400"
+                  )}
+                >
+                  <div className={cn("w-9 h-9 rounded-xl border flex items-center justify-center mb-1.5", isActive ? "bg-slate-900/90 text-cyan-300 border-slate-800" : "bg-slate-950 text-slate-500 border-slate-900")}>
+                    <IconComponent className="w-4 h-4" />
+                  </div>
+                  <span className={cn("text-xs font-black", isActive ? "text-white" : "text-slate-400")}>
+                    {stage.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Details Area */}
+          <div className="bg-slate-950/75 border border-slate-900 rounded-3xl p-5 text-right relative overflow-hidden shadow-xl">
+            {/* Glow inside details */}
+            <div 
+              className="absolute top-0 right-0 w-32 h-32 opacity-20 pointer-events-none"
+              style={{
+                background: `radial-gradient(circle at 100% 0%, ${stages[activeMobileTab].glowColor}, transparent 70%)`
+              }}
+            />
+            
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeMobileTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="mb-4">
+                  <div className="text-xs text-slate-500 font-bold mb-1">
+                    {stages[activeMobileTab].shortSummary}
+                  </div>
+                  <h4 className="text-xs font-bold text-slate-400 mb-1">التحدي:</h4>
+                  <p className="text-sm text-white font-bold leading-relaxed">
+                    {stages[activeMobileTab].challenge}
+                  </p>
+                </div>
+
+                <div className="h-[1px] bg-slate-900 my-4" />
+
+                <ul className="space-y-3 mb-5">
+                  {stages[activeMobileTab].points.map((point) => (
+                    <li key={point} className="flex items-start gap-2.5 text-right justify-start">
+                      <CheckCircle2 className={cn("w-4 h-4 mt-0.5 shrink-0", stages[activeMobileTab].activeColor)} />
+                      <span className="text-xs text-slate-300 font-bold leading-relaxed">{point}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="bg-slate-900/50 border border-slate-800/60 rounded-xl p-3 text-center">
+                  <span className="text-[10px] text-slate-500 font-black block mb-0.5">الناتج المستهدف</span>
+                  <span className="text-xs text-white font-black">{stages[activeMobileTab].result}</span>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Closing Strip */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-8 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 px-5 py-4 text-center"
+          className="mt-12 bg-slate-950/40 border border-slate-900/80 rounded-3xl p-6 md:p-8 text-center max-w-4xl mx-auto shadow-lg relative"
         >
-          <p className="text-sm md:text-base text-emerald-100 font-bold leading-relaxed">
-            هذه المحركات لا تعمل بشكل منفصل؛ بل تدخل في خطة تشغيل أسبوعية واضحة تبدأ من التشخيص وتنتهي بقياس النتائج وتحسين القمع.
+          <div className="absolute inset-0 rounded-3xl bg-cyan-500/5 blur-sm opacity-50 pointer-events-none" />
+          
+          <p className="text-sm md:text-base text-slate-300 font-bold leading-relaxed mb-6 max-w-2xl mx-auto">
+            لا نكتفي بجلب الفرص فقط؛ نجهز ما قبلها، ندعم فريقك أثناء تحريكها، ونحلل ما بعدها حتى يتحسن القمع أسبوعيًا.
           </p>
+          
+          <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 text-xs font-black relative z-10">
+            <div className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-teal-300 flex items-center gap-1.5 shadow-sm">
+              <ClipboardList className="w-3.5 h-3.5" />
+              <span>قبل الفرص</span>
+            </div>
+            <span className="text-slate-600">←</span>
+            <div className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-cyan-300 flex items-center gap-1.5 shadow-sm">
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>أثناء الفرص</span>
+            </div>
+            <span className="text-slate-600">←</span>
+            <div className="px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-emerald-300 flex items-center gap-1.5 shadow-sm">
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>بعد الفرص</span>
+            </div>
+            <span className="text-slate-600">←</span>
+            <div className="px-3.5 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-1.5 shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+              <Target className="w-3.5 h-3.5" />
+              <span>قمع أفضل</span>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -1241,7 +1496,7 @@ const Investment2Page = () => {
         <HeroSection2 />
       </div>
       <div id="engines">
-        <EnginesSection />
+        <ChallengesSection />
       </div>
       <div id="target-triangle">
         <GrowthTriangleSection clientSalesCenter />
