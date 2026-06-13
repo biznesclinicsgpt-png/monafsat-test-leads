@@ -214,16 +214,16 @@ const ClientSalesInteractiveTriangle = () => {
     const isEdgeActive = (id: string) => active.id === id;
 
     const nodePositions = {
-        sales: { top: '52%', left: '50%' },
+        sales: { top: '56%', left: '50%' },
         advisory: { top: '12%', left: '50%' },
         monafsat: { top: '78%', left: '18%' },
         ninja: { top: '78%', left: '82%' },
     };
 
     const edgePaths = [
-        { id: 'sales-ninja', d: 'M 50 52 L 82 78' },
-        { id: 'sales-monafsat', d: 'M 50 52 L 18 78' },
-        { id: 'sales-advisory', d: 'M 50 52 L 50 12' },
+        { id: 'sales-ninja', d: 'M 50 56 L 82 78' },
+        { id: 'sales-monafsat', d: 'M 50 56 L 18 78' },
+        { id: 'sales-advisory', d: 'M 50 56 L 50 12' },
         { id: 'ninja-monafsat', d: 'M 82 78 L 18 78' },
         { id: 'ninja-advisory', d: 'M 82 78 L 50 12' },
         { id: 'monafsat-advisory', d: 'M 18 78 L 50 12' },
