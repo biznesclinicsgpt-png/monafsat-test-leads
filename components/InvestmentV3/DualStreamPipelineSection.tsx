@@ -128,8 +128,6 @@ export const DualStreamPipelineSection = () => {
                       ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
-                  onMouseEnter={() => setHoveredSection('before')}
-                  onMouseLeave={() => setHoveredSection(null)}
                 >
                   <Target className="w-2.5 h-2.5" />
                   <span className="text-[9px] font-black">قبل الفرص</span>
@@ -176,8 +174,6 @@ export const DualStreamPipelineSection = () => {
                       ? "border-cyan-500/40 bg-cyan-950/20 text-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
-                  onMouseEnter={() => setHoveredSection('during')}
-                  onMouseLeave={() => setHoveredSection(null)}
                 >
                   <TrendingUp className="w-2.5 h-2.5" />
                   <span className="text-[9px] font-black">أثناء الفرص</span>
@@ -224,8 +220,6 @@ export const DualStreamPipelineSection = () => {
                       ? "border-emerald-500/40 bg-emerald-950/20 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.1)]"
                       : "border-slate-800 bg-slate-950/40 text-slate-400 hover:border-slate-700"
                   )}
-                  onMouseEnter={() => setHoveredSection('after')}
-                  onMouseLeave={() => setHoveredSection(null)}
                 >
                   <RefreshCw className="w-2.5 h-2.5" />
                   <span className="text-[9px] font-black">بعد الفرص</span>
@@ -278,7 +272,10 @@ export const DualStreamPipelineSection = () => {
             </div>
 
             {/* Funnel Container Box */}
-            <div className="relative w-full h-[520px] select-none">
+            <div 
+              className="relative w-full h-[520px] select-none"
+              onMouseLeave={() => setHoveredSection(null)}
+            >
               
               {/* 3D Funnel SVG Drawing (Enlarged by 30%) */}
               <svg className="absolute inset-0 w-full h-full overflow-visible pointer-events-none" viewBox="0 0 460 530" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -308,57 +305,111 @@ export const DualStreamPipelineSection = () => {
                 </defs>
 
                 {/* --- SEGMENT 1: حصيلة الفرص --- */}
-                <ellipse cx="230" cy="40" rx="190" ry="32" fill="url(#rim-glow-cyan)" fillOpacity="0.15" stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.42)"} strokeWidth={hoveredSection === 'before' ? 2.2 : 1.5} />
+                <ellipse 
+                  cx="230" cy="40" rx="190" ry="32" 
+                  fill="url(#rim-glow-cyan)" fillOpacity="0.15" 
+                  stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.42)"} 
+                  strokeWidth={hoveredSection === 'before' ? 2.2 : 1.5}
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('before')}
+                />
                 <path 
                   d="M 40 40 A 190 32 0 0 0 420 40 L 390 105 A 160 27 0 0 1 70 105 Z" 
                   fill={hoveredSection === 'before' ? "url(#funnel-top-active)" : "url(#funnel-grad-inactive)"} 
                   stroke={hoveredSection === 'before' ? "#22d3ee" : "rgba(6, 182, 212, 0.32)"} 
                   strokeWidth="1.5"
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('before')}
                 />
 
                 {/* --- SEGMENT 2: فرص جاهزة للتحريك --- */}
-                <ellipse cx="230" cy="105" rx="160" ry="27" fill="none" stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} />
+                <ellipse 
+                  cx="230" cy="105" rx="160" ry="27" 
+                  fill="none" 
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} 
+                  strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} 
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('during')}
+                />
                 <path 
                   d="M 70 105 A 160 27 0 0 0 390 105 L 360 170 A 130 22 0 0 1 100 170 Z" 
                   fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
                   stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.22)"} 
                   strokeWidth="1.3"
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('during')}
                 />
 
                 {/* --- SEGMENT 3: اجتماعات مؤهلة --- */}
-                <ellipse cx="230" cy="170" rx="130" ry="22" fill="none" stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} />
+                <ellipse 
+                  cx="230" cy="170" rx="130" ry="22" 
+                  fill="none" 
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} 
+                  strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} 
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('during')}
+                />
                 <path 
                   d="M 100 170 A 130 22 0 0 0 360 170 L 335 235 A 105 18 0 0 1 125 235 Z" 
                   fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
                   stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.22)"} 
                   strokeWidth="1.3"
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('during')}
                 />
 
                 {/* --- SEGMENT 4: عروض سعر --- */}
-                <ellipse cx="230" cy="235" rx="105" ry="18" fill="none" stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} />
+                <ellipse 
+                  cx="230" cy="235" rx="105" ry="18" 
+                  fill="none" 
+                  stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.3)"} 
+                  strokeWidth={hoveredSection === 'during' ? 1.8 : 1.3} 
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('during')}
+                />
                 <path 
                   d="M 125 235 A 105 18 0 0 0 335 235 L 315 300 A 85 15 0 0 1 145 300 Z" 
                   fill={hoveredSection === 'during' ? "url(#funnel-grad-active)" : "url(#funnel-grad-inactive)"} 
                   stroke={hoveredSection === 'during' ? "#22d3ee" : "rgba(6, 182, 212, 0.22)"} 
                   strokeWidth="1.3"
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('during')}
                 />
 
                 {/* --- SEGMENT 5: تفاوض --- */}
-                <ellipse cx="230" cy="300" rx="85" ry="15" fill="none" stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} strokeWidth={hoveredSection === 'after' ? 1.8 : 1.3} />
+                <ellipse 
+                  cx="230" cy="300" rx="85" ry="15" 
+                  fill="none" 
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} 
+                  strokeWidth={hoveredSection === 'after' ? 1.8 : 1.3} 
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('after')}
+                />
                 <path 
                   d="M 145 300 A 85 15 0 0 0 315 300 L 298 365 A 68 12 0 0 1 162 365 Z" 
                   fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
                   stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.22)"} 
                   strokeWidth="1.3"
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('after')}
                 />
 
                 {/* --- SEGMENT 6: صفقات --- */}
-                <ellipse cx="230" cy="365" rx="68" ry="12" fill="none" stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} strokeWidth={hoveredSection === 'after' ? 1.8 : 1.3} />
+                <ellipse 
+                  cx="230" cy="365" rx="68" ry="12" 
+                  fill="none" 
+                  stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.3)"} 
+                  strokeWidth={hoveredSection === 'after' ? 1.8 : 1.3} 
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('after')}
+                />
                 <path 
                   d="M 162 365 A 68 12 0 0 0 298 365 L 282 430 A 52 9 0 0 1 178 430 Z" 
                   fill={hoveredSection === 'after' ? "url(#funnel-emerald-active)" : "url(#funnel-grad-inactive)"} 
                   stroke={hoveredSection === 'after' ? "#34d399" : "rgba(16, 185, 129, 0.22)"} 
                   strokeWidth="1.3"
+                  className="pointer-events-auto cursor-pointer"
+                  onMouseEnter={() => setHoveredSection('after')}
                 />
                 
                 {/* Bottom opening ellipse */}
@@ -378,7 +429,6 @@ export const DualStreamPipelineSection = () => {
               <div 
                 className="absolute top-[44px] left-1/2 -translate-x-1/2 w-[280px] h-[55px] flex flex-col items-center justify-center text-center cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('before')}
-                onMouseLeave={() => setHoveredSection(null)}
               >
                 <div className="text-[9.5px] font-black text-cyan-300 bg-cyan-950/80 px-2.5 py-0.5 rounded-full border border-cyan-500/25 mb-1.5 select-none uppercase tracking-widest shadow-[0_0_12px_rgba(6,182,212,0.15)] animate-pulse">
                   نقطة التلاقي
@@ -394,7 +444,6 @@ export const DualStreamPipelineSection = () => {
               <div 
                 className="absolute top-[120px] left-1/2 -translate-x-1/2 w-[200px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('during')}
-                onMouseLeave={() => setHoveredSection(null)}
               >
                 <Target className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                 <span className="text-[14px] font-black text-cyan-100 select-none">فرص جاهزة للتحريك</span>
@@ -404,7 +453,6 @@ export const DualStreamPipelineSection = () => {
               <div 
                 className="absolute top-[185px] left-1/2 -translate-x-1/2 w-[160px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('during')}
-                onMouseLeave={() => setHoveredSection(null)}
               >
                 <Users className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                 <span className="text-[13.5px] font-black text-cyan-100 select-none">اجتماعات مؤهلة</span>
@@ -414,7 +462,6 @@ export const DualStreamPipelineSection = () => {
               <div 
                 className="absolute top-[250px] left-1/2 -translate-x-1/2 w-[130px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('during')}
-                onMouseLeave={() => setHoveredSection(null)}
               >
                 <FileText className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
                 <span className="text-[13.5px] font-black text-cyan-100 select-none">عروض سعر</span>
@@ -424,7 +471,6 @@ export const DualStreamPipelineSection = () => {
               <div 
                 className="absolute top-[315px] left-1/2 -translate-x-1/2 w-[110px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('after')}
-                onMouseLeave={() => setHoveredSection(null)}
               >
                 <Handshake className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span className="text-[13.5px] font-black text-emerald-100 select-none">تفاوض</span>
@@ -434,7 +480,6 @@ export const DualStreamPipelineSection = () => {
               <div 
                 className="absolute top-[380px] left-1/2 -translate-x-1/2 w-[90px] h-[36px] flex items-center justify-center gap-1.5 cursor-default z-20 pointer-events-auto"
                 onMouseEnter={() => setHoveredSection('after')}
-                onMouseLeave={() => setHoveredSection(null)}
               >
                 <CheckCircle className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 <span className="text-[13.5px] font-black text-emerald-100 select-none">صفقات</span>
