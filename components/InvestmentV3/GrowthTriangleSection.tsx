@@ -341,10 +341,11 @@ const ClientSalesInteractiveTriangle = () => {
                                         key={node.id}
                                         type="button"
                                         className={cn(
-                                            'absolute z-20 -translate-x-1/2 -translate-y-1/2 text-center outline-none',
+                                            'absolute z-20 text-center outline-none',
                                             isCenter ? 'h-24 w-24 md:h-32 md:w-32' : 'h-16 w-16 md:h-20 md:w-20'
                                         )}
                                         style={position}
+                                        transformTemplate={(_, generated) => `translate(-50%, -50%) ${generated}`}
                                         initial={{ opacity: 0, scale: 0.7 }}
                                         whileInView={{ opacity: 1, scale: 1 }}
                                         viewport={{ once: true }}
@@ -355,17 +356,13 @@ const ClientSalesInteractiveTriangle = () => {
                                     >
                                         <motion.div
                                             animate={isCenter ? {
-                                                y: active.id === node.id ? -4 : [0, -3, 0],
                                                 scale: activeNode ? 1.06 : [1, 1.025, 1],
                                             } : {
-                                                y: active.id === node.id ? -4 : [0, -5, 0],
                                                 scale: activeNode ? 1.05 : 1,
                                             }}
                                             transition={isCenter ? {
-                                                y: active.id === node.id ? { duration: 0.2 } : { duration: 5, repeat: Infinity, ease: 'easeInOut' },
                                                 scale: activeNode ? { duration: 0.25 } : { duration: 3.5, repeat: Infinity, ease: 'easeInOut' },
                                             } : {
-                                                y: active.id === node.id ? { duration: 0.2 } : { duration: 4, repeat: Infinity, ease: 'easeInOut' },
                                                 scale: { duration: 0.2 },
                                             }}
                                             className={cn(
