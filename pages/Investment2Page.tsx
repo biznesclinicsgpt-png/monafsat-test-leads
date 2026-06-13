@@ -822,135 +822,7 @@ const ExecutionTimelineSection = () => {
   );
 };
 
-const OneSalespersonSection = () => {
-  const { shouldReduce, reveal, container, item } = useSharedMotion();
 
-  return (
-    <motion.section 
-      variants={reveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      className="py-16 bg-[#080808] border-t border-slate-900/60"
-    >
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid lg:grid-cols-12 gap-8 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: shouldReduce ? 0 : 25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-5 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-8"
-          >
-            <UserRoundCheck className="w-12 h-12 text-emerald-300 mb-6" />
-            <h2 className="text-3xl md:text-5xl font-black text-white leading-tight mb-5">
-              حتى لو لديك موظف مبيعات واحد فقط... سنبني حوله نظام تشغيل
-            </h2>
-            <p className="text-slate-300 leading-relaxed">
-              نحن لا نحتاج فريقًا كبيرًا. نحتاج شخصًا واحدًا قابلًا للتطوير، ثم نزوده يوميًا بما يحتاجه ليعمل بوضوح: من يستهدف، ماذا يقول، أي قناة يستخدم، متى يتابع، وكيف يحول الرد إلى اجتماع.
-            </p>
-          </motion.div>
-          <div className="lg:col-span-7">
-            <div className="relative bg-slate-950/70 border border-slate-800 rounded-3xl p-6 md:p-8 overflow-hidden">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.12),transparent_48%)] pointer-events-none" />
-              
-              <motion.div 
-                variants={container}
-                className="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-4 items-center"
-              >
-                {[
-                  ['بيانات جاهزة', Database],
-                  ['رسائل جاهزة', MessageSquare],
-                  ['قنوات مفعلة', PhoneCall],
-                  ['متابعة', CalendarCheck],
-                  ['تدريب', Users],
-                  ['تقارير', BarChart3],
-                ].map(([title, Icon]) => (
-                  <motion.div
-                    key={title as string}
-                    variants={item}
-                    whileHover={shouldReduce ? {} : { y: -5, scale: 1.02, boxShadow: '0 8px 20px rgba(6, 182, 212, 0.1)' }}
-                    className="bg-black/35 border border-slate-800 rounded-2xl p-4 text-center min-h-[110px] flex flex-col items-center justify-center transition-all duration-300"
-                  >
-                    <Icon className="w-6 h-6 text-cyan-300 mb-3" />
-                    <span className="text-slate-200 font-black text-sm">{title as string}</span>
-                  </motion.div>
-                ))}
-              </motion.div>
-
-              <div className="relative z-10 my-5 flex justify-center">
-                <motion.div 
-                  whileHover={shouldReduce ? {} : { scale: 1.05 }}
-                  className="rounded-full bg-emerald-400 text-slate-950 px-6 py-3 font-black border border-emerald-200 shadow-[0_0_30px_rgba(52,211,153,0.25)] cursor-default"
-                >
-                  موظف المبيعات
-                </motion.div>
-              </div>
-
-              <div className="relative z-10 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-4 flex items-center justify-center gap-3">
-                <BriefcaseBusiness className="w-5 h-5 text-emerald-300 shrink-0" />
-                <span className="text-emerald-100 font-black text-sm">فرص مباشرة تدخل القمع بدل انتظار المحاولات العشوائية</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </motion.section>
-  );
-};
-
-const FocusedTargetingSection = () => {
-  const { shouldReduce, reveal } = useSharedMotion();
-
-  return (
-    <motion.section 
-      variants={reveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.15 }}
-      className="py-16 bg-[#080808] border-t border-slate-900/60"
-    >
-      <div className="container mx-auto px-4 max-w-6xl">
-        <div className="grid lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6">
-            <SectionHeader
-              eyebrow="استهداف أدق"
-              title="لا نستهدف الجميع... نستخرج الأقرب للشراء"
-              description="لو منتجك يناسب شريحة محددة فقط، لا نضيع وقت فريقك على آلاف غير مناسبين. نحلل السوق ونستخرج أفضل الحسابات وصناع القرار حسب القطاع، المنطقة، حجم الشركة، الاحتياج، واحتمالية الاستجابة."
-            />
-          </div>
-          <motion.div
-            initial={{ opacity: 0, x: shouldReduce ? 0 : -25 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="lg:col-span-6 bg-slate-950/75 border border-slate-800 rounded-3xl p-7"
-          >
-            <div className="grid gap-4">
-              <motion.div 
-                whileHover={shouldReduce ? {} : { scale: 1.015, boxShadow: '0 4px 15px rgba(239, 68, 68, 0.05)' }}
-                className="rounded-2xl border border-red-500/20 bg-red-500/5 p-5 transition-all duration-300"
-              >
-                <div className="text-red-300 font-black text-sm mb-2">بدون فلترة</div>
-                <div className="text-4xl font-black text-white font-sans">300,000</div>
-                <div className="text-xs text-slate-500 font-bold mt-1">جهة عامة يصعب تشغيلها بذكاء</div>
-              </motion.div>
-              <ArrowLeft className="w-7 h-7 text-emerald-300 mx-auto -rotate-90 lg:rotate-0" />
-              <motion.div 
-                whileHover={shouldReduce ? {} : { scale: 1.015, boxShadow: '0 4px 15px rgba(16, 185, 129, 0.05)' }}
-                className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-5 transition-all duration-300"
-              >
-                <div className="text-emerald-300 font-black text-sm mb-2">بعد تحليل الملاءمة</div>
-                <div className="text-4xl font-black text-white font-sans">800 - 2,000</div>
-                <div className="text-xs text-slate-400 font-bold mt-1">حساب مناسب يمكن تحويله إلى محادثات واجتماعات</div>
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </div>
-    </motion.section>
-  );
-};
 
 const DailySalesSystemSection = () => {
   const { shouldReduce, reveal, container, item } = useSharedMotion();
@@ -1756,12 +1628,7 @@ const Investment2Page = () => {
       <div id="execution-plan">
         <ExecutionTimelineSection />
       </div>
-      <div id="one-salesperson">
-        <OneSalespersonSection />
-      </div>
-      <div id="focused-targeting">
-        <FocusedTargetingSection />
-      </div>
+
       <div id="operational-formula">
         <OperationalFormulaSection />
       </div>
